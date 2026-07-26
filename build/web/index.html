@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Charlie Chat AAC - Communication app for all devices">
+  
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#008080">
+  <meta name="msapplication-TileColor" content="#008080">
+
+  <!-- iOS web app configuration -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Charlie Chat">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon and icons -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Progressive Web App support -->
+  <link rel="shortcut icon" href="favicon.png">
+
+  <!-- OCR Engine for Web (Tesseract.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <title>Charlie Chat</title>
+  
+  <!-- Browser compatibility polyfills -->
+  <script>
+    // Polyfill for older browsers
+    if (!window.requestAnimationFrame) {
+      window.requestAnimationFrame = function(callback) {
+        return setTimeout(callback, 1000 / 60);
+      };
+    }
+  </script>
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #flutter-loading {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div id="flutter-loading">Loading...</div>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

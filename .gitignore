@@ -4,6 +4,7 @@
 .pub-cache/
 .pub/
 build/
+!build/web/
 ios/Flutter/Flutter.framework/
 ios/Flutter/Flutter.podspec
 ios/Pods/

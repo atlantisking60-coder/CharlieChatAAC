@@ -1,5 +1,5 @@
 [build]
-  command = "if [ ! -d \"flutter\" ]; then git clone https://github.com/flutter/flutter.git -b stable; fi && ./flutter/bin/flutter build web --release"
+  command = "echo 'Using pre-built web folder from repository'"
   publish = "build/web"
 
 [build.environment]
