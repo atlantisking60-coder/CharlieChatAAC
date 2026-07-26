@@ -1,0 +1,1400 @@
+Scanned 9022 image assets.
+Found 71 board JSON files.
+  prebuilt_actions.json: ask -> assets/symbols/1. Main Boards/Actions/ask.png
+  prebuilt_actions.json: do -> assets/symbols/1. Main Boards/Actions/do.png
+  prebuilt_actions.json: dress -> assets/symbols/1. Main Boards/Actions/dress.png
+  prebuilt_actions.json: drink -> assets/symbols/1. Main Boards/Common/drink.png
+  prebuilt_actions.json: eat -> assets/symbols/1. Main Boards/Common/eat.png
+  prebuilt_actions.json: go -> assets/symbols/1. Main Boards/Actions/go.png
+  prebuilt_actions.json: stop -> assets/symbols/1. Main Boards/Actions/stop.png
+  prebuilt_actions.json: play -> assets/symbols/1. Main Boards/Common/play.png
+  prebuilt_actions.json: sleep -> assets/symbols/1. Main Boards/Actions/sleep.png
+  prebuilt_actions.json: talk -> assets/symbols/1. Main Boards/Actions/talk.png
+  prebuilt_actions.json: listen -> assets/symbols/1. Main Boards/Common/listen.png
+  prebuilt_actions.json: enter -> assets/symbols/1. Main Boards/Actions/enter.png
+  prebuilt_actions.json: throw away -> assets/symbols/1. Main Boards/Actions/throw away.png
+  prebuilt_actions.json: throw -> assets/symbols/1. Main Boards/Actions/throw.png
+  prebuilt_actions.json: mix -> assets/symbols/3. Lesson Vocab/Cooking & Food/Key Terminology/mix.png
+  prebuilt_actions.json: cook -> assets/symbols/1. Main Boards/Actions/cook.png
+  prebuilt_actions.json: blow nose -> assets/symbols/1. Main Boards/Common/blow nose.png
+  prebuilt_actions.json: ride -> assets/symbols/4. Other Words (For Thesaurus)/Actions/Move/ride.png
+  prebuilt_actions.json: Movement -> assets/symbols/3. Lesson Vocab/EPIC/movement.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_actions.json
+  prebuilt_alphabet.json: A -> assets/symbols/1. Main Boards/Alphabet/a.png
+  prebuilt_alphabet.json: B -> assets/symbols/1. Main Boards/Alphabet/b.png
+  prebuilt_alphabet.json: C -> assets/symbols/1. Main Boards/Alphabet/c.png
+  prebuilt_alphabet.json: D -> assets/symbols/1. Main Boards/Alphabet/d.png
+  prebuilt_alphabet.json: E -> assets/symbols/1. Main Boards/Alphabet/e.png
+  prebuilt_alphabet.json: F -> assets/symbols/1. Main Boards/Alphabet/f.png
+  prebuilt_alphabet.json: G -> assets/symbols/1. Main Boards/Alphabet/g.png
+  prebuilt_alphabet.json: H -> assets/symbols/1. Main Boards/Alphabet/h.png
+  prebuilt_alphabet.json: I -> assets/symbols/1. Main Boards/Alphabet/i.png
+  prebuilt_alphabet.json: J -> assets/symbols/1. Main Boards/Alphabet/j.png
+  prebuilt_alphabet.json: K -> assets/symbols/1. Main Boards/Alphabet/k.png
+  prebuilt_alphabet.json: L -> assets/symbols/1. Main Boards/Alphabet/l.png
+  prebuilt_alphabet.json: M -> assets/symbols/1. Main Boards/Alphabet/m.png
+  prebuilt_alphabet.json: N -> assets/symbols/1. Main Boards/Alphabet/n.png
+  prebuilt_alphabet.json: O -> assets/symbols/1. Main Boards/Alphabet/o.png
+  prebuilt_alphabet.json: P -> assets/symbols/1. Main Boards/Alphabet/p.png
+  prebuilt_alphabet.json: Q -> assets/symbols/1. Main Boards/Alphabet/q.png
+  prebuilt_alphabet.json: R -> assets/symbols/1. Main Boards/Alphabet/r.png
+  prebuilt_alphabet.json: S -> assets/symbols/1. Main Boards/Alphabet/s.png
+  prebuilt_alphabet.json: T -> assets/symbols/1. Main Boards/Alphabet/t.png
+  prebuilt_alphabet.json: U -> assets/symbols/1. Main Boards/Alphabet/u.png
+  prebuilt_alphabet.json: V -> assets/symbols/1. Main Boards/Alphabet/v.png
+  prebuilt_alphabet.json: W -> assets/symbols/1. Main Boards/Alphabet/w.png
+  prebuilt_alphabet.json: X -> assets/symbols/1. Main Boards/Alphabet/x.png
+  prebuilt_alphabet.json: Y -> assets/symbols/1. Main Boards/Alphabet/y.png
+  prebuilt_alphabet.json: Z -> assets/symbols/1. Main Boards/Alphabet/z.png
+  prebuilt_alphabet.json: Phonics -> assets/symbols/Completed SymboTalk Board Screenshots/1. Main Boards/Phonics.jpg
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_alphabet.json
+  prebuilt_amphibians.json: axolotl -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/axolotl.png
+  prebuilt_amphibians.json: eel -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/eel.png
+  prebuilt_amphibians.json: frog -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/frog.png
+  prebuilt_amphibians.json: frogspawn -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/frogspawn.png
+  prebuilt_amphibians.json: newt -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/newt.png
+  prebuilt_amphibians.json: poison dart frog -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/poison dart frog.png
+  prebuilt_amphibians.json: salamander -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/salamander.png
+  prebuilt_amphibians.json: toad -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/toad.png
+  prebuilt_amphibians.json: tree frog -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/tree frog.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_amphibians.json
+  prebuilt_arachnids.json: scorpion -> assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/scorpion.png
+  prebuilt_arachnids.json: spider -> assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/spider.png
+  prebuilt_arachnids.json: tick -> assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/tick.png
+  prebuilt_arachnids.json: mite -> assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/mite.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_arachnids.json
+  prebuilt_birds.json: bird -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/bird.png
+  prebuilt_birds.json: blackbird -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/blackbird.png
+  prebuilt_birds.json: budgie -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/budgie.png
+  prebuilt_birds.json: buzzard -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/buzzard.png
+  prebuilt_birds.json: cassowary -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/cassowary.png
+  prebuilt_birds.json: chicken -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/chicken.png
+  prebuilt_birds.json: cockatoo -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/cockatoo.png
+  prebuilt_birds.json: cormorant -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/cormorant.png
+  prebuilt_birds.json: crow -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/crow.png
+  prebuilt_birds.json: dodo -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/dodo.png
+  prebuilt_birds.json: dove -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/dove.png
+  prebuilt_birds.json: duck -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/duck.png
+  prebuilt_birds.json: eagle -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/eagle.png
+  prebuilt_birds.json: egret -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/egret.png
+  prebuilt_birds.json: emu -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/emu.png
+  prebuilt_birds.json: falcon -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/falcon.png
+  prebuilt_birds.json: finch -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/finch.png
+  prebuilt_birds.json: flamingo -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/flamingo.png
+  prebuilt_birds.json: goose -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/goose.png
+  prebuilt_birds.json: hawk -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/hawk.png
+  prebuilt_birds.json: heron -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/heron.png
+  prebuilt_birds.json: hornbill -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/hornbill.png
+  prebuilt_birds.json: jay -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/jay.png
+  prebuilt_birds.json: kingfisher -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/kingfisher.png
+  prebuilt_birds.json: kiwi -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/kiwi.png
+  prebuilt_birds.json: lark -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/lark.png
+  prebuilt_birds.json: mallard -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/mallard.png
+  prebuilt_birds.json: osprey -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/osprey.png
+  prebuilt_birds.json: ostrich -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/ostrich.png
+  prebuilt_birds.json: owl -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/owl.png
+  prebuilt_birds.json: parrot -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/parrot.png
+  prebuilt_birds.json: peacock -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/peacock.png
+  prebuilt_birds.json: pelican -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/pelican.png
+  prebuilt_birds.json: penguin -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/penguin.png
+  prebuilt_birds.json: pigeon -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/pigeon.png
+  prebuilt_birds.json: quail -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/quail.png
+  prebuilt_birds.json: raven -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/raven.png
+  prebuilt_birds.json: robin -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/robin.png
+  prebuilt_birds.json: rooster -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/rooster.png
+  prebuilt_birds.json: seagull -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/seagull.png
+  prebuilt_birds.json: sparrow -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/sparrow.png
+  prebuilt_birds.json: starling -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/starling.png
+  prebuilt_birds.json: swallow -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/swallow.png
+  prebuilt_birds.json: swan -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/swan.png
+  prebuilt_birds.json: thrush -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/thrush.png
+  prebuilt_birds.json: toucan -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/toucan.png
+  prebuilt_birds.json: turkey -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/turkey.png
+  prebuilt_birds.json: vulture -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/vulture.png
+  prebuilt_birds.json: wren -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/wren.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_birds.json
+  prebuilt_body_parts.json: hair -> assets/symbols/1. Main Boards/Body Parts/hair.png
+  prebuilt_body_parts.json: head -> assets/symbols/1. Main Boards/Body Parts/head.png
+  prebuilt_body_parts.json: forehead -> assets/symbols/1. Main Boards/Body Parts/forehead.png
+  prebuilt_body_parts.json: eye -> assets/symbols/1. Main Boards/Body Parts/eye.png
+  prebuilt_body_parts.json: eyebrow -> assets/symbols/1. Main Boards/Body Parts/eyebrow.png
+  prebuilt_body_parts.json: eyelash -> assets/symbols/1. Main Boards/Body Parts/eyelash.png
+  prebuilt_body_parts.json: ear -> assets/symbols/1. Main Boards/Body Parts/ear.png
+  prebuilt_body_parts.json: nose -> assets/symbols/1. Main Boards/Body Parts/nose.png
+  prebuilt_body_parts.json: mouth -> assets/symbols/1. Main Boards/Body Parts/mouth.png
+  prebuilt_body_parts.json: teeth -> assets/symbols/1. Main Boards/Body Parts/teeth.png
+  prebuilt_body_parts.json: tongue -> assets/symbols/1. Main Boards/Body Parts/tongue.png
+  prebuilt_body_parts.json: chin -> assets/symbols/1. Main Boards/Body Parts/chin.png
+  prebuilt_body_parts.json: neck -> assets/symbols/1. Main Boards/Body Parts/neck.png
+  prebuilt_body_parts.json: shoulder -> assets/symbols/1. Main Boards/Body Parts/shoulder.png
+  prebuilt_body_parts.json: chest -> assets/symbols/1. Main Boards/Body Parts/chest.png
+  prebuilt_body_parts.json: belly -> assets/symbols/1. Main Boards/Body Parts/belly.png
+  prebuilt_body_parts.json: back -> assets/symbols/1. Main Boards/Body Parts/back.png
+  prebuilt_body_parts.json: arm -> assets/symbols/1. Main Boards/Body Parts/arm.png
+  prebuilt_body_parts.json: elbow -> assets/symbols/1. Main Boards/Body Parts/elbow.png
+  prebuilt_body_parts.json: wrist -> assets/symbols/1. Main Boards/Body Parts/wrist.png
+  prebuilt_body_parts.json: hand -> assets/symbols/1. Main Boards/Body Parts/hand.png
+  prebuilt_body_parts.json: knuckles -> assets/symbols/1. Main Boards/Body Parts/knuckles.png
+  prebuilt_body_parts.json: finger -> assets/symbols/1. Main Boards/Body Parts/finger.png
+  prebuilt_body_parts.json: fingernail -> assets/symbols/1. Main Boards/Body Parts/fingernail.png
+  prebuilt_body_parts.json: waist -> assets/symbols/1. Main Boards/Body Parts/waist.png
+  prebuilt_body_parts.json: hip -> assets/symbols/1. Main Boards/Body Parts/hip.png
+  prebuilt_body_parts.json: private area -> assets/symbols/1. Main Boards/Body Parts/private area.png
+  prebuilt_body_parts.json: bottom -> assets/symbols/1. Main Boards/Body Parts/bottom.png
+  prebuilt_body_parts.json: leg -> assets/symbols/1. Main Boards/Body Parts/leg.png
+  prebuilt_body_parts.json: knee -> assets/symbols/1. Main Boards/Body Parts/knee.png
+  prebuilt_body_parts.json: ankle -> assets/symbols/1. Main Boards/Body Parts/ankle.png
+  prebuilt_body_parts.json: foot -> assets/symbols/1. Main Boards/Body Parts/foot.png
+  prebuilt_body_parts.json: toes -> assets/symbols/1. Main Boards/Body Parts/toes.png
+  prebuilt_body_parts.json: toenails -> assets/symbols/1. Main Boards/Body Parts/toenails.png
+  prebuilt_body_parts.json: [BLANK] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_body_parts.json: [BLANK] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_body_parts.json: burp -> assets/symbols/1. Main Boards/Body Parts/burp.png
+  prebuilt_body_parts.json: fart -> assets/symbols/1. Main Boards/Body Parts/fart.png
+  prebuilt_body_parts.json: period -> assets/symbols/1. Main Boards/Body Parts/period.png
+  prebuilt_body_parts.json: Medical -> assets/symbols/BOARDS/Medical.png
+  prebuilt_body_parts.json: Internal Organs -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/internal organs.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_body_parts.json
+  prebuilt_body_parts_of_animals.json: fur -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/fur.png
+  prebuilt_body_parts_of_animals.json: whiskers -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/whiskers.png
+  prebuilt_body_parts_of_animals.json: tail -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/tail.png
+  prebuilt_body_parts_of_animals.json: feather -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/feather.png
+  prebuilt_body_parts_of_animals.json: wing -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/wing.png
+  prebuilt_body_parts_of_animals.json: fin -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/fin.png
+  prebuilt_body_parts_of_animals.json: gills -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/gills.png
+  prebuilt_body_parts_of_animals.json: scales -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/scales.png
+  prebuilt_body_parts_of_animals.json: shell -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/shell.png
+  prebuilt_body_parts_of_animals.json: pouch -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/pouch.png
+  prebuilt_body_parts_of_animals.json: tongue -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/tongue.png
+  prebuilt_body_parts_of_animals.json: fang -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/fang.png
+  prebuilt_body_parts_of_animals.json: horn -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/horn.png
+  prebuilt_body_parts_of_animals.json: mane -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/mane.png
+  prebuilt_body_parts_of_animals.json: trunk -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/trunk.png
+  prebuilt_body_parts_of_animals.json: tusk -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/tusk.png
+  prebuilt_body_parts_of_animals.json: snout -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/snout.png
+  prebuilt_body_parts_of_animals.json: feeler -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/feeler.png
+  prebuilt_body_parts_of_animals.json: proboscis -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/proboscis.png
+  prebuilt_body_parts_of_animals.json: flipper -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/flipper.png
+  prebuilt_body_parts_of_animals.json: blubber -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/blubber.png
+  prebuilt_body_parts_of_animals.json: tentacles -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/tentacles.png
+  prebuilt_body_parts_of_animals.json: udder -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/udder.png
+  prebuilt_body_parts_of_animals.json: hoof -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/hoof.png
+  prebuilt_body_parts_of_animals.json: trotter -> assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/trotter.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_body_parts_of_animals.json
+  prebuilt_bonfire_night_keywords.json: bonfire night -> assets/symbols/1. Main Boards/Time/Events & Occasions/bonfire night.png
+  prebuilt_bonfire_night_keywords.json: 5th November -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/5th November.png
+  prebuilt_bonfire_night_keywords.json: bonfire -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/bonfire.png
+  prebuilt_bonfire_night_keywords.json: drone light show -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/drone light show.png
+  prebuilt_bonfire_night_keywords.json: effigy -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/effigy.png
+  prebuilt_bonfire_night_keywords.json: festive atmosphere -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/festive atmosphere.png
+  prebuilt_bonfire_night_keywords.json: fire pit -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/fire pit.png
+  prebuilt_bonfire_night_keywords.json: firework -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/firework.png
+  prebuilt_bonfire_night_keywords.json: fireworks display -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/fireworks display.png
+  prebuilt_bonfire_night_keywords.json: fun fair -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/fun fair.png
+  prebuilt_bonfire_night_keywords.json: gunpowder -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/gunpowder.png
+  prebuilt_bonfire_night_keywords.json: guy fawkes -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/guy fawkes.png
+  prebuilt_bonfire_night_keywords.json: hot chocolate -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/hot chocolate.png
+  prebuilt_bonfire_night_keywords.json: loud bangs -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/loud bangs.png
+  prebuilt_bonfire_night_keywords.json: marshmellow -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/marshmellow.png
+  prebuilt_bonfire_night_keywords.json: outdoor festival -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/outdoor festival.png
+  prebuilt_bonfire_night_keywords.json: park celebration -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/park celebration.png
+  prebuilt_bonfire_night_keywords.json: sparkler -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/sparkler.png
+  prebuilt_bonfire_night_keywords.json: toffee apple -> assets/symbols/1. Main Boards/Time/Events & Occasions/Bonfire Night/toffee apple.png
+  prebuilt_bonfire_night_keywords.json: Fire Safety -> assets/symbols/3. Lesson Vocab/Retail/Legislation/fire safety.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_bonfire_night_keywords.json
+  prebuilt_buildings.json: Buildings -> assets/symbols/BOARDS/Buildings.png
+  prebuilt_buildings.json: Furniture -> assets/symbols/BOARDS/Furniture.png
+  prebuilt_buildings.json: Habitats -> assets/symbols/BOARDS/Animals/Habitats.png
+  prebuilt_buildings.json: Local Places -> assets/symbols/BOARDS/PEEP & Sustainability/Local Places.png
+  prebuilt_buildings.json: airport -> assets/symbols/1. Main Boards/Places/Buildings/airport.png
+  prebuilt_buildings.json: bank -> assets/symbols/1. Main Boards/Places/Buildings/bank.png
+  prebuilt_buildings.json: cafe -> assets/symbols/1. Main Boards/Places/Buildings/cafe.png
+  prebuilt_buildings.json: church -> assets/symbols/1. Main Boards/Places/Buildings/church.png
+  prebuilt_buildings.json: cinema -> assets/symbols/1. Main Boards/Places/Buildings/cinema.png
+  prebuilt_buildings.json: clinic -> assets/symbols/1. Main Boards/Places/Buildings/clinic.png
+  prebuilt_buildings.json: coffee shop -> assets/symbols/1. Main Boards/Places/Buildings/coffee shop.png
+  prebuilt_buildings.json: college -> assets/symbols/1. Main Boards/Places/Buildings/college.png
+  prebuilt_buildings.json: community hall -> assets/symbols/1. Main Boards/Places/Buildings/community hall.png
+  prebuilt_buildings.json: court -> assets/symbols/1. Main Boards/Places/Buildings/court.png
+  prebuilt_buildings.json: dentist -> assets/symbols/1. Main Boards/Places/Buildings/dentist.png
+  prebuilt_buildings.json: fire station -> assets/symbols/1. Main Boards/Places/Buildings/fire station.png
+  prebuilt_buildings.json: GP surgery -> assets/symbols/1. Main Boards/Places/Buildings/gp surgery.png
+  prebuilt_buildings.json: hospital -> assets/symbols/1. Main Boards/Places/Buildings/hospital.png
+  prebuilt_buildings.json: hotel -> assets/symbols/1. Main Boards/Places/Buildings/hotel.png
+  prebuilt_buildings.json: library -> assets/symbols/1. Main Boards/Places/Buildings/library.png
+  prebuilt_buildings.json: mosque -> assets/symbols/1. Main Boards/Places/Buildings/mosque.png
+  prebuilt_buildings.json: museum -> assets/symbols/1. Main Boards/Places/Buildings/museum.png
+  prebuilt_buildings.json: office -> assets/symbols/1. Main Boards/Places/Buildings/office.png
+  prebuilt_buildings.json: optician -> assets/symbols/1. Main Boards/Places/Buildings/optician.png
+  prebuilt_buildings.json: petrol station -> assets/symbols/1. Main Boards/Places/Buildings/petrol station.png
+  prebuilt_buildings.json: pharmacy -> assets/symbols/1. Main Boards/Places/Buildings/pharmacy.png
+  prebuilt_buildings.json: police station -> assets/symbols/1. Main Boards/Places/Buildings/police station.png
+  prebuilt_buildings.json: post office -> assets/symbols/1. Main Boards/Places/Buildings/post office.png
+  prebuilt_buildings.json: prison -> assets/symbols/1. Main Boards/Places/Buildings/prison.png
+  prebuilt_buildings.json: restaurant -> assets/symbols/1. Main Boards/Places/Buildings/restaurant.png
+  prebuilt_buildings.json: school -> assets/symbols/1. Main Boards/Places/Buildings/school.png
+  prebuilt_buildings.json: stadium -> assets/symbols/1. Main Boards/Places/Buildings/stadium.png
+  prebuilt_buildings.json: synagogue -> assets/symbols/1. Main Boards/Places/Buildings/synagogue.png
+  prebuilt_buildings.json: temple -> assets/symbols/1. Main Boards/Places/Buildings/temple.png
+  prebuilt_buildings.json: theatre -> assets/symbols/1. Main Boards/Places/Buildings/theatre.png
+  prebuilt_buildings.json: university -> assets/symbols/1. Main Boards/Places/Buildings/university.png
+  prebuilt_buildings.json: vet -> assets/symbols/1. Main Boards/Places/Buildings/vet.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_buildings.json
+  prebuilt_calm.json: serene -> assets/symbols/1. Main Boards/Feelings & Emotions/serene.png
+  prebuilt_calm.json: grounded -> assets/symbols/1. Main Boards/Feelings & Emotions/grounded.png
+  prebuilt_calm.json: peaceful -> assets/symbols/1. Main Boards/Feelings & Emotions/peaceful.png
+  prebuilt_calm.json: present -> assets/symbols/1. Main Boards/Feelings & Emotions/present.png
+  prebuilt_calm.json: relaxed -> assets/symbols/1. Main Boards/Feelings & Emotions/relaxed.png
+  prebuilt_calm.json: safe -> assets/symbols/3. Lesson Vocab/Sustainability/safe.png
+  prebuilt_calm.json: caring -> assets/symbols/1. Main Boards/Feelings & Emotions/caring.png
+  prebuilt_calm.json: content -> assets/symbols/1. Main Boards/Feelings & Emotions/content.png
+  prebuilt_calm.json: loving -> assets/symbols/1. Main Boards/Feelings & Emotions/loving.png
+  prebuilt_calm.json: focused -> assets/symbols/1. Main Boards/Feelings & Emotions/focused.png
+  prebuilt_calm.json: comfortable -> assets/symbols/1. Main Boards/Feelings & Emotions/comfortable.png
+  prebuilt_calm.json: trusting -> assets/symbols/1. Main Boards/Feelings & Emotions/trusting.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_calm.json
+  prebuilt_child_animals.json: calf (cow) -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/calf (cow).png
+  prebuilt_child_animals.json: calf (elephant) -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/calf (elephant).png
+  prebuilt_child_animals.json: calf (sealife) -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/calf (sealife).png
+  prebuilt_child_animals.json: chick -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/chick.png
+  prebuilt_child_animals.json: cub -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/cub.png
+  prebuilt_child_animals.json: cygnet -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/cygnet.png
+  prebuilt_child_animals.json: duckling -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/duckling.png
+  prebuilt_child_animals.json: gosling -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/gosling.png
+  prebuilt_child_animals.json: fawn -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/fawn.png
+  prebuilt_child_animals.json: foal -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/foal.png
+  prebuilt_child_animals.json: fry -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/fry.png
+  prebuilt_child_animals.json: hoglet -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/hoglet.png
+  prebuilt_child_animals.json: joey -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/joey.png
+  prebuilt_child_animals.json: kitten -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/kitten.png
+  prebuilt_child_animals.json: lamb -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/lamb.png
+  prebuilt_child_animals.json: piglet -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/piglet.png
+  prebuilt_child_animals.json: porcupette -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/porcupette.png
+  prebuilt_child_animals.json: pup -> assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/pup.png
+  prebuilt_child_animals.json: nymph -> assets/symbols/3. Lesson Vocab/English/Characters & Fantasy/Creatures & Races/nymph.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_child_animals.json
+  prebuilt_christmas_keywords.json: angel -> assets/symbols/3. Lesson Vocab/Religion & Worldviews/Angels/angel.png
+  prebuilt_christmas_keywords.json: advent -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/advent.png
+  prebuilt_christmas_keywords.json: baubles -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/baubles.png
+  prebuilt_christmas_keywords.json: bells -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/bells.png
+  prebuilt_christmas_keywords.json: bobble hat -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/bobble hat.png
+  prebuilt_christmas_keywords.json: candle -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/candle.png
+  prebuilt_christmas_keywords.json: christmas dinner -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/christmas dinner.png
+  prebuilt_christmas_keywords.json: christmas pudding -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/christmas pudding.png
+  prebuilt_christmas_keywords.json: church -> assets/symbols/1. Main Boards/Places/Buildings/church.png
+  prebuilt_christmas_keywords.json: cracker -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/cracker.png
+  prebuilt_christmas_keywords.json: decorations -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/decorations.png
+  prebuilt_christmas_keywords.json: elf -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/elf.png
+  prebuilt_christmas_keywords.json: fireplace -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/fireplace.png
+  prebuilt_christmas_keywords.json: gingerbread -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/gingerbread.png
+  prebuilt_christmas_keywords.json: grinch -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/grinch.png
+  prebuilt_christmas_keywords.json: holly & ivy -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/holly & ivy.png
+  prebuilt_christmas_keywords.json: Jesus -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/jesus.png
+  prebuilt_christmas_keywords.json: mince pie -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/mince pie.png
+  prebuilt_christmas_keywords.json: mistletoe -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/mistletoe.png
+  prebuilt_christmas_keywords.json: nativity -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/nativity.png
+  prebuilt_christmas_keywords.json: north pole -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/north pole.png
+  prebuilt_christmas_keywords.json: reindeer -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/reindeer.png
+  prebuilt_christmas_keywords.json: robin -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/robin.png
+  prebuilt_christmas_keywords.json: Rudolph -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/rudolph.png
+  prebuilt_christmas_keywords.json: sleigh -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/sleigh.png
+  prebuilt_christmas_keywords.json: snowball -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/snowball.png
+  prebuilt_christmas_keywords.json: snowflake -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/snowflake.png
+  prebuilt_christmas_keywords.json: snowman -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/snowman.png
+  prebuilt_christmas_keywords.json: sprouts -> assets/symbols/3. Lesson Vocab/Cooking & Food/Vegetables/sprouts.png
+  prebuilt_christmas_keywords.json: star -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/star.png
+  prebuilt_christmas_keywords.json: stocking -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/stocking.png
+  prebuilt_christmas_keywords.json: stuffing -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/stuffing.png
+  prebuilt_christmas_keywords.json: tinsel -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/tinsel.png
+  prebuilt_christmas_keywords.json: toy -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/toy.png
+  prebuilt_christmas_keywords.json: tree -> assets/symbols/3. Lesson Vocab/Sustainability/tree.png
+  prebuilt_christmas_keywords.json: turkey -> assets/symbols/1. Main Boards/Animals & Habitats/Birds/turkey.png
+  prebuilt_christmas_keywords.json: wreath -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/wreath.png
+  prebuilt_christmas_keywords.json: Religion & Worldviews -> assets/symbols/Subjects/Religion & Worldviews.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_christmas_keywords.json
+  prebuilt_class_equipment.json: pencil -> assets/symbols/1. Main Boards/Classroom Equipment/pencil.png
+  prebuilt_class_equipment.json: pen -> assets/symbols/1. Main Boards/Classroom Equipment/pen.png
+  prebuilt_class_equipment.json: highlighter -> assets/symbols/1. Main Boards/Classroom Equipment/highlighter.png
+  prebuilt_class_equipment.json: felt-tip -> assets/symbols/1. Main Boards/Classroom Equipment/felt-tip.png
+  prebuilt_class_equipment.json: colouring pencils -> assets/symbols/1. Main Boards/Classroom Equipment/colouring pencils.png
+  prebuilt_class_equipment.json: text book -> assets/symbols/1. Main Boards/Classroom Equipment/text book.png
+  prebuilt_class_equipment.json: lined paper -> assets/symbols/1. Main Boards/Classroom Equipment/lined paper.png
+  prebuilt_class_equipment.json: squared paper -> assets/symbols/1. Main Boards/Classroom Equipment/squared paper.png
+  prebuilt_class_equipment.json: graph paper -> assets/symbols/1. Main Boards/Classroom Equipment/graph paper.png
+  prebuilt_class_equipment.json: tracing paper -> assets/symbols/1. Main Boards/Classroom Equipment/tracing paper.png
+  prebuilt_class_equipment.json: interactive whiteboard -> assets/symbols/1. Main Boards/Classroom Equipment/interactive whiteboard.png
+  prebuilt_class_equipment.json: whiteboard -> assets/symbols/1. Main Boards/Classroom Equipment/whiteboard.png
+  prebuilt_class_equipment.json: rubber - eraser -> assets/symbols/1. Main Boards/Classroom Equipment/rubber - eraser.png
+  prebuilt_class_equipment.json: sharpener -> assets/symbols/1. Main Boards/Classroom Equipment/sharpener.png
+  prebuilt_class_equipment.json: calculator -> assets/symbols/1. Main Boards/Classroom Equipment/calculator.png
+  prebuilt_class_equipment.json: ruler -> assets/symbols/1. Main Boards/Classroom Equipment/ruler.png
+  prebuilt_class_equipment.json: measuring tape -> assets/symbols/1. Main Boards/Classroom Equipment/measuring tape.png
+  prebuilt_class_equipment.json: set square -> assets/symbols/1. Main Boards/Classroom Equipment/set square.png
+  prebuilt_class_equipment.json: protractor -> assets/symbols/1. Main Boards/Classroom Equipment/protractor.png
+  prebuilt_class_equipment.json: compass -> assets/symbols/1. Main Boards/Classroom Equipment/compass.png
+  prebuilt_class_equipment.json: counter -> assets/symbols/1. Main Boards/Classroom Equipment/counter.png
+  prebuilt_class_equipment.json: dice -> assets/symbols/1. Main Boards/Classroom Equipment/dice.png
+  prebuilt_class_equipment.json: spinner -> assets/symbols/1. Main Boards/Classroom Equipment/spinner.png
+  prebuilt_class_equipment.json: paper scissors -> assets/symbols/3. Lesson Vocab/Textiles/paper scissors.png
+  prebuilt_class_equipment.json: glue stick -> assets/symbols/1. Main Boards/Classroom Equipment/glue stick.png
+  prebuilt_class_equipment.json: chair -> assets/symbols/1. Main Boards/Classroom Equipment/chair.png
+  prebuilt_class_equipment.json: table -> assets/symbols/1. Main Boards/Classroom Equipment/table.png
+  prebuilt_class_equipment.json: tray -> assets/symbols/1. Main Boards/Classroom Equipment/tray.png
+  prebuilt_class_equipment.json: clipboard -> assets/symbols/1. Main Boards/Classroom Equipment/clipboard.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_class_equipment.json
+  prebuilt_clothes.json: clothes -> assets/symbols/1. Main Boards/Clothes/clothes.png
+  prebuilt_clothes.json: bag -> assets/symbols/1. Main Boards/Clothes/bag.png
+  prebuilt_clothes.json: belt -> assets/symbols/1. Main Boards/Clothes/belt.png
+  prebuilt_clothes.json: blouse -> assets/symbols/1. Main Boards/Clothes/blouse.png
+  prebuilt_clothes.json: boots -> assets/symbols/1. Main Boards/Clothes/boots.png
+  prebuilt_clothes.json: boxer shorts -> assets/symbols/1. Main Boards/Clothes/boxer shorts.png
+  prebuilt_clothes.json: bra -> assets/symbols/1. Main Boards/Clothes/bra.png
+  prebuilt_clothes.json: briefs -> assets/symbols/1. Main Boards/Clothes/briefs.png
+  prebuilt_clothes.json: cap -> assets/symbols/1. Main Boards/Clothes/cap.png
+  prebuilt_clothes.json: coat -> assets/symbols/1. Main Boards/Clothes/coat.png
+  prebuilt_clothes.json: coverall -> assets/symbols/1. Main Boards/Clothes/coverall.png
+  prebuilt_clothes.json: dress -> assets/symbols/1. Main Boards/Clothes/dress.png
+  prebuilt_clothes.json: gloves -> assets/symbols/1. Main Boards/Clothes/gloves.png
+  prebuilt_clothes.json: hat -> assets/symbols/1. Main Boards/Clothes/hat.png
+  prebuilt_clothes.json: heels -> assets/symbols/1. Main Boards/Clothes/heels.png
+  prebuilt_clothes.json: hoodie -> assets/symbols/1. Main Boards/Clothes/hoodie.png
+  prebuilt_clothes.json: jacket -> assets/symbols/1. Main Boards/Clothes/jacket.png
+  prebuilt_clothes.json: jeans -> assets/symbols/1. Main Boards/Clothes/jeans.png
+  prebuilt_clothes.json: jewellry -> assets/symbols/1. Main Boards/Clothes/jewellry.png
+  prebuilt_clothes.json: jumpsuit -> assets/symbols/1. Main Boards/Clothes/jumpsuit.png
+  prebuilt_clothes.json: nightgown -> assets/symbols/1. Main Boards/Clothes/nightgown.png
+  prebuilt_clothes.json: panties -> assets/symbols/1. Main Boards/Clothes/panties.png
+  prebuilt_clothes.json: pants -> assets/symbols/1. Main Boards/Clothes/pants.png
+  prebuilt_clothes.json: purse -> assets/symbols/1. Main Boards/Clothes/purse.png
+  prebuilt_clothes.json: raincoat -> assets/symbols/1. Main Boards/Clothes/raincoat.png
+  prebuilt_clothes.json: robe -> assets/symbols/1. Main Boards/Clothes/robe.png
+  prebuilt_clothes.json: sandals -> assets/symbols/1. Main Boards/Clothes/sandals.png
+  prebuilt_clothes.json: scarf -> assets/symbols/1. Main Boards/Clothes/scarf.png
+  prebuilt_clothes.json: shirt -> assets/symbols/1. Main Boards/Clothes/shirt.png
+  prebuilt_clothes.json: shoes -> assets/symbols/1. Main Boards/Clothes/shoes.png
+  prebuilt_clothes.json: shorts -> assets/symbols/1. Main Boards/Clothes/shorts.png
+  prebuilt_clothes.json: skirt -> assets/symbols/1. Main Boards/Clothes/skirt.png
+  prebuilt_clothes.json: slippers -> assets/symbols/1. Main Boards/Clothes/slippers.png
+  prebuilt_clothes.json: sneakers -> assets/symbols/1. Main Boards/Clothes/sneakers.png
+  prebuilt_clothes.json: socks -> assets/symbols/1. Main Boards/Clothes/socks.png
+  prebuilt_clothes.json: suit -> assets/symbols/1. Main Boards/Clothes/suit.png
+  prebuilt_clothes.json: sunglasses -> assets/symbols/1. Main Boards/Clothes/sunglasses.png
+  prebuilt_clothes.json: sweater -> assets/symbols/1. Main Boards/Clothes/sweater.png
+  prebuilt_clothes.json: t-shirt -> assets/symbols/1. Main Boards/Clothes/t-shirt.png
+  prebuilt_clothes.json: tie -> assets/symbols/1. Main Boards/Clothes/tie.png
+  prebuilt_clothes.json: tights -> assets/symbols/1. Main Boards/Clothes/tights.png
+  prebuilt_clothes.json: trainers -> assets/symbols/1. Main Boards/Clothes/trainers.png
+  prebuilt_clothes.json: trench coat -> assets/symbols/1. Main Boards/Clothes/trenchcoat.png
+  prebuilt_clothes.json: trousers -> assets/symbols/1. Main Boards/Clothes/trousers.png
+  prebuilt_clothes.json: uggs -> assets/symbols/1. Main Boards/Clothes/uggs.png
+  prebuilt_clothes.json: umbrella -> assets/symbols/1. Main Boards/Clothes/umbrella.png
+  prebuilt_clothes.json: underwear -> assets/symbols/1. Main Boards/Clothes/underwear.png
+  prebuilt_clothes.json: uniform -> assets/symbols/1. Main Boards/Clothes/uniform.png
+  prebuilt_clothes.json: watch -> assets/symbols/1. Main Boards/Clothes/watch.png
+  prebuilt_clothes.json: wellington boots -> assets/symbols/1. Main Boards/Clothes/wellington boots.png
+  prebuilt_clothes.json: woolly hat -> assets/symbols/1. Main Boards/Clothes/woolly hat.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_clothes.json
+  prebuilt_colours.json: silver -> assets/symbols/3. Lesson Vocab/Science/Year 8/Rocks/Types Of Rock/silver.png
+  prebuilt_colours.json: primary colours -> assets/symbols/3. Lesson Vocab/Art/primary colours.png
+  prebuilt_colours.json: orange -> assets/symbols/3. Lesson Vocab/Cooking & Food/Fruit/orange.png
+  prebuilt_colours.json: green -> assets/symbols/3. Lesson Vocab/Sustainability/green.png
+  prebuilt_colours.json: secondary colours -> assets/symbols/3. Lesson Vocab/Art/secondary colours.png
+  prebuilt_colours.json: magenta -> assets/symbols/1. Main Boards/Colours/magenta.png
+  prebuilt_colours.json: lilac -> assets/symbols/3. Lesson Vocab/Horticulture/Flowers/3/lilac.png
+  prebuilt_colours.json: maroon -> assets/symbols/3. Lesson Vocab/PEEP/Pirates/maroon.png
+  prebuilt_colours.json: mahogany -> assets/symbols/1. Main Boards/Colours/mahogany.png
+  prebuilt_colours.json: complimentary colours -> assets/symbols/3. Lesson Vocab/Art/complimentary colours.png
+  prebuilt_colours.json: coffee -> assets/symbols/3. Lesson Vocab/Science/Year 9/Acids & Alkelis/coffee.png
+  prebuilt_colours.json: tan -> assets/symbols/1. Main Boards/Colours/tan.png
+  prebuilt_colours.json: mustard -> assets/symbols/3. Lesson Vocab/Cooking & Food/Spices/mustard.png
+  prebuilt_colours.json: peach -> assets/symbols/1. Main Boards/Colours/peach.png
+  prebuilt_colours.json: colour wheel -> assets/symbols/3. Lesson Vocab/Art/colour wheel.png
+  prebuilt_colours.json: olive -> assets/symbols/1. Main Boards/Colours/olive.png
+  prebuilt_colours.json: lime -> assets/symbols/1. Main Boards/Colours/lime.png
+  prebuilt_colours.json: chartreuse -> assets/symbols/1. Main Boards/Colours/chartreuse.png
+  prebuilt_colours.json: lavender -> assets/symbols/1. Main Boards/Colours/lavender.png
+  prebuilt_colours.json: rainbow -> assets/symbols/1. Main Boards/Time/Events & Occasions/Special Days/4 April/rainbow.png
+  prebuilt_colours.json: cyan -> assets/symbols/1. Main Boards/Colours/cyan.png
+  prebuilt_colours.json: turquoise -> assets/symbols/1. Main Boards/Colours/turquoise.png
+  prebuilt_colours.json: teal -> assets/symbols/1. Main Boards/Colours/teal.png
+  prebuilt_colours.json: azure -> assets/symbols/1. Main Boards/Colours/azure.png
+  prebuilt_colours.json: sapphire -> assets/symbols/1. Main Boards/Colours/sapphire.png
+  prebuilt_colours.json: Shades Of Colours -> assets/symbols/BOARDS/Shades Of Colours.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_colours.json
+  prebuilt_common_words.json: caloo equipment -> assets/symbols/3. Lesson Vocab/Break & Lunchtime/caloo equipment.png
+  prebuilt_common_words.json: hanging bars -> assets/symbols/3. Lesson Vocab/Break & Lunchtime/hanging bars.png
+  prebuilt_common_words.json: swing -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/swing.png
+  prebuilt_common_words.json: roundabout -> assets/symbols/3. Lesson Vocab/Break & Lunchtime/roundabout.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_common_words.json
+  prebuilt_easter_keywords.json: lent -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/lent.png
+  prebuilt_easter_keywords.json: ash wednesday -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/ash wednesday.png
+  prebuilt_easter_keywords.json: easter -> assets/symbols/1. Main Boards/Time/Events & Occasions/easter.png
+  prebuilt_easter_keywords.json: passover -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/passover.png
+  prebuilt_easter_keywords.json: last supper -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/last supper.png
+  prebuilt_easter_keywords.json: holy week -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/holy week.png
+  prebuilt_easter_keywords.json: palm sunday -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/palm sunday.png
+  prebuilt_easter_keywords.json: good friday -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/good friday.png
+  prebuilt_easter_keywords.json: easter sunday -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter sunday.png
+  prebuilt_easter_keywords.json: easter story -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter story.png
+  prebuilt_easter_keywords.json: blessing -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/blessing.png
+  prebuilt_easter_keywords.json: church service -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/church service.png
+  prebuilt_easter_keywords.json: cross -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/cross.png
+  prebuilt_easter_keywords.json: crucifixion -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/crucifixion.png
+  prebuilt_easter_keywords.json: daffodil -> assets/symbols/3. Lesson Vocab/Horticulture/Flowers/2/daffodil.png
+  prebuilt_easter_keywords.json: disciples -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/disciples.png
+  prebuilt_easter_keywords.json: easter basket -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter basket.png
+  prebuilt_easter_keywords.json: easter bunny -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter bunny.png
+  prebuilt_easter_keywords.json: easter egg -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter egg.png
+  prebuilt_easter_keywords.json: easter egg hunt -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/easter egg hunt.png
+  prebuilt_easter_keywords.json: empty tomb -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/empty tomb.png
+  prebuilt_easter_keywords.json: family gathering -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/family gathering.png
+  prebuilt_easter_keywords.json: feast -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/feast.png
+  prebuilt_easter_keywords.json: fire safety -> assets/symbols/3. Lesson Vocab/Retail/Legislation/fire safety.png
+  prebuilt_easter_keywords.json: jesus -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/jesus.png
+  prebuilt_easter_keywords.json: mini-eggs -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/mini-eggs.png
+  prebuilt_easter_keywords.json: parade -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/parade.png
+  prebuilt_easter_keywords.json: pieces of silver -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/pieces of silver.png
+  prebuilt_easter_keywords.json: prayer -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/prayer.png
+  prebuilt_easter_keywords.json: resurrection -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/resurrection.png
+  prebuilt_easter_keywords.json: springtime -> assets/symbols/1. Main Boards/Time/Events & Occasions/Easter/springtime.png
+  prebuilt_easter_keywords.json: worship -> assets/symbols/1. Main Boards/Feelings & Emotions/worship.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_easter_keywords.json
+  prebuilt_events_occasions.json: chinese new year -> assets/symbols/1. Main Boards/Time/Events & Occasions/chinese new year.png
+  prebuilt_events_occasions.json: valentine's day -> assets/symbols/1. Main Boards/Time/Events & Occasions/valentine's day.png
+  prebuilt_events_occasions.json: st. patrick's day -> assets/symbols/1. Main Boards/Time/Events & Occasions/st. patrick's day.png
+  prebuilt_events_occasions.json: holi -> assets/symbols/1. Main Boards/Time/Events & Occasions/holi.png
+  prebuilt_events_occasions.json: mother's day -> assets/symbols/1. Main Boards/Time/Events & Occasions/mother's day.png
+  prebuilt_events_occasions.json: easter -> assets/symbols/1. Main Boards/Time/Events & Occasions/easter.png
+  prebuilt_events_occasions.json: earth day -> assets/symbols/1. Main Boards/Time/Events & Occasions/earth day.png
+  prebuilt_events_occasions.json: pride -> assets/symbols/1. Main Boards/Time/Events & Occasions/pride.png
+  prebuilt_events_occasions.json: solstice -> assets/symbols/1. Main Boards/Time/Events & Occasions/solstice.png
+  prebuilt_events_occasions.json: father's day -> assets/symbols/1. Main Boards/Time/Events & Occasions/father's day.png
+  prebuilt_events_occasions.json: independence day -> assets/symbols/1. Main Boards/Time/Events & Occasions/independence day.png
+  prebuilt_events_occasions.json: diwali -> assets/symbols/1. Main Boards/Time/Events & Occasions/diwali.png
+  prebuilt_events_occasions.json: halloween -> assets/symbols/1. Main Boards/Time/Events & Occasions/halloween.png
+  prebuilt_events_occasions.json: day of the dead -> assets/symbols/1. Main Boards/Time/Events & Occasions/day of the dead.png
+  prebuilt_events_occasions.json: bonfire night -> assets/symbols/1. Main Boards/Time/Events & Occasions/bonfire night.png
+  prebuilt_events_occasions.json: thanksgiving -> assets/symbols/1. Main Boards/Time/Events & Occasions/thanksgiving.png
+  prebuilt_events_occasions.json: hanukkah -> assets/symbols/1. Main Boards/Time/Events & Occasions/hanukkah.png
+  prebuilt_events_occasions.json: christmas -> assets/symbols/1. Main Boards/Time/Events & Occasions/christmas.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_events_occasions.json
+  prebuilt_fish.json: fish -> assets/symbols/1. Main Boards/Animals & Habitats/fish.png
+  prebuilt_fish.json: angelfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/angelfish.png
+  prebuilt_fish.json: anglerfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/anglerfish.png
+  prebuilt_fish.json: archerfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/archerfish.png
+  prebuilt_fish.json: barracuda -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/barracuda.png
+  prebuilt_fish.json: betta -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/betta.png
+  prebuilt_fish.json: blobfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/blobfish.png
+  prebuilt_fish.json: blue tang -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/blue tang.png
+  prebuilt_fish.json: catfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/catfish.png
+  prebuilt_fish.json: clownfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/clownfish.png
+  prebuilt_fish.json: cod -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/cod.png
+  prebuilt_fish.json: flying fish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/flying fish.png
+  prebuilt_fish.json: goby -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/goby.png
+  prebuilt_fish.json: goldfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/goldfish.png
+  prebuilt_fish.json: guppy -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/guppy.png
+  prebuilt_fish.json: herring -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/herring.png
+  prebuilt_fish.json: loach -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/loach.png
+  prebuilt_fish.json: mackerel -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/mackerel.png
+  prebuilt_fish.json: marlin -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/marlin.png
+  prebuilt_fish.json: mudskipper -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/mudskipper.png
+  prebuilt_fish.json: pufferfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/pufferfish.png
+  prebuilt_fish.json: sardine -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/sardine.png
+  prebuilt_fish.json: salmon -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/salmon.png
+  prebuilt_fish.json: sturgeon -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/sturgeon.png
+  prebuilt_fish.json: swordfish -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/swordfish.png
+  prebuilt_fish.json: tetra -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/tetra.png
+  prebuilt_fish.json: tuna -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/tuna.png
+  prebuilt_fish.json: trout -> assets/symbols/1. Main Boards/Animals & Habitats/Fish/trout.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_fish.json
+  prebuilt_furniture.json: Buildings -> assets/symbols/BOARDS/Buildings.png
+  prebuilt_furniture.json: Furniture -> assets/symbols/BOARDS/Furniture.png
+  prebuilt_furniture.json: Habitats -> assets/symbols/BOARDS/Animals/Habitats.png
+  prebuilt_furniture.json: Local Places -> assets/symbols/BOARDS/PEEP & Sustainability/Local Places.png
+  prebuilt_furniture.json: armchair -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/armchair.png
+  prebuilt_furniture.json: barbeque -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/barbeque.png
+  prebuilt_furniture.json: bath -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bath.png
+  prebuilt_furniture.json: bean bag -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bean bag.png
+  prebuilt_furniture.json: bed -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bed.png
+  prebuilt_furniture.json: bedside table -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bedside table.png
+  prebuilt_furniture.json: book -> assets/symbols/1. Main Boards/Adjectives/book.png
+  prebuilt_furniture.json: bookshelf -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bookshelf.png
+  prebuilt_furniture.json: bunk bed -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/bunk bed.png
+  prebuilt_furniture.json: chair -> assets/symbols/1. Main Boards/Classroom Equipment/chair.png
+  prebuilt_furniture.json: chest of drawers -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/chest of drawers.png
+  prebuilt_furniture.json: coat rack -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/coat rack.png
+  prebuilt_furniture.json: coffee table -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/coffee table.png
+  prebuilt_furniture.json: cot -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/cot.png
+  prebuilt_furniture.json: cupboard -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/cupboard.png
+  prebuilt_furniture.json: dining table -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/dining table.png
+  prebuilt_furniture.json: dishwasher -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/dishwasher.png
+  prebuilt_furniture.json: dryer -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/dryer.png
+  prebuilt_furniture.json: fire pit -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/fire pit.png
+  prebuilt_furniture.json: floor -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/floor.png
+  prebuilt_furniture.json: freezer -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/freezer.png
+  prebuilt_furniture.json: fridge -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/fridge.png
+  prebuilt_furniture.json: gazebo -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/gazebo.png
+  prebuilt_furniture.json: hammock -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/hammock.png
+  prebuilt_furniture.json: high chair -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/high chair.png
+  prebuilt_furniture.json: lamp -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/lamp.png
+  prebuilt_furniture.json: lights -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/lights.png
+  prebuilt_furniture.json: oven -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/oven.png
+  prebuilt_furniture.json: patio -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/patio.png
+  prebuilt_furniture.json: picnic table -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/picnic table.png
+  prebuilt_furniture.json: picture -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/picture.png
+  prebuilt_furniture.json: plant -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/plant.png
+  prebuilt_furniture.json: recliner -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/recliner.png
+  prebuilt_furniture.json: shelf -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/shelf.png
+  prebuilt_furniture.json: shoe rack -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/shoe rack.png
+  prebuilt_furniture.json: shower -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/shower.png
+  prebuilt_furniture.json: sink -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/sink.png
+  prebuilt_furniture.json: sofa -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/sofa.png
+  prebuilt_furniture.json: storage cube -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/storage cube.png
+  prebuilt_furniture.json: swing -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/swing.png
+  prebuilt_furniture.json: table -> assets/symbols/1. Main Boards/Classroom Equipment/table.png
+  prebuilt_furniture.json: tv -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/tv.png
+  prebuilt_furniture.json: wardrobe -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/wardrobe.png
+  prebuilt_furniture.json: washing machine -> assets/symbols/1. Main Boards/Places/Rooms & Home/Furniture/washing machine.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_furniture.json
+  prebuilt_groups_of_animals.json: cast of crabs or falcons -> assets/symbols/1. Main Boards/Animals & Habitats/Groups of Animals/cast of crabs or falcons.png
+  prebuilt_groups_of_animals.json: parliament of flamingos or owls -> assets/symbols/1. Main Boards/Animals & Habitats/Groups of Animals/parliament of flamingos or owls.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_groups_of_animals.json
+  prebuilt_habitats.json: habitat -> assets/symbols/1. Main Boards/Animals & Habitats/habitat.png
+  prebuilt_habitats.json: alpine -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/alpine.png
+  prebuilt_habitats.json: antarctic -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/antarctic.png
+  prebuilt_habitats.json: aquatic -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/aquatic.png
+  prebuilt_habitats.json: arctic -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/arctic.png
+  prebuilt_habitats.json: burrows -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/burrows.png
+  prebuilt_habitats.json: cave -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/cave.png
+  prebuilt_habitats.json: coastal -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/coastal.png
+  prebuilt_habitats.json: coral reef -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/coral reef.png
+  prebuilt_habitats.json: desert -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/desert.png
+  prebuilt_habitats.json: estuary -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/estuary.png
+  prebuilt_habitats.json: farm -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/farm.png
+  prebuilt_habitats.json: farmland -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/farmland.png
+  prebuilt_habitats.json: forest -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/forest.png
+  prebuilt_habitats.json: freshwater -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/freshwater.png
+  prebuilt_habitats.json: glacier -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/glacier.png
+  prebuilt_habitats.json: grassland -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/grassland.png
+  prebuilt_habitats.json: ice caps -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/ice caps.png
+  prebuilt_habitats.json: jungle -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/jungle.png
+  prebuilt_habitats.json: lake -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/lake.png
+  prebuilt_habitats.json: mangrove -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/mangrove.png
+  prebuilt_habitats.json: marsh -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/marsh.png
+  prebuilt_habitats.json: mountain -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/mountain.png
+  prebuilt_habitats.json: ocean -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/ocean.png
+  prebuilt_habitats.json: polar -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/polar.png
+  prebuilt_habitats.json: pond -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/pond.png
+  prebuilt_habitats.json: rainforest -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/rainforest.png
+  prebuilt_habitats.json: river -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/river.png
+  prebuilt_habitats.json: savannah -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/savannah.png
+  prebuilt_habitats.json: sea -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/sea.png
+  prebuilt_habitats.json: soil -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/soil.png
+  prebuilt_habitats.json: steppe -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/steppe.png
+  prebuilt_habitats.json: stream -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/stream.png
+  prebuilt_habitats.json: swamp -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/swamp.png
+  prebuilt_habitats.json: tide pool -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/tide pool.png
+  prebuilt_habitats.json: tundra -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/tundra.png
+  prebuilt_habitats.json: underground -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/underground.png
+  prebuilt_habitats.json: urban -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/urban.png
+  prebuilt_habitats.json: wetland -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/wetland.png
+  prebuilt_habitats.json: island -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/island.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_habitats.json
+  prebuilt_halloween_keywords.json: clown -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/clown.png
+  prebuilt_halloween_keywords.json: doll -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/doll.png
+  prebuilt_halloween_keywords.json: ghost -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/ghost.png
+  prebuilt_halloween_keywords.json: invisible man -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/invisible man.png
+  prebuilt_halloween_keywords.json: monster -> assets/symbols/3. Lesson Vocab/English/Characters & Fantasy/Creatures & Races/monster.png
+  prebuilt_halloween_keywords.json: mummy -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/mummy.png
+  prebuilt_halloween_keywords.json: skeleton -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/skeleton.png
+  prebuilt_halloween_keywords.json: vampire -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/vampire.png
+  prebuilt_halloween_keywords.json: werewolf -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/werewolf.png
+  prebuilt_halloween_keywords.json: witch -> assets/symbols/3. Lesson Vocab/English/Characters & Fantasy/Creatures & Races/witch.png
+  prebuilt_halloween_keywords.json: zombie -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/zombie.png
+  prebuilt_halloween_keywords.json: pumpkin -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/pumpkin.png
+  prebuilt_halloween_keywords.json: cauldron -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/cauldron.png
+  prebuilt_halloween_keywords.json: jack in the box -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/jack in the box.png
+  prebuilt_halloween_keywords.json: trick or treat -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/trick or treat.png
+  prebuilt_halloween_keywords.json: bat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/bat.png
+  prebuilt_halloween_keywords.json: cat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/cat.png
+  prebuilt_halloween_keywords.json: spider -> assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/spider.png
+  prebuilt_halloween_keywords.json: rat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rat.png
+  prebuilt_halloween_keywords.json: beetle -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/beetle.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_halloween_keywords.json
+  prebuilt_insects.json: egg - insect -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/egg - insect.png
+  prebuilt_insects.json: larva -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/larva.png
+  prebuilt_insects.json: pupa -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/pupa.png
+  prebuilt_insects.json: ant -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/ant.png
+  prebuilt_insects.json: aphid -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/aphid.png
+  prebuilt_insects.json: bee -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/bee.png
+  prebuilt_insects.json: beetle -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/beetle.png
+  prebuilt_insects.json: beetle - ground -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/beetle - ground.png
+  prebuilt_insects.json: caterpillar -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/caterpillar.png
+  prebuilt_insects.json: centipede -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/centipede.png
+  prebuilt_insects.json: cockroach -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/cockroach.png
+  prebuilt_insects.json: cricket -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/cricket.png
+  prebuilt_insects.json: dragonfly -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/dragonfly.png
+  prebuilt_insects.json: earthworm -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/earthworm.png
+  prebuilt_insects.json: earwig -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/earwig.png
+  prebuilt_insects.json: flea -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/flea.png
+  prebuilt_insects.json: fly -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/fly.png
+  prebuilt_insects.json: gnat -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/gnat.png
+  prebuilt_insects.json: grasshopper -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/grasshopper.png
+  prebuilt_insects.json: ladybird -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/ladybird.png
+  prebuilt_insects.json: locust -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/locust.png
+  prebuilt_insects.json: millipede -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/millipede.png
+  prebuilt_insects.json: mosquito -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/mosquito.png
+  prebuilt_insects.json: moth -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/moth.png
+  prebuilt_insects.json: praying mantis -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/praying mantis.png
+  prebuilt_insects.json: silverfish -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/silverfish.png
+  prebuilt_insects.json: slug -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/slug.png
+  prebuilt_insects.json: snail -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/snail.png
+  prebuilt_insects.json: stick insect -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/stick insect.png
+  prebuilt_insects.json: termite -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/termite.png
+  prebuilt_insects.json: wasp -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/wasp.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_insects.json
+  prebuilt_internal_organs.json: organs -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/organs.png
+  prebuilt_internal_organs.json: muscle -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Muscles/muscle.png
+  prebuilt_internal_organs.json: nerves -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Cells & Organelles/nerves.png
+  prebuilt_internal_organs.json: skeleton -> assets/symbols/1. Main Boards/Time/Events & Occasions/Halloween/skeleton.png
+  prebuilt_internal_organs.json: bone -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/The Skeleton/bone.png
+  prebuilt_internal_organs.json: brain -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/brain.png
+  prebuilt_internal_organs.json: esophagus -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Digestive System/esophagus.png
+  prebuilt_internal_organs.json: ribs -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/The Skeleton/ribs.png
+  prebuilt_internal_organs.json: heart -> assets/symbols/3. Lesson Vocab/Maths/Shapes & Angles/heart.png
+  prebuilt_internal_organs.json: lungs -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Breathing Vs Respiration/lungs.png
+  prebuilt_internal_organs.json: diaphragm -> assets/symbols/3. Lesson Vocab/Music/diaphragm.png
+  prebuilt_internal_organs.json: liver -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Digestive System/liver.png
+  prebuilt_internal_organs.json: stomach -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Digestive System/stomach.png
+  prebuilt_internal_organs.json: intestines -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Digestive System/intestines.png
+  prebuilt_internal_organs.json: kidneys -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Digestive System/kidneys.png
+  prebuilt_internal_organs.json: radius -> assets/symbols/3. Lesson Vocab/Maths/Shapes & Angles/radius.png
+  prebuilt_internal_organs.json: oxygen -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Breathing Vs Respiration/oxygen.png
+  prebuilt_internal_organs.json: carbon dioxide -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Circulatory System/carbon dioxide.png
+  prebuilt_internal_organs.json: tissue -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Cells & Organelles/tissue.png
+  prebuilt_internal_organs.json: veins -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Circulatory System/veins.png
+  prebuilt_internal_organs.json: blood vessels -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Circulatory System/blood vessels.png
+  prebuilt_internal_organs.json: blood -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Circulatory System/blood.png
+  prebuilt_internal_organs.json: cells -> assets/symbols/3. Lesson Vocab/Science/Entry Level/Body Wars/cells.png
+  prebuilt_internal_organs.json: arteries -> assets/symbols/3. Lesson Vocab/Science/Year 9/Organs/Circulatory System/arteries.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_internal_organs.json
+  prebuilt_invertebrates.json: myriapods -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/myriapods.png
+  prebuilt_invertebrates.json: centipede -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/centipede.png
+  prebuilt_invertebrates.json: millipede -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/millipede.png
+  prebuilt_invertebrates.json: crustaceans -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/crustaceans.png
+  prebuilt_invertebrates.json: barnacle -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/barnacle.png
+  prebuilt_invertebrates.json: crab -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/crab.png
+  prebuilt_invertebrates.json: crayfish -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/crayfish.png
+  prebuilt_invertebrates.json: lobster -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/lobster.png
+  prebuilt_invertebrates.json: prawn -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/prawn.png
+  prebuilt_invertebrates.json: shrimp -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/shrimp.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_invertebrates.json: coral -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/coral.png
+  prebuilt_invertebrates.json: hydra -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/hydra.png
+  prebuilt_invertebrates.json: jellyfish -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/jellyfish.png
+  prebuilt_invertebrates.json: sea anemone -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea anemone.png
+  prebuilt_invertebrates.json: [Blank] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+  prebuilt_invertebrates.json: slug -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/slug.png
+  prebuilt_invertebrates.json: snail -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/snail.png
+  prebuilt_invertebrates.json: earthworm -> assets/symbols/1. Main Boards/Animals & Habitats/Insects/earthworm.png
+  prebuilt_invertebrates.json: leech -> assets/symbols/1. Main Boards/Animals & Habitats/Invertebrates/leech.png
+  prebuilt_invertebrates.json: brittle star -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/brittle star.png
+  prebuilt_invertebrates.json: sand dollar -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sand dollar.png
+  prebuilt_invertebrates.json: sea cucumber -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea cucumber.png
+  prebuilt_invertebrates.json: sea urchin -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea urchin.png
+  prebuilt_invertebrates.json: starfish -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/starfish.png
+  prebuilt_invertebrates.json: sea sponge -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea sponge.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_invertebrates.json
+  prebuilt_jobs_careers.json: accountant -> assets/symbols/1. Main Boards/Careers/accountant.png
+  prebuilt_jobs_careers.json: actor -> assets/symbols/1. Main Boards/Careers/actor.png
+  prebuilt_jobs_careers.json: animator -> assets/symbols/1. Main Boards/Careers/animator.png
+  prebuilt_jobs_careers.json: architect -> assets/symbols/3. Lesson Vocab/Art/9/architect.png
+  prebuilt_jobs_careers.json: artist -> assets/symbols/1. Main Boards/Careers/artist.png
+  prebuilt_jobs_careers.json: astronaut -> assets/symbols/1. Main Boards/Careers/astronaut.png
+  prebuilt_jobs_careers.json: author -> assets/symbols/1. Main Boards/Careers/author.png
+  prebuilt_jobs_careers.json: baker -> assets/symbols/1. Main Boards/Careers/baker.png
+  prebuilt_jobs_careers.json: barber -> assets/symbols/1. Main Boards/Careers/barber.png
+  prebuilt_jobs_careers.json: bartender -> assets/symbols/1. Main Boards/Careers/bartender.png
+  prebuilt_jobs_careers.json: blacksmith -> assets/symbols/1. Main Boards/Careers/blacksmith.png
+  prebuilt_jobs_careers.json: builder -> assets/symbols/1. Main Boards/Careers/builder.png
+  prebuilt_jobs_careers.json: bus driver -> assets/symbols/1. Main Boards/Careers/bus driver.png
+  prebuilt_jobs_careers.json: butcher -> assets/symbols/1. Main Boards/Careers/butcher.png
+  prebuilt_jobs_careers.json: captain -> assets/symbols/1. Main Boards/Careers/captain.png
+  prebuilt_jobs_careers.json: carpenter -> assets/symbols/1. Main Boards/Careers/carpenter.png
+  prebuilt_jobs_careers.json: chef -> assets/symbols/1. Main Boards/Careers/chef.png
+  prebuilt_jobs_careers.json: comedian -> assets/symbols/1. Main Boards/Careers/comedian.png
+  prebuilt_jobs_careers.json: construction worker -> assets/symbols/1. Main Boards/Careers/construction worker.png
+  prebuilt_jobs_careers.json: cook -> assets/symbols/1. Main Boards/Actions/cook.png
+  prebuilt_jobs_careers.json: dancer -> assets/symbols/1. Main Boards/Careers/dancer.png
+  prebuilt_jobs_careers.json: dentist -> assets/symbols/1. Main Boards/Careers/dentist.png
+  prebuilt_jobs_careers.json: doctor -> assets/symbols/1. Main Boards/Careers/doctor.png
+  prebuilt_jobs_careers.json: electrician -> assets/symbols/1. Main Boards/Careers/electrician.png
+  prebuilt_jobs_careers.json: engineer -> assets/symbols/1. Main Boards/Careers/engineer.png
+  prebuilt_jobs_careers.json: farmer -> assets/symbols/1. Main Boards/Careers/farmer.png
+  prebuilt_jobs_careers.json: firefighter -> assets/symbols/3. Lesson Vocab/PEEP/Emergencies/firefighter.png
+  prebuilt_jobs_careers.json: fisherperson -> assets/symbols/1. Main Boards/Careers/fisherperson.png
+  prebuilt_jobs_careers.json: fitness instructor -> assets/symbols/1. Main Boards/Careers/fitness instructor.png
+  prebuilt_jobs_careers.json: gardener -> assets/symbols/1. Main Boards/Careers/gardener.png
+  prebuilt_jobs_careers.json: hairdresser -> assets/symbols/1. Main Boards/Careers/hairdresser.png
+  prebuilt_jobs_careers.json: hotel worker -> assets/symbols/1. Main Boards/Careers/hotel worker.png
+  prebuilt_jobs_careers.json: inspector -> assets/symbols/1. Main Boards/Careers/inspector.png
+  prebuilt_jobs_careers.json: it technician -> assets/symbols/1. Main Boards/Careers/IT technician.png
+  prebuilt_jobs_careers.json: journalist -> assets/symbols/1. Main Boards/Careers/journalist.png
+  prebuilt_jobs_careers.json: judge -> assets/symbols/1. Main Boards/Careers/judge.png
+  prebuilt_jobs_careers.json: kitchen porter -> assets/symbols/1. Main Boards/Careers/kitchen porter.png
+  prebuilt_jobs_careers.json: lawyer -> assets/symbols/1. Main Boards/Careers/lawyer.png
+  prebuilt_jobs_careers.json: librarian -> assets/symbols/1. Main Boards/Careers/librarian.png
+  prebuilt_jobs_careers.json: lifeguard -> assets/symbols/1. Main Boards/Careers/lifeguard.png
+  prebuilt_jobs_careers.json: lollipop person -> assets/symbols/1. Main Boards/Careers/lollipop person.png
+  prebuilt_jobs_careers.json: marine biologist -> assets/symbols/1. Main Boards/Careers/marine biologist.png
+  prebuilt_jobs_careers.json: mechanic -> assets/symbols/1. Main Boards/Careers/mechanic.png
+  prebuilt_jobs_careers.json: milkperson -> assets/symbols/1. Main Boards/Careers/milkperson.png
+  prebuilt_jobs_careers.json: musician -> assets/symbols/1. Main Boards/Careers/musician.png
+  prebuilt_jobs_careers.json: nanny -> assets/symbols/1. Main Boards/Careers/nanny.png
+  prebuilt_jobs_careers.json: newscaster -> assets/symbols/1. Main Boards/Careers/newscaster.png
+  prebuilt_jobs_careers.json: nurse -> assets/symbols/1. Main Boards/Careers/nurse.png
+  prebuilt_jobs_careers.json: optician -> assets/symbols/1. Main Boards/Careers/optician.png
+  prebuilt_jobs_careers.json: painter -> assets/symbols/1. Main Boards/Careers/painter.png
+  prebuilt_jobs_careers.json: pharmacist -> assets/symbols/1. Main Boards/Careers/pharmacist.png
+  prebuilt_jobs_careers.json: photographer -> assets/symbols/1. Main Boards/Careers/photographer.png
+  prebuilt_jobs_careers.json: pilot -> assets/symbols/1. Main Boards/Careers/pilot.png
+  prebuilt_jobs_careers.json: plumber -> assets/symbols/1. Main Boards/Careers/plumber.png
+  prebuilt_jobs_careers.json: police officer -> assets/symbols/1. Main Boards/Careers/police officer.png
+  prebuilt_jobs_careers.json: quality controller -> assets/symbols/1. Main Boards/Careers/quality controller.png
+  prebuilt_jobs_careers.json: ringmaster -> assets/symbols/1. Main Boards/Careers/ringmaster.png
+  prebuilt_jobs_careers.json: runner -> assets/symbols/1. Main Boards/Careers/runner.png
+  prebuilt_jobs_careers.json: sailor -> assets/symbols/1. Main Boards/Careers/sailor.png
+  prebuilt_jobs_careers.json: scientist -> assets/symbols/1. Main Boards/Careers/scientist.png
+  prebuilt_jobs_careers.json: secretary -> assets/symbols/1. Main Boards/Careers/secretary.png
+  prebuilt_jobs_careers.json: security guard -> assets/symbols/1. Main Boards/Careers/security guard.png
+  prebuilt_jobs_careers.json: singer -> assets/symbols/1. Main Boards/Careers/singer.png
+  prebuilt_jobs_careers.json: software developer -> assets/symbols/1. Main Boards/Careers/software developer.png
+  prebuilt_jobs_careers.json: soldier -> assets/symbols/1. Main Boards/Careers/soldier.png
+  prebuilt_jobs_careers.json: tailor -> assets/symbols/1. Main Boards/Careers/tailor.png
+  prebuilt_jobs_careers.json: teacher -> assets/symbols/1. Main Boards/Careers/teacher.png
+  prebuilt_jobs_careers.json: tour guide -> assets/symbols/1. Main Boards/Careers/tour guide.png
+  prebuilt_jobs_careers.json: train guard -> assets/symbols/1. Main Boards/Careers/train guard.png
+  prebuilt_jobs_careers.json: travel agent -> assets/symbols/1. Main Boards/Careers/travel agent.png
+  prebuilt_jobs_careers.json: tv presenter -> assets/symbols/1. Main Boards/Careers/tv presenter.png
+  prebuilt_jobs_careers.json: urban planner -> assets/symbols/1. Main Boards/Careers/urban planner.png
+  prebuilt_jobs_careers.json: waiter -> assets/symbols/1. Main Boards/Careers/waiter.png
+  prebuilt_jobs_careers.json: web designer -> assets/symbols/1. Main Boards/Careers/web designer.png
+  prebuilt_jobs_careers.json: welder -> assets/symbols/1. Main Boards/Careers/welder.png
+  prebuilt_jobs_careers.json: x-ray technician -> assets/symbols/1. Main Boards/Careers/x-ray technician.png
+  prebuilt_jobs_careers.json: yoga instructor -> assets/symbols/1. Main Boards/Careers/yoga instructor.png
+  prebuilt_jobs_careers.json: zookeeper -> assets/symbols/1. Main Boards/Careers/zookeeper.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_jobs_careers.json
+  prebuilt_joyful.json: excited -> assets/symbols/1. Main Boards/Feelings & Emotions/excited.png
+  prebuilt_joyful.json: optimistic -> assets/symbols/1. Main Boards/Feelings & Emotions/optimistic.png
+  prebuilt_joyful.json: happy -> assets/symbols/1. Main Boards/Feelings & Emotions/happy.png
+  prebuilt_joyful.json: creative -> assets/symbols/1. Main Boards/Feelings & Emotions/creative.png
+  prebuilt_joyful.json: energetic -> assets/symbols/1. Main Boards/Feelings & Emotions/energetic.png
+  prebuilt_joyful.json: daring -> assets/symbols/1. Main Boards/Feelings & Emotions/daring.png
+  prebuilt_joyful.json: hopeful -> assets/symbols/1. Main Boards/Feelings & Emotions/hopeful.png
+  prebuilt_joyful.json: delighted -> assets/symbols/1. Main Boards/Feelings & Emotions/delighted.png
+  prebuilt_joyful.json: amused -> assets/symbols/1. Main Boards/Feelings & Emotions/amused.png
+  prebuilt_joyful.json: passionate -> assets/symbols/1. Main Boards/Feelings & Emotions/passionate.png
+  prebuilt_joyful.json: enthusiastic -> assets/symbols/1. Main Boards/Feelings & Emotions/enthusiastic.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_joyful.json
+  prebuilt_mad.json: hurt -> assets/symbols/1. Main Boards/Feelings & Emotions/hurt.png
+  prebuilt_mad.json: hostile -> assets/symbols/1. Main Boards/Feelings & Emotions/hostile.png
+  prebuilt_mad.json: angry -> assets/symbols/1. Main Boards/Feelings & Emotions/angry.png
+  prebuilt_mad.json: selfish -> assets/symbols/1. Main Boards/Feelings & Emotions/selfish.png
+  prebuilt_mad.json: hateful -> assets/symbols/1. Main Boards/Feelings & Emotions/hateful.png
+  prebuilt_mad.json: critical -> assets/symbols/1. Main Boards/Feelings & Emotions/critical.png
+  prebuilt_mad.json: defensive -> assets/symbols/1. Main Boards/Feelings & Emotions/defensive.png
+  prebuilt_mad.json: sarcastic -> assets/symbols/1. Main Boards/Feelings & Emotions/sarcastic.png
+  prebuilt_mad.json: frustrated -> assets/symbols/1. Main Boards/Feelings & Emotions/frustrated.png
+  prebuilt_mad.json: jealous -> assets/symbols/1. Main Boards/Feelings & Emotions/jealous.png
+  prebuilt_mad.json: annoyed -> assets/symbols/1. Main Boards/Feelings & Emotions/annoyed.png
+  prebuilt_mad.json: doubtful -> assets/symbols/1. Main Boards/Feelings & Emotions/doubtful.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_mad.json
+  prebuilt_mammals.json: anteater -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/anteater.png
+  prebuilt_mammals.json: antelope -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/antelope.png
+  prebuilt_mammals.json: armadillo -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/armadillo.png
+  prebuilt_mammals.json: bandicoot -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/bandicoot.png
+  prebuilt_mammals.json: bat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/bat.png
+  prebuilt_mammals.json: bear -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/bear.png
+  prebuilt_mammals.json: beaver -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/beaver.png
+  prebuilt_mammals.json: camel -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/camel.png
+  prebuilt_mammals.json: cat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/cat.png
+  prebuilt_mammals.json: chimpanzee -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/chimpanzee.png
+  prebuilt_mammals.json: chipmunk -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/chipmunk.png
+  prebuilt_mammals.json: cow -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/cow.png
+  prebuilt_mammals.json: deer -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/deer.png
+  prebuilt_mammals.json: dog -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/dog.png
+  prebuilt_mammals.json: donkey -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/donkey.png
+  prebuilt_mammals.json: echidna -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/echidna.png
+  prebuilt_mammals.json: elephant -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/elephant.png
+  prebuilt_mammals.json: fox -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/fox.png
+  prebuilt_mammals.json: giraffe -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/giraffe.png
+  prebuilt_mammals.json: goat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/goat.png
+  prebuilt_mammals.json: gorilla -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/gorilla.png
+  prebuilt_mammals.json: guinea pig -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/guinea pig.png
+  prebuilt_mammals.json: hamster -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/hamster.png
+  prebuilt_mammals.json: hedgehog -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/hedgehog.png
+  prebuilt_mammals.json: hippopotamus -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/hippopotamus.png
+  prebuilt_mammals.json: horse -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/horse.png
+  prebuilt_mammals.json: human -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/human.png
+  prebuilt_mammals.json: kangaroo -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/kangaroo.png
+  prebuilt_mammals.json: koala -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/koala.png
+  prebuilt_mammals.json: leopard -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/leopard.png
+  prebuilt_mammals.json: lion -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/lion.png
+  prebuilt_mammals.json: llama -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/llama.png
+  prebuilt_mammals.json: meerkat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/meerkat.png
+  prebuilt_mammals.json: mole -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/mole.png
+  prebuilt_mammals.json: monkey -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/monkey.png
+  prebuilt_mammals.json: moose -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/moose.png
+  prebuilt_mammals.json: mouse -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/mouse.png
+  prebuilt_mammals.json: panda -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/panda.png
+  prebuilt_mammals.json: pig -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/pig.png
+  prebuilt_mammals.json: platypus -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/platypus.png
+  prebuilt_mammals.json: porcupine -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/porcupine.png
+  prebuilt_mammals.json: possum -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/possum.png
+  prebuilt_mammals.json: rabbit -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rabbit.png
+  prebuilt_mammals.json: rat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rat.png
+  prebuilt_mammals.json: red panda -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/red panda.png
+  prebuilt_mammals.json: reindeer -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/reindeer.png
+  prebuilt_mammals.json: rhinoceros -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rhinoceros.png
+  prebuilt_mammals.json: sheep -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/sheep.png
+  prebuilt_mammals.json: skunk -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/skunk.png
+  prebuilt_mammals.json: sloth -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/sloth.png
+  prebuilt_mammals.json: squirrel -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/squirrel.png
+  prebuilt_mammals.json: tasmanian devil -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/tasmanian devil.png
+  prebuilt_mammals.json: tiger -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/tiger.png
+  prebuilt_mammals.json: wallaby -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/wallaby.png
+  prebuilt_mammals.json: wolf -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/wolf.png
+  prebuilt_mammals.json: wombat -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/wombat.png
+  prebuilt_mammals.json: zebra -> assets/symbols/1. Main Boards/Animals & Habitats/Mammals/zebra.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_mammals.json
+  prebuilt_medical.json: GP surgery -> assets/symbols/1. Main Boards/Places/Buildings/gp surgery.png
+  prebuilt_medical.json: hospital -> assets/symbols/1. Main Boards/Places/Buildings/hospital.png
+  prebuilt_medical.json: dentist -> assets/symbols/1. Main Boards/Careers/dentist.png
+  prebuilt_medical.json: optician -> assets/symbols/1. Main Boards/Careers/optician.png
+  prebuilt_medical.json: doctor -> assets/symbols/1. Main Boards/Careers/doctor.png
+  prebuilt_medical.json: nurse -> assets/symbols/1. Main Boards/Careers/nurse.png
+  prebuilt_medical.json: dentist -> assets/symbols/1. Main Boards/Places/Buildings/dentist.png
+  prebuilt_medical.json: optician -> assets/symbols/1. Main Boards/Places/Buildings/optician.png
+  prebuilt_medical.json: eye test -> assets/symbols/1. Main Boards/Body Parts/Medical Vocab/eye test.png
+  prebuilt_medical.json: reflex test -> assets/symbols/1. Main Boards/Body Parts/Medical Vocab/reflex test.png
+  prebuilt_medical.json: surgery -> assets/symbols/1. Main Boards/Body Parts/Medical Vocab/surgery.png
+  prebuilt_medical.json: hearing test -> assets/symbols/1. Main Boards/Body Parts/Medical Vocab/hearing test.png
+  prebuilt_medical.json: eye test -> assets/symbols/1. Main Boards/Body Parts/Medical Vocab/eye test.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_medical.json
+  prebuilt_money.json: money -> assets/symbols/3. Lesson Vocab/Maths/Money/money.png
+  prebuilt_money.json: coin -> assets/symbols/3. Lesson Vocab/Maths/Money/Coin.png
+  prebuilt_money.json: note -> assets/symbols/3. Lesson Vocab/Maths/Money/note.png
+  prebuilt_money.json: card -> assets/symbols/1. Main Boards/Time/Events & Occasions/Special Days/2 February/card.png
+  prebuilt_money.json: value or worth -> assets/symbols/3. Lesson Vocab/Maths/Money/value or worth.png
+  prebuilt_money.json: change -> assets/symbols/3. Lesson Vocab/Maths/Money/change.png
+  prebuilt_money.json: bill -> assets/symbols/3. Lesson Vocab/Maths/Money/bill.png
+  prebuilt_money.json: decimal -> assets/symbols/3. Lesson Vocab/Maths/Fractions & Percentages/decimal.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_money.json
+  prebuilt_months.json: december -> assets/symbols/1. Main Boards/Time/Months/december.png
+  prebuilt_months.json: january -> assets/symbols/1. Main Boards/Time/Months/january.png
+  prebuilt_months.json: february -> assets/symbols/1. Main Boards/Time/Months/february.png
+  prebuilt_months.json: march -> assets/symbols/1. Main Boards/Time/Months/march.png
+  prebuilt_months.json: april -> assets/symbols/1. Main Boards/Time/Months/april.png
+  prebuilt_months.json: may -> assets/symbols/1. Main Boards/Time/Months/may.png
+  prebuilt_months.json: june -> assets/symbols/1. Main Boards/Time/Months/june.png
+  prebuilt_months.json: july -> assets/symbols/1. Main Boards/Time/Months/july.png
+  prebuilt_months.json: august -> assets/symbols/1. Main Boards/Time/Months/august.png
+  prebuilt_months.json: september -> assets/symbols/1. Main Boards/Time/Months/september.png
+  prebuilt_months.json: october -> assets/symbols/1. Main Boards/Time/Months/october.png
+  prebuilt_months.json: november -> assets/symbols/1. Main Boards/Time/Months/november.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_months.json
+  prebuilt_nature_vocabulary.json: tree -> assets/symbols/3. Lesson Vocab/Sustainability/tree.png
+  prebuilt_nature_vocabulary.json: flower -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/flower.png
+  prebuilt_nature_vocabulary.json: soil -> assets/symbols/1. Main Boards/Animals & Habitats/Habitats/soil.png
+  prebuilt_nature_vocabulary.json: sky -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/sky.png
+  prebuilt_nature_vocabulary.json: [BLANK] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_nature_vocabulary.json: carnivore -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/carnivore.png
+  prebuilt_nature_vocabulary.json: herbivore -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/herbivore.png
+  prebuilt_nature_vocabulary.json: omnivore -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/omnivore.png
+  prebuilt_nature_vocabulary.json: scavenger -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/scavenger.png
+  prebuilt_nature_vocabulary.json: nocturnal -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/nocturnal.png
+  prebuilt_nature_vocabulary.json: hibernate -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/hibernate.png
+  prebuilt_nature_vocabulary.json: migrate -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/migrate.png
+  prebuilt_nature_vocabulary.json: breed -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/breed.png
+  prebuilt_nature_vocabulary.json: food chain -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/food chain.png
+  prebuilt_nature_vocabulary.json: wild -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/wild.png
+  prebuilt_nature_vocabulary.json: tame -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/tame.png
+  prebuilt_nature_vocabulary.json: pet -> assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocab/pet.png
+  prebuilt_nature_vocabulary.json: predator -> assets/symbols/3. Lesson Vocab/Science/Year 8/Ecosystems/predator.png
+  prebuilt_nature_vocabulary.json: prey -> assets/symbols/3. Lesson Vocab/Science/Year 8/Ecosystems/prey.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_nature_vocabulary.json
+  prebuilt_numbers.json: subtract -> assets/symbols/3. Lesson Vocab/Maths/Basic/subtract.png
+  prebuilt_numbers.json: multiply -> assets/symbols/3. Lesson Vocab/Maths/Basic/multiply.png
+  prebuilt_numbers.json: divide -> assets/symbols/3. Lesson Vocab/Maths/Basic/divide.png
+  prebuilt_numbers.json: equals -> assets/symbols/3. Lesson Vocab/Maths/Basic/equals.png
+  prebuilt_numbers.json: one -> assets/symbols/3. Lesson Vocab/Maths/Basic/one.png
+  prebuilt_numbers.json: ten -> assets/symbols/3. Lesson Vocab/Maths/Basic/ten.png
+  prebuilt_numbers.json: hundred -> assets/symbols/3. Lesson Vocab/Maths/Basic/hundred.png
+  prebuilt_numbers.json: thousand -> assets/symbols/3. Lesson Vocab/Maths/Basic/thousand.png
+  prebuilt_numbers.json: million -> assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/million.png
+  prebuilt_numbers.json: billion -> assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/billion.png
+  prebuilt_numbers.json: trillion -> assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/trillion.png
+  prebuilt_numbers.json: 0 -> assets/symbols/3. Lesson Vocab/Maths/Basic/0.png
+  prebuilt_numbers.json: 1 -> assets/symbols/2. Baycroft Specific/People At School/1.png
+  prebuilt_numbers.json: 2 -> assets/symbols/2. Baycroft Specific/People At School/2.png
+  prebuilt_numbers.json: 3 -> assets/symbols/2. Baycroft Specific/People At School/3.png
+  prebuilt_numbers.json: 4 -> assets/symbols/2. Baycroft Specific/People At School/4.png
+  prebuilt_numbers.json: 5 -> assets/symbols/3. Lesson Vocab/Maths/Basic/5.png
+  prebuilt_numbers.json: 6 -> assets/symbols/3. Lesson Vocab/Maths/Basic/6.png
+  prebuilt_numbers.json: 7 -> assets/symbols/2. Baycroft Specific/People At School/7.png
+  prebuilt_numbers.json: 8 -> assets/symbols/2. Baycroft Specific/People At School/8.png
+  prebuilt_numbers.json: 9 -> assets/symbols/2. Baycroft Specific/People At School/9.png
+  prebuilt_numbers.json: 10 -> assets/symbols/2. Baycroft Specific/People At School/10.png
+  prebuilt_numbers.json: ones -> assets/symbols/3. Lesson Vocab/Maths/Basic/ones.png
+  prebuilt_numbers.json: tens -> assets/symbols/3. Lesson Vocab/Maths/Basic/tens.png
+  prebuilt_numbers.json: hundreds -> assets/symbols/3. Lesson Vocab/Maths/Basic/hundreds.png
+  prebuilt_numbers.json: thousands -> assets/symbols/3. Lesson Vocab/Maths/Basic/thousands.png
+  prebuilt_numbers.json: [blank] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_numbers.json: o'clock -> assets/symbols/3. Lesson Vocab/Maths/Time/o'clock.png
+  prebuilt_numbers.json: quarter past -> assets/symbols/3. Lesson Vocab/Maths/Time/quarter past.png
+  prebuilt_numbers.json: half past -> assets/symbols/3. Lesson Vocab/Maths/Time/half past.png
+  prebuilt_numbers.json: quarter to -> assets/symbols/3. Lesson Vocab/Maths/Time/quarter to.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_numbers.json
+  prebuilt_people.json: I -> assets/symbols/1. Main Boards/People/i.png
+  prebuilt_people.json: he -> assets/symbols/1. Main Boards/People/he.png
+  prebuilt_people.json: she -> assets/symbols/1. Main Boards/People/she.png
+  prebuilt_people.json: person -> assets/symbols/1. Main Boards/People/person.png
+  prebuilt_people.json: me -> assets/symbols/1. Main Boards/People/me.png
+  prebuilt_people.json: we -> assets/symbols/1. Main Boards/People/we.png
+  prebuilt_people.json: us -> assets/symbols/1. Main Boards/People/us.png
+  prebuilt_people.json: man -> assets/symbols/1. Main Boards/People/man.png
+  prebuilt_people.json: grandmother -> assets/symbols/1. Main Boards/People/grandmother.png
+  prebuilt_people.json: grandfather -> assets/symbols/1. Main Boards/People/grandfather.png
+  prebuilt_people.json: friend -> assets/symbols/1. Main Boards/People/friend.png
+  prebuilt_people.json: classmate -> assets/symbols/1. Main Boards/People/classmate.png
+  prebuilt_people.json: someone else -> assets/symbols/1. Main Boards/People/someone else.png
+  prebuilt_people.json: woman -> assets/symbols/1. Main Boards/People/woman.png
+  prebuilt_people.json: aunt -> assets/symbols/1. Main Boards/People/aunt.png
+  prebuilt_people.json: uncle -> assets/symbols/1. Main Boards/People/uncle.png
+  prebuilt_people.json: carer -> assets/symbols/1. Main Boards/People/carer.png
+  prebuilt_people.json: boy -> assets/symbols/1. Main Boards/People/boy.png
+  prebuilt_people.json: sister -> assets/symbols/1. Main Boards/People/sister.png
+  prebuilt_people.json: brother -> assets/symbols/1. Main Boards/People/brother.png
+  prebuilt_people.json: cousin -> assets/symbols/1. Main Boards/People/cousin.png
+  prebuilt_people.json: stranger -> assets/symbols/1. Main Boards/People/stranger.png
+  prebuilt_people.json: girl -> assets/symbols/1. Main Boards/People/girl.png
+  prebuilt_people.json: baby -> assets/symbols/1. Main Boards/People/baby.png
+  prebuilt_people.json: toddler -> assets/symbols/1. Main Boards/People/toddler.png
+  prebuilt_people.json: teenager -> assets/symbols/1. Main Boards/People/teenager.png
+  prebuilt_people.json: adult -> assets/symbols/1. Main Boards/People/adult.png
+  prebuilt_people.json: middle aged -> assets/symbols/1. Main Boards/People/middle aged.png
+  prebuilt_people.json: old aged -> assets/symbols/1. Main Boards/People/old aged.png
+  prebuilt_people.json: called -> assets/symbols/1. Main Boards/People/called.png
+  prebuilt_people.json: Characters -> assets/symbols/BOARDS/English/Characters.png
+  prebuilt_people.json: People At School -> assets/symbols/BOARDS/People At School.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_people.json
+  prebuilt_phase_2_phonics.json: I -> assets/symbols/1. Main Boards/Alphabet/i.png
+  prebuilt_phase_2_phonics.json: to -> assets/symbols/3. Lesson Vocab/Maths/Time/to.png
+  prebuilt_phase_2_phonics.json: no -> assets/symbols/1. Main Boards/Common/no.png
+  prebuilt_phase_2_phonics.json: go -> assets/symbols/1. Main Boards/Actions/go.png
+  prebuilt_phase_2_phonics.json: [blank] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_phase_2_phonics.json: into -> assets/symbols/1. Main Boards/Prepositions/into.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_phase_2_phonics.json
+  prebuilt_phase_3_phonics.json: tricky -> assets/symbols/1. Main Boards/Alphabet/Phonics/tricky.png
+  prebuilt_phase_3_phonics.json: words -> assets/symbols/1. Main Boards/Alphabet/Phonics/words.png
+  prebuilt_phase_3_phonics.json: he -> assets/symbols/1. Main Boards/People/he.png
+  prebuilt_phase_3_phonics.json: she -> assets/symbols/1. Main Boards/People/she.png
+  prebuilt_phase_3_phonics.json: we -> assets/symbols/1. Main Boards/People/we.png
+  prebuilt_phase_3_phonics.json: me -> assets/symbols/1. Main Boards/People/me.png
+  prebuilt_phase_3_phonics.json: all -> assets/symbols/1. Main Boards/Adjectives/all.png
+  prebuilt_phase_3_phonics.json: [BLANK] -> assets/symbols/BOARDS/BLANK.png
+  prebuilt_phase_3_phonics.json: [BLANK] -> assets/symbols/BOARDS/Living Life Skills & Prepare For Adulthood & Employment/blank.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_phase_3_phonics.json
+  prebuilt_phase_4_phonics.json: tricky -> assets/symbols/1. Main Boards/Alphabet/Phonics/tricky.png
+  prebuilt_phase_4_phonics.json: words -> assets/symbols/1. Main Boards/Alphabet/Phonics/words.png
+  prebuilt_phase_4_phonics.json: said -> assets/symbols/1. Main Boards/Alphabet/Phonics/Phase 4/said.png
+  prebuilt_phase_4_phonics.json: have -> assets/symbols/4. Other Words (For Thesaurus)/Actions/Have/have.png
+  prebuilt_phase_4_phonics.json: like -> assets/symbols/1. Main Boards/Feelings & Emotions/like.png
+  prebuilt_phase_4_phonics.json: do -> assets/symbols/1. Main Boards/Actions/do.png
+  prebuilt_phase_4_phonics.json: come -> assets/symbols/4. Other Words (For Thesaurus)/Actions/Come/come.png
+  prebuilt_phase_4_phonics.json: little -> assets/symbols/1. Main Boards/Prepositions/little.png
+  prebuilt_phase_4_phonics.json: one -> assets/symbols/3. Lesson Vocab/Maths/Basic/one.png
+  prebuilt_phase_4_phonics.json: there -> assets/symbols/1. Main Boards/Prepositions/there.png
+  prebuilt_phase_4_phonics.json: what -> assets/symbols/3. Lesson Vocab/English/what.png
+  prebuilt_phase_4_phonics.json: out -> assets/symbols/1. Main Boards/Prepositions/out.png
+  prebuilt_phase_4_phonics.json: when -> assets/symbols/3. Lesson Vocab/English/when.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_phase_4_phonics.json
+  prebuilt_phase_5_phonics.json: tricky -> assets/symbols/1. Main Boards/Alphabet/Phonics/tricky.png
+  prebuilt_phase_5_phonics.json: words -> assets/symbols/1. Main Boards/Alphabet/Phonics/words.png
+  prebuilt_phase_5_phonics.json: people -> assets/symbols/3. Lesson Vocab/PEEP/Keywords/people.png
+  prebuilt_phase_5_phonics.json: their -> assets/symbols/1. Main Boards/People/their.png
+  prebuilt_phase_5_phonics.json: called -> assets/symbols/1. Main Boards/People/called.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_phase_5_phonics.json
+  prebuilt_phonics.json: Letters -> assets/symbols/BOARDS/Letters.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_phonics.json
+  prebuilt_places.json: Buildings -> assets/symbols/BOARDS/Buildings.png
+  prebuilt_places.json: Furniture -> assets/symbols/BOARDS/Furniture.png
+  prebuilt_places.json: Habitats -> assets/symbols/BOARDS/Animals/Habitats.png
+  prebuilt_places.json: Local Places -> assets/symbols/BOARDS/PEEP & Sustainability/Local Places.png
+  prebuilt_places.json: beach -> assets/symbols/1. Main Boards/Places/beach.png
+  prebuilt_places.json: building site -> assets/symbols/1. Main Boards/Adjectives/building site.png
+  prebuilt_places.json: bus stop -> assets/symbols/1. Main Boards/Places/bus stop.png
+  prebuilt_places.json: garden centre -> assets/symbols/3. Lesson Vocab/Science/Year 7/Plants/garden centre.png
+  prebuilt_places.json: nature park -> assets/symbols/1. Main Boards/Places/nature park.png
+  prebuilt_places.json: pitch -> assets/symbols/3. Lesson Vocab/EPIC/pitch.png
+  prebuilt_places.json: play park -> assets/symbols/1. Main Boards/Places/play park.png
+  prebuilt_places.json: skate park -> assets/symbols/1. Main Boards/Places/skate park.png
+  prebuilt_places.json: soft play -> assets/symbols/1. Main Boards/Places/soft play.png
+  prebuilt_places.json: swimming pool -> assets/symbols/1. Main Boards/Places/swimming pool.png
+  prebuilt_places.json: tennis court -> assets/symbols/1. Main Boards/Places/tennis court.png
+  prebuilt_places.json: water park -> assets/symbols/1. Main Boards/Places/water park.png
+  prebuilt_places.json: zoo -> assets/symbols/1. Main Boards/Places/zoo.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_places.json
+  prebuilt_prepositions.json: get -> assets/symbols/1. Main Boards/Prepositions/get.png
+  prebuilt_prepositions.json: put -> assets/symbols/1. Main Boards/Prepositions/put.png
+  prebuilt_prepositions.json: at -> assets/symbols/1. Main Boards/Prepositions/at.png
+  prebuilt_prepositions.json: above -> assets/symbols/1. Main Boards/Prepositions/above.png
+  prebuilt_prepositions.json: over -> assets/symbols/1. Main Boards/Prepositions/over.png
+  prebuilt_prepositions.json: into -> assets/symbols/1. Main Boards/Prepositions/into.png
+  prebuilt_prepositions.json: high -> assets/symbols/1. Main Boards/Prepositions/high.png
+  prebuilt_prepositions.json: up -> assets/symbols/3. Lesson Vocab/Maths/Position & Direction/up.png
+  prebuilt_prepositions.json: between -> assets/symbols/1. Main Boards/Prepositions/between.png
+  prebuilt_prepositions.json: on -> assets/symbols/1. Main Boards/Prepositions/on.png
+  prebuilt_prepositions.json: off -> assets/symbols/1. Main Boards/Prepositions/off.png
+  prebuilt_prepositions.json: among -> assets/symbols/1. Main Boards/Prepositions/among.png
+  prebuilt_prepositions.json: around -> assets/symbols/1. Main Boards/Prepositions/around.png
+  prebuilt_prepositions.json: centre -> assets/symbols/1. Main Boards/Prepositions/centre.png
+  prebuilt_prepositions.json: start -> assets/symbols/1. Main Boards/Prepositions/start.png
+  prebuilt_prepositions.json: next to -> assets/symbols/1. Main Boards/Prepositions/next to.png
+  prebuilt_prepositions.json: in -> assets/symbols/1. Main Boards/Prepositions/in.png
+  prebuilt_prepositions.json: beside -> assets/symbols/1. Main Boards/Prepositions/beside.png
+  prebuilt_prepositions.json: near -> assets/symbols/1. Main Boards/Prepositions/near.png
+  prebuilt_prepositions.json: finish -> assets/symbols/1. Main Boards/Prepositions/finish.png
+  prebuilt_prepositions.json: low -> assets/symbols/1. Main Boards/Prepositions/low.png
+  prebuilt_prepositions.json: down -> assets/symbols/3. Lesson Vocab/Maths/Position & Direction/down.png
+  prebuilt_prepositions.json: behind -> assets/symbols/1. Main Boards/Prepositions/behind.png
+  prebuilt_prepositions.json: under -> assets/symbols/1. Main Boards/Prepositions/under.png
+  prebuilt_prepositions.json: in front -> assets/symbols/1. Main Boards/Prepositions/in front.png
+  prebuilt_prepositions.json: before -> assets/symbols/1. Main Boards/Prepositions/before.png
+  prebuilt_prepositions.json: after -> assets/symbols/1. Main Boards/Prepositions/after.png
+  prebuilt_prepositions.json: background -> assets/symbols/1. Main Boards/Prepositions/background.png
+  prebuilt_prepositions.json: middle ground -> assets/symbols/1. Main Boards/Prepositions/middle ground.png
+  prebuilt_prepositions.json: foreground -> assets/symbols/1. Main Boards/Prepositions/foreground.png
+  prebuilt_prepositions.json: below -> assets/symbols/1. Main Boards/Prepositions/below.png
+  prebuilt_prepositions.json: large -> assets/symbols/1. Main Boards/Adjectives/large.png
+  prebuilt_prepositions.json: medium -> assets/symbols/1. Main Boards/Adjectives/medium.png
+  prebuilt_prepositions.json: small -> assets/symbols/1. Main Boards/Adjectives/small.png
+  prebuilt_prepositions.json: this -> assets/symbols/1. Main Boards/Prepositions/this.png
+  prebuilt_prepositions.json: that -> assets/symbols/1. Main Boards/Prepositions/that.png
+  prebuilt_prepositions.json: inside -> assets/symbols/1. Main Boards/Prepositions/inside.png
+  prebuilt_prepositions.json: outside -> assets/symbols/1. Main Boards/Prepositions/outside.png
+  prebuilt_prepositions.json: here -> assets/symbols/1. Main Boards/Prepositions/here.png
+  prebuilt_prepositions.json: there -> assets/symbols/1. Main Boards/Prepositions/there.png
+  prebuilt_prepositions.json: somewhere else -> assets/symbols/1. Main Boards/Prepositions/somewhere else.png
+  prebuilt_prepositions.json: different -> assets/symbols/1. Main Boards/Prepositions/different.png
+  prebuilt_prepositions.json: same -> assets/symbols/1. Main Boards/Prepositions/same.png
+  prebuilt_prepositions.json: along -> assets/symbols/1. Main Boards/Prepositions/along.png
+  prebuilt_prepositions.json: across -> assets/symbols/1. Main Boards/Prepositions/across.png
+  prebuilt_prepositions.json: toward -> assets/symbols/1. Main Boards/Prepositions/toward.png
+  prebuilt_prepositions.json: away -> assets/symbols/1. Main Boards/Prepositions/away.png
+  prebuilt_prepositions.json: through -> assets/symbols/1. Main Boards/Prepositions/through.png
+  prebuilt_prepositions.json: left -> assets/symbols/1. Main Boards/Prepositions/left.png
+  prebuilt_prepositions.json: right -> assets/symbols/1. Main Boards/Prepositions/right.png
+  prebuilt_prepositions.json: far -> assets/symbols/1. Main Boards/Prepositions/far.png
+  prebuilt_prepositions.json: opposite -> assets/symbols/1. Main Boards/Prepositions/opposite.png
+  prebuilt_prepositions.json: tall -> assets/symbols/1. Main Boards/Adjectives/tall.png
+  prebuilt_prepositions.json: Adjectives -> assets/symbols/BOARDS/English/Adjectives.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_prepositions.json
+  prebuilt_reptiles.json: Dinosaurs -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/Dinosaurs/dinosaurs.png
+  prebuilt_reptiles.json: alligator -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/alligator.png
+  prebuilt_reptiles.json: anaconda -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/anaconda.png
+  prebuilt_reptiles.json: bearded dragon -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/bearded dragon.png
+  prebuilt_reptiles.json: caiman -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/caiman.png
+  prebuilt_reptiles.json: chameleon -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/chameleon.png
+  prebuilt_reptiles.json: cobra -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/cobra.png
+  prebuilt_reptiles.json: crocodile -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/crocodile.png
+  prebuilt_reptiles.json: gecko -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/gecko.png
+  prebuilt_reptiles.json: gharial -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/gharial.png
+  prebuilt_reptiles.json: iguana -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/iguana.png
+  prebuilt_reptiles.json: komodo dragon -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/komodo dragon.png
+  prebuilt_reptiles.json: lizard -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/lizard.png
+  prebuilt_reptiles.json: python -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/python.png
+  prebuilt_reptiles.json: snake -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/snake.png
+  prebuilt_reptiles.json: tortoise -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/tortoise.png
+  prebuilt_reptiles.json: tortoise-hard shelled -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/tortoise - hard shelled.png
+  prebuilt_reptiles.json: turtle -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/turtle.png
+  prebuilt_reptiles.json: viper -> assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/viper.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_reptiles.json
+  prebuilt_rooms_home.json: Buildings -> assets/symbols/BOARDS/Buildings.png
+  prebuilt_rooms_home.json: Furniture -> assets/symbols/BOARDS/Furniture.png
+  prebuilt_rooms_home.json: Habitats -> assets/symbols/BOARDS/Animals/Habitats.png
+  prebuilt_rooms_home.json: Local Places -> assets/symbols/BOARDS/PEEP & Sustainability/Local Places.png
+  prebuilt_rooms_home.json: home -> assets/symbols/1. Main Boards/Places/Rooms & Home/home.png
+  prebuilt_rooms_home.json: office -> assets/symbols/1. Main Boards/Places/Rooms & Home/office.png
+  prebuilt_rooms_home.json: attic -> assets/symbols/1. Main Boards/Places/Rooms & Home/attic.png
+  prebuilt_rooms_home.json: shower room -> assets/symbols/1. Main Boards/Places/Rooms & Home/shower room.png
+  prebuilt_rooms_home.json: guest room -> assets/symbols/1. Main Boards/Places/Rooms & Home/guest room.png
+  prebuilt_rooms_home.json: bedroom -> assets/symbols/1. Main Boards/Places/Rooms & Home/bedroom.png
+  prebuilt_rooms_home.json: study -> assets/symbols/1. Main Boards/Places/Rooms & Home/study.png
+  prebuilt_rooms_home.json: stairs -> assets/symbols/1. Main Boards/Places/Rooms & Home/stairs.png
+  prebuilt_rooms_home.json: bathroom -> assets/symbols/1. Main Boards/Places/Rooms & Home/bathroom.png
+  prebuilt_rooms_home.json: kitchen -> assets/symbols/1. Main Boards/Places/Rooms & Home/kitchen.png
+  prebuilt_rooms_home.json: dining room -> assets/symbols/1. Main Boards/Places/Rooms & Home/dining room.png
+  prebuilt_rooms_home.json: hallway -> assets/symbols/1. Main Boards/Places/Rooms & Home/hallway.png
+  prebuilt_rooms_home.json: toilet -> assets/symbols/1. Main Boards/Places/Rooms & Home/toilet.png
+  prebuilt_rooms_home.json: laundry -> assets/symbols/1. Main Boards/Places/Rooms & Home/laundry.png
+  prebuilt_rooms_home.json: garden -> assets/symbols/1. Main Boards/Places/garden.png
+  prebuilt_rooms_home.json: cellar -> assets/symbols/1. Main Boards/Places/Rooms & Home/cellar.png
+  prebuilt_rooms_home.json: living room -> assets/symbols/1. Main Boards/Places/Rooms & Home/living room.png
+  prebuilt_rooms_home.json: garage -> assets/symbols/1. Main Boards/Places/Rooms & Home/garage.png
+  prebuilt_rooms_home.json: classroom -> assets/symbols/1. Main Boards/Places/Rooms & Home/classroom.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_rooms_home.json
+  prebuilt_sad.json: tired -> assets/symbols/1. Main Boards/Feelings & Emotions/tired.png
+  prebuilt_sad.json: bored -> assets/symbols/1. Main Boards/Feelings & Emotions/bored.png
+  prebuilt_sad.json: lonely -> assets/symbols/1. Main Boards/Feelings & Emotions/lonely.png
+  prebuilt_sad.json: depressed -> assets/symbols/1. Main Boards/Feelings & Emotions/depressed.png
+  prebuilt_sad.json: ashamed -> assets/symbols/1. Main Boards/Feelings & Emotions/ashamed.png
+  prebuilt_sad.json: guilty -> assets/symbols/1. Main Boards/Feelings & Emotions/guilty.png
+  prebuilt_sad.json: uncaring -> assets/symbols/1. Main Boards/Feelings & Emotions/uncaring.png
+  prebuilt_sad.json: desolate -> assets/symbols/1. Main Boards/Feelings & Emotions/desolate.png
+  prebuilt_sad.json: hopeless -> assets/symbols/1. Main Boards/Feelings & Emotions/hopeless.png
+  prebuilt_sad.json: stupid -> assets/symbols/1. Main Boards/Feelings & Emotions/stupid.png
+  prebuilt_sad.json: miserable -> assets/symbols/1. Main Boards/Feelings & Emotions/miserable.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_sad.json
+  prebuilt_scared.json: rejected -> assets/symbols/1. Main Boards/Feelings & Emotions/rejected.png
+  prebuilt_scared.json: nervous -> assets/symbols/1. Main Boards/Feelings & Emotions/nervous.png
+  prebuilt_scared.json: confused -> assets/symbols/1. Main Boards/Feelings & Emotions/confused.png
+  prebuilt_scared.json: helpless -> assets/symbols/1. Main Boards/Feelings & Emotions/helpless.png
+  prebuilt_scared.json: insecure -> assets/symbols/1. Main Boards/Feelings & Emotions/insecure.png
+  prebuilt_scared.json: anxious -> assets/symbols/1. Main Boards/Feelings & Emotions/anxious.png
+  prebuilt_scared.json: discouraged -> assets/symbols/1. Main Boards/Feelings & Emotions/discouraged.png
+  prebuilt_scared.json: worried -> assets/symbols/1. Main Boards/Feelings & Emotions/worried.png
+  prebuilt_scared.json: baffled -> assets/symbols/1. Main Boards/Feelings & Emotions/baffled.png
+  prebuilt_scared.json: vulnerable -> assets/symbols/1. Main Boards/Feelings & Emotions/vulnerable.png
+  prebuilt_scared.json: embarrassed -> assets/symbols/1. Main Boards/Feelings & Emotions/embarrassed.png
+  prebuilt_scared.json: overwhelmed -> assets/symbols/1. Main Boards/Feelings & Emotions/overwhelmed.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_scared.json
+  prebuilt_school_people.json: teacher -> assets/symbols/1. Main Boards/Careers/teacher.png
+  prebuilt_school_people.json: tutor team -> assets/symbols/1. Main Boards/People/At School/tutor team.png
+  prebuilt_school_people.json: office staff -> assets/symbols/1. Main Boards/People/At School/office staff.png
+  prebuilt_school_people.json: first aid staff -> assets/symbols/1. Main Boards/People/At School/first aid staff.png
+  prebuilt_school_people.json: drivers & escorts -> assets/symbols/1. Main Boards/People/At School/drivers & escorts.png
+  prebuilt_school_people.json: speech & language -> assets/symbols/1. Main Boards/People/At School/speech & language.png
+  prebuilt_school_people.json: friends -> assets/symbols/1. Main Boards/More/friends.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_school_people.json
+  prebuilt_sealife.json: barnacle -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/barnacle.png
+  prebuilt_sealife.json: brittle star -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/brittle star.png
+  prebuilt_sealife.json: clam -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/clam.png
+  prebuilt_sealife.json: coral -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/coral.png
+  prebuilt_sealife.json: cuttlefish -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/cuttlefish.png
+  prebuilt_sealife.json: dolphin -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/dolphin.png
+  prebuilt_sealife.json: eel -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/eel.png
+  prebuilt_sealife.json: eel -> assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/eel.png
+  prebuilt_sealife.json: great white shark -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/great white shark.png
+  prebuilt_sealife.json: hammerhead shark -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/hammerhead shark.png
+  prebuilt_sealife.json: humpback whale -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/humpback whale.png
+  prebuilt_sealife.json: hydra -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/hydra.png
+  prebuilt_sealife.json: jellyfish -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/jellyfish.png
+  prebuilt_sealife.json: kelp -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/kelp.png
+  prebuilt_sealife.json: krill -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/krill.png
+  prebuilt_sealife.json: manta ray -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/manta ray.png
+  prebuilt_sealife.json: mollusc -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/mollusc.png
+  prebuilt_sealife.json: mussel -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/mussel.png
+  prebuilt_sealife.json: nautilus -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/nautilus.png
+  prebuilt_sealife.json: octopus -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/octopus.png
+  prebuilt_sealife.json: orca -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/orca.png
+  prebuilt_sealife.json: otter -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/otter.png
+  prebuilt_sealife.json: oyster -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/oyster.png
+  prebuilt_sealife.json: phytoplankton -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/phytoplankton.png
+  prebuilt_sealife.json: plankton -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/plankton.png
+  prebuilt_sealife.json: sand dollar -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sand dollar.png
+  prebuilt_sealife.json: sea anemone -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea anemone.png
+  prebuilt_sealife.json: sea cucumber -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea cucumber.png
+  prebuilt_sealife.json: sea lion -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea lion.png
+  prebuilt_sealife.json: sea sponge -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea sponge.png
+  prebuilt_sealife.json: sea urchin -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea urchin.png
+  prebuilt_sealife.json: seahorse -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/seahorse.png
+  prebuilt_sealife.json: seal -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/seal.png
+  prebuilt_sealife.json: seaweed -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/seaweed.png
+  prebuilt_sealife.json: shark -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/shark.png
+  prebuilt_sealife.json: squid -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/squid.png
+  prebuilt_sealife.json: starfish -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/starfish.png
+  prebuilt_sealife.json: tadpole -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/tadpole.png
+  prebuilt_sealife.json: walrus -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/walrus.png
+  prebuilt_sealife.json: whale shark -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/whale shark.png
+  prebuilt_sealife.json: whale -> assets/symbols/1. Main Boards/Animals & Habitats/Sealife/whale.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_sealife.json
+  prebuilt_seasons.json: december -> assets/symbols/1. Main Boards/Time/Months/december.png
+  prebuilt_seasons.json: january -> assets/symbols/1. Main Boards/Time/Months/january.png
+  prebuilt_seasons.json: february -> assets/symbols/1. Main Boards/Time/Months/february.png
+  prebuilt_seasons.json: dark -> assets/symbols/4. Other Words (For Thesaurus)/Appearance/2 - Pretty, Ugly, Bright, Dark/dark.png
+  prebuilt_seasons.json: cold -> assets/symbols/1. Main Boards/Weather/cold.png
+  prebuilt_seasons.json: snowman -> assets/symbols/1. Main Boards/Time/Events & Occasions/Christmas/snowman.png
+  prebuilt_seasons.json: march -> assets/symbols/1. Main Boards/Time/Months/march.png
+  prebuilt_seasons.json: april -> assets/symbols/1. Main Boards/Time/Months/april.png
+  prebuilt_seasons.json: may -> assets/symbols/1. Main Boards/Time/Months/may.png
+  prebuilt_seasons.json: leaves grow -> assets/symbols/1. Main Boards/Weather/leaves grow.png
+  prebuilt_seasons.json: easter -> assets/symbols/1. Main Boards/Time/Events & Occasions/easter.png
+  prebuilt_seasons.json: june -> assets/symbols/1. Main Boards/Time/Months/june.png
+  prebuilt_seasons.json: july -> assets/symbols/1. Main Boards/Time/Months/july.png
+  prebuilt_seasons.json: august -> assets/symbols/1. Main Boards/Time/Months/august.png
+  prebuilt_seasons.json: light -> assets/symbols/1. Main Boards/Weather/light.png
+  prebuilt_seasons.json: sunny -> assets/symbols/1. Main Boards/Weather/sunny.png
+  prebuilt_seasons.json: hot -> assets/symbols/1. Main Boards/Weather/hot.png
+  prebuilt_seasons.json: swimming -> assets/symbols/3. Lesson Vocab/Sports, Activities & P.E/Water & Winter Sports/swimming.png
+  prebuilt_seasons.json: september -> assets/symbols/1. Main Boards/Time/Months/september.png
+  prebuilt_seasons.json: october -> assets/symbols/1. Main Boards/Time/Months/october.png
+  prebuilt_seasons.json: november -> assets/symbols/1. Main Boards/Time/Months/november.png
+  prebuilt_seasons.json: leaves fall -> assets/symbols/1. Main Boards/Weather/leaves fall.png
+  prebuilt_seasons.json: harvest -> assets/symbols/3. Lesson Vocab/PEEP/Seasons/harvest.png
+  prebuilt_seasons.json: halloween -> assets/symbols/1. Main Boards/Time/Events & Occasions/halloween.png
+  prebuilt_seasons.json: seasons -> assets/symbols/3. Lesson Vocab/PEEP/Seasons/seasons.png
+  prebuilt_seasons.json: Weather -> assets/symbols/1. Main Boards/Weather/weather.png
+  prebuilt_seasons.json: Clothes -> assets/symbols/1. Main Boards/Clothes/clothes.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_seasons.json
+  prebuilt_small_words.json: a -> assets/symbols/1. Main Boards/Alphabet/a.png
+  prebuilt_small_words.json: or -> assets/symbols/1. Main Boards/Alphabet/Phonics/Phase 3/or.png
+  prebuilt_small_words.json: to -> assets/symbols/3. Lesson Vocab/Maths/Time/to.png
+  prebuilt_small_words.json: have -> assets/symbols/4. Other Words (For Thesaurus)/Actions/Have/have.png
+  prebuilt_small_words.json: do -> assets/symbols/1. Main Boards/Actions/do.png
+  prebuilt_small_words.json: done -> assets/symbols/3. Lesson Vocab/Cooking & Food/More Symbols/Done.png
+  prebuilt_small_words.json: may -> assets/symbols/1. Main Boards/Time/Months/may.png
+  prebuilt_small_words.json: conjunction -> assets/symbols/1. Main Boards/Small Words/conjunction.png
+  prebuilt_small_words.json: few -> assets/symbols/1. Main Boards/Adjectives/few.png
+  prebuilt_small_words.json: many -> assets/symbols/1. Main Boards/Adjectives/many.png
+  prebuilt_small_words.json: more -> assets/symbols/BOARDS/More ++.png
+  prebuilt_small_words.json: several -> assets/symbols/1. Main Boards/Adjectives/several.png
+  prebuilt_small_words.json: most -> assets/symbols/3. Lesson Vocab/English/most.png
+  prebuilt_small_words.json: each -> assets/symbols/3. Lesson Vocab/English/each.png
+  prebuilt_small_words.json: all -> assets/symbols/1. Main Boards/Adjectives/all.png
+  prebuilt_small_words.json: even -> assets/symbols/3. Lesson Vocab/Maths/Basic/even.png
+  prebuilt_small_words.json: just -> assets/symbols/1. Main Boards/Adverbs/just.png
+  prebuilt_small_words.json: really -> assets/symbols/1. Main Boards/Adverbs/really.png
+  prebuilt_small_words.json: who -> assets/symbols/3. Lesson Vocab/English/who.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_small_words.json
+  prebuilt_strong.json: motivated -> assets/symbols/1. Main Boards/Feelings & Emotions/motivated.png
+  prebuilt_strong.json: valuable -> assets/symbols/1. Main Boards/Feelings & Emotions/valuable.png
+  prebuilt_strong.json: confident -> assets/symbols/1. Main Boards/Feelings & Emotions/confident.png
+  prebuilt_strong.json: worthy -> assets/symbols/1. Main Boards/Feelings & Emotions/worthy.png
+  prebuilt_strong.json: successful -> assets/symbols/1. Main Boards/Feelings & Emotions/successful.png
+  prebuilt_strong.json: fulfilled -> assets/symbols/1. Main Boards/Feelings & Emotions/fulfilled.png
+  prebuilt_strong.json: inspired -> assets/symbols/1. Main Boards/Feelings & Emotions/inspired.png
+  prebuilt_strong.json: appreciated -> assets/symbols/1. Main Boards/Feelings & Emotions/appreciated.png
+  prebuilt_strong.json: faithful -> assets/symbols/1. Main Boards/Feelings & Emotions/faithful.png
+  prebuilt_strong.json: respected -> assets/symbols/1. Main Boards/Feelings & Emotions/respected.png
+  prebuilt_strong.json: proud -> assets/symbols/1. Main Boards/Feelings & Emotions/proud.png
+  prebuilt_strong.json: assured -> assets/symbols/1. Main Boards/Feelings & Emotions/assured.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_strong.json
+  prebuilt_time.json: Time (Clocks) -> assets/symbols/BOARDS/Maths/Time (Clocks).png
+  prebuilt_time.json: Months -> assets/symbols/BOARDS/Time, Months, Events/Months.png
+  prebuilt_time.json: yesterday -> assets/symbols/1. Main Boards/Time/yesterday.png
+  prebuilt_time.json: today -> assets/symbols/1. Main Boards/Time/today.png
+  prebuilt_time.json: tomorrow -> assets/symbols/1. Main Boards/Time/tomorrow.png
+  prebuilt_time.json: monday -> assets/symbols/1. Main Boards/Time/monday.png
+  prebuilt_time.json: duration -> assets/symbols/1. Main Boards/Time/duration.png
+  prebuilt_time.json: before -> assets/symbols/1. Main Boards/Prepositions/before.png
+  prebuilt_time.json: now -> assets/symbols/1. Main Boards/Time/now.png
+  prebuilt_time.json: after -> assets/symbols/1. Main Boards/Prepositions/after.png
+  prebuilt_time.json: soon -> assets/symbols/1. Main Boards/Time/soon.png
+  prebuilt_time.json: later -> assets/symbols/1. Main Boards/Time/later.png
+  prebuilt_time.json: tuesday -> assets/symbols/1. Main Boards/Time/tuesday.png
+  prebuilt_time.json: timeline -> assets/symbols/1. Main Boards/Time/timeline.png
+  prebuilt_time.json: past -> assets/symbols/1. Main Boards/Time/past.png
+  prebuilt_time.json: present -> assets/symbols/1. Main Boards/Feelings & Emotions/present.png
+  prebuilt_time.json: future -> assets/symbols/1. Main Boards/Time/future.png
+  prebuilt_time.json: noon -> assets/symbols/1. Main Boards/Time/noon.png
+  prebuilt_time.json: midnight -> assets/symbols/1. Main Boards/Time/midnight.png
+  prebuilt_time.json: wednesday -> assets/symbols/1. Main Boards/Time/wednesday.png
+  prebuilt_time.json: clock -> assets/symbols/1. Main Boards/Time/clock.png
+  prebuilt_time.json: sundial -> assets/symbols/1. Main Boards/Time/sundial.png
+  prebuilt_time.json: watch -> assets/symbols/1. Main Boards/Actions/watch.png
+  prebuilt_time.json: timer -> assets/symbols/1. Main Boards/Time/timer.png
+  prebuilt_time.json: stopwatch -> assets/symbols/1. Main Boards/Time/stopwatch.png
+  prebuilt_time.json: nighttime -> assets/symbols/1. Main Boards/Time/nighttime.png
+  prebuilt_time.json: thursday -> assets/symbols/1. Main Boards/Time/thursday.png
+  prebuilt_time.json: dawn -> assets/symbols/1. Main Boards/Time/dawn.png
+  prebuilt_time.json: morning -> assets/symbols/1. Main Boards/Time/morning.png
+  prebuilt_time.json: daytime -> assets/symbols/1. Main Boards/Time/daytime.png
+  prebuilt_time.json: afternoon -> assets/symbols/1. Main Boards/Time/afternoon.png
+  prebuilt_time.json: evening -> assets/symbols/1. Main Boards/Time/evening.png
+  prebuilt_time.json: dusk -> assets/symbols/1. Main Boards/Time/dusk.png
+  prebuilt_time.json: friday -> assets/symbols/1. Main Boards/Time/friday.png
+  prebuilt_time.json: day -> assets/symbols/3. Lesson Vocab/Maths/Time/day.png
+  prebuilt_time.json: month -> assets/symbols/3. Lesson Vocab/Maths/Time/month.png
+  prebuilt_time.json: year -> assets/symbols/3. Lesson Vocab/Maths/Time/year.png
+  prebuilt_time.json: calendar -> assets/symbols/1. Main Boards/Time/calendar.png
+  prebuilt_time.json: saturday -> assets/symbols/1. Main Boards/Time/saturday.png
+  prebuilt_time.json: life -> assets/symbols/1. Main Boards/Time/life.png
+  prebuilt_time.json: birthday -> assets/symbols/1. Main Boards/People/birthday.png
+  prebuilt_time.json: party -> assets/symbols/1. Main Boards/Time/party.png
+  prebuilt_time.json: decade -> assets/symbols/1. Main Boards/Time/decade.png
+  prebuilt_time.json: century -> assets/symbols/1. Main Boards/Time/century.png
+  prebuilt_time.json: millenium -> assets/symbols/1. Main Boards/Time/millenium.png
+  prebuilt_time.json: sunday -> assets/symbols/1. Main Boards/Time/sunday.png
+  prebuilt_time.json: cycle -> assets/symbols/1. Main Boards/Time/cycle.png
+  prebuilt_time.json: never -> assets/symbols/1. Main Boards/Time/never.png
+  prebuilt_time.json: forever -> assets/symbols/1. Main Boards/Time/forever.png
+  prebuilt_time.json: leap year -> assets/symbols/1. Main Boards/Time/leap year.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_time.json
+  prebuilt_transport.json: aeroplane -> assets/symbols/1. Main Boards/Vehicles/aeroplane.png
+  prebuilt_transport.json: bicycle -> assets/symbols/1. Main Boards/Time/Events & Occasions/Special Days/4 April/bicycle.png
+  prebuilt_transport.json: boat -> assets/symbols/1. Main Boards/Vehicles/boat.png
+  prebuilt_transport.json: bus -> assets/symbols/1. Main Boards/Vehicles/bus.png
+  prebuilt_transport.json: car -> assets/symbols/1. Main Boards/Vehicles/car.png
+  prebuilt_transport.json: double decker bus -> assets/symbols/1. Main Boards/Vehicles/double decker bus.png
+  prebuilt_transport.json: excavator -> assets/symbols/1. Main Boards/Vehicles/excavator.png
+  prebuilt_transport.json: ferry -> assets/symbols/1. Main Boards/Vehicles/ferry.png
+  prebuilt_transport.json: garbage truck -> assets/symbols/1. Main Boards/Vehicles/garbage truck.png
+  prebuilt_transport.json: etiquette -> assets/symbols/3. Lesson Vocab/PEEP/Victorians/etiquette.png
+  prebuilt_transport.json: hovercraft -> assets/symbols/1. Main Boards/Vehicles/hovercraft.png
+  prebuilt_transport.json: ice cream van -> assets/symbols/1. Main Boards/Vehicles/ice cream van.png
+  prebuilt_transport.json: jet ski -> assets/symbols/1. Main Boards/Vehicles/jetski.png
+  prebuilt_transport.json: kayak -> assets/symbols/1. Main Boards/Vehicles/kayak.png
+  prebuilt_transport.json: limousine -> assets/symbols/1. Main Boards/Vehicles/limousine.png
+  prebuilt_transport.json: lorry -> assets/symbols/1. Main Boards/Vehicles/lorry.png
+  prebuilt_transport.json: milk truck -> assets/symbols/1. Main Boards/Vehicles/milk truck.png
+  prebuilt_transport.json: motorbike -> assets/symbols/1. Main Boards/Vehicles/motorbike.png
+  prebuilt_transport.json: navy ship -> assets/symbols/1. Main Boards/Vehicles/navy ship.png
+  prebuilt_transport.json: oil tanker -> assets/symbols/1. Main Boards/Vehicles/oil tanker.png
+  prebuilt_transport.json: pickup truck -> assets/symbols/1. Main Boards/Vehicles/pickup truck.png
+  prebuilt_transport.json: quad bike -> assets/symbols/1. Main Boards/Vehicles/quad-bike.png
+  prebuilt_transport.json: rescue truck -> assets/symbols/1. Main Boards/Vehicles/rescue truck.png
+  prebuilt_transport.json: rocket -> assets/symbols/1. Main Boards/Vehicles/rocket.png
+  prebuilt_transport.json: submarine -> assets/symbols/1. Main Boards/Vehicles/submarine.png
+  prebuilt_transport.json: subway -> assets/symbols/1. Main Boards/Vehicles/subway.png
+  prebuilt_transport.json: taxi -> assets/symbols/1. Main Boards/Vehicles/taxi.png
+  prebuilt_transport.json: tractor -> assets/symbols/1. Main Boards/Vehicles/tractor.png
+  prebuilt_transport.json: train -> assets/symbols/1. Main Boards/Common Interests/train.png
+  prebuilt_transport.json: unicycle -> assets/symbols/1. Main Boards/Vehicles/unicycle.png
+  prebuilt_transport.json: van -> assets/symbols/1. Main Boards/Vehicles/van.png
+  prebuilt_transport.json: wagon -> assets/symbols/1. Main Boards/Vehicles/wagon.png
+  prebuilt_transport.json: xebec -> assets/symbols/1. Main Boards/Vehicles/xebec.png
+  prebuilt_transport.json: yacht -> assets/symbols/1. Main Boards/Vehicles/yacht.png
+  prebuilt_transport.json: zeppelin -> assets/symbols/1. Main Boards/Vehicles/zeppelin.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_transport.json
+  prebuilt_weather.json: weather -> assets/symbols/1. Main Boards/Weather/weather.png
+  prebuilt_weather.json: rainbow -> assets/symbols/1. Main Boards/Weather/rainbow.png
+  prebuilt_weather.json: hot -> assets/symbols/1. Main Boards/Weather/hot.png
+  prebuilt_weather.json: cold -> assets/symbols/1. Main Boards/Weather/cold.png
+  prebuilt_weather.json: sun -> assets/symbols/3. Lesson Vocab/Science/Year 7/Universe/sun.png
+  prebuilt_weather.json: sunny -> assets/symbols/1. Main Boards/Weather/sunny.png
+  prebuilt_weather.json: rainy -> assets/symbols/1. Main Boards/Weather/rainy.png
+  prebuilt_weather.json: windy -> assets/symbols/1. Main Boards/Weather/windy.png
+  prebuilt_weather.json: cloudy -> assets/symbols/1. Main Boards/Weather/cloudy.png
+  prebuilt_weather.json: foggy -> assets/symbols/1. Main Boards/Weather/foggy.png
+  prebuilt_weather.json: snowy -> assets/symbols/1. Main Boards/Weather/snowy.png
+  prebuilt_weather.json: storm -> assets/symbols/3. Lesson Vocab/PEEP/Disasters/storm.png
+  prebuilt_weather.json: sleet -> assets/symbols/1. Main Boards/Weather/sleet.png
+  prebuilt_weather.json: hail -> assets/symbols/1. Main Boards/Weather/hail.png
+  prebuilt_weather.json: Seasons -> assets/symbols/3. Lesson Vocab/PEEP/Seasons/seasons.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_weather.json
+  prebuilt_baycroft_expects.json: try your best -> assets/symbols/2. Baycroft Specific/Baycroft Expects & Words For When Things Go Wrong/try your best.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\My School\prebuilt_baycroft_expects.json
+  prebuilt_lessons.json: english -> assets/symbols/Subjects/English.png
+  prebuilt_lessons.json: science -> assets/symbols/Subjects/Science.png
+  prebuilt_lessons.json: history -> assets/symbols/BOARDS/PEEP & Sustainability/History.png
+  prebuilt_lessons.json: art -> assets/symbols/1. Main Boards/Time/Events & Occasions/Special Days/4 April/art.png
+  prebuilt_lessons.json: music -> assets/symbols/1. Main Boards/Time/Events & Occasions/Special Days/6 June/music.png
+  prebuilt_lessons.json: PE -> assets/symbols/Subjects/P.E.png
+  prebuilt_lessons.json: technology -> assets/symbols/BOARDS/Sports, Activities & P.E/Technology.png
+  prebuilt_lessons.json: reading -> assets/symbols/1. Main Boards/Common Interests/reading.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\My School\prebuilt_lessons.json

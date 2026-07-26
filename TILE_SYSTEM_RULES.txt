@@ -1,0 +1,42 @@
+================================================================================
+CHARLIE CHAT TILE SYSTEM RULES
+================================================================================
+
+This document defines the core logic for tile generation, persistence, and
+behavior. All code changes MUST adhere to these rules.
+
+1. FOLDER IMPORT PERSISTENCE
+   - When new tiles are added via folder import, the filename (label) and the
+     image file MUST translate directly into the tile.
+   - Images MUST be mirrored to the local project disk (via Dev Save Server)
+     immediately to ensure they are available upon reload.
+
+2. IMAGE SEARCH HIERARCHY
+   - When tiles are generated via word lists, AI, or manual text entry without
+     an image, the app MUST follow this priority:
+     a) Search local project assets (assets/symbols/...).
+     b) Search external libraries (Arasaac, Mulberry, etc.) ONLY if no local
+        match is found.
+   - The selected image path MUST be saved permanently to the board JSON.
+
+3. SUB-BOARD LINK VISUALS
+   - All tiles linking to sub-boards MUST utilize folder-style icons.
+   - These icons are located in: assets/symbols/BOARDS/
+   - If a specific board icon is missing, the app MUST fallback to a generic
+     folder icon, never a standard word icon.
+
+4. FULL SCREEN VIEWING
+   - Any tile marked as "isFullScreenImage" (Open in full screen) MUST open
+     the image in a high-resolution, full-screen overlay when clicked.
+   - The tile MUST NOT navigate or trigger voice synthesis if it is
+     configured for full-screen display.
+
+5. TILE ID FORMAT
+   - Tile IDs MUST follow the format: [board_id]_[label_lowercase_sanitized]
+   - Example: prebuilt_feelings_sad
+   - This ensures IDs are human-readable and consistent across reloads.
+
+================================================================================
+RULE ENFORCEMENT: BoardService.dart and SymbolGrid.dart are configured to
+strictly follow these definitions.
+================================================================================

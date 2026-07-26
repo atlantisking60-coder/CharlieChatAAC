@@ -1,0 +1,9 @@
+Scanned 10926 image assets across 9036 keys.
+Found 110 board JSON files.
+  prebuilt_body_parts.json: "ear" -> assets/symbols/1. Main Boards/Body Parts/ear.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_body_parts.json
+  prebuilt_small_words.json: "a" -> assets/symbols/1. Main Boards/Alphabet/a.png
+  prebuilt_small_words.json: "or" -> assets/symbols/1. Main Boards/Alphabet/Phonics/Phase 3/or.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Common\prebuilt_small_words.json
+  prebuilt_lessons.json: "resistant materials" -> assets/symbols/Subjects/Resistant Materials.png
+Saved C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\My School\prebuilt_lessons.json

@@ -1,0 +1,38 @@
+================================================================================
+CHARLIE CHAT BOARD DATA STORAGE REPORT
+================================================================================
+Last Updated: 2026-07-26 15:12:30.978266
+
+This document tracks where your board data is stored and helps identify if 
+duplicates exist.
+
+PRIMARY SOURCE OF TRUTH (DEV MODE):
+- Location: lib/data/boards/[Area]/[BoardID].json
+- Usage: When you are running the "Web Live Preview", any edits you make are 
+  automatically written here by the Dev Save Server. On app startup, the app
+  scans these folders and loads these files first.
+
+BACKUP STORAGE:
+- Location: lib/data/BACKUP boards/[Area]/[BoardID].json
+- Usage: These are manual backups. The app DOES NOT read from here unless 
+  a developer (like me) manually copies a file from here back into the 
+  primary "lib/data/boards/" folder.
+
+--------------------------------------------------------------------------------
+DUPLICATE CHECK (Summary of files found in multiple areas):
+--------------------------------------------------------------------------------
+No duplicates found between Active and Backup folders.
+
+--------------------------------------------------------------------------------
+STORAGE FLOW - WHY THINGS GO WRONG:
+--------------------------------------------------------------------------------
+1. MIRRORING: Edits in the browser -> Dev Save Server -> lib/data/boards/...
+2. OVERWRITING: If the app starts and can't find your project root, it loads 
+   empty defaults. If the server is running, it might then "mirror" those empty 
+   defaults BACK to your disk, erasing your work.
+3. FIX APPLIED: I have added a "Safety Lock" that prevents the app from 
+   mirroring a board if it contains 0 images or only blank tiles.
+
+================================================================================
+REPORT GENERATOR: Updated by dev_save_server.dart on every board save.
+================================================================================

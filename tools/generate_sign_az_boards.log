@@ -1,0 +1,55 @@
+Read 1110 non-empty lines. First 5: [A, able, ability, can, about, approximately, about, concerning, above, higher than, superior]
+Found section: A
+Found section: B
+Found section: C
+Found section: D
+Found section: E
+Found section: F
+Found section: G
+Found section: H
+Found section: I
+Found section: J
+Found section: K
+Found section: L
+Found section: M
+Found section: N
+Found section: O
+Found section: P
+Found section: Q
+Found section: R
+Found section: S
+Found section: T
+Found section: U
+Found section: V
+Found section: W
+Found section: X
+Found section: Y
+Found section: Z
+Total sections: 26
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_a_sign.json' with 85 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_b_sign.json' with 91 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_c_sign.json' with 116 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_d_sign.json' with 61 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_e_sign.json' with 37 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_f_sign.json' with 56 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_g_sign.json' with 36 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_h_sign.json' with 38 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_i_sign.json' with 27 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_j_sign.json' with 10 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_k_sign.json' with 11 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_l_sign.json' with 42 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_m_sign.json' with 40 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_n_sign.json' with 34 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_o_sign.json' with 22 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_p_sign.json' with 74 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_q_sign.json' with 6 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_r_sign.json' with 34 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_s_sign.json' with 120 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_t_sign.json' with 57 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_u_sign.json' with 16 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_v_sign.json' with 6 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_w_sign.json' with 53 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_x_sign.json' with 0 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_y_sign.json' with 11 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_z_sign.json' with 1 tiles
+Wrote File: 'C:\Users\Craig\Downloads\Charlie Chat\lib\data\boards\Sign\prebuilt_a_to_z_of_sign.json' with 26 links

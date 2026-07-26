@@ -1,0 +1,46 @@
+Components - Word List
+==========================
+
+alligator clip lead
+arduino board
+battery
+breadboard
+buzzer
+capacitor
+cell
+circuit board
+circuit breaker
+component storage box
+diode
+electrical components
+fuse
+inductor
+jumper wire
+LED
+light bulb
+light sensor
+Logic Gate - And - Icon
+Logic Gate - Buffer
+Logic Gate - Nand - Icon
+Logic Gate - Nor - Icon
+Logic Gate - Not - Icon
+Logic Gate - Or - Icon
+Logic Gate - Xnor - Icon
+Logic Gate - Xor - Icon
+micro-bit
+microcontroller
+microphone
+motion sensor
+motor
+perfboard
+potentiometer
+raspberry pi
+relay
+resistor
+snap-circuit kit
+speaker
+switch
+temperature sensor
+terminal block
+transistor
+wire

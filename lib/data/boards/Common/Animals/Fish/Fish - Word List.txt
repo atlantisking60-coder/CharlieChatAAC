@@ -1,0 +1,28 @@
+fish
+angelfish
+anglerfish
+archerfish
+barracuda
+betta
+blobfish
+blue tang
+catfish
+clownfish
+cod
+flying fish
+goby
+goldfish
+guppy
+herring
+loach
+mackerel
+marlin
+mudskipper
+pufferfish
+sardine
+salmon
+sturgeon
+swordfish
+tetra
+tuna
+trout

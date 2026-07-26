@@ -1,0 +1,51 @@
+Asia - Word List
+====================
+
+afghanistan
+bahrain
+bangladesh
+bhutan
+brunei
+cambodia
+china
+cyprus
+india
+indonesia
+iran
+iraq
+iraqi kurdistan
+israel
+japan
+jordan
+kazakhstan
+kuwait
+kyrgyzstan
+laos
+lebanon
+macau
+malaysia
+maldives
+mongolia
+myanmar
+nepal
+north korea
+oman
+pakistan
+palestine
+philippines
+qatar
+russia
+saudi arabia
+singapore
+south korea
+sri lanka
+syria
+taiwan
+tajikistan
+thailand
+timor-leste
+turkmenistan
+united arab emirates
+uzbekistan
+vietnam
+yemen

@@ -1,0 +1,55 @@
+Fruit - Word List
+=====================
+
+apple - green
+apple - red
+apple
+apricot
+avocado
+banana
+berries
+blackberry
+blackcurrant
+blood orange
+blueberry
+cherry tomato
+cherry
+clementine
+coconut
+courgette
+cranberry
+dragonfruit
+fig
+gooseberry
+grapefruit
+grapes - green
+grapes - red
+guava
+kiwi
+lemon
+lime
+lychee
+mandarin
+mango
+melon
+mulberry
+nectarine
+olive
+orange
+passionfruit
+peach
+pear
+persimmon
+pineapple
+plum
+pomegranate
+pumpkin
+quince
+raisin
+raspberries
+redcurrant
+rhubarb
+strawberry
+tangerine
+tomato
+watermelon

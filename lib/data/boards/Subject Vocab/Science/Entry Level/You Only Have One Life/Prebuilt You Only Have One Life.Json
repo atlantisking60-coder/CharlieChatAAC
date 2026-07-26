@@ -1,0 +1,56 @@
+{
+  "id": "prebuilt_you_only_have_one_life",
+  "name": "You Only Have One Life",
+  "area": "Subject Vocab",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 3,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_you_only_have_one_life_tile_1",
+      "type": "image",
+      "label": "digestive enzyme",
+      "category": "You Only Have One Life",
+      "image": "assets/symbols/3. Lesson Vocab/Science/Entry Level/You Only Have One Life/digestive enzyme.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_you_only_have_one_life_tile_2",
+      "type": "image",
+      "label": "starch",
+      "category": "You Only Have One Life",
+      "image": "assets/symbols/3. Lesson Vocab/Science/Entry Level/You Only Have One Life/starch.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_science"
+}

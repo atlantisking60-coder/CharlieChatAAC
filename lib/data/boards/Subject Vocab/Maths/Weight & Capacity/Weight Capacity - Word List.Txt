@@ -1,0 +1,23 @@
+Weight & Capacity - Word List
+=================================
+
+balance
+capacity
+container
+empty
+full
+gram (g)
+half-full
+heavier
+jug
+kilogram (kg)
+lighter
+litres (l)
+mass
+measurement
+millilitres (ml)
+pour
+scales
+tonne (t)
+volume
+weight

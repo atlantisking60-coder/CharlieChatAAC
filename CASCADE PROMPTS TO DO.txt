@@ -1,0 +1,65 @@
+TO DO:
+
+On the Create Board .bat file, do not bother Asking about number of columns or rows Or if it will be an adjustable layout , just assume an adjustable layout for all boards created in this manner . don't bother asking about special Tiles or types . don't bother asking if its a main or sub board either.
+when writing to the JSON, ensure that the ID for each tile is simply the same as the label/word. 
+ensure that the path for the image contains only single forward slashes (/) not double back slashes (\\), and that the saved path starts with 'assets/' and removes anything placed before that in the path by the user / me when using the Create Board.bat file.
+so the only questions the bat file should ask are regarding:
+1) Which of the 5 areas?
+2) What is the board called?
+3) What are the words on this board?
+4) What asset folder paths Should The board for image matches in?
+5) Confirm save as a JSON file.
+
+-----
+
+
+
+
+CHECK THESE:
+
+-----
+under the common area we seem to have developed boards for Easter Halloween Bonfire Night Christmas and Better Words. completely remove any trace of these including the JSON files. I'll build those boards in the correct places later when I am ready. they do not belong here.
+-----
+Allow users to write more than nine rows without the app panicking that they are simply writing 1 row. give a 10 second delay before attempting to change the amount of rows, or wait for their user to press enter or tab over to columns before making the change.
+-----
+if the user has populated the board with more words than the adjustable layout currently is showing, then automatically show the new words too. make the adjustable layout adjust as and when these new tiles are added.
+-----
+If I go into the reptiles sub-board, of the animals board, not only has the dinosaurs board changed back to the wrong icon , but the sub board tabs are showing twice so I can two lines of amphibians arachnids birds etc , and those tabs have become organised alphabetically which is not how I had them organised . Please fix the problem.
+-----
+when clicking to search online symbols, or edit tile, or anywhere that has a writing option, always start the cursor in the writing box, so that if users or talk into speech to text, it is actually writing.
+-----
+do not ever allow the app to override which picture has been used for a tile, if a particular picture has been manually selected by the user already. many of my selected pictures on tiles are being overridden by the app for some reason, no matter how many times I reselect them (even though the correct pictures & path are referenced in the JSON files). stop this override from happening.
+if I look at the JSON file prebuilt_baycroft_expects.JSON, I can see that several tiles have their image selected as a long string starting with "data:image/png;base64," this seems very odd given that these exact images are in our assets folder, so this should surely just read as an asset path such as: "image": "assets/symbols/BOARDS/Animals/Fish.png"
+why is it doing this?
+-----
+remember that if I as a user on the Live Preview, upload an image that already exists in our Assets Library, the app should use the existing Image. 
+-----
+when the user turns on 'adjustable layout', or whenever this is used, ensure that it always includes the very last tile on the board, and finishes there. it should not cut tiles off, nor should I any more extra blank tiles than is needed.
+-----
+The 'record' function on Edit tile, does not appear to be working. please fix.
+Fix the issue with recording voices. it is not working, still.
+-----
+ensure that anything I do in Live Preview whilst logged in on the Admin profile, also affect the default profile and any other profiles.
+-----
+on the admin pop up when you hold down over a symbol , add a 3rd option, which removes the white background from any picture that you select this on, making the background transparent, and saving over the old version once you click Yes.
+-----
+there seems to be an issue with changing settings when in smaller screens. I believe it may be due to a previous prompt:
+"when the user is editing their settings, do not come out of the Settings menu when they press Save. just put a little confirmation word 'saved' next to the save button, and make it persist there For about 15 seconds, then disappear."
+Fix these problems.
+-----
+in the Manage Boards section of the settings, if the user clicks on the icon for one of the boards It should allow them to pick a new icon for it .
+-----
+when any new brand new board is created from within another board, automatically give it that specific path. so for example if the user is in the 'common' area, the 'time' board, the 'events and occasions' sub board, a tertiary board called 'Special Events', and creates a quaternary board called 'July'; then that new July board should have that exact path in the tabs across the top of the page, and in the manage boards area of the settings, as well as anywhere it is referenced in any of our files.
+-----
+When I'm using the admin profile, or the default profile, when I add a picture to a board, which is from one of the online databases, but is not present in my assets, add it to our assets folder in the appropriate subfolder for that board. This will not be the case for other profiles (or for the default one once we publish the app), but will remain the case for the admin profile.
+-----
+when a user is searching for a word in our library that exists, forgive them adding an S or ES or ING on the end, or similar frequent use modifiers. allow this to find the word, even though it's not exact. If add dots into their search, or fails to, forgive this and still bring up those search results. for example T.F.L., T.F.L, TFL. also if abbreviations are used, or not used, this should also work, for example PD, or P.D. for Personal Development.
+-----
+when returning to a previous board either by back or up, or indeed going to any board via any method, ensure that the screen starts at the top of the board, and NOT wherever you left off in a previous board.
+-----
+change the functionality of the merge tiles function. instead of this showing as an option in Edit Board, it should show as an option when you click the three dots on an individual tile. when you do this if you click 'merge with empty tile', it should then give the user the option to click an adjacent empty tile either to the left, right, above or below the current tile, merging it with that one.
+-----
+the edit board feature 'populate > Create From Image' did a genuinely terrible job, only correctly uploading 4 of 50 tiles from the hi-resolution screenshot. what can we do to improve this feature? or if needed can we use an existing programme or website to assist us with it?
+-----
+When opening a picture in full screen, if the picture is not large enough to fill the screen, simply make the picture bigger to fill the screen, keeping ratio of the picture of course.
+-----

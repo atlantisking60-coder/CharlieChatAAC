@@ -1,0 +1,15 @@
+MAIN - Word List
+====================
+
+agnostic
+atheism
+buddhism
+christianity
+confucianism
+hinduism
+islam
+judaism
+paganism
+shinto
+sikhism
+taoism

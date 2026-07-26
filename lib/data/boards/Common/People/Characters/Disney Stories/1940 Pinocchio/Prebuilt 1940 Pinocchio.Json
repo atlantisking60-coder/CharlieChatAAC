@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_1940_pinocchio",
+  "name": "1940 Pinocchio",
+  "area": "Common",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": true,
+  "isQuinaryBoard": false,
+  "sortOrder": 2,
+  "tier": 4,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "prebuilt_disney_stories"
+}

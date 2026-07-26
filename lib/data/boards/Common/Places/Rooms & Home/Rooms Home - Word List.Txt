@@ -1,0 +1,29 @@
+Rooms & Home - Word List
+============================
+
+Buildings
+Rooms & Home
+Furniture
+Habitats
+Local Places
+home
+office
+attic
+shower room
+guest room
+bedroom
+study
+stairs
+bathroom
+(home) gym
+kitchen
+dining room
+hallway
+toilet
+laundry
+garden
+conservatory
+cellar
+living room
+garage
+classroom
