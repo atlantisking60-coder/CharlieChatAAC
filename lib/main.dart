@@ -3100,6 +3100,7 @@ class _HomePageState extends State<HomePage> {
 
     final tabRows = _buildTabRows();
     
+    return Scaffold(
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -3277,18 +3278,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-    floatingActionButton: _showScrollToTop
-        ? FloatingActionButton.small(
-            onPressed: () {
-              _boardScrollController.animateTo(
-                0,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeOut,
-              );
-            },
-            child: const Icon(Icons.keyboard_arrow_up, size: 24),
-          )
-        : null,
+      floatingActionButton: _showScrollToTop
+          ? FloatingActionButton.small(
+              onPressed: () {
+                _boardScrollController.animateTo(
+                  0,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOut,
+                );
+              },
+              child: const Icon(Icons.keyboard_arrow_up, size: 24),
+            )
+          : null,
     );
   }
 
@@ -3724,6 +3725,7 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
       actions: [
         TextButton(
           onPressed: () async {
+            final navigator = Navigator.of(context);
             final confirmed = await showDialog<bool>(
               context: context,
               builder: (ctx) => AlertDialog(
@@ -3746,7 +3748,6 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
               if (mounted) {
                  setState(() => _statusMessage = 'Order reset to default.');
                  widget.onSaveComplete();
-                 final navigator = Navigator.of(context);
                  Future.delayed(const Duration(seconds: 2), () {
                     if (mounted) navigator.pop(_localList);
                  });
