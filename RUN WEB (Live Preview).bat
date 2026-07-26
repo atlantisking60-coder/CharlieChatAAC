@@ -1,5 +1,5 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 
 :: Run from the script folder so relative paths work reliably
 pushd "%~dp0" >nul || (
@@ -10,8 +10,9 @@ pushd "%~dp0" >nul || (
 
 title Charlie Chat - Web Live Preview
 color 0A
-cls
 
+:START
+cls
 echo.
 echo =============================================
 echo   Charlie Chat  ^|  Web Live Preview
@@ -25,92 +26,115 @@ echo HOT RESTART : Press R  in this window
 echo QUIT        : Press q  in this window
 echo.
 echo DEV SERVER  : Board edits will be saved to
-echo               lib/data/boards/ automatically.
-echo.
-echo Any .dart file saved in your editor will
-echo reflect in the browser within 1-2 seconds.
+echo               lib/data/boards/[Area]/[BoardName]/ automatically.
 echo.
 echo =============================================
 echo.
+
 if not exist "pubspec.yaml" (
   echo ERROR: This batch file must be run from the Charlie Chat project root.
-  popd
-  pause
-  exit /b 1
+  echo Current directory: %CD%
+  goto :EXIT_PROMPT
 )
 
 set "FLUTTER_CMD="
 set "DART_CMD="
 
-:: Locate flutter and dart on PATH (works when installed via flutter_windows_*.zip)
+:: 1. Try finding flutter in system PATH
 for /f "delims=" %%I in ('where flutter.bat 2^>nul') do if not defined FLUTTER_CMD set "FLUTTER_CMD=%%~fI"
 for /f "delims=" %%I in ('where flutter 2^>nul') do if not defined FLUTTER_CMD set "FLUTTER_CMD=%%~fI"
-for /f "delims=" %%I in ('where dart.exe 2^>nul') do if not defined DART_CMD set "DART_CMD=%%~fI"
-for /f "delims=" %%I in ('where dart 2^>nul') do if not defined DART_CMD set "DART_CMD=%%~fI"
 
+:: 2. Try common installation locations if not found
 if not defined FLUTTER_CMD (
-  echo ERROR: Flutter was not found in PATH.
-  echo Make sure Flutter SDK is installed and its \bin folder is added to PATH.
-  popd
-  pause
-  exit /b 1
+    for %%D in ("C:\flutter\bin" "C:\src\flutter\bin" "D:\flutter\bin" "%USERPROFILE%\flutter\bin" "%USERPROFILE%\src\flutter\bin") do (
+        if exist "%%~D\flutter.bat" set "FLUTTER_CMD=%%~D\flutter.bat"
+    )
 )
 
-:: If dart not found, try next to flutter.exe/flutter.bat
-if not defined DART_CMD (
-  for %%I in ("%FLUTTER_CMD%") do set "FLUTTER_DIR=%%~dpI"
-  if exist "%FLUTTER_DIR%dart.exe" set "DART_CMD=%FLUTTER_DIR%dart.exe"
+:: 3. Manual path prompt if still not found
+if not defined FLUTTER_CMD (
+  echo ERROR: Flutter was not found in your PATH or common installation folders.
+  echo.
+  echo If you have Flutter installed, please enter the full path to the 'flutter\bin' folder.
+  echo Example: C:\src\flutter\bin
+  echo.
+  set /p "USER_FLUTTER_PATH=Path to flutter\bin (or press Enter to try auto-detect again): "
+  if not "!USER_FLUTTER_PATH!"=="" (
+    if exist "!USER_FLUTTER_PATH!\flutter.bat" (
+        set "FLUTTER_CMD=!USER_FLUTTER_PATH!\flutter.bat"
+    ) else (
+        echo.
+        echo ERROR: "!USER_FLUTTER_PATH!\flutter.bat" does not exist.
+        echo Press any key to try again...
+        pause >nul
+        goto :START
+    )
+  ) else (
+    goto :START
+  )
 )
 
+:: Locate dart - try several common locations inside Flutter SDK
+for %%I in ("%FLUTTER_CMD%") do set "FLUTTER_DIR=%%~dpI"
+
+if exist "%FLUTTER_DIR%dart.exe" (
+    set "DART_CMD=%FLUTTER_DIR%dart.exe"
+) else if exist "%FLUTTER_DIR%cache\dart-sdk\bin\dart.exe" (
+    set "DART_CMD=%FLUTTER_DIR%cache\dart-sdk\bin\dart.exe"
+) else (
+    :: Fallback to PATH
+    for /f "delims=" %%I in ('where dart.exe 2^>nul') do if not defined DART_CMD set "DART_CMD=%%~fI"
+)
+
+:: Last ditch: use "flutter dart" command if we have flutter but no direct dart.exe path
 if not defined DART_CMD (
-  echo ERROR: Dart was not found alongside Flutter.
-  echo Please install or repair the Flutter SDK.
-  popd
-  pause
-  exit /b 1
+    set "DART_CMD=%FLUTTER_CMD% dart"
 )
 
 echo.
-echo Ensuring Flutter dependencies are up to date...
+echo [1/4] Ensuring dependencies...
 call "%FLUTTER_CMD%" pub get
 if errorlevel 1 (
-  echo WARNING: flutter pub get failed. The web preview may still start if dependencies are already available.
+  echo WARNING: 'flutter pub get' failed.
 )
 
 if not exist "tools\dev_save_server.dart" (
   echo ERROR: tools/dev_save_server.dart was not found.
-  popd
-  pause
-  exit /b 1
+  goto :EXIT_PROMPT
 )
 
 echo.
-echo Launching Dev Save Server (to persist edits)...
-:: Use cmd /c with start to ensure quoted executable + args work across environments
-start "Charlie Chat Dev Save Server" /B cmd /c ""%DART_CMD%" run tools/dev_save_server.dart"
+echo [2/4] Launching Dev Save Server (background)...
+:: If DART_CMD contains spaces or is a complex command, we wrap carefully
+start "Charlie Chat Dev Save Server" /B cmd /c "%DART_CMD% run tools/dev_save_server.dart"
 
 if exist "assets\symbols" (
-  echo Web preview assets detected.
+  echo [3/4] Symbols folder detected.
 ) else (
-  echo Warning: assets/symbols was not found. The app may still run, but some assets may be missing.
+  echo WARNING: assets/symbols was not found. Images may be missing.
 )
 
 echo.
-echo Launching Flutter web server...
-call "%FLUTTER_CMD%" config --enable-web
-if errorlevel 1 (
-  echo WARNING: Could not enable web support automatically. Continuing with the run step.
-)
+echo [4/4] Starting Flutter Web Server...
+call "%FLUTTER_CMD%" config --enable-web >nul
 
+:: Start with Chrome. If it fails, fallback to web-server mode.
 call "%FLUTTER_CMD%" run -d chrome --web-port=8080 --hot --web-hostname=localhost
 if errorlevel 1 (
   echo.
-  echo Chrome launch failed. Falling back to the web-server target.
-  echo Open http://localhost:8080 after the server starts.
+  echo Chrome launch failed. Falling back to the generic web-server...
+  echo Once started, open: http://localhost:8080
+  echo.
   call "%FLUTTER_CMD%" run -d web-server --web-port=8080 --web-hostname=0.0.0.0
 )
 
+:EXIT_PROMPT
 echo.
-echo Session ended. Press any key to close.
-pause >nul
-popd >nul
+echo =============================================
+echo Session ended or a fatal error occurred.
+echo This window will NOT close automatically.
+echo You can scroll up to copy any error messages.
+echo =============================================
+echo.
+:: Instead of exit, we open a new cmd instance that stays open
+cmd /k
