@@ -3100,16 +3100,18 @@ class _HomePageState extends State<HomePage> {
 
     final tabRows = _buildTabRows();
     
-    return Scaffold(
       appBar: AppBar(
-        leading: Image.asset(
-          kIsWeb ? 'charlie_chat_aac_logo.png' : 'assets/charlie_chat_aac_logo.png',
-          fit: BoxFit.contain,
-          cacheWidth: 100, // Optimize loading
-          errorBuilder: (context, error, stackTrace) {
-            debugPrint('Logo error: $error');
-            return const Icon(Icons.chat_bubble_outline, color: Colors.blue);
-          },
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/charlie_chat_aac_logo.png',
+            fit: BoxFit.contain,
+            cacheWidth: 100, // Optimize loading
+            errorBuilder: (context, error, stackTrace) {
+              debugPrint('Logo error: $error');
+              return const Icon(Icons.chat_bubble_outline, color: Colors.blue);
+            },
+          ),
         ),
         title: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
