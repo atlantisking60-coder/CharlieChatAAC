@@ -4,7 +4,7 @@
 .pub-cache/
 .pub/
 build/
-!build/web/
+build/web/
 ios/Flutter/Flutter.framework/
 ios/Flutter/Flutter.podspec
 ios/Pods/
@@ -29,3 +29,7 @@ ios/Pods/
 .DS_Store
 */.flutter-plugins
 */.flutter-plugins-dependencies
+node_modules
+
+# Large untracked symbol asset tree - kept locally but not versioned
+assets/symbols/
