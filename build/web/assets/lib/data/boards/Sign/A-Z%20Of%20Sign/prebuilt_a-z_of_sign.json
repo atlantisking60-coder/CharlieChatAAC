@@ -243,5 +243,11 @@
       "bgColor": "#000000",
       "textColor": "#FFFFFF"
     }
-  ]
+  ],
+  "parentBoardId": null,
+  "tier": 1,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

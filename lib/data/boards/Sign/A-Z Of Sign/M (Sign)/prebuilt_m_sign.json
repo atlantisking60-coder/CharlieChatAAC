@@ -674,5 +674,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a_to_z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

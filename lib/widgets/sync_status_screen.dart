@@ -23,6 +23,7 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
 
   Future<void> _load() async {
     _syncService = await SyncService.init();
+    _syncService.refreshRecords();
     setState(() {
       _status = _syncService.status;
       _records = _syncService.records.reversed.toList();
@@ -61,6 +62,20 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
     }
   }
 
+  Future<void> _pushAll() async {
+    setState(() => _loading = true);
+    try {
+      await _syncService.pushAllPending();
+    } finally {
+      await _load();
+    }
+  }
+
+  Future<void> _pushRecord(SyncRecord record) async {
+    await _syncService.pushRecord(record.id);
+    await _load();
+  }
+
   @override
   Widget build(BuildContext context) {
     final status = _status;
@@ -78,6 +93,11 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: _load,
+          ),
+          IconButton(
+            icon: const Icon(Icons.cloud_upload),
+            tooltip: 'Push all pending',
+            onPressed: _pushAll,
           ),
           IconButton(
             icon: const Icon(Icons.cleaning_services_outlined),
@@ -110,8 +130,10 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
                       child: Center(child: Text('No local changes recorded.')),
                     )
                   else
-                    ..._records
-                        .map((record) => _SyncRecordTile(record: record)),
+                    ..._records.map((record) => _SyncRecordTile(
+                          record: record,
+                          onPush: record.needsUpload ? () => _pushRecord(record) : null,
+                        )),
                 ],
               ),
             ),
@@ -189,8 +211,9 @@ class _CountChip extends StatelessWidget {
 
 class _SyncRecordTile extends StatelessWidget {
   final SyncRecord record;
+  final VoidCallback? onPush;
 
-  const _SyncRecordTile({required this.record});
+  const _SyncRecordTile({required this.record, this.onPush});
 
   @override
   Widget build(BuildContext context) {
@@ -208,13 +231,24 @@ class _SyncRecordTile extends StatelessWidget {
           '${record.errorMessage.isNotEmpty ? '\n${record.errorMessage}' : ''}',
         ),
         isThreeLine: true,
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(record.conflictResolution.name),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(record.conflictResolution.name),
+            ),
+            if (onPush != null)
+              IconButton(
+                icon: const Icon(Icons.cloud_upload, size: 20),
+                tooltip: 'Push now',
+                onPressed: onPush,
+              ),
+          ],
         ),
       ),
     );

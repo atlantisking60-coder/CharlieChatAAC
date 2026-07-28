@@ -1458,5 +1458,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

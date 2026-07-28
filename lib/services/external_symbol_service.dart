@@ -1091,6 +1091,18 @@ class ExternalSymbolService {
         if (a.source != 'Assets' && b.source == 'Assets') return 1;
       }
 
+      // Within local assets, prefer symbols over sign images.
+      if (a.source == 'Assets' && b.source == 'Assets') {
+        final aIsSymbols = a.imageUrl.toLowerCase().startsWith('assets/symbols/');
+        final bIsSymbols = b.imageUrl.toLowerCase().startsWith('assets/symbols/');
+        final aIsSign = a.imageUrl.toLowerCase().startsWith('assets/sign/');
+        final bIsSign = b.imageUrl.toLowerCase().startsWith('assets/sign/');
+        if (aIsSymbols && !bIsSymbols) return -1;
+        if (bIsSymbols && !aIsSymbols) return 1;
+        if (aIsSign && !bIsSign) return 1;
+        if (bIsSign && !aIsSign) return -1;
+      }
+
       // 2. Relevance Score
       final scoreA = scores[a.id] ?? 9999;
       final scoreB = scores[b.id] ?? 9999;
@@ -1133,10 +1145,6 @@ class ExternalSymbolService {
     if (label.contains(word)) return 7;
 
     return 100 + _minLevenshtein(word, labelWords);
-  }
-
-  String _normalizeVowels(String s) {
-    return s.toLowerCase().replaceAll(RegExp(r'[aeiouy]'), '*');
   }
 
   bool _isSubsequence(List<String> sub, List<String> superList) {

@@ -62,7 +62,8 @@ class SyncRecord {
   });
 
   bool get needsUpload =>
-      status == SyncRecordStatus.pending || status == SyncRecordStatus.failed;
+      status == SyncRecordStatus.pending ||
+      status == SyncRecordStatus.failed;
 
   SyncRecord copyWith({
     SyncOperation? operation,
@@ -302,6 +303,10 @@ class SyncService {
 
   List<SyncRecord> get pendingRecords =>
       records.where((record) => record.needsUpload).toList();
+
+  void refreshRecords() {
+    _cache = null;
+  }
 
   List<SyncRecord> get conflictedRecords => records
       .where((record) => record.status == SyncRecordStatus.conflict)
@@ -546,6 +551,25 @@ class SyncService {
     await _saveRecord(updated);
   }
 
+  /// Push all pending/failed records. Currently simulates a successful upload;
+  /// replace with real network logic when a cloud backend is available.
+  Future<void> pushAllPending() async {
+    for (final record in List<SyncRecord>.from(pendingRecords)) {
+      await pushRecord(record.id);
+    }
+  }
+
+  /// Push a single pending/failed record.
+  Future<void> pushRecord(String recordId) async {
+    final current = records;
+    final index = current.indexWhere((r) => r.id == recordId);
+    if (index < 0) return;
+    final record = current[index];
+    if (!record.needsUpload || record.status == SyncRecordStatus.inFlight) return;
+    await markInFlight(recordId);
+    await markSynced(recordId);
+  }
+
   Future<void> clearSyncedRecords() async {
     final all = List<SyncRecord>.from(records);
     final synced =
@@ -568,19 +592,6 @@ class SyncService {
     await _prefs.remove(_recordIdsKey);
   }
 
-  Future<void> _updateRecord(
-    String recordId,
-    SyncRecord Function(SyncRecord record) update,
-  ) async {
-    final current = List<SyncRecord>.from(records);
-    final index = current.indexWhere((record) => record.id == recordId);
-    if (index < 0) return;
-    final updated = update(current[index]);
-    current[index] = updated;
-    _cache = current;
-    await _saveRecord(updated);
-  }
-
   Future<void> _saveRecord(SyncRecord record) async {
     await _prefs.setString(
         '$_recordPrefix${record.id}', json.encode(record.toMap()));
@@ -589,16 +600,6 @@ class SyncService {
   Future<void> _saveIndex(List<SyncRecord> records) async {
     final ids = records.map((r) => r.id).toList();
     await _prefs.setString(_recordIdsKey, json.encode(ids));
-  }
-
-  Future<void> _saveRecords(List<SyncRecord> records) async {
-    _cache = List.from(records);
-    // 1. Save individual records
-    for (final record in records) {
-      await _saveRecord(record);
-    }
-    // 2. Save index
-    await _saveIndex(records);
   }
 
   int _nextLocalRevision(List<SyncRecord> records) {

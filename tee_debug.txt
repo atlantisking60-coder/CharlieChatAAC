@@ -1,0 +1,6 @@
+flutterCmd = C:/Users/Craig/flutter/bin/flutter.bat
+logFile = log.txt
+mode = chrome
+executable = cmd.exe
+arguments = [/c, C:/Users/Craig/flutter/bin/flutter.bat, run, -d, chrome, --web-port=8080, --hot, --web-hostname=localhost]
+cwd = C:\Users\Craig\Downloads\Charlie Chat

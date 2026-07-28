@@ -7,8 +7,6 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
-  "isQuaternaryBoard": false,
-  "isQuinaryBoard": false,
   "sortOrder": 120,
   "tier": 2,
   "boxScale": 1,
@@ -20,7 +18,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_k_sign_keep_fit_exercise",
+      "id": "prebuilt_k_sign_t1",
       "type": "image_viewer",
       "label": "keep fit, exercise",
       "category": "Custom",
@@ -36,7 +34,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_keep_hang_on_to",
+      "id": "prebuilt_k_sign_t2",
       "type": "image_viewer",
       "label": "keep, hang on to",
       "category": "Custom",
@@ -52,7 +50,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kettle",
+      "id": "prebuilt_k_sign_t3",
       "type": "image_viewer",
       "label": "kettle",
       "category": "Custom",
@@ -68,7 +66,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_ketchup_sauce",
+      "id": "prebuilt_k_sign_t4",
       "type": "image_viewer",
       "label": "ketchup, sauce",
       "category": "Custom",
@@ -84,7 +82,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_key_keys",
+      "id": "prebuilt_k_sign_t5",
       "type": "image_viewer",
       "label": "key, keys",
       "category": "Custom",
@@ -100,7 +98,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kick_kick_out_sack",
+      "id": "prebuilt_k_sign_t6",
       "type": "image_viewer",
       "label": "kick, kick out, sack",
       "category": "Custom",
@@ -116,7 +114,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kill_meat",
+      "id": "prebuilt_k_sign_t7",
       "type": "image_viewer",
       "label": "kill, meat",
       "category": "Custom",
@@ -132,7 +130,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kiss_1",
+      "id": "prebuilt_k_sign_t8",
       "type": "image_viewer",
       "label": "kiss (1)",
       "category": "Custom",
@@ -148,7 +146,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kiss_2",
+      "id": "prebuilt_k_sign_t9",
       "type": "image_viewer",
       "label": "kiss (2)",
       "category": "Custom",
@@ -164,7 +162,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_kitchen",
+      "id": "prebuilt_k_sign_t10",
       "type": "image_viewer",
       "label": "kitchen",
       "category": "Custom",
@@ -180,7 +178,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_know",
+      "id": "prebuilt_k_sign_t11",
       "type": "image_viewer",
       "label": "know",
       "category": "Custom",
@@ -196,7 +194,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_12",
+      "id": "tile_11",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -212,7 +210,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_13",
+      "id": "tile_12",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -228,7 +226,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_14",
+      "id": "tile_13",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -244,7 +242,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_15",
+      "id": "tile_14",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -260,7 +258,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_16",
+      "id": "tile_15",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -276,7 +274,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_17",
+      "id": "tile_16",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -292,7 +290,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_k_sign_tile_18",
+      "id": "tile_17",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -308,5 +306,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

@@ -7,8 +7,6 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
-  "isQuaternaryBoard": false,
-  "isQuinaryBoard": false,
   "sortOrder": 130,
   "tier": 2,
   "boxScale": 1,
@@ -20,7 +18,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_l_sign_language",
+      "id": "prebuilt_l_sign_t1",
       "type": "image_viewer",
       "label": "language",
       "category": "Custom",
@@ -36,7 +34,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_laptop_computer",
+      "id": "prebuilt_l_sign_t2",
       "type": "image_viewer",
       "label": "laptop computer",
       "category": "Custom",
@@ -52,7 +50,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_last_final_end",
+      "id": "prebuilt_l_sign_t3",
       "type": "image_viewer",
       "label": "last, final, end",
       "category": "Custom",
@@ -68,7 +66,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_late_overdue",
+      "id": "prebuilt_l_sign_t4",
       "type": "image_viewer",
       "label": "late, overdue",
       "category": "Custom",
@@ -84,7 +82,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_laughter_funny_humour",
+      "id": "prebuilt_l_sign_t5",
       "type": "image_viewer",
       "label": "laughter, funny, humour",
       "category": "Custom",
@@ -100,7 +98,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_law_rule_principle",
+      "id": "prebuilt_l_sign_t6",
       "type": "image_viewer",
       "label": "law, rule, principle",
       "category": "Custom",
@@ -116,7 +114,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_league_results",
+      "id": "prebuilt_l_sign_t7",
       "type": "image_viewer",
       "label": "league, results",
       "category": "Custom",
@@ -132,7 +130,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_learn_acquire_take_in",
+      "id": "prebuilt_l_sign_t8",
       "type": "image_viewer",
       "label": "learn, acquire, take in",
       "category": "Custom",
@@ -148,7 +146,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_learn_aquire_take_in",
+      "id": "prebuilt_l_sign_t9",
       "type": "image_viewer",
       "label": "learn, aquire, take in",
       "category": "Custom",
@@ -164,7 +162,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_leave_go_depart",
+      "id": "prebuilt_l_sign_t10",
       "type": "image_viewer",
       "label": "leave, go, depart",
       "category": "Custom",
@@ -180,7 +178,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lecture_give_speech",
+      "id": "prebuilt_l_sign_t11",
       "type": "image_viewer",
       "label": "lecture, give, speech",
       "category": "Custom",
@@ -196,7 +194,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lend_loan_hire_out",
+      "id": "prebuilt_l_sign_t12",
       "type": "image_viewer",
       "label": "lend, loan, hire out",
       "category": "Custom",
@@ -212,7 +210,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lesbian",
+      "id": "prebuilt_l_sign_t13",
       "type": "image_viewer",
       "label": "lesbian",
       "category": "Custom",
@@ -228,7 +226,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_let_me_know",
+      "id": "prebuilt_l_sign_t14",
       "type": "image_viewer",
       "label": "let me know",
       "category": "Custom",
@@ -244,7 +242,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_let_you_know",
+      "id": "prebuilt_l_sign_t15",
       "type": "image_viewer",
       "label": "let you know",
       "category": "Custom",
@@ -260,7 +258,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_letter_mail_stamp_insurance",
+      "id": "prebuilt_l_sign_t16",
       "type": "image_viewer",
       "label": "letter, mail, stamp, insurance",
       "category": "Custom",
@@ -276,7 +274,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lie_down_lay_down",
+      "id": "prebuilt_l_sign_t17",
       "type": "image_viewer",
       "label": "lie down, lay down",
       "category": "Custom",
@@ -292,7 +290,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lie_liar_fib",
+      "id": "prebuilt_l_sign_t18",
       "type": "image_viewer",
       "label": "lie, liar, fib",
       "category": "Custom",
@@ -308,7 +306,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_light_off_lights_out",
+      "id": "prebuilt_l_sign_t19",
       "type": "image_viewer",
       "label": "light (off), lights out",
       "category": "Custom",
@@ -324,7 +322,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_light_on_put_light_on",
+      "id": "prebuilt_l_sign_t20",
       "type": "image_viewer",
       "label": "light (on), put light on",
       "category": "Custom",
@@ -340,7 +338,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_light_weight",
+      "id": "prebuilt_l_sign_t21",
       "type": "image_viewer",
       "label": "light (weight)",
       "category": "Custom",
@@ -356,7 +354,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lightning_electricity",
+      "id": "prebuilt_l_sign_t22",
       "type": "image_viewer",
       "label": "lightning, electricity",
       "category": "Custom",
@@ -372,7 +370,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_like_same_as",
+      "id": "prebuilt_l_sign_t23",
       "type": "image_viewer",
       "label": "like, same as",
       "category": "Custom",
@@ -388,7 +386,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lipread_lip_pattern",
+      "id": "prebuilt_l_sign_t24",
       "type": "image_viewer",
       "label": "lipread, lip pattern",
       "category": "Custom",
@@ -404,7 +402,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_list_programme",
+      "id": "prebuilt_l_sign_t25",
       "type": "image_viewer",
       "label": "list, programme",
       "category": "Custom",
@@ -420,7 +418,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_listen",
+      "id": "prebuilt_l_sign_t26",
       "type": "image_viewer",
       "label": "listen",
       "category": "Custom",
@@ -436,7 +434,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_little_bit_tiny",
+      "id": "prebuilt_l_sign_t27",
       "type": "image_viewer",
       "label": "little, bit, tiny",
       "category": "Custom",
@@ -452,7 +450,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_live_alive_life",
+      "id": "prebuilt_l_sign_t28",
       "type": "image_viewer",
       "label": "live, alive, life",
       "category": "Custom",
@@ -468,7 +466,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_liverpool_lesbian",
+      "id": "prebuilt_l_sign_t29",
       "type": "image_viewer",
       "label": "liverpool, lesbian",
       "category": "Custom",
@@ -484,7 +482,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_living_room_room",
+      "id": "prebuilt_l_sign_t30",
       "type": "image_viewer",
       "label": "living-room, room",
       "category": "Custom",
@@ -500,7 +498,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_london_noise_noisy",
+      "id": "prebuilt_l_sign_t31",
       "type": "image_viewer",
       "label": "london, noise, noisy",
       "category": "Custom",
@@ -516,7 +514,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_look_after_supervise_1",
+      "id": "prebuilt_l_sign_t32",
       "type": "image_viewer",
       "label": "look after, supervise (1)",
       "category": "Custom",
@@ -532,7 +530,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_look_after_supervise_2",
+      "id": "prebuilt_l_sign_t33",
       "type": "image_viewer",
       "label": "look after, supervise (2)",
       "category": "Custom",
@@ -548,7 +546,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_look_around_sightsee",
+      "id": "prebuilt_l_sign_t34",
       "type": "image_viewer",
       "label": "look around, sightsee",
       "category": "Custom",
@@ -564,7 +562,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_look_look_at_see",
+      "id": "prebuilt_l_sign_t35",
       "type": "image_viewer",
       "label": "look, look at, see",
       "category": "Custom",
@@ -580,7 +578,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_look_look_at_watch",
+      "id": "prebuilt_l_sign_t36",
       "type": "image_viewer",
       "label": "look, look at, watch",
       "category": "Custom",
@@ -596,7 +594,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lose_lost_waste",
+      "id": "prebuilt_l_sign_t37",
       "type": "image_viewer",
       "label": "lose, lost, waste",
       "category": "Custom",
@@ -612,7 +610,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_love_adore_dear",
+      "id": "prebuilt_l_sign_t38",
       "type": "image_viewer",
       "label": "love, adore, dear",
       "category": "Custom",
@@ -628,7 +626,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_lovely_tasty_delicious",
+      "id": "prebuilt_l_sign_t39",
       "type": "image_viewer",
       "label": "lovely, tasty, delicious",
       "category": "Custom",
@@ -644,7 +642,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_luck_lucky_good_luck",
+      "id": "prebuilt_l_sign_t40",
       "type": "image_viewer",
       "label": "luck, lucky, good luck",
       "category": "Custom",
@@ -660,7 +658,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_tile_41",
+      "id": "tile_40",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -676,7 +674,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_l_sign_tile_42",
+      "id": "tile_41",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -692,5 +690,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

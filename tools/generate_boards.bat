@@ -5,7 +5,7 @@ cmd /k ""%~f0" __child__"
 exit /b
 
 :MAIN
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
 where python >nul 2>&1
 if %errorlevel% neq 0 (
@@ -21,7 +21,7 @@ if %errorlevel% neq 0 (
 )
 
 echo Running generate_boards.py...
-python generate_boards.py --verbose
+python ".py Files\generate_boards.py" --verbose
 if %errorlevel% neq 0 (
     echo.
     echo ERROR: generate_boards.py exited with code %errorlevel%.

@@ -213,14 +213,14 @@ class BoardService {
   Future<void> _syncDevBoards() async {
     try {
       final uri = Uri.parse('http://localhost:8787/listBoards');
-      final response = await http.get(uri).timeout(const Duration(seconds: 2));
+      final response = await http.get(uri).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         final List<dynamic> allBoards = json.decode(response.body);
         for (final b in allBoards) {
           final board = _boardFromJson(b as Map<String, dynamic>);
           if (_deletedBoardIds.contains(board.id)) continue;
           // Always refresh boards from dev server to ensure latest images
-          await _writeBoard(board, mirrorToDisk: false);
+          await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: !board.id.startsWith('prebuilt_'));
         }
         debugPrint('Dev Sync: Updated $_currentProfileId profile with ${allBoards.length} boards from disk.');
       }
@@ -665,10 +665,10 @@ class BoardService {
         try {
           final area = _areaForBoardName(name);
           final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
-          final response = await http.get(uri).timeout(const Duration(seconds: 1));
+          final response = await http.get(uri).timeout(const Duration(seconds: 2));
           if (response.statusCode == 200) {
              final board = _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
-             await _writeBoard(board, mirrorToDisk: false);
+             await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: false);
              return;
           }
         } catch (_) {}
@@ -690,7 +690,7 @@ class BoardService {
       // 2. Try to load from App Assets (Production Mode)
       final assetBoard = await _loadBoardFromAssets(id, name);
       if (assetBoard != null) {
-        await _writeBoard(assetBoard, mirrorToDisk: false);
+        await _writeBoard(assetBoard, mirrorToDisk: false, cacheInWebStorage: false);
         return;
       }
 
@@ -2569,7 +2569,7 @@ class BoardService {
     return boards.where((board) => !_deletedBoardIds.contains(board.id)).toList();
   }
 
-  Future<List<Board>> listBoards() async {
+  Future<List<Board>> listBoards({String? area}) async {
     if (!kIsWeb && _projectRoot != null) {
       final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
       if (await root.exists()) {
@@ -2592,7 +2592,7 @@ class BoardService {
           }
         }
         if (boardsById.isNotEmpty) {
-          return _sortBoards(_withoutDeletedBoards(boardsById.values));
+          return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
         }
       }
       // Fallback to old assets/boards path for backward compatibility
@@ -2608,7 +2608,7 @@ class BoardService {
             debugPrint('listBoards: failed to load fallback ${f.path}: $e');
           }
         }
-        if (boards.isNotEmpty) return _sortBoards(boards);
+        if (boards.isNotEmpty) return _areaFilter(_sortBoards(boards), area);
       }
     }
 
@@ -2631,6 +2631,7 @@ class BoardService {
 
       // Inject prebuilt boards missing from storage
       for (final name in prebuiltBoardNames) {
+        if (area != null && _areaForBoardName(name) != area) continue;
         final id = prebuiltBoardId(name);
         if (!boardsById.containsKey(id) && !_deletedBoardIds.contains(id)) {
           final assetBoard = await _loadBoardFromAssets(id, name);
@@ -2640,7 +2641,7 @@ class BoardService {
         }
       }
       
-      return _sortBoards(_withoutDeletedBoards(boardsById.values));
+      return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
     } else {
       final boardsById = <String, Board>{};
       for (final prefix in [defaultPrefix, currentPrefix]) {
@@ -2659,32 +2660,41 @@ class BoardService {
           }
         }
       }
-      return _sortBoards(_withoutDeletedBoards(boardsById.values));
+      return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
     }
   }
 
   List<Board> _sortBoards(List<Board> boards) {
     boards.sort((a, b) {
-      // 1. Check manual sortOrder
+      // 1. Top-level prebuilt boards are ordered by the compiled hierarchy.
+      //    This overrides any stale / auto-generated sortOrder values.
+      final aIndex = prebuiltBoardNames.indexOf(a.name);
+      final bIndex = prebuiltBoardNames.indexOf(b.name);
+      if (a.tier == 1 && b.tier == 1 && aIndex >= 0 && bIndex >= 0) {
+        return aIndex.compareTo(bIndex);
+      }
+
+      // 2. Check manual sortOrder (used for sub-boards / children)
       if (a.sortOrder != 0 && b.sortOrder != 0) {
         return a.sortOrder.compareTo(b.sortOrder);
       }
       if (a.sortOrder != 0) return -1;
       if (b.sortOrder != 0) return 1;
 
-      // 2. Check prebuilt hierarchy order (STRICT)
-      // Use the actual prebuiltBoardNames list which defines the UI tab sequence.
-      final aIndex = prebuiltBoardNames.indexOf(a.name);
-      final bIndex = prebuiltBoardNames.indexOf(b.name);
-      
+      // 3. Check prebuilt hierarchy order for remaining boards
       if (aIndex >= 0 && bIndex >= 0) return aIndex.compareTo(bIndex);
       if (aIndex >= 0) return -1;
       if (bIndex >= 0) return 1;
 
-      // 3. Alphabetical for custom boards or sub-boards
+      // 4. Alphabetical for custom boards or sub-boards
       return a.name.toLowerCase().compareTo(b.name.toLowerCase());
     });
     return boards;
+  }
+
+  List<Board> _areaFilter(List<Board> boards, String? area) {
+    if (area == null) return boards;
+    return boards.where((b) => b.area == area).toList();
   }
 
   Future<Board?> loadBoard(String id) async {
@@ -2738,7 +2748,7 @@ class BoardService {
 
     try {
       await _clearBoardDeletion(board.id);
-      await _writeBoard(board);
+      await _writeBoard(board, cacheInWebStorage: !board.id.startsWith('prebuilt_'));
 
       // Register new board in the appropriate hierarchy.
       // Runs on ALL platforms so web and native present identically.
@@ -2839,7 +2849,13 @@ class BoardService {
 /// the primary storage (Web or Native).
 /// If admin profile is active, also saves to default profile.
 
-  Future<void> _writeBoard(Board board, {bool mirrorToDisk = true}) async {
+  Future<void> _freeLocalStorageSpace() async {
+    if (!kIsWeb || _prefs == null) return;
+    // The symbol metadata cache can be rebuilt in memory; free its persisted copy.
+    await _prefs!.remove('aac_symbol_metadata_v1');
+  }
+
+  Future<void> _writeBoard(Board board, {bool mirrorToDisk = true, bool cacheInWebStorage = true}) async {
     _normalizePersistentIds(board);
     final boardJson = _boardToJson(board);
 
@@ -2855,41 +2871,44 @@ class BoardService {
 
     // In web builds, also try to mirror the save to a local dev server
     if (kIsWeb && mirrorToDisk) {
-      unawaited(_mirrorSaveToDevServer(boardJson));
-      unawaited(_backupBoardToDevServer(boardJson));
+      await _mirrorSaveToDevServer(boardJson);
     }
 
     final key = _getBoardKey(board.id);
     if (kIsWeb) {
       final encoded = json.encode(board.toMap());
-      try {
-        await _prefs!.setString(key, encoded);
-      } catch (e) {
-        if (e.toString().contains('QuotaExceededError')) {
-          debugPrint('localStorage quota exceeded while saving board ${board.id}. Skipping cache.');
-        } else {
-          rethrow;
-        }
-      }
-
-      if (_isAdmin) {
-        // OPTIMIZATION: Instead of scanning ALL keys with _prefs!.getKeys(),
-        // we construct the specific keys for known profiles.
+      if (cacheInWebStorage) {
         try {
-          final profilesRaw = _prefs!.getString('aac_user_profiles');
-          if (profilesRaw != null && profilesRaw.isNotEmpty) {
-            final List<dynamic> profiles = json.decode(profilesRaw);
-            for (final p in profiles) {
-              final id = p['id'] as String?;
-              if (id == null || id == 'default' || id == 'admin') continue;
-              final profileKey = 'board_${id}_${board.id}';
-              try {
-                await _prefs!.setString(profileKey, encoded);
-              } catch (_) {}
-            }
-          }
+          await _prefs!.setString(key, encoded);
         } catch (e) {
-          debugPrint('Error propagating admin board edit to profiles: $e');
+          if (e.toString().contains('QuotaExceededError')) {
+            debugPrint('localStorage quota exceeded while saving board ${board.id}. Freeing caches and retrying.');
+            await _freeLocalStorageSpace();
+            await _prefs!.setString(key, encoded);
+          } else {
+            rethrow;
+          }
+        }
+
+        if (_isAdmin) {
+          // OPTIMIZATION: Instead of scanning ALL keys with _prefs!.getKeys(),
+          // we construct the specific keys for known profiles.
+          try {
+            final profilesRaw = _prefs!.getString('aac_user_profiles');
+            if (profilesRaw != null && profilesRaw.isNotEmpty) {
+              final List<dynamic> profiles = json.decode(profilesRaw);
+              for (final p in profiles) {
+                final id = p['id'] as String?;
+                if (id == null || id == 'default' || id == 'admin') continue;
+                final profileKey = 'board_${id}_${board.id}';
+                try {
+                  await _prefs!.setString(profileKey, encoded);
+                } catch (_) {}
+              }
+            }
+          } catch (e) {
+            debugPrint('Error propagating admin board edit to profiles: $e');
+          }
         }
       }
     } else {
@@ -2945,19 +2964,6 @@ class BoardService {
     } catch (e) {
       // Server not running; ignore.
     }
-  }
-
-  Future<void> _backupBoardToDevServer(Map<String, dynamic> boardJson) async {
-    try {
-      final uri = Uri.parse('http://localhost:8787/backupBoard');
-      await http
-          .post(
-            uri,
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode(boardJson),
-          )
-          .timeout(const Duration(seconds: 2));
-    } catch (_) {}
   }
 
   /// POST the full runtime hierarchy to the local dev server so it can write
@@ -3584,6 +3590,17 @@ class BoardService {
   Future<Board?> _loadBoardFromAssets(String id, String name) async {
     final area = _areaForBoardName(name);
 
+    // In the web preview, ask the dev server for the latest board JSON first.
+    if (kIsWeb && Uri.base.host == 'localhost') {
+      try {
+        final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
+        final response = await http.get(uri).timeout(const Duration(seconds: 2));
+        if (response.statusCode == 200) {
+          return _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
+        }
+      } catch (_) {}
+    }
+
     // 1. Try the direct flat path: lib/data/boards/{area}/{id}.json
     final directPath = 'lib/data/boards/$area/$id.json';
     try {
@@ -3605,24 +3622,35 @@ class BoardService {
       final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
       final allAssets = manifest.listAssets();
 
+      // On web, manifest paths are prefixed with 'assets/' and may have
+      // URL-encoded spaces (%20).  Strip the prefix and decode for
+      // comparison, but keep the original path for rootBundle.loadString().
+      String decode(String p) => Uri.decodeComponent(p);
+      String normalize(String p) {
+        final stripped = p.startsWith('assets/') ? p.substring(7) : p;
+        return decode(stripped);
+      }
+
       // 3a. Try the area-specific prefix first (faster).
       final areaPrefix = 'lib/data/boards/$area/';
-      final areaMatch = allAssets.where(
-        (p) => p.startsWith(areaPrefix) && p.endsWith('/$id.json'),
-      ).toList();
-      if (areaMatch.isNotEmpty) {
-        final raw = await rootBundle.loadString(areaMatch.first);
-        return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+      for (var i = 0; i < allAssets.length; i++) {
+        final original = allAssets[i];
+        final np = normalize(original);
+        if (np.startsWith(areaPrefix) && np.endsWith('/$id.json')) {
+          final raw = await rootBundle.loadString(original);
+          return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+        }
       }
 
       // 3b. Full search across all board areas.
       final boardsPrefix = 'lib/data/boards/';
-      final globalMatch = allAssets.where(
-        (p) => p.startsWith(boardsPrefix) && p.endsWith('/$id.json'),
-      ).toList();
-      if (globalMatch.isNotEmpty) {
-        final raw = await rootBundle.loadString(globalMatch.first);
-        return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+      for (var i = 0; i < allAssets.length; i++) {
+        final original = allAssets[i];
+        final np = normalize(original);
+        if (np.startsWith(boardsPrefix) && np.endsWith('/$id.json')) {
+          final raw = await rootBundle.loadString(original);
+          return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+        }
       }
     } catch (_) {}
     return null;
@@ -3634,6 +3662,8 @@ class BoardService {
   /// from the asset bundle back into local storage so the user's previous
   /// edits remain visible.
   Future<void> _ensureProjectBoardsFromAssets() async {
+    // On web, do not bulk-cache prebuilt boards in localStorage; load on demand.
+    if (kIsWeb) return;
     try {
       // In native dev mode, read directly from disk JSON files so edits
       // take effect immediately on next launch without a full rebuild.
@@ -3723,7 +3753,10 @@ class BoardService {
   }
 
   String _boardFolderName(String name) {
-    return name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim();
+    return name
+        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
+        .replaceAll(RegExp(r'[. ]+$'), '')
+        .trim();
   }
 
   Future<File> _projectJsonFileForBoard(Board board) async {

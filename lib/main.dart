@@ -43,6 +43,8 @@ const int defaultBoardColumns = 5;
 
 enum AppMode {
   home,
+  legends,
+  recipes,
   sign,
   school,
   mySchool,
@@ -428,7 +430,7 @@ class _HomePageState extends State<HomePage> {
     'Sad', 'Mad', 'Scared', 'Joyful', 'Strong', 'Calm',
     'Shades Of Colours',
     'Adjectives', 'Phonics', 'Phase 2 Phonics', 'Phase 3 Phonics', 'Phase 4 Phonics', 'Phase 5 Phonics', 'Phase 6 Phonics',
-    'School People', 'Characters', 'Jobs & Careers',
+    'School People', 'Jobs & Careers',
     'Buildings', 'Rooms & Home', 'Furniture', 'Habitats', 'Local Places',
     'Mammals', 'Birds', 'Reptiles', 'Amphibians', 'Insects', 'Arachnids', 'Invertebrates', 'Fish', 'Sealife', 'Nature Vocabulary', 'Body Parts Of Animals', 'Child Animals', 'Groups Of Animals',
     'A (Sign)', 'B (Sign)', 'C (Sign)', 'D (Sign)', 'E (Sign)', 'F (Sign)',
@@ -469,11 +471,8 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
       boardService.setCurrentProfileId(_activeProfile?.id ?? 'default');
 
-      await _loadBoards();
-      
-      // One-time startup migration: scan all boards and add mismatched
-      // tile labels as search tags for their images.
-      _migrateTileLabelsToImageTags();
+      await _loadBoards(area: 'Common');
+      if (!mounted) return;
 
       // Determine initial mode and tab based on profile starting board setting
       final startingBoardId = _activeProfile?.startingBoardId ?? '';
@@ -484,6 +483,14 @@ class _HomePageState extends State<HomePage> {
       }
       
       _buildTabs();
+
+      // Load remaining areas in the background so the Common boards appear fast.
+      _loadBoards().then((_) {
+        if (mounted) _buildTabs();
+        _migrateTileLabelsToImageTags();
+      }).catchError((e) {
+        debugPrint('Error loading remaining boards: $e');
+      });
 
       _boardScrollController.addListener(() {
         // Requirement: Make the scroll to top button less sensitive
@@ -511,6 +518,8 @@ class _HomePageState extends State<HomePage> {
     final board = _boards.cast<Board?>().firstWhere((b) => b?.id == boardId, orElse: () => null);
     if (board == null) return AppMode.home;
     final area = board.area;
+    if (area == 'Legends') return AppMode.legends;
+    if (area == 'Recipes') return AppMode.recipes;
     if (area == 'My School') return AppMode.mySchool;
     if (area == 'Sign') return AppMode.sign;
     if (area == 'Subject Vocab') return AppMode.school;
@@ -535,9 +544,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> _loadBoards() async {
+  Future<void> _loadBoards({String? area}) async {
     final service = await BoardService.getInstance();
-    _boards = await service.listBoards();
+    _boards = await service.listBoards(area: area);
     _buildTabs();
   }
 
@@ -564,6 +573,15 @@ class _HomePageState extends State<HomePage> {
       debugPrint('Migration: synced tile labels to image tags for ${boards.length} boards');
     } catch (e) {
       debugPrint('Error during tile-label-to-image-tag migration: $e');
+    }
+  }
+
+  String _sanitizeIconAssetPath(String path) {
+    try {
+      // Decode twice to undo accidental double-encoding (e.g. %2520 -> space).
+      return Uri.decodeFull(Uri.decodeFull(path));
+    } catch (_) {
+      return path;
     }
   }
 
@@ -668,7 +686,6 @@ class _HomePageState extends State<HomePage> {
       'Phase 5 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 5.png',
       'Phase 6 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 6.png',
       'School People': 'assets/symbols/BOARDS/People At School.png',
-      'Characters': 'assets/symbols/BOARDS/English/Characters.png',
       'Mammals': 'assets/symbols/BOARDS/Animals/Mammals.png',
       'Birds': 'assets/symbols/BOARDS/Animals/Birds.png',
       'Reptiles': 'assets/symbols/BOARDS/Animals/Reptiles.png',
@@ -721,19 +738,27 @@ class _HomePageState extends State<HomePage> {
 
       // PERSONAL mode icons
       'PEOPLE AT HOME': 'assets/symbols/BOARDS/Home.png',
+      'World Map': 'assets/symbols/BOARDS/Places.png',
+      'Internal Organs': 'assets/symbols/BOARDS/Body Parts.png',
     };
+
+    // Small Words child tabs use Montessori icons named after the board
+    if (board.parentBoardId == 'prebuilt_small_words') {
+      return _sanitizeIconAssetPath(
+          'assets/symbols/BOARDS/English/Montessori/${board.name}.png');
+    }
     
     // Check if we have a specific mapping for this board name
     final upperBoardName = boardName.toUpperCase();
     for (final entry in iconMappings.entries) {
       if (entry.key.toUpperCase() == upperBoardName) {
-        return entry.value;
+        return _sanitizeIconAssetPath(entry.value);
       }
     }
     
     // Fallback to dynamic path construction
     final fileName = boardName.replaceAll(' ', ' ');
-    return 'assets/symbols/BOARDS/$fileName.png';
+    return _sanitizeIconAssetPath('assets/symbols/BOARDS/$fileName.png');
   }
 
   static const _fallbackLanguages = [
@@ -811,39 +836,63 @@ class _HomePageState extends State<HomePage> {
       'Letters',
       'Numbers',
       'Feelings',
+      'Actions',
+      'People',
+      'Places',
       'Colours',
       'Prepositions',
-      'People',
-      'Animals',
-      'Actions',
-      'Places',
-      'Jobs & Careers',
-      'Weather',
       'Body Parts',
+      'Jobs & Careers',
+      'Animals',
+      'Weather',
       'Time',
       'Clothes',
-      'Transport',
-      'Money',
       'Toys',
+      'Money',
+      'Transport',
       'World Map',
+    ];
+    // Boards that belong to Legends mode (in exact order)
+    final legendsBoardNames = [
+      'Characters',
+      'Creatures & Races',
+      'Gods, Titans, Heroes & Monsters',
+      'Fairy Tale Characters',
+      'Disney Stories',
+      'D&D',
+      'Arthurian Legend',
+      'Arabian & Middle Eastern Tales',
+      'Asian Legends & Folklore',
+      'Horror Icons',
+      'Legendary Heroes & Folk Heroes',
+      'Literary & Gothic Characters',
+      'Marvel',
+      'X-Men',
+      'DC',
+      'The Muppets',
+      'Star Wars',
+      'Star Trek',
+      'The Lord Of The Rings',
+      'Computer Games',
+      'Misc',
     ];
     // Boards that belong to School mode (in order: main first)
     final schoolBoardNames = [
       'Subject Vocabulary',
-      'Lessons',
       'Better Words (Thesaurus)',
+      'Lessons',
       'Sentence Creator',
       'Small Words (Subject)',
       'Letters (Subject)',
       'Numbers (Subject)',
       'Breaktime',
       'Lunchtime',
-      'Tutor Time',
+      'Tutor Time, Events & Clubs',
       'English',
       'Maths',
       'Science',
       'T.F.L. / I.T.',
-      'P.D.',
+      'Personal Development',
       'P.E.E.P.',
       'E.P.I.C.',
       'P.E.',
@@ -859,8 +908,10 @@ class _HomePageState extends State<HomePage> {
       'Retail',
       'Photography',
       'Construction',
-      'Engineering',
       'Design Technology',
+      'Engineering',
+      'Living Life Skills',
+      'Prepare For Adulthood',
       'Hair & Beauty',
       'Health & Social Care',
       'Public Services',
@@ -895,9 +946,9 @@ class _HomePageState extends State<HomePage> {
             
         final addedHomeBoardIds = <String>{};
         for (final boardName in homeBoardNames) {
-          // Look for board by name regardless of area to allow cross-area access (case-insensitive)
+          // Look for board by name within the current area (case-insensitive)
           final board = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase(),
+            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
             orElse: () => null,
           );
           if (board != null && !board.isSubBoard) {
@@ -938,7 +989,76 @@ class _HomePageState extends State<HomePage> {
             icon: Icons.edit,
             type: TopTabType.editor));
         break;
-      
+
+      case AppMode.legends:
+        // Legends mode: Show the legend boards in the exact requested order
+        allTabs.add(TopTab(
+            id: 'favorites',
+            label: 'Favorites',
+            icon: Icons.favorite,
+            type: TopTabType.favorites));
+        final addedLegendsBoardIds = <String>{};
+        for (final boardName in legendsBoardNames) {
+          final board = _boards.cast<Board?>().firstWhere(
+            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
+            orElse: () => null,
+          );
+          if (board != null && !board.isSubBoard) {
+            allTabs.add(TopTab(
+                id: board.id,
+                label: board.name,
+                iconAssetPath: _getBoardIconPath(board),
+                type: TopTabType.board,
+                board: board));
+            addedLegendsBoardIds.add(board.id);
+          }
+        }
+        // Add any remaining boards explicitly in the Legends area
+        for (final board in _boards) {
+          if (board.area == 'Legends' &&
+              !board.isSubBoard &&
+              !addedLegendsBoardIds.contains(board.id)) {
+            allTabs.add(TopTab(
+                id: board.id,
+                label: board.name,
+                iconAssetPath: _getBoardIconPath(board),
+                type: TopTabType.board,
+                board: board));
+            addedLegendsBoardIds.add(board.id);
+          }
+        }
+        allTabs.add(TopTab(
+            id: 'legends_editor',
+            label: 'New Board',
+            icon: Icons.edit,
+            type: TopTabType.editor));
+        break;
+
+      case AppMode.recipes:
+        allTabs.add(TopTab(
+            id: 'favorites',
+            label: 'Favorites',
+            icon: Icons.favorite,
+            type: TopTabType.favorites));
+        final addedRecipesBoardIds = <String>{};
+        for (final board in _boards) {
+          if (board.area == 'Recipes' && !board.isSubBoard) {
+            allTabs.add(TopTab(
+                id: board.id,
+                label: board.name,
+                iconAssetPath: _getBoardIconPath(board),
+                type: TopTabType.board,
+                board: board));
+            addedRecipesBoardIds.add(board.id);
+          }
+        }
+        allTabs.add(TopTab(
+            id: 'recipes_editor',
+            label: 'New Board',
+            icon: Icons.edit,
+            type: TopTabType.editor));
+        break;
+
       case AppMode.sign:
         // Sign mode: Category boards for BSL/Makaton
         allTabs.add(TopTab(
@@ -948,7 +1068,7 @@ class _HomePageState extends State<HomePage> {
             type: TopTabType.favorites));
         // Add Sign as main board
         final signMainBoard = _boards.cast<Board?>().firstWhere(
-          (b) => b?.name.toLowerCase() == 'sign main',
+          (b) => b?.name.toLowerCase() == 'sign main' && b?.area == _activeArea(),
           orElse: () => null,
         );
         if (signMainBoard != null) {
@@ -964,38 +1084,38 @@ class _HomePageState extends State<HomePage> {
           'A-Z Of Sign',
           'Manners & Greetings',
           'Family & People',
-          'Animals & Nature',
-          'Transport & Vehicles',
-          'Food & Drink',
-          'Home & Household',
           'Feelings & Health',
-          'School & Instructions',
-          'Colours',
-          'Descriptions & Attributes',
-          'Prepositions',
-          'Weather',
-          'Outside',
-          'Time & Days',
           'Questions',
-          'Letters',
+          'Grammatical Elements',
+          'Prepositions',
+          'Descriptions & Attributes',
+          'Colours',
           'Numbers',
+          'Quantity & Measurement',
+          'Time & Days',
+          'Letters',
+          'Food & Drink',
           'Personal Actions',
           'Shared Activities',
-          'Leisure Activities & Interests',
-          'General Objects',
+          'Personal Hygiene',
           'Clothing & Personal',
           'Personal Possessions',
-          'Personal Hygiene',
-          'Gender & Sexuality',
-          'Places',
-          'Sport',
-          'Religion & Customs',
-          'Other Countries',
-          'Public Notices',
-          'Money',
+          'Home & Household',
+          'General Objects',
           'Computer Items',
-          'Grammatical Elements',
-          'Quantity & Measurement'
+          'School & Instructions',
+          'Leisure Activities & Interests',
+          'Sport',
+          'Animals & Nature',
+          'Weather',
+          'Outside',
+          'Places',
+          'Transport & Vehicles',
+          'Money',
+          'Public Notices',
+          'Other Countries',
+          'Religion & Customs',
+          'Gender & Sexuality'
         ];
         final addedSignBoardIds = <String>{};
         for (final boardName in signBoardNames) {
@@ -1047,9 +1167,9 @@ class _HomePageState extends State<HomePage> {
             type: TopTabType.favorites));
         final addedSchoolBoardIds = <String>{};
         for (final boardName in schoolBoardNames) {
-          // Look for board by name regardless of area to allow cross-area access
+          // Look for board by name within the current area
           final boardMatch = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase(),
+            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
             orElse: () => null,
           );
           
@@ -1094,9 +1214,9 @@ class _HomePageState extends State<HomePage> {
             type: TopTabType.favorites));
         final addedMySchoolBoardIds = <String>{};
         for (final boardName in mySchoolBoardNames) {
-          // Look for board by name regardless of area to allow cross-area access
+          // Look for board by name within the current area
           final boardMatch = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase(),
+            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
             orElse: () => null,
           );
           
@@ -1323,7 +1443,7 @@ class _HomePageState extends State<HomePage> {
     }
     
     for (final name in linkedSubBoardNames) {
-      final b = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == name.toUpperCase(), orElse: () => null);
+      final b = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == name.toUpperCase() && b?.area == board.area, orElse: () => null);
       if (b != null && seenIds.add(b.id)) {
         childrenTabs.add(TopTab(
           id: b.id,
@@ -2679,6 +2799,10 @@ class _HomePageState extends State<HomePage> {
     switch (_currentMode) {
       case AppMode.home:
         return 'Common';
+      case AppMode.legends:
+        return 'Legends';
+      case AppMode.recipes:
+        return 'Recipes';
       case AppMode.school:
         return 'Subject Vocab';
       case AppMode.sign:
@@ -3129,6 +3253,8 @@ class _HomePageState extends State<HomePage> {
                 _buildModeButton(AppMode.school, Icons.school, 'Lesson Vocab'),
                 _buildModeButton(AppMode.sign, Icons.sign_language, 'Sign'),
                 _buildModeButton(AppMode.mySchool, Icons.school, 'My School'),
+                _buildModeButton(AppMode.legends, Icons.auto_stories, 'Legends'),
+                _buildModeButton(AppMode.recipes, Icons.restaurant, 'Recipes'),
                 _buildModeButton(AppMode.personal, Icons.person, 'Personal'),
               ],
             ),

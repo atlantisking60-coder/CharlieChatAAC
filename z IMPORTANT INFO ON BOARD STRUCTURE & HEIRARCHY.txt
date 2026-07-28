@@ -1,0 +1,41 @@
+Here's the full list of files containing board structure, hierarchy, board names, and tab data:
+
+Source Of Thruth MD Files:
+Charlie Chat\MD Files\AREA_COMMON.md
+Charlie Chat\MD Files\AREA_SUBJECT_VOCAB.md
+Charlie Chat\MD Files\AREA_SIGN.md
+Charlie Chat\MD Files\AREA_MY_SCHOOL.md
+Charlie Chat\MD Files\AREA_LEGENDS.md
+Charlie Chat\MD Files\AREA_RECIPES.md
+Charlie Chat\MD Files\AREA_PERSONAL.md
+
+Generated Dart Data Files
+lib/data/board_hierarchy.dart — single source of truth for board hierarchy across all 5 areas (parent chain, tier derivation)
+lib/data/board_index.dart — all 594 board entries with id, name, area, parentBoardId, isSubBoard, sortOrder, tier, etc.
+lib/data/symbol_data.dart — all 16,572 symbol tiles with categories, labels, and asset paths
+lib/models/symbol_tile.dart — SymbolTile model (id, label, category, imageAsset)
+
+Board JSON Data (1,369 files)
+All files under lib/data/boards/ — every prebuilt_*.json and *.json contains board structure, hierarchy (parentBoardId, area, sortOrder, tier), and board names
+
+Services (Board Hierarchy Logic)
+lib/services/board_service.dart — reads/modifies board hierarchy, boardIndex, allSymbolTiles, boardHierarchy
+
+Tab Navigation / App Shell
+lib/main.dart — contains TabBar for the top-level app tabs
+lib/widgets/aac_home_screen.dart — AAC home screen with board grid
+lib/core/routes/app_router.dart — app routing (Scaffold hosts)
+
+Board Editor / Structure UI
+lib/widgets/board_editor.dart — board structure editor with hierarchy and parentBoardId
+lib/widgets/board_archive_browser.dart — archived board browser
+lib/widgets/settings/settings_shell.dart — settings shell with tab navigation
+lib/widgets/settings/sections/manage_boards_section.dart — board hierarchy management (reorder, move, parentBoardId)
+
+Generation Tools
+tools/generate_board_index.py — generates board_index.dart from JSON data
+tools/generate_symbol_data.py — generates symbol_data.dart from png assets
+tools/dev_save_server.dart — dev server that writes hierarchy edits to board_hierarchy.dart
+
+Board Audit / Structure Tools
+tools/audit_jsons.py, tools/check_dups.py, tools/check_keys.py, tools/check_missing_images.py, tools/fix_parents.py, tools/restructure_boards.py, tools/setup_characters_parent.py, tools/fix_boards2.py, tools/fix_disney.py, tools/fix_json_images.py, tools/update_legends_boards.py, tools/final_legends_update.py, tools/inspect_legends.py, tools/copy_back_fix.py, tools/check_self_parents.py, tools/check_orig.py, tools/check_phase_tiles.py, tools/count_sign_images.py, tools/list_root_jsons.py, tools/remove_strays.py, tools/restore_phonics.py, tools/rebuild_lessons.py

@@ -1,0 +1,241 @@
+=============================================
+  Charlie Chat - Web Live Preview Error Log
+=============================================
+Session started: 29/07/2026  0:04:24.41
+---------------------------------------------
+
+=============================================
+  Charlie Chat  |  Web Live Preview
+=============================================
+
+Starting Flutter web server with hot reload...
+Session: 29/07/2026  0:04:24.41
+
+[INFO] Flutter found: C:\Users\Craig\flutter\bin\flutter.bat
+[INFO] Dart found: C:\Users\Craig\flutter\bin\cache\dart-sdk\bin\dart.exe
+[1/4] Running flutter clean ...
+Deleting .dart_tool...                                               2ms
+Deleting ephemeral...                                                3ms
+Deleting Generated.xcconfig...                                       0ms
+Deleting flutter_export_environment.sh...                            0ms
+Deleting ephemeral...                                                4ms
+Deleting .flutter-plugins-dependencies...                            0ms
+[1/4] Running flutter pub get ...
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 99.0.0 (105.0.0 available)
+  analyzer 12.1.0 (14.1.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.0 available)
+  hooks 2.0.2 (2.1.0 available)
+  image 4.8.0 (4.9.1 available)
+  matcher 0.12.19 (0.12.20 available)
+  meta 1.18.0 (1.19.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  record_use 0.6.0 (1.0.0 available)
+  test 1.31.0 (1.31.2 available)
+  test_api 0.7.11 (0.7.13 available)
+  test_core 0.6.17 (0.6.19 available)
+  vector_math 2.2.0 (2.4.1 available)
+  xml 6.6.1 (7.0.1 available)
+Got dependencies!
+14 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+[1/4] flutter pub get succeeded.
+[2/4] Cleaning up stale ports (8080, 8787)...
+[CLEANUP] Killing PID 1928 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 9068 on port 8080
+[CLEANUP] Killing PID 5064 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 4860 on port 8080
+[CLEANUP] Killing PID 1736 on port 8080
+[CLEANUP] Killing PID 1524 on port 8080
+[CLEANUP] Killing PID 2408 on port 8080
+[CLEANUP] Killing PID 3136 on port 8080
+[CLEANUP] Killing PID 4124 on port 8080
+[CLEANUP] Killing PID 1620 on port 8080
+[CLEANUP] Killing PID 13912 on port 8080
+[CLEANUP] Killing PID 31780 on port 8080
+[CLEANUP] Killing PID 13912 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 1928 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 5064 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 4860 on port 8080
+[CLEANUP] Killing PID 1736 on port 8080
+[CLEANUP] Killing PID 1524 on port 8080
+[CLEANUP] Killing PID 2408 on port 8080
+[CLEANUP] Killing PID 3136 on port 8080
+[CLEANUP] Killing PID 4124 on port 8080
+[CLEANUP] Killing PID 1620 on port 8080
+[CLEANUP] Killing PID 1928 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 9068 on port 8787
+[CLEANUP] Killing PID 5064 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 4860 on port 8787
+[CLEANUP] Killing PID 1736 on port 8787
+[CLEANUP] Killing PID 1524 on port 8787
+[CLEANUP] Killing PID 2408 on port 8787
+[CLEANUP] Killing PID 3136 on port 8787
+[CLEANUP] Killing PID 4124 on port 8787
+[CLEANUP] Killing PID 1620 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 1928 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 5064 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 4860 on port 8787
+[CLEANUP] Killing PID 1736 on port 8787
+[CLEANUP] Killing PID 1524 on port 8787
+[CLEANUP] Killing PID 2408 on port 8787
+[CLEANUP] Killing PID 3136 on port 8787
+[CLEANUP] Killing PID 4124 on port 8787
+[CLEANUP] Killing PID 1620 on port 8787
+[2/4] Port cleanup complete.
+[3/4] Launching Dev Save Server (via tee script)...
+[3/4] Symbols folder detected.
+[4/4] Starting Flutter Web Server...
+---------------------------------------------
+  Flutter run output begins below
+---------------------------------------------
+
+Resolving dependencies...
+Charlie Chat dev save server listening on http://localhost:8787
+Project root: C:\Users\Craig\Downloads\Charlie Chat
+Board edits will be saved to their respective nested subdirectories in lib/data/boards/
+Downloading packages...
+  _fe_analyzer_shared 99.0.0 (105.0.0 available)
+  analyzer 12.1.0 (14.1.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.0 available)
+  hooks 2.0.2 (2.1.0 available)
+  image 4.8.0 (4.9.1 available)
+  matcher 0.12.19 (0.12.20 available)
+  meta 1.18.0 (1.19.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  record_use 0.6.0 (1.0.0 available)
+  test 1.31.0 (1.31.2 available)
+  test_api 0.7.11 (0.7.13 available)
+  test_core 0.6.17 (0.6.19 available)
+  vector_math 2.2.0 (2.4.1 available)
+  xml 6.6.1 (7.0.1 available)
+Got dependencies!
+14 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching lib\main.dart on Chrome in debug mode...
+
+Oops; flutter has exited unexpectedly: "Null check operator used on a null value".
+A crash report has been written to C:\Users\Craig\Downloads\Charlie Chat\flutter_10.log
+This crash may already be reported. Check GitHub for similar crashes.
+https://github.com/flutter/flutter/issues?q=is%3Aissue+Null+check+operator+used+on+a+null+value
+
+To report your crash to the Flutter team, first read the guide to filing a bug.
+https://flutter.dev/to/report-bugs
+
+Create a new GitHub issue by pasting this link into your browser and completing the issue template. Thank you!
+https://github.com/flutter/flutter/issues/new?title=%5Btool_crash%5D+_TypeError%3A+%28%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%29&body=%23%23+Command%0A%60%60%60sh%0Aflutter+run+-d+chrome+--web-port%3D8080+--hot+--web-hostname%3Dlocalhost%0A%60%60%60%0A%0A%23%23+Steps+to+Reproduce%0A1.+...%0A2.+...%0A3.+...%0A%0A%23%23+Logs%0A_TypeError%3A+%28%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%29%0A%60%60%60console%0A%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%0A%231++++++loadDwdsDirectory+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fweb_server_utilities.dart%3A36%3A45%29%0A%232++++++WebAssetServer.start+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fweb_asset_server.dart%3A329%3A39%29%0A%3Casynchronous+suspension%3E%0A%233++++++WebDevFS.create+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fdevfs_web.dart%3A205%3A22%29%0A%3Casynchronous+suspension%3E%0A%234++++++ResidentWebRunner.run.%3Canonymous+closure%3E+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fresident_web_runner.dart%3A324%3A19%29%0A%3Casynchronous+suspension%3E%0A%235++++++asyncGuard.%3Canonymous+closure%3E+%28package%3Aflutter_tools%2Fsrc%2Fbase%2Fasync_guard.dart%3A108%3A24%29%0A%3Casynchronous+suspension%3E%0A%60%60%60%0A%60%60%60console%0A%5B%E2%9C%93%5D+Flutter+%28Channel+stable%2C+3.44.0%2C+on+Microsoft+Windows+%5BVersion+10.0.26200.8894%5D%2C+locale+en-GB%29+%5B502ms%5D%0A++++%E2%80%A2+Flutter+version+3.44.0+on+channel+stable+at+C%3A%5CUsers%5CCraig%5Cflutter%0A++++%E2%80%A2+Upstream+repository+https%3A%2F%2Fgithub.com%2Fflutter%2Fflutter.git%0A++++%E2%80%A2+Framework+revision+559ffa3f75+%282+months+ago%29%2C+2026-05-15+14%3A13%3A13+-0700%0A++++%E2%80%A2+Engine+revision+4c525dac5e%0A++++%E2%80%A2+Dart+version+3.12.0%0A++++%E2%80%A2+DevTools+version+2.57.0%0A++++%E2%80%A2+Feature+flags%3A+enable-web%2C+enable-linux-desktop%2C+enable-macos-desktop%2C+enable-windows-desktop%2C+enable-android%2C+enable-ios%2C+cli-animations%2C+enable-native-assets%2C+enable-swift-package-manager%2C+omit-legacy-version-file%2C+enable-lldb-debugging%2C+enable-uiscene-migration%0A%0A%5B%21%5D+Windows+Version+%28Problem+detected+with+Windows+installation%29+%5B816ms%5D%0A++++%21+Get-Process+failed+to+complete%0A%0A%5B%E2%9C%93%5D+Android+toolchain+-+develop+for+Android+devices+%28Android+SDK+version+37.0.0%29+%5B2.8s%5D%0A++++%E2%80%A2+Android+SDK+at+C%3A%5CUsers%5CCraig%5CAppData%5CLocal%5CAndroid%5Csdk%0A++++%E2%80%A2+Emulator+version+36.6.11.0+%28build_id+15507667%29+%28CL%3AN%2FA%29%0A++++%E2%80%A2+Platform+android-CinnamonBun-ext23%2C+build-tools+37.0.0%0A++++%E2%80%A2+Java+binary+at%3A+C%3A%5CProgram+Files%5CAndroid%5CAndroid+Studio%5Cjbr%5Cbin%5Cjava%0A++++++This+is+the+JDK+bundled+with+the+latest+Android+Studio+installation+on+this+machine.%0A++++++To+manually+set+the+JDK+path%2C+use%3A+%60flutter+config+--jdk-dir%3D%22path%2Fto%2Fjdk%22%60.%0A++++%E2%80%A2+Java+version+OpenJDK+Runtime+Environment+%28build+21.0.10%2B-14961533-b1163.108%29%0D%0A++++%E2%80%A2+All+Android+licenses+accepted.%0A%0A%5B%E2%9C%93%5D+Chrome+-+develop+for+the+web+%5B170ms%5D%0A++++%E2%80%A2+Chrome+at+C%3A%5CProgram+Files+%28x86%29%5CGoogle%5CChrome%5CApplication%5Cchrome.exe%0A%0A%5B%E2%9C%93%5D+Visual+Studio+-+develop+Windows+apps+%28Visual+Studio+Build+Tools+2026+18.6.2%29+%5B168ms%5D%0A++++%E2%80%A2+Visual+Studio+at+C%3A%5CProgram+Files+%28x86%29%5CMicrosoft+Visual+Studio%5C18%5CBuildTools%0A++++%E2%80%A2+Visual+Studio+Build+Tools+2026+version+18.6.11822.322%0A++++%E2%80%A2+Windows+10+SDK+version+10.0.26100.0%0A%0A%5B%E2%9C%93%5D+Connected+device+%283+available%29+%5B2.3s%5D%0A++++%E2%80%A2+Windows+%28desktop%29+%E2%80%A2+windows+%E2%80%A2+windows-x64++++%E2%80%A2+Microsoft+Windows+%5BVersion+10.0.26200.8894%5D%0A++++%E2%80%A2+Chrome+%28web%29++++++%E2%80%A2+chrome++%E2%80%A2+web-javascript+%E2%80%A2+Google+Chrome+150.0.7871.187%0A++++%E2%80%A2+Edge+%28web%29++++++++%E2%80%A2+edge++++%E2%80%A2+web-javascript+%E2%80%A2+Microsoft+Edge+150.0.4078.99%0A%0A%5B%E2%9C%93%5D+Network+resources+%5B573ms%5D%0A++++%E2%80%A2+All+expected+network+resources+are+available.%0A%0A%21+Doctor+found+issues+in+1+category.%0A%0A%60%60%60%0A%0A%23%23+Flutter+Application+Metadata%0A%2A%2AType%2A%2A%3A+app%0A%2A%2AVersion%2A%2A%3A+0.1.0%2B1%0A%2A%2AMaterial%2A%2A%3A+true%0A%2A%2AAndroid+X%2A%2A%3A+false%0A%2A%2AModule%2A%2A%3A+false%0A%2A%2APlugin%2A%2A%3A+false%0A%2A%2AAndroid+package%2A%2A%3A+null%0A%2A%2AiOS+bundle+identifier%2A%2A%3A+null%0A%2A%2ACreation+channel%2A%2A%3A+stable%0A%2A%2ACreation+framework+version%2A%2A%3A+559ffa3f75e7402d65a8def9c28389a9b2e6fe42%0A%23%23%23+Plugins%0Aaudioplayers_darwin-6.5.0%0Aconnectivity_plus-7.3.1%0Afile_picker-12.0.0-beta.7%0Afirebase_auth-6.5.6%0Afirebase_core-4.12.1%0Aflutter_secure_storage_darwin-0.3.2%0Aflutter_tts-4.2.5%0Agoogle_mlkit_commons-0.12.0%0Agoogle_mlkit_text_recognition-0.16.0%0Agoogle_sign_in_ios-6.3.0%0Aimage_picker_ios-0.8.13%2B6%0Apath_provider_foundation-2.6.0%0Arecord_ios-2.1.1%0Ashare_plus-13.3.0%0Ashared_preferences_foundation-2.5.6%0Asign_in_with_apple-8.1.0%0Aurl_launcher_ios-6.4.1%0Aaudioplayers_android-5.3.0%0Adesktop_drop-0.7.1%0Aflutter_plugin_android_lifecycle-2.0.35%0Aflutter_secure_storage-10.3.1%0Agoogle_sign_in_android-7.2.15%0Aimage_picker_android-0.8.13%2B19%0Ajni-1.0.2%0Ajni_flutter-1.0.2%0Apath_provider_android-2.3.1%0Arecord_android-2.1.2%0Ashared_preferences_android-2.4.27%0Aurl_launcher_android-6.3.32%0Afile_selector_macos-0.9.5%0Aimage_picker_macos-0.2.2%2B1%0Arecord_macos-2.1.1%0Aurl_launcher_macos-3.2.5%0Aaudioplayers_linux-4.3.0%0Afile_selector_linux-0.9.4%0Aflutter_secure_storage_linux-3.0.1%0Aimage_picker_linux-0.2.2%0Apath_provider_linux-2.2.2%0Arecord_linux-2.1.1%0Ashared_preferences_linux-2.4.1%0Aurl_launcher_linux-3.2.2%0Aaudioplayers_windows-4.4.1%0Afile_selector_windows-0.9.3%2B5%0Aflutter_secure_storage_windows-4.2.2%0Aimage_picker_windows-0.2.2%0Apath_provider_windows-2.3.0%0Arecord_windows-2.2.2%0Ashared_preferences_windows-2.4.1%0Aurl_launcher_windows-3.1.5%0Aaudioplayers_web-5.3.0%0Afirebase_auth_web-6.2.5%0Afirebase_core_web-3.9.1%0Aflutter_secure_storage_web-2.1.1%0Agoogle_sign_in_web-1.1.3%0Aimage_picker_for_web-3.1.1%0Arecord_web-2.1.1%0Ashared_preferences_web-2.4.3%0Asign_in_with_apple_web-3.0.0%0Aurl_launcher_web-2.4.3%0A%0A&labels=tool%2Csevere%3A+crash
+
+Running build hooks...Running build hooks...
+
+[FATAL] Chrome launch failed. Falling back to web-server mode...
+
+Resolving dependencies...
+Charlie Chat dev save server listening on http://localhost:8787
+Project root: C:\Users\Craig\Downloads\Charlie Chat
+Board edits will be saved to their respective nested subdirectories in lib/data/boards/
+Downloading packages...
+  _fe_analyzer_shared 99.0.0 (105.0.0 available)
+  analyzer 12.1.0 (14.1.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.0 available)
+  hooks 2.0.2 (2.1.0 available)
+  image 4.8.0 (4.9.1 available)
+  matcher 0.12.19 (0.12.20 available)
+  meta 1.18.0 (1.19.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  record_use 0.6.0 (1.0.0 available)
+  test 1.31.0 (1.31.2 available)
+  test_api 0.7.11 (0.7.13 available)
+  test_core 0.6.17 (0.6.19 available)
+  vector_math 2.2.0 (2.4.1 available)
+  xml 6.6.1 (7.0.1 available)
+Got dependencies!
+14 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching lib\main.dart on Web Server in debug mode...
+
+Oops; flutter has exited unexpectedly: "Null check operator used on a null value".
+A crash report has been written to C:\Users\Craig\Downloads\Charlie Chat\flutter_11.log
+This crash may already be reported. Check GitHub for similar crashes.
+https://github.com/flutter/flutter/issues?q=is%3Aissue+Null+check+operator+used+on+a+null+value
+
+To report your crash to the Flutter team, first read the guide to filing a bug.
+https://flutter.dev/to/report-bugs
+
+Create a new GitHub issue by pasting this link into your browser and completing the issue template. Thank you!
+https://github.com/flutter/flutter/issues/new?title=%5Btool_crash%5D+_TypeError%3A+%28%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%29&body=%23%23+Command%0A%60%60%60sh%0Aflutter+run+-d+web-server+--web-port%3D8080+--hot+--web-hostname%3Dlocalhost%0A%60%60%60%0A%0A%23%23+Steps+to+Reproduce%0A1.+...%0A2.+...%0A3.+...%0A%0A%23%23+Logs%0A_TypeError%3A+%28%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%29%0A%60%60%60console%0A%230++++++currentPackageConfig+%28package%3Aflutter_tools%2Fsrc%2Fdart%2Fpackage_map.dart%3A16%3A56%29%0A%231++++++loadDwdsDirectory+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fweb_server_utilities.dart%3A36%3A45%29%0A%232++++++WebAssetServer.start+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fweb_asset_server.dart%3A329%3A39%29%0A%3Casynchronous+suspension%3E%0A%233++++++WebDevFS.create+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fdevfs_web.dart%3A205%3A22%29%0A%3Casynchronous+suspension%3E%0A%234++++++ResidentWebRunner.run.%3Canonymous+closure%3E+%28package%3Aflutter_tools%2Fsrc%2Fisolated%2Fresident_web_runner.dart%3A324%3A19%29%0A%3Casynchronous+suspension%3E%0A%235++++++asyncGuard.%3Canonymous+closure%3E+%28package%3Aflutter_tools%2Fsrc%2Fbase%2Fasync_guard.dart%3A108%3A24%29%0A%3Casynchronous+suspension%3E%0A%60%60%60%0A%60%60%60console%0A%5B%E2%9C%93%5D+Flutter+%28Channel+stable%2C+3.44.0%2C+on+Microsoft+Windows+%5BVersion+10.0.26200.8894%5D%2C+locale+en-GB%29+%5B484ms%5D%0A++++%E2%80%A2+Flutter+version+3.44.0+on+channel+stable+at+C%3A%5CUsers%5CCraig%5Cflutter%0A++++%E2%80%A2+Upstream+repository+https%3A%2F%2Fgithub.com%2Fflutter%2Fflutter.git%0A++++%E2%80%A2+Framework+revision+559ffa3f75+%282+months+ago%29%2C+2026-05-15+14%3A13%3A13+-0700%0A++++%E2%80%A2+Engine+revision+4c525dac5e%0A++++%E2%80%A2+Dart+version+3.12.0%0A++++%E2%80%A2+DevTools+version+2.57.0%0A++++%E2%80%A2+Feature+flags%3A+enable-web%2C+enable-linux-desktop%2C+enable-macos-desktop%2C+enable-windows-desktop%2C+enable-android%2C+enable-ios%2C+cli-animations%2C+enable-native-assets%2C+enable-swift-package-manager%2C+omit-legacy-version-file%2C+enable-lldb-debugging%2C+enable-uiscene-migration%0A%0A%5B%21%5D+Windows+Version+%28Problem+detected+with+Windows+installation%29+%5B911ms%5D%0A++++%21+Get-Process+failed+to+complete%0A%0A%5B%E2%9C%93%5D+Android+toolchain+-+develop+for+Android+devices+%28Android+SDK+version+37.0.0%29+%5B2.7s%5D%0A++++%E2%80%A2+Android+SDK+at+C%3A%5CUsers%5CCraig%5CAppData%5CLocal%5CAndroid%5Csdk%0A++++%E2%80%A2+Emulator+version+36.6.11.0+%28build_id+15507667%29+%28CL%3AN%2FA%29%0A++++%E2%80%A2+Platform+android-CinnamonBun-ext23%2C+build-tools+37.0.0%0A++++%E2%80%A2+Java+binary+at%3A+C%3A%5CProgram+Files%5CAndroid%5CAndroid+Studio%5Cjbr%5Cbin%5Cjava%0A++++++This+is+the+JDK+bundled+with+the+latest+Android+Studio+installation+on+this+machine.%0A++++++To+manually+set+the+JDK+path%2C+use%3A+%60flutter+config+--jdk-dir%3D%22path%2Fto%2Fjdk%22%60.%0A++++%E2%80%A2+Java+version+OpenJDK+Runtime+Environment+%28build+21.0.10%2B-14961533-b1163.108%29%0D%0A++++%E2%80%A2+All+Android+licenses+accepted.%0A%0A%5B%E2%9C%93%5D+Chrome+-+develop+for+the+web+%5B159ms%5D%0A++++%E2%80%A2+Chrome+at+C%3A%5CProgram+Files+%28x86%29%5CGoogle%5CChrome%5CApplication%5Cchrome.exe%0A%0A%5B%E2%9C%93%5D+Visual+Studio+-+develop+Windows+apps+%28Visual+Studio+Build+Tools+2026+18.6.2%29+%5B158ms%5D%0A++++%E2%80%A2+Visual+Studio+at+C%3A%5CProgram+Files+%28x86%29%5CMicrosoft+Visual+Studio%5C18%5CBuildTools%0A++++%E2%80%A2+Visual+Studio+Build+Tools+2026+version+18.6.11822.322%0A++++%E2%80%A2+Windows+10+SDK+version+10.0.26100.0%0A%0A%5B%E2%9C%93%5D+Connected+device+%284+available%29+%5B215ms%5D%0A++++%E2%80%A2+Windows+%28desktop%29+%E2%80%A2+windows++++%E2%80%A2+windows-x64++++%E2%80%A2+Microsoft+Windows+%5BVersion+10.0.26200.8894%5D%0A++++%E2%80%A2+Web+Server+%28web%29++%E2%80%A2+web-server+%E2%80%A2+web-javascript+%E2%80%A2+Flutter+Tools%0A++++%E2%80%A2+Chrome+%28web%29++++++%E2%80%A2+chrome+++++%E2%80%A2+web-javascript+%E2%80%A2+Google+Chrome+150.0.7871.187%0A++++%E2%80%A2+Edge+%28web%29++++++++%E2%80%A2+edge+++++++%E2%80%A2+web-javascript+%E2%80%A2+Microsoft+Edge+150.0.4078.99%0A%0A%5B%E2%9C%93%5D+Network+resources+%5B211ms%5D%0A++++%E2%80%A2+All+expected+network+resources+are+available.%0A%0A%21+Doctor+found+issues+in+1+category.%0A%0A%60%60%60%0A%0A%23%23+Flutter+Application+Metadata%0A%2A%2AType%2A%2A%3A+app%0A%2A%2AVersion%2A%2A%3A+0.1.0%2B1%0A%2A%2AMaterial%2A%2A%3A+true%0A%2A%2AAndroid+X%2A%2A%3A+false%0A%2A%2AModule%2A%2A%3A+false%0A%2A%2APlugin%2A%2A%3A+false%0A%2A%2AAndroid+package%2A%2A%3A+null%0A%2A%2AiOS+bundle+identifier%2A%2A%3A+null%0A%2A%2ACreation+channel%2A%2A%3A+stable%0A%2A%2ACreation+framework+version%2A%2A%3A+559ffa3f75e7402d65a8def9c28389a9b2e6fe42%0A%23%23%23+Plugins%0Aaudioplayers_darwin-6.5.0%0Aconnectivity_plus-7.3.1%0Afile_picker-12.0.0-beta.7%0Afirebase_auth-6.5.6%0Afirebase_core-4.12.1%0Aflutter_secure_storage_darwin-0.3.2%0Aflutter_tts-4.2.5%0Agoogle_mlkit_commons-0.12.0%0Agoogle_mlkit_text_recognition-0.16.0%0Agoogle_sign_in_ios-6.3.0%0Aimage_picker_ios-0.8.13%2B6%0Apath_provider_foundation-2.6.0%0Arecord_ios-2.1.1%0Ashare_plus-13.3.0%0Ashared_preferences_foundation-2.5.6%0Asign_in_with_apple-8.1.0%0Aurl_launcher_ios-6.4.1%0Aaudioplayers_android-5.3.0%0Adesktop_drop-0.7.1%0Aflutter_plugin_android_lifecycle-2.0.35%0Aflutter_secure_storage-10.3.1%0Agoogle_sign_in_android-7.2.15%0Aimage_picker_android-0.8.13%2B19%0Ajni-1.0.2%0Ajni_flutter-1.0.2%0Apath_provider_android-2.3.1%0Arecord_android-2.1.2%0Ashared_preferences_android-2.4.27%0Aurl_launcher_android-6.3.32%0Afile_selector_macos-0.9.5%0Aimage_picker_macos-0.2.2%2B1%0Arecord_macos-2.1.1%0Aurl_launcher_macos-3.2.5%0Aaudioplayers_linux-4.3.0%0Afile_selector_linux-0.9.4%0Aflutter_secure_storage_linux-3.0.1%0Aimage_picker_linux-0.2.2%0Apath_provider_linux-2.2.2%0Arecord_linux-2.1.1%0Ashared_preferences_linux-2.4.1%0Aurl_launcher_linux-3.2.2%0Aaudioplayers_windows-4.4.1%0Afile_selector_windows-0.9.3%2B5%0Aflutter_secure_storage_windows-4.2.2%0Aimage_picker_windows-0.2.2%0Apath_provider_windows-2.3.0%0Arecord_windows-2.2.2%0Ashared_preferences_windows-2.4.1%0Aurl_launcher_windows-3.1.5%0Aaudioplayers_web-5.3.0%0Afirebase_auth_web-6.2.5%0Afirebase_core_web-3.9.1%0Aflutter_secure_storage_web-2.1.1%0Agoogle_sign_in_web-1.1.3%0Aimage_picker_for_web-3.1.1%0Arecord_web-2.1.1%0Ashared_preferences_web-2.4.3%0Asign_in_with_apple_web-3.0.0%0Aurl_launcher_web-2.4.3%0A%0A&labels=tool%2Csevere%3A+crash
+
+Running build hooks...Running build hooks...
+
+[CLEANUP] Killing remaining processes on ports 8080, 8787...
+[CLEANUP] Killing PID 1928 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 9068 on port 8080
+[CLEANUP] Killing PID 5064 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 4860 on port 8080
+[CLEANUP] Killing PID 1736 on port 8080
+[CLEANUP] Killing PID 1524 on port 8080
+[CLEANUP] Killing PID 2408 on port 8080
+[CLEANUP] Killing PID 3136 on port 8080
+[CLEANUP] Killing PID 4124 on port 8080
+[CLEANUP] Killing PID 1620 on port 8080
+[CLEANUP] Killing PID 25960 on port 8080
+[CLEANUP] Killing PID 26880 on port 8080
+[CLEANUP] Killing PID 16916 on port 8080
+[CLEANUP] Killing PID 26880 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 1928 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 5064 on port 8080
+[CLEANUP] Skipping protected PID 4 on port 8080
+[CLEANUP] Killing PID 4860 on port 8080
+[CLEANUP] Killing PID 1736 on port 8080
+[CLEANUP] Killing PID 1524 on port 8080
+[CLEANUP] Killing PID 2408 on port 8080
+[CLEANUP] Killing PID 3136 on port 8080
+[CLEANUP] Killing PID 4124 on port 8080
+[CLEANUP] Killing PID 1620 on port 8080
+[CLEANUP] Killing PID 1928 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 9068 on port 8787
+[CLEANUP] Killing PID 5064 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 4860 on port 8787
+[CLEANUP] Killing PID 1736 on port 8787
+[CLEANUP] Killing PID 1524 on port 8787
+[CLEANUP] Killing PID 2408 on port 8787
+[CLEANUP] Killing PID 3136 on port 8787
+[CLEANUP] Killing PID 4124 on port 8787
+[CLEANUP] Killing PID 1620 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 1928 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 5064 on port 8787
+[CLEANUP] Skipping protected PID 4 on port 8787
+[CLEANUP] Killing PID 4860 on port 8787
+[CLEANUP] Killing PID 1736 on port 8787
+[CLEANUP] Killing PID 1524 on port 8787
+[CLEANUP] Killing PID 2408 on port 8787
+[CLEANUP] Killing PID 3136 on port 8787
+[CLEANUP] Killing PID 4124 on port 8787
+[CLEANUP] Killing PID 1620 on port 8787
+[CLEANUP] Done.
+
+---------------------------------------------
+  Session ended: 29/07/2026  0:05:01.18
+---------------------------------------------

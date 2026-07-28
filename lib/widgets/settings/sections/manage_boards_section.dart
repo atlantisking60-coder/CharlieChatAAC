@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:ui' as ui;
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:path/path.dart' as p;
-import 'package:web/web.dart' as web;
 import '../../../models/symbol_tile.dart';
 import '../../../services/board_service.dart';
-import '../../../services/filesystem_access.dart' as fsa;
 import '../../../services/settings_service.dart';
 import '../../external_symbol_search.dart';
-import '../../symbol_grid.dart';
 import '../settings_widgets.dart';
 
 class ManageBoardsSection extends StatefulWidget {
@@ -35,6 +25,8 @@ class BoardShortcut {
 class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   List<Board> _allBoardsPool = [];
   List<dynamic> _hierarchyItems = [];
+  final Map<String, (int, int)> _boardPositions = {};
+  List<String> _prebuiltBoardNames = [];
   bool _loading = true;
 
   @override
@@ -47,6 +39,8 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     setState(() => _loading = true);
     final service = await BoardService.getInstance();
     _allBoardsPool = await service.listBoards();
+    _prebuiltBoardNames = prebuiltBoardNames;
+    _computeBoardPositions();
     if (mounted) {
       setState(() {
         _hierarchyItems = _sortItemsHierarchically(_allBoardsPool);
@@ -55,144 +49,11 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     }
   }
 
-  String _boardWordList(Board board) {
-    return board.tiles
-        .where((t) => t.label.isNotEmpty)
-        .map((t) => t.label)
-        .join('\n');
-  }
-
-  Future<void> _backupAllBoards() async {
-    try {
-      final service = await BoardService.getInstance();
-      final boards = await service.listBoards();
-
-      if (kIsWeb) {
-        if (!fsa.isSupported) {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('File System Access API is not supported in this browser. Use Chrome.')),
-            );
-          }
-          return;
-        }
-        final dirHandle = await fsa.pickDirectory();
-        if (dirHandle == null) return;
-        int count = 0;
-        for (final board in boards) {
-          final relativePath = await service.boardRelativePath(board);
-          final filePath = 'lib/data/boards/$relativePath/${board.id}.json';
-          final jsonString = JsonEncoder.withIndent('  ').convert(board.toMap());
-          await fsa.writeTextToPath(dirHandle, filePath, jsonString);
-          final wordListName = '${board.name} - Word List';
-          await fsa.writeTextToPath(dirHandle, 'lib/data/boards/$relativePath/$wordListName.txt', _boardWordList(board));
-          count++;
-        }
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Backed up $count boards')),
-          );
-        }
-      } else {
-        final selectedDir = await FilePicker.getDirectoryPath(
-          dialogTitle: 'Choose where to back up all boards',
-        );
-        if (selectedDir == null || selectedDir.isEmpty) return;
-        int count = 0;
-        for (final board in boards) {
-          final relativePath = await service.boardRelativePath(board);
-          final boardDir = Directory(p.join(selectedDir, 'lib', 'data', 'boards', relativePath));
-          await boardDir.create(recursive: true);
-          final jsonString = JsonEncoder.withIndent('  ').convert(board.toMap());
-          await File(p.join(boardDir.path, '${board.id}.json')).writeAsString(jsonString);
-          final wordListName = '${board.name} - Word List';
-          await File(p.join(boardDir.path, '$wordListName.txt')).writeAsString(_boardWordList(board));
-          final pngBytes = await _captureBoardPng(board);
-          if (pngBytes != null) {
-            final pngFileName = '${board.name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim()}.png';
-            await File(p.join(boardDir.path, pngFileName)).writeAsBytes(pngBytes);
-          }
-          count++;
-        }
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Backed up $count boards to $selectedDir')),
-          );
-        }
-      }
-    } catch (e) {
-      debugPrint('Error backing up boards: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Backup failed: $e')),
-        );
-      }
-    }
-  }
-
-  Future<List<int>?> _captureBoardPng(Board board) async {
-    try {
-      final captureKey = GlobalKey();
-      final screenWidth = MediaQuery.of(context).size.width;
-      final overlay = Overlay.of(context);
-      OverlayEntry? entry;
-      entry = OverlayEntry(builder: (ctx) {
-        return Positioned(
-          left: -10000, top: -10000,
-          child: Material(
-            type: MaterialType.transparency,
-            child: RepaintBoundary(
-              key: captureKey,
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  width: screenWidth,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      Text(board.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
-                      const SizedBox(height: 20),
-                      SymbolGrid(
-                        symbols: board.tiles,
-                        favoriteIds: const {},
-                        onTap: (_) {}, onLongPress: (_) {},
-                        fixedRows: board.rows, fixedColumns: board.columns,
-                        adjustableLayout: board.adjustableLayout,
-                        boxScale: board.boxScale,
-                        highContrast: widget.settings.highContrast,
-                        viewOnly: true, scrollable: false,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      });
-      overlay.insert(entry);
-      await Future.delayed(const Duration(milliseconds: 300));
-      final boundary = captureKey.currentContext?.findRenderObject();
-      if (boundary == null) { entry.remove(); return null; }
-      final image = await (boundary as dynamic).toImage(pixelRatio: 2.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      entry.remove();
-      if (byteData == null) return null;
-      return byteData.buffer.asUint8List();
-    } catch (e) {
-      debugPrint('Error capturing board PNG: $e');
-      return null;
-    }
-  }
-
   Future<void> _renumberAllBoards() async {
     final service = await BoardService.getInstance();
     final list = await service.listBoards();
     
-    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Personal'];
+    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Legends', 'Recipes', 'Personal'];
     for (final area in areas) {
       final roots = list.where((b) => b.area == area && !b.isSubBoard && !b.isTertiaryBoard).toList();
       for (int i = 0; i < roots.length; i++) {
@@ -219,7 +80,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   }
 
   List<dynamic> _sortItemsHierarchically(List<Board> all) {
-    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Personal'];
+    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Legends', 'Recipes', 'Personal'];
     final boardsByArea = <String, List<Board>>{};
     for (final area in areas) {
       boardsByArea[area] = [];
@@ -326,17 +187,17 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     }
 
     final combined = <dynamic>[...children, ...shortcuts];
+    final prebuiltOrder = _prebuiltBoardNames;
     combined.sort((a, b) {
       final orderA = (a is Board) ? a.sortOrder : 0;
       final orderB = (b is Board) ? b.sortOrder : 0;
       if (orderA != 0 && orderB != 0) return orderA.compareTo(orderB);
       if (orderA != 0) return -1;
       if (orderB != 0) return 1;
-      
+
       final labelA = (a is Board) ? a.name : (a as BoardShortcut).label;
       final labelB = (b is Board) ? b.name : (b as BoardShortcut).label;
 
-      final prebuiltOrder = prebuiltBoardNames;
       final aIndex = prebuiltOrder.indexOf(labelA);
       final bIndex = prebuiltOrder.indexOf(labelB);
       if (aIndex >= 0 && bIndex >= 0) return aIndex.compareTo(bIndex);
@@ -375,119 +236,22 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     return parts.join(' > ');
   }
 
-  String _getBoardIconPath(Board board) {
-    if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) return board.iconAssetPath!;
-    final iconMappings = {
-      'ANIMALS': 'assets/symbols/BOARDS/Animals/Animals.png',
-      'JOBS & CAREERS': 'assets/symbols/BOARDS/Jobs.png',
-      'TIME': 'assets/symbols/BOARDS/Time, Months, Events/Time.png',
-      'MORE BOARDS': 'assets/symbols/BOARDS/More ++.png',
-      'MORE WORDS': 'assets/symbols/BOARDS/More ++.png',
-      'SENTENCE CREATOR': 'assets/symbols/Subjects/English.png',
-      'BETTER WORDS': 'assets/symbols/Subjects/English.png',
-      'Lessons': 'assets/symbols/Subjects/Tutor Time.png',
-      'English': 'assets/symbols/Subjects/English.png',
-      'Maths': 'assets/symbols/Subjects/Maths.png',
-      'Science': 'assets/symbols/Subjects/Science.png',
-      'TFL': 'assets/symbols/Subjects/TFL.png',
-      'Personal Development': 'assets/symbols/Subjects/P.D.png',
-      'PEEP': 'assets/symbols/Subjects/PEEP.png',
-      'EPIC': 'assets/symbols/Subjects/EPIC.png',
-      'P.E.': 'assets/symbols/Subjects/P.E.png',
-      'Art': 'assets/symbols/Subjects/Art.png',
-      'Performing Arts': 'assets/symbols/Subjects/Performing Arts.png',
-      'Sustainability': 'assets/symbols/Subjects/Sustainability.png',
-      'Cooking': 'assets/symbols/Subjects/Cooking.png',
-      'Resistant Materials': 'assets/symbols/Subjects/Resistant Materials & Construction.png',
-      'Textiles': 'assets/symbols/Subjects/Textiles.png',
-      'Religion & Worldviews': 'assets/symbols/Subjects/Religion & Worldviews.png',
-      'Music': 'assets/symbols/Subjects/Music.png',
-      'Horticulture': 'assets/symbols/Subjects/Horticulture.png',
-      'Retail': 'assets/symbols/Subjects/Retail.png',
-      'Photography': 'assets/symbols/Subjects/Photography.png',
-      'Information Technology': 'assets/symbols/Subjects/I.T.png',
-      'Construction': 'assets/symbols/Subjects/Resistant Materials & Construction.png',
-      'Engineering': 'assets/symbols/Subjects/Engineering.png',
-      'Living Life Skills': 'assets/symbols/Subjects/Living Life Skills.png',
-      'Prepare For Adulthood': 'assets/symbols/Subjects/Prepare For Adulthood.png',
-      'Break & Lunch': 'assets/symbols/Subjects/Breaktime.png',
-      'Tutor Time': 'assets/symbols/Subjects/Tutor Time.png',
-      'Sign': 'assets/symbols/BOARDS/Signs.png',
-      'A-Z Of Sign': 'assets/symbols/BOARDS/Letters.png',
-      'Manners & Greetings': 'assets/symbols/BOARDS/People.png',
-      'Family & People': 'assets/symbols/BOARDS/Family Tree.png',
-      'Transport & Vehicles': 'assets/symbols/BOARDS/Transport.png',
-      'Food & Drink': 'assets/symbols/BOARDS/Cooking & Food/Food.png',
-      'Home & Household': 'assets/symbols/BOARDS/Home.png',
-      'Feelings & Health': 'assets/symbols/BOARDS/Feelings.png',
-      'School & Instructions': 'assets/symbols/BOARDS/People At School.png',
-      'Descriptions & Attributes': 'assets/symbols/BOARDS/English/Adjectives.png',
-      'Prepositions': 'assets/symbols/BOARDS/Prepositions.png',
-      'Outside': 'assets/symbols/BOARDS/Town.png',
-      'Questions': 'assets/symbols/BOARDS/English/How.png',
-      'Letters': 'assets/symbols/BOARDS/Letters.png',
-      'Numbers': 'assets/symbols/BOARDS/Numbers.png',
-      'Personal Actions': 'assets/symbols/BOARDS/Actions.png',
-      'Shared Activities': 'assets/symbols/BOARDS/People & Places.png',
-      'Leisure Activities & Interests': 'assets/symbols/BOARDS/Sports, Activities & P.E/Sports.png',
-      'General Objects': 'assets/symbols/BOARDS/Furniture.png',
-      'Clothing & Personal': 'assets/symbols/BOARDS/Clothes.png',
-      'Personal Possessions': 'assets/symbols/BOARDS/Toys.png',
-      'Personal Hygiene': 'assets/symbols/BOARDS/Medical.png',
-      'Gender & Sexuality': 'assets/symbols/BOARDS/People.png',
-      'Places': 'assets/symbols/BOARDS/Places.png',
-      'Sport': 'assets/symbols/BOARDS/Sports, Activities & P.E/Sports.png',
-      'Religion & Customs': 'assets/symbols/BOARDS/Religion & Worldviews/Community.png',
-      'Other Countries': 'assets/symbols/BOARDS/Countryside.png',
-      'Public Notices': 'assets/symbols/BOARDS/Signs.png',
-      'Money': 'assets/symbols/BOARDS/Money UK.png',
-      'Computer Items': 'assets/symbols/BOARDS/Class Equipment.png',
-      'Grammatical Elements': 'assets/symbols/BOARDS/Small Words.png',
-      'Quantity & Measurement': 'assets/symbols/BOARDS/Numbers.png',
-      'Sad': 'assets/symbols/BOARDS/Feelings/Sad.png',
-      'Mad': 'assets/symbols/BOARDS/Feelings/Mad.png',
-      'Scared': 'assets/symbols/BOARDS/Feelings/Scared.png',
-      'Joyful': 'assets/symbols/BOARDS/Feelings/Joyful.png',
-      'Strong': 'assets/symbols/BOARDS/Feelings/Strong.png',
-      'Calm': 'assets/symbols/BOARDS/Feelings/Calm.png',
-      'Shades Of Colours': 'assets/symbols/BOARDS/Shades Of Colours.png',
-      'Adjectives': 'assets/symbols/BOARDS/English/Adjectives.png',
-      'Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 2.png',
-      'Phase 2 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 2.png',
-      'Phase 3 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 3.png',
-      'Phase 4 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 4.png',
-      'Phase 5 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 5.png',
-      'Phase 6 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 6.png',
-      'School People': 'assets/symbols/BOARDS/People At School.png',
-      'Characters': 'assets/symbols/BOARDS/English/Characters.png',
-      'Mammals': 'assets/symbols/BOARDS/Animals/Mammals.png',
-      'Birds': 'assets/symbols/BOARDS/Animals/Birds.png',
-      'Reptiles': 'assets/symbols/BOARDS/Animals/Reptiles.png',
-      'Amphibians': 'assets/symbols/BOARDS/Animals/Amphibians.png',
-      'Insects': 'assets/symbols/BOARDS/Animals/Insects.png',
-      'Arachnids': 'assets/symbols/BOARDS/Animals/Arachnids.png',
-      'Invertebrates': 'assets/symbols/BOARDS/Animals/Invertebrates.png',
-      'Fish': 'assets/symbols/BOARDS/Animals/Fish.png',
-      'Habitats': 'assets/symbols/BOARDS/Animals/Habitats.png',
-      'Sealife': 'assets/symbols/BOARDS/Animals/Sealife.png',
-      'Nature Vocabulary': 'assets/symbols/BOARDS/Animals/Animals.png',
-      'Body Parts Of Animals': 'assets/symbols/BOARDS/Animals/Animal Body Parts.png',
-      'Child Animals': 'assets/symbols/BOARDS/Animals/Child Animals.png',
-      'Groups Of Animals': 'assets/symbols/BOARDS/Animals/Groups of Animals.png',
-      'MY SCHOOL': 'assets/symbols/BOARDS/People At School.png',
-      'People At School': 'assets/symbols/BOARDS/People At School.png',
-      'Baycroft Expects': 'assets/symbols/BOARDS/Baycroft Expects.png',
-      'Thinking Skills': 'assets/symbols/BOARDS/Thinking Skills.png',
-      'When Things Go Wrong': 'assets/symbols/BOARDS/Words For When Things Go Wrong.png',
-      'Blank Levels': 'assets/symbols/BOARDS/Blank Levels.png',
-      'My School Lessons': 'assets/symbols/BOARDS/Lesson Vocabulary.png',
-      'PEOPLE AT HOME': 'assets/symbols/BOARDS/Home.png',
-    };
-    final upper = board.name.toUpperCase();
-    for (final entry in iconMappings.entries) {
-      if (entry.key.toUpperCase() == upper) return entry.value;
+  Widget _defaultBoardIcon(Board board, ColorScheme cs) {
+    return Icon(
+      board.isSubBoard || board.isTertiaryBoard ? Icons.folder_open : Icons.grid_view,
+      size: 20,
+      color: cs.primary,
+    );
+  }
+
+  Widget _buildBoardIcon(Board board, ColorScheme cs) {
+    if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.asset(board.iconAssetPath!, errorBuilder: (_, __, ___) => _defaultBoardIcon(board, cs)),
+      );
     }
-    return 'assets/symbols/BOARDS/${board.name.replaceAll(' ', ' ')}.png';
+    return _defaultBoardIcon(board, cs);
   }
 
   Future<void> _deleteBoard(Board board) async {
@@ -638,44 +402,46 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     }
   }
 
+  void _computeBoardPositions() {
+    _boardPositions.clear();
+
+    // Root positions by area
+    final areaGroups = <String, List<Board>>{};
+    for (final b in _allBoardsPool) {
+      if (!b.isSubBoard && !b.isTertiaryBoard) {
+        areaGroups.putIfAbsent(b.area, () => []).add(b);
+      }
+    }
+    for (final group in areaGroups.values) {
+      group.sort((a, b) {
+        if (a.sortOrder != b.sortOrder) return a.sortOrder.compareTo(b.sortOrder);
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
+      for (int i = 0; i < group.length; i++) {
+        _boardPositions[group[i].id] = (i + 1, group.length);
+      }
+    }
+
+    // Sub-board positions by parent
+    final parentGroups = <String?, List<Board>>{};
+    for (final b in _allBoardsPool) {
+      if (b.isSubBoard || b.isTertiaryBoard) {
+        parentGroups.putIfAbsent(b.parentBoardId, () => []).add(b);
+      }
+    }
+    for (final group in parentGroups.values) {
+      group.sort((a, b) {
+        if (a.sortOrder != b.sortOrder) return a.sortOrder.compareTo(b.sortOrder);
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
+      for (int i = 0; i < group.length; i++) {
+        _boardPositions[group[i].id] = (i + 1, group.length);
+      }
+    }
+  }
+
   (int, int) _getBoardPosition(Board board) {
-    final bool isRoot = !board.isSubBoard && !board.isTertiaryBoard;
-    List<Board> siblings;
-    if (isRoot) {
-      siblings = _allBoardsPool.where((b) => b.area == board.area && !b.isSubBoard && !b.isTertiaryBoard).toList();
-    } else {
-      siblings = _allBoardsPool.where((b) => b.parentBoardId == board.parentBoardId).toList();
-    }
-    siblings.sort((a, b) {
-      if (a.sortOrder != b.sortOrder) return a.sortOrder.compareTo(b.sortOrder);
-      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-    });
-    final index = siblings.indexWhere((b) => b.id == board.id);
-    return (index + 1, siblings.length);
-  }
-
-  Widget _buildPreview(Board board) {
-    final filledTiles = board.tiles.where((t) => t.label.isNotEmpty || t.imageAsset.isNotEmpty || t.emoji.isNotEmpty).toList();
-    if (filledTiles.isEmpty) return const Padding(padding: EdgeInsets.all(16), child: Text('Empty Board', style: TextStyle(fontStyle: FontStyle.italic)));
-    return Container(
-      width: 280, padding: const EdgeInsets.all(8),
-      child: GridView.builder(
-        shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, mainAxisSpacing: 4, crossAxisSpacing: 4),
-        itemCount: filledTiles.length.clamp(0, 12),
-        itemBuilder: (context, i) => Container(decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(4)), child: _buildTileImage(filledTiles[i].imageAsset, size: 40)),
-      ),
-    );
-  }
-
-  Widget _buildTileImage(String path, {double size = 32}) {
-    if (path.isEmpty) return Icon(Icons.image, size: size * 0.6, color: Colors.grey);
-    if (path.startsWith('http')) return Image.network(path, width: size, height: size, fit: BoxFit.contain, errorBuilder: (_, __, ___) => Icon(Icons.broken_image, size: size * 0.6));
-    if (path.startsWith('assets/')) {
-      if (path.toLowerCase().endsWith('.svg')) return SvgPicture.asset(path, width: size, height: size, fit: BoxFit.contain);
-      return Image.asset(path, width: size, height: size, fit: BoxFit.contain, errorBuilder: (_, __, ___) => Icon(Icons.broken_image, size: size * 0.6));
-    }
-    return Image.network(path, width: size, height: size, fit: BoxFit.contain, errorBuilder: (_, __, ___) => Icon(Icons.broken_image, size: size * 0.6));
+    return _boardPositions[board.id] ?? (1, 1);
   }
 
   Widget _buildShortcutCard(BoardShortcut shortcut, ColorScheme cs) {
@@ -706,9 +472,8 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     }
   }
 
-  void _openBoard(Board board) async {
-    if (kIsWeb) { web.window.open(web.window.location.href, '_blank'); }
-    else { widget.onNavigate?.call(board.id); }
+  void _openBoard(Board board) {
+    widget.onNavigate?.call(board.id);
   }
 
   @override
@@ -723,7 +488,6 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
             const Expanded(child: SettingsSectionHeader(icon: Icons.grid_view_rounded, title: 'Manage Boards', subtitle: 'Organize, move, and delete boards across your app areas.')),
           ],
         ),
-        Padding(padding: const EdgeInsets.only(bottom: 12), child: SizedBox(width: double.infinity, child: OutlinedButton.icon(onPressed: _backupAllBoards, icon: const Icon(Icons.backup_rounded), label: const Text('Backup All Boards')))),
         if (_loading) const Center(child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()))
         else if (_hierarchyItems.isEmpty) const Center(child: Padding(padding: EdgeInsets.all(40), child: Text('No boards found.')))
         else ListView.builder(
@@ -742,7 +506,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
                   children: [
                     InkWell(
                       onTap: () => _pickBoardIcon(board), borderRadius: BorderRadius.circular(8),
-                      child: Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 16), decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(8), border: Border.all(color: cs.outlineVariant, width: 1)), child: ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.asset(board.iconAssetPath ?? _getBoardIconPath(board), errorBuilder: (_, __, ___) => Icon(board.isSubBoard || board.isTertiaryBoard ? Icons.folder_open : Icons.grid_view, size: 20, color: cs.primary)))),
+                      child: Container(width: 40, height: 40, margin: const EdgeInsets.only(right: 16), decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(8), border: Border.all(color: cs.outlineVariant, width: 1)), child: _buildBoardIcon(board, cs)),
                     ),
                     Expanded(
                       child: Column(
@@ -750,7 +514,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
                         children: [
                           Builder(builder: (context) {
                             final pos = _getBoardPosition(board);
-                            return Tooltip(richMessage: WidgetSpan(child: _buildPreview(board)), decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(12), border: Border.all(color: cs.primary.withValues(alpha: 0.5)), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10)]), child: Text('${board.name} (${pos.$1}/${pos.$2})', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)));
+                            return Text('${board.name} (${pos.$1}/${pos.$2})', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15));
                           }),
                           const SizedBox(height: 2),
                           Text(_getBoardPath(board), style: TextStyle(fontSize: 11, color: cs.onSurfaceVariant, fontStyle: FontStyle.italic)),
@@ -950,6 +714,7 @@ class _ReorderBoardsDialogState extends State<_ReorderBoardsDialog> {
                           ),
                   );
                 },
+                // ignore: deprecated_member_use
                 onReorder: (oldIndex, newIndex) {
                   setState(() {
                     final item = _localList.removeAt(oldIndex);
@@ -985,7 +750,7 @@ class _ReorderBoardsDialogState extends State<_ReorderBoardsDialog> {
               if (mounted) {
                  setState(() => _statusMessage = 'Order reset to default.');
                  Future.delayed(const Duration(seconds: 2), () {
-                    if (mounted) Navigator.pop(context, _localList);
+                    if (mounted && context.mounted) Navigator.pop(context, _localList);
                  });
               }
             }

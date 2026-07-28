@@ -7,6 +7,6 @@ if "%~1"=="" (
     pause
     exit /b
 )
-node "%~dp0create_json_from_folder.js" "%~1"
+node "%~dp0.js Files\create_json_from_folder.js" "%~1"
 echo.
 pause

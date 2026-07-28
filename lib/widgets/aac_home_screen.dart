@@ -767,11 +767,13 @@ class _BoardIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    // Try to load asset image; fall back to icon
+    final iconPath = board.iconAssetPath?.isNotEmpty == true
+        ? board.iconAssetPath!
+        : 'assets/symbols/BOARDS/${board.name}.png';
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Image.asset(
-        'assets/symbols/BOARDS/${board.name}.png',
+        iconPath,
         width: size,
         height: size,
         fit: BoxFit.cover,

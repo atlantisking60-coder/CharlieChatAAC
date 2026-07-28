@@ -610,22 +610,6 @@
       "colSpan": 1,
       "rowSpan": 1,
       "customVoice": ""
-    },
-    {
-      "id": "prebuilt_lessons_tile_38",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "image": null,
-      "emoji": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
     }
   ]
 }

@@ -151,7 +151,7 @@
       "id": "prebuilt_places_garden_centre",
       "type": "vocabulary",
       "label": "garden centre",
-      "category": "Assets",
+      "category": "Custom",
       "image": "assets/symbols/3. Lesson Vocab/Science/Plants/garden centre.png",
       "emoji": "",
       "linkedBoardName": null,
@@ -339,5 +339,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": null
 }

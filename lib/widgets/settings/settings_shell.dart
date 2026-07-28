@@ -13,7 +13,6 @@ import 'sections/language_section.dart';
 import 'sections/manage_boards_section.dart';
 import 'sections/custom_symbols_section.dart';
 import 'sections/edit_symbols_section.dart';
-import 'sections/backup_section.dart';
 import 'sections/about_section.dart';
 import '../settings_screen.dart' show VoiceOption, ProfileSettingsResult;
 
@@ -138,8 +137,6 @@ class _SettingsShellState extends State<SettingsShell> {
         return CustomSymbolsSection(settings: _settings, onChanged: _update);
       case 'edit_symbols':
         return EditSymbolsSection(settings: _settings, onChanged: _update);
-      case 'backup':
-        return const BackupSection();
       case 'about':
         return const AboutSection();
       default:

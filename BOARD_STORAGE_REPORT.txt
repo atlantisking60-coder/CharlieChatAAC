@@ -1,10 +1,9 @@
 ================================================================================
 CHARLIE CHAT BOARD DATA STORAGE REPORT
 ================================================================================
-Last Updated: 2026-07-26 15:12:30.978266
+Last Updated: 2026-07-28 22:31:33.610096
 
-This document tracks where your board data is stored and helps identify if 
-duplicates exist.
+This document tracks the active board data locations.
 
 PRIMARY SOURCE OF TRUTH (DEV MODE):
 - Location: lib/data/boards/[Area]/[BoardID].json
@@ -12,16 +11,10 @@ PRIMARY SOURCE OF TRUTH (DEV MODE):
   automatically written here by the Dev Save Server. On app startup, the app
   scans these folders and loads these files first.
 
-BACKUP STORAGE:
-- Location: lib/data/BACKUP boards/[Area]/[BoardID].json
-- Usage: These are manual backups. The app DOES NOT read from here unless 
-  a developer (like me) manually copies a file from here back into the 
-  primary "lib/data/boards/" folder.
-
 --------------------------------------------------------------------------------
-DUPLICATE CHECK (Summary of files found in multiple areas):
+ACTIVE FILES (Summary):
 --------------------------------------------------------------------------------
-No duplicates found between Active and Backup folders.
+545 active board files found.
 
 --------------------------------------------------------------------------------
 STORAGE FLOW - WHY THINGS GO WRONG:
@@ -30,8 +23,8 @@ STORAGE FLOW - WHY THINGS GO WRONG:
 2. OVERWRITING: If the app starts and can't find your project root, it loads 
    empty defaults. If the server is running, it might then "mirror" those empty 
    defaults BACK to your disk, erasing your work.
-3. FIX APPLIED: I have added a "Safety Lock" that prevents the app from 
-   mirroring a board if it contains 0 images or only blank tiles.
+3. FIX APPLIED: A "Safety Lock" prevents the app from mirroring a board if it 
+   contains 0 images or only blank tiles.
 
 ================================================================================
 REPORT GENERATOR: Updated by dev_save_server.dart on every board save.

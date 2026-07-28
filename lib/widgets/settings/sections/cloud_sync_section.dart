@@ -34,10 +34,19 @@ class _CloudSyncSectionState extends State<CloudSyncSection> {
 
   Future<void> _forceSyncNow() async {
     setState(() => _loading = true);
-    await _loadSyncStatus();
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sync queued — will upload when connected')));
+    try {
+      final svc = await SyncService.init();
+      await svc.pushAllPending();
+      await _loadSyncStatus();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Pending changes pushed')));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Push failed: $e')));
+      }
     }
   }
 

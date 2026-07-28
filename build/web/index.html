@@ -60,7 +60,99 @@
       font-size: 16px;
       color: #666;
     }
+    /* Disable text selection and drag */
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    /* Re-enable selection inside input fields */
+    input, textarea, [contenteditable="true"] {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
   </style>
+
+  <!-- Right-click & dev-tools protection -->
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    }, false);
+
+    // Disable drag
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+    }, false);
+
+    // Block common dev-tools keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+I (DevTools)
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+J (Console)
+      if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+C (Inspect element)
+      if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+U (View source)
+      if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+S (Save page)
+      if (e.ctrlKey && (e.key === 'S' || e.key === 's')) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+A (Select all - block outside inputs)
+      if (e.ctrlKey && (e.key === 'A' || e.key === 'a') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+P (Print)
+      if (e.ctrlKey && (e.key === 'P' || e.key === 'p')) {
+        e.preventDefault();
+        return false;
+      }
+    }, false);
+
+    // Disable browser developer tools via debugger statement (works in some browsers)
+    (function() {
+      var devtoolsOpen = false;
+      var threshold = 160;
+      setInterval(function() {
+        var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        if (widthThreshold || heightThreshold) {
+          if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            document.body.innerHTML = '';
+            document.body.style.display = 'none';
+          }
+        } else {
+          devtoolsOpen = false;
+        }
+      }, 1000);
+    })();
+  </script>
+
 </head>
 <body>
   <div id="flutter-loading">Loading...</div>

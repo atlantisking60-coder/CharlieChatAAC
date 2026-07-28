@@ -7,8 +7,6 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
-  "isQuaternaryBoard": false,
-  "isQuinaryBoard": false,
   "sortOrder": 110,
   "tier": 2,
   "boxScale": 1,
@@ -20,7 +18,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_j_sign_jeans_bottoms_pants",
+      "id": "prebuilt_j_sign_t1",
       "type": "image_viewer",
       "label": "jeans, bottoms, pants",
       "category": "Custom",
@@ -36,7 +34,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_jealousy_envy",
+      "id": "prebuilt_j_sign_t2",
       "type": "image_viewer",
       "label": "jealousy, envy",
       "category": "Custom",
@@ -52,7 +50,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_jesus",
+      "id": "prebuilt_j_sign_t3",
       "type": "image_viewer",
       "label": "jesus",
       "category": "Custom",
@@ -68,7 +66,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_jigsaw_puzzle",
+      "id": "prebuilt_j_sign_t4",
       "type": "image_viewer",
       "label": "jigsaw puzzle",
       "category": "Custom",
@@ -84,7 +82,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_join_attach_link",
+      "id": "prebuilt_j_sign_t5",
       "type": "image_viewer",
       "label": "join, attach, link",
       "category": "Custom",
@@ -100,7 +98,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_joinery_carpentry",
+      "id": "prebuilt_j_sign_t6",
       "type": "image_viewer",
       "label": "joinery, carpentry",
       "category": "Custom",
@@ -116,7 +114,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_joke_kid_have_on",
+      "id": "prebuilt_j_sign_t7",
       "type": "image_viewer",
       "label": "joke, kid, have on",
       "category": "Custom",
@@ -132,7 +130,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_jump",
+      "id": "prebuilt_j_sign_t8",
       "type": "image_viewer",
       "label": "jump",
       "category": "Custom",
@@ -148,7 +146,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_jumper_sweater",
+      "id": "prebuilt_j_sign_t9",
       "type": "image_viewer",
       "label": "jumper, sweater",
       "category": "Custom",
@@ -164,7 +162,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_just_only_just_a_little_while_ago",
+      "id": "prebuilt_j_sign_t10",
       "type": "image_viewer",
       "label": "just, only just, a little while ago",
       "category": "Custom",
@@ -180,7 +178,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_11",
+      "id": "tile_10",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -196,7 +194,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_12",
+      "id": "tile_11",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -212,7 +210,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_13",
+      "id": "tile_12",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -228,7 +226,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_14",
+      "id": "tile_13",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -244,7 +242,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_15",
+      "id": "tile_14",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -260,7 +258,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_16",
+      "id": "tile_15",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -276,7 +274,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_17",
+      "id": "tile_16",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -292,7 +290,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_j_sign_tile_18",
+      "id": "tile_17",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -308,5 +306,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

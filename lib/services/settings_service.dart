@@ -207,7 +207,7 @@ class AppSettings {
       themeMode: themeMode,
       voiceRate: (map['voiceRate'] is num)
           ? (map['voiceRate'] as num).toDouble()
-          : 0.45,
+          : 0.80,
       voicePitch: (map['voicePitch'] is num)
           ? (map['voicePitch'] as num).toDouble()
           : 1.0,
@@ -304,7 +304,7 @@ class SettingsService {
         : themeValue == 'dark'
             ? ThemeMode.dark
             : ThemeMode.system;
-    final voiceRate = _prefs.getDouble(_rateKey) ?? 0.45;
+    final voiceRate = _prefs.getDouble(_rateKey) ?? 0.80;
     final voicePitch = _prefs.getDouble(_pitchKey) ?? 1.0;
     final voiceVolume = _prefs.getDouble(_volumeKey) ?? 1.0;
     final voiceLanguage = _prefs.getString(_languageKey) ?? 'en-GB';

@@ -222,6 +222,7 @@ class _ProfilesSectionState extends State<ProfilesSection> {
     return ReorderableListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      // ignore: deprecated_member_use
       onReorder: (oldIndex, newIndex) {
         final updated = List<String>.from(currentOrder);
         final item = updated.removeAt(oldIndex);

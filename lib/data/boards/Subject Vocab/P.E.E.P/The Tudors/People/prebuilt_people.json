@@ -1,16 +1,16 @@
 {
   "id": "prebuilt_people",
   "name": "People",
-  "area": "Subject Vocab",
+  "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": false,
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 0,
-  "tier": 3,
+  "sortOrder": 7,
+  "tier": 2,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -371,5 +371,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": "prebuilt_p_e_e_p"
 }

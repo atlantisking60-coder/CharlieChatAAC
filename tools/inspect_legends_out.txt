@@ -1,0 +1,104 @@
+Total JSON: 103
+Arabian & Middle Eastern Tales\prebuilt_arabian_middle_eastern_tales.json | Common | Arabian & Middle Eastern Tales | prebuilt_characters | True | 3
+Arthurian Legend\prebuilt_arthurian_legend.json | Subject Vocab | Arthurian Legend | prebuilt_characters | True | 3
+Asian Legends & Folklore\prebuilt_asian_legends_folklore.json | Common | Asian Legends & Folklore | prebuilt_characters | True | 3
+Computer Games\prebuilt_computer_games.json | Common | Computer Games | prebuilt_characters | True | 3
+Creatures & Races\prebuilt_creatures_races.json | Subject Vocab | Creatures & Races | prebuilt_characters | True | 3
+D&D\prebuilt_d_d.json | Common | D&D | prebuilt_characters | True | 3
+DC\prebuilt_dc.json | Subject Vocab | DC | prebuilt_characters | True | 3
+Disney Stories\1937 Snow White & The Seven Dwarfs\prebuilt_1937_snow_white_the_seven_dwarfs.json | Common | 1937 Snow White & The Seven Dwarfs | prebuilt_disney_stories | True | 4
+Disney Stories\1940 Fantasia\prebuilt_1940_fantasia.json | Common | 1940 Fantasia | prebuilt_disney_stories | True | 4
+Disney Stories\1940 Pinocchio\prebuilt_1940_pinocchio.json | Common | 1940 Pinocchio | prebuilt_disney_stories | True | 3
+Disney Stories\1941 Dumbo\prebuilt_1941_dumbo.json | Common | 1941 Dumbo | prebuilt_disney_stories | True | 4
+Disney Stories\1942 Bambi\prebuilt_1942_bambi.json | Common | 1942 Bambi | prebuilt_disney_stories | True | 4
+Disney Stories\1950 Cinderella\prebuilt_1950_cinderella.json | Common | 1950 Cinderella | prebuilt_disney_stories | True | 4
+Disney Stories\1951 Alice In Wonderland\prebuilt_1951_alice_in_wonderland.json | Common | 1951 Alice In Wonderland | prebuilt_disney_stories | True | 4
+Disney Stories\1953 Peter Pan\prebuilt_1953_peter_pan.json | Subject Vocab | 1953 Peter Pan | prebuilt_disney_stories | True | 4
+Disney Stories\1955 Lady & The Tramp\prebuilt_1955_lady_the_tramp.json | Subject Vocab | 1955 Lady & The Tramp | prebuilt_disney_stories | True | 4
+Disney Stories\1959 Sleeping Beauty\prebuilt_1959_sleeping_beauty.json | Subject Vocab | 1959 Sleeping Beauty | prebuilt_disney_stories | True | 4
+Disney Stories\1961 101 Dalmatians\prebuilt_1961_101_dalmatians.json | Subject Vocab | 1961 101 Dalmatians | prebuilt_disney_stories | True | 4
+Disney Stories\1963 The Sword In The Stone\prebuilt_1963_the_sword_in_the_stone.json | Subject Vocab | 1963 The Sword In The Stone | prebuilt_disney_stories | True | 4
+Disney Stories\1967 The Jungle Book\prebuilt_1967_the_jungle_book.json | Subject Vocab | 1967 The Jungle Book | prebuilt_disney_stories | True | 4
+Disney Stories\1970 The Aristocats\prebuilt_1970_the_aristocats.json | Common | 1970 The Aristocats | prebuilt_disney_stories | True | 4
+Disney Stories\1973 Robin Hood\prebuilt_1973_robin_hood.json | Subject Vocab | 1973 Robin Hood | prebuilt_disney_stories | True | 4
+Disney Stories\1977 The Rescuers\prebuilt_1977_the_rescuers.json | Subject Vocab | 1977 The Rescuers | prebuilt_disney_stories | True | 4
+Disney Stories\1977 Winnie The Pooh\prebuilt_1977_winnie_the_pooh.json | Subject Vocab | 1977 Winnie The Pooh | prebuilt_disney_stories | True | 4
+Disney Stories\1981 The Fox & The Hound\prebuilt_1981_the_fox_the_hound.json | Common | 1981 The Fox & The Hound | prebuilt_disney_stories | True | 4
+Disney Stories\1985 The Black Cauldron\prebuilt_1985_the_black_cauldron.json | Common | 1985 The Black Cauldron | prebuilt_disney_stories | True | 4
+Disney Stories\1986 The Great Mouse Detective\prebuilt_1986_the_great_mouse_detective.json | Common | 1986 The Great Mouse Detective | prebuilt_disney_stories | True | 4
+Disney Stories\1988 Oliver & Company\prebuilt_1988_oliver_company.json | Common | 1988 Oliver & Company | prebuilt_disney_stories | True | 4
+Disney Stories\1989 The Little Mermaid\prebuilt_1989_the_little_mermaid.json | Subject Vocab | 1989 The Little Mermaid | prebuilt_disney_stories | True | 4
+Disney Stories\1990 The Rescuers Down Under\prebuilt_1990_the_rescuers_down_under.json | Common | 1990 The Rescuers Down Under | prebuilt_disney_stories | True | 4
+Disney Stories\1991 Beauty & The Beast\prebuilt_1991_beauty_the_beast.json | Subject Vocab | 1991 Beauty & The Beast | prebuilt_disney_stories | True | 4
+Disney Stories\1992 Aladdin\prebuilt_1992_aladdin.json | Subject Vocab | 1992 Aladdin | prebuilt_disney_stories | True | 4
+Disney Stories\1993 The Nightmare Before Christmas\prebuilt_1993_the_nightmare_before_christmas.json | Subject Vocab | 1993 The Nightmare Before Christmas | prebuilt_disney_stories | True | 4
+Disney Stories\1994 The Lion King\prebuilt_1994_the_lion_king.json | Subject Vocab | 1994 The Lion King | prebuilt_disney_stories | True | 4
+Disney Stories\1995 Pocahontas\prebuilt_1995_pocahontas.json | Subject Vocab | 1995 Pocahontas | prebuilt_disney_stories | True | 4
+Disney Stories\1995 Toy Story\prebuilt_1995_toy_story.json | Subject Vocab | 1995 Toy Story | prebuilt_disney_stories | True | 4
+Disney Stories\1996 The Hunchback Of Notre Dame\prebuilt_1996_the_hunchback_of_notre_dame.json | Subject Vocab | 1996 The Hunchback Of Notre Dame | prebuilt_disney_stories | True | 4
+Disney Stories\1997 Hercules\prebuilt_1997_hercules.json | Subject Vocab | 1997 Hercules | prebuilt_disney_stories | True | 4
+Disney Stories\1998 A Bug's Life\prebuilt_1998_a_bug_s_life.json | Common | 1998 A Bug's Life | prebuilt_disney_stories | True | 4
+Disney Stories\1998 Mulan\prebuilt_1998_mulan.json | Subject Vocab | 1998 Mulan | prebuilt_disney_stories | True | 4
+Disney Stories\1999 Tarzan\prebuilt_1999_tarzan.json | Subject Vocab | 1999 Tarzan | prebuilt_disney_stories | True | 4
+Disney Stories\2000 Dinosaur\prebuilt_2000_dinosaur.json | Common | 2000 Dinosaur | prebuilt_disney_stories | True | 4
+Disney Stories\2000 The Emperor's New Groove\prebuilt_2000_the_emperor_s_new_groove.json | Common | 2000 The Emperor's New Groove | prebuilt_disney_stories | True | 4
+Disney Stories\2001 Atlantis - The Lost Empire\prebuilt_2001_atlantis_the_lost_empire.json | Common | 2001 Atlantis - The Lost Empire | prebuilt_disney_stories | True | 4
+Disney Stories\2002 Lilo & Stitch\prebuilt_2002_lilo_stitch.json | Subject Vocab | 2002 Lilo & Stitch | prebuilt_disney_stories | True | 4
+Disney Stories\2002 Treasure Planet\prebuilt_2002_treasure_planet.json | Subject Vocab | 2002 Treasure Planet | prebuilt_disney_stories | True | 4
+Disney Stories\2003 Brother Bear\prebuilt_2003_brother_bear.json | Common | 2003 Brother Bear | prebuilt_disney_stories | True | 4
+Disney Stories\2003 Finding Nemo\prebuilt_2003_finding_nemo.json | Subject Vocab | 2003 Finding Nemo | prebuilt_disney_stories | True | 4
+Disney Stories\2004 Home On The Range\prebuilt_2004_home_on_the_range.json | Common | 2004 Home On The Range | prebuilt_disney_stories | True | 4
+Disney Stories\2004 The Incredibles\prebuilt_2004_the_incredibles.json | Subject Vocab | 2004 The Incredibles | prebuilt_disney_stories | True | 4
+Disney Stories\2005 Chicken Little\prebuilt_2005_chicken_little.json | Common | 2005 Chicken Little | prebuilt_disney_stories | True | 4
+Disney Stories\2006 Cars\prebuilt_2006_cars.json | Subject Vocab | 2006 Cars | prebuilt_disney_stories | True | 4
+Disney Stories\2007 Meet The Robinsons\prebuilt_2007_meet_the_robinsons.json | Common | 2007 Meet The Robinsons | prebuilt_disney_stories | True | 4
+Disney Stories\2007 Ratatouille\prebuilt_2007_ratatouille.json | Common | 2007 Ratatouille | prebuilt_disney_stories | True | 4
+Disney Stories\2008 Bolt\prebuilt_2008_bolt.json | Subject Vocab | 2008 Bolt | prebuilt_disney_stories | True | 4
+Disney Stories\2008 WALL-E\prebuilt_2008_wall_e.json | Subject Vocab | 2008 WALL-E | prebuilt_disney_stories | True | 4
+Disney Stories\2009 The Princess & The Frog\prebuilt_2009_the_princess_the_frog.json | Subject Vocab | 2009 The Princess & The Frog | prebuilt_disney_stories | True | 4
+Disney Stories\2009 Up\prebuilt_2009_up.json | Subject Vocab | 2009 Up | prebuilt_disney_stories | True | 4
+Disney Stories\2010 Tangled\prebuilt_2010_tangled.json | Subject Vocab | 2010 Tangled | prebuilt_disney_stories | True | 4
+Disney Stories\2012 Brave\prebuilt_2012_brave.json | Subject Vocab | 2012 Brave | prebuilt_disney_stories | True | 4
+Disney Stories\2012 Wreck-It Ralph\prebuilt_2012_wreck_it_ralph.json | Subject Vocab | 2012 Wreck-It Ralph | prebuilt_disney_stories | True | 4
+Disney Stories\2013 Frozen\prebuilt_2013_frozen.json | Subject Vocab | 2013 Frozen | prebuilt_disney_stories | True | 4
+Disney Stories\2014 Big Hero 6\prebuilt_2014_big_hero_6.json | Subject Vocab | 2014 Big Hero 6 | prebuilt_disney_stories | True | 4
+Disney Stories\2015 Inside Out\prebuilt_2015_inside_out.json | Subject Vocab | 2015 Inside Out | prebuilt_disney_stories | True | 4
+Disney Stories\2015 The Good Dinosaur\prebuilt_2015_the_good_dinosaur.json | Common | 2015 The Good Dinosaur | prebuilt_disney_stories | True | 4
+Disney Stories\2016 Moana\prebuilt_2016_moana.json | Subject Vocab | 2016 Moana | prebuilt_disney_stories | True | 4
+Disney Stories\2016 Zootopia\prebuilt_2016_zootopia.json | Subject Vocab | 2016 Zootopia | prebuilt_disney_stories | True | 4
+Disney Stories\2017 Coco\prebuilt_2017_coco.json | Subject Vocab | 2017 Coco | prebuilt_disney_stories | True | 4
+Disney Stories\2020 Onward\prebuilt_2020_onward.json | Common | 2020 Onward | prebuilt_disney_stories | True | 4
+Disney Stories\2020 Soul\prebuilt_2020_soul.json | Subject Vocab | 2020 Soul | prebuilt_disney_stories | True | 4
+Disney Stories\2021 Encanto\prebuilt_2021_encanto.json | Subject Vocab | 2021 Encanto | prebuilt_disney_stories | True | 4
+Disney Stories\2021 Luca\prebuilt_2021_luca.json | Subject Vocab | 2021 Luca | prebuilt_disney_stories | True | 4
+Disney Stories\2021 Raya & The Last Dragon\prebuilt_2021_raya_the_last_dragon.json | Subject Vocab | 2021 Raya & The Last Dragon | prebuilt_disney_stories | True | 4
+Disney Stories\2022 Lightyear\prebuilt_2022_lightyear.json | Common | 2022 Lightyear | prebuilt_disney_stories | True | 4
+Disney Stories\2022 Strange World\prebuilt_2022_strange_world.json | Common | 2022 Strange World | prebuilt_disney_stories | True | 4
+Disney Stories\2022 Turning Red\prebuilt_2022_turning_red.json | Subject Vocab | 2022 Turning Red | prebuilt_disney_stories | True | 4
+Disney Stories\2023 Elemental\prebuilt_2023_elemental.json | Subject Vocab | 2023 Elemental | prebuilt_disney_stories | True | 4
+Disney Stories\2023 Wish\prebuilt_2023_wish.json | Subject Vocab | 2023 Wish | prebuilt_disney_stories | True | 4
+Disney Stories\2025 Elio\prebuilt_2025_elio.json | Common | 2025 Elio | prebuilt_disney_stories | True | 4
+Disney Stories\Mickey & Friends\prebuilt_mickey_friends.json | Subject Vocab | Mickey & Friends | prebuilt_characters | True | 3
+Disney Stories\prebuilt_disney_stories.json | Common | Disney Stories | prebuilt_characters | True | 1
+Fairy Tale Characters\prebuilt_fairy_tale_characters.json | Common | Fairy Tale Characters | prebuilt_characters | True | 3
+Gods, Titans, Heroes & Monsters\Christian Angels & Demons\prebuilt_christian_angels_demons.json | Common | Christian Angels Demons | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Family Trees\prebuilt_family_trees.json | Common | Family Trees | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Greek Gods\prebuilt_greek_gods.json | Common | Greek Gods | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Hindu Gods\prebuilt_hindu_gods.json | Common | Hindu Gods | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Norse Gods\prebuilt_norse_gods.json | Common | Norse Gods | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Other Mythology\prebuilt_other_mythology.json | Common | Other Mythology | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\Roman Gods\prebuilt_roman_gods.json | Common | Roman Gods | prebuilt_gods_titans_heroes_monsters | True | 4
+Gods, Titans, Heroes & Monsters\prebuilt_gods_titans_heroes_monsters.json | Common | Gods, Titans, Heroes & Monsters | prebuilt_characters | True | 3
+Heroes & Monsters (Greek & Roman)\prebuilt_heroes_monsters_greek_roman.json | Common | Heroes & Monsters (Greek & Roman) | prebuilt_characters | True | 4
+Horror Icons\prebuilt_horror_icons.json | Common | Horror Icons | prebuilt_characters | True | 1
+Legendary Heroes & Folk Heroes\prebuilt_legendary_heroes_folk_heroes.json | Common | Legendary Heroes & Folk Heroes | prebuilt_characters | True | 3
+Literary & Gothic Characters\prebuilt_literary_gothic_characters.json | Common | Literary & Gothic Characters | prebuilt_characters | True | 3
+Marvel\prebuilt_marvel.json | Subject Vocab | Marvel | prebuilt_characters | True | 3
+Misc\prebuilt_misc.json | Subject Vocab | Misc | prebuilt_characters | True | 3
+Star Trek\Starships\prebuilt_starships.json | Subject Vocab | Starships | prebuilt_star_trek | True | 4
+Star Trek\prebuilt_star_trek.json | Common | Star Trek | prebuilt_characters | True | 3
+Star Wars\prebuilt_star_wars.json | Subject Vocab | Star Wars | prebuilt_characters | True | 3
+The Lord Of The Rings\prebuilt_the_lord_of_the_rings.json | Common | The Lord Of The Rings | prebuilt_characters | True | 3
+The Muppets\prebuilt_the_muppets.json | Subject Vocab | The Muppets | prebuilt_characters | True | 3
+X-Men\prebuilt_x_men.json | Subject Vocab | X-Men | prebuilt_characters | True | 3
+prebuilt_characters.json | Common | Characters | prebuilt_people | True | 2

@@ -661,12 +661,12 @@
     },
     {
       "id": "prebuilt_people_characters",
-      "type": "board_link",
-      "label": "Characters",
+      "type": "blank",
+      "label": "",
       "category": "Custom",
-      "image": "assets/symbols/BOARDS/English/Characters.png",
+      "image": null,
       "emoji": "",
-      "linkedBoardName": "prebuilt_characters",
+      "linkedBoardName": null,
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
@@ -691,5 +691,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": null
 }

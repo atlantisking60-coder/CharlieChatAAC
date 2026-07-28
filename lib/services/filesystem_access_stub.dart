@@ -1,4 +1,4 @@
-/// Stub for non-web platforms. The real implementation is in filesystem_access_web.dart.
+// Stub for non-web platforms. The real implementation is in filesystem_access_web.dart.
 
 bool get isSupported => false;
 

@@ -1,0 +1,78 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d web-server --web-port=8080 --hot --web-hostname=localhost
+
+## exception
+
+PathNotFoundException: PathNotFoundException: Cannot open file, path = 'C:\Users\Craig\Downloads\Charlie Chat\assets\symbols\3. Lesson Vocab\English\Characters & Fantasy\Marvel\ool.yloil' (OS Error: The system cannot find the file specified, errno = 2)
+
+```
+#0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+#1      _File.openSync (dart:io/file_impl.dart:572:5)
+#2      ForwardingFile.openSync (package:file/src/forwarding/forwarding_file.dart:74:16)
+#3      ErrorHandlingFile.copySync.<anonymous closure> (package:flutter_tools/src/base/error_handling_io.dart:292:22)
+#4      _runSync (package:flutter_tools/src/base/error_handling_io.dart:552:14)
+#5      ErrorHandlingFile.copySync (package:flutter_tools/src/base/error_handling_io.dart:291:5)
+#6      writeBundle.<anonymous closure> (package:flutter_tools/src/bundle_builder.dart:234:19)
+<asynchronous suspension>
+#7      Future.wait.<anonymous closure> (dart:async/future.dart:546:21)
+<asynchronous suspension>
+#8      writeBundle (package:flutter_tools/src/bundle_builder.dart:171:3)
+<asynchronous suspension>
+#9      WebDevFS.update (package:flutter_tools/src/isolated/devfs_web.dart:342:9)
+<asynchronous suspension>
+#10     ResidentWebRunner._updateDevFS (package:flutter_tools/src/isolated/resident_web_runner.dart:797:35)
+<asynchronous suspension>
+#11     ResidentWebRunner.run.<anonymous closure> (package:flutter_tools/src/isolated/resident_web_runner.dart:330:41)
+<asynchronous suspension>
+#12     asyncGuard.<anonymous closure> (package:flutter_tools/src/base/async_guard.dart:108:24)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, 3.44.0, on Microsoft Windows [Version 10.0.26200.8894], locale en-GB) [884ms]
+    • Flutter version 3.44.0 on channel stable at C:\Users\Craig\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision 559ffa3f75 (2 months ago), 2026-05-15 14:13:13 -0700
+    • Engine revision 4c525dac5e
+    • Dart version 3.12.0
+    • DevTools version 2.57.0
+    • Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, enable-swift-package-manager, omit-legacy-version-file, enable-lldb-debugging, enable-uiscene-migration
+
+[!] Windows Version (Problem detected with Windows installation) [3.2s]
+    ! Get-Process failed to complete
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 37.0.0) [5.5s]
+    • Android SDK at C:\Users\Craig\AppData\Local\Android\sdk
+    • Emulator version 36.6.11.0 (build_id 15507667) (CL:N/A)
+    • Platform android-CinnamonBun-ext23, build-tools 37.0.0
+    • Java binary at: C:\Program Files\Android\Android Studio\jbr\bin\java
+      This is the JDK bundled with the latest Android Studio installation on this machine.
+      To manually set the JDK path, use: `flutter config --jdk-dir="path/to/jdk"`.
+    • Java version OpenJDK Runtime Environment (build 21.0.10+-14961533-b1163.108)
+    • All Android licenses accepted.
+
+[✓] Chrome - develop for the web [315ms]
+    • Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+
+[✓] Visual Studio - develop Windows apps (Visual Studio Build Tools 2026 18.6.2) [312ms]
+    • Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools
+    • Visual Studio Build Tools 2026 version 18.6.11822.322
+    • Windows 10 SDK version 10.0.26100.0
+
+[✓] Connected device (4 available) [338ms]
+    • Windows (desktop) • windows    • windows-x64    • Microsoft Windows [Version 10.0.26200.8894]
+    • Web Server (web)  • web-server • web-javascript • Flutter Tools
+    • Chrome (web)      • chrome     • web-javascript • Google Chrome 150.0.7871.187
+    • Edge (web)        • edge       • web-javascript • Microsoft Edge 150.0.4078.99
+
+[✓] Network resources [265ms]
+    • All expected network resources are available.
+
+! Doctor found issues in 1 category.
+```

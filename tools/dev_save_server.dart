@@ -6,7 +6,8 @@ import 'package:path/path.dart' as p;
 
 const defaultPort = 8787;
 
-String _folderName(String name) => name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim();
+String _folderName(String name) =>
+    name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').replaceAll(RegExp(r'[. ]+$'), '').trim();
 
 Future<File?> _findBoardFile(Directory root, String id) async {
   if (!await root.exists()) return null;
@@ -17,23 +18,33 @@ Future<File?> _findBoardFile(Directory root, String id) async {
 }
 
 Future<Directory> _boardDirectory(Directory root, Map<String, dynamic> data) async {
+  final id = data['id'] as String? ?? 'unknown';
+  
+  // 1. If the board already exists on disk, keep it exactly where it is.
+  // This is the most reliable way to handle nested subdirectories.
+  final existingFile = await _findBoardFile(root, id);
+  if (existingFile != null) {
+    return existingFile.parent;
+  }
+
+  // 2. Logic for new boards
   final area = data['area'] as String? ?? 'Common';
   final name = data['name'] as String? ?? 'Board';
   final parentId = data['parentBoardId'] as String?;
   final areaRoot = Directory(p.join(root.path, area));
+  
   Directory? parent;
   if (parentId != null && parentId.isNotEmpty) {
     final parentFile = await _findBoardFile(root, parentId);
     if (parentFile != null) parent = parentFile.parent;
   }
 
-  final tier = (data['tier'] as num?)?.toInt() ?? 1;
-  if (parent == null && tier > 1) {
-    if (!await areaRoot.exists()) await areaRoot.create(recursive: true);
-    return areaRoot;
-  }
-
-  final directory = Directory(p.join((parent ?? areaRoot).path, _folderName(name)));
+  // If we found a parent folder, nest under it. 
+  // Otherwise, start from the Area root.
+  // In both cases, we create a folder named after the board itself.
+  final baseDir = parent ?? areaRoot;
+  final directory = Directory(p.join(baseDir.path, _folderName(name)));
+  
   if (!await directory.exists()) await directory.create(recursive: true);
   return directory;
 }
@@ -58,7 +69,7 @@ void main(List<String> args) async {
 
   print('Charlie Chat dev save server listening on http://localhost:$port');
   print('Project root: $projectRoot');
-  print('Board edits from the web preview will be written to lib/data/boards/[Area]/');
+  print('Board edits will be saved to their respective nested subdirectories in lib/data/boards/');
 
   await for (final request in server) {
     final response = request.response;
@@ -119,7 +130,7 @@ void main(List<String> args) async {
             final root = Directory('$projectRoot/lib/data/boards');
             if (await root.exists()) {
               await for (final entity in root.list(recursive: true)) {
-                if (entity is File && entity.path.endsWith('$id.json')) {
+                if (entity is File && p.basename(entity.path) == '$id.json') {
                   foundFile = entity;
                   break;
                 }
@@ -206,38 +217,6 @@ void main(List<String> args) async {
         }
       } catch (e, st) {
         print('Error saving image: $e\n$st');
-        response.statusCode = 500;
-        response.write(json.encode({'ok': false, 'error': e.toString()}));
-      }
-      await response.close();
-      continue;
-    }
-
-    if (request.method == 'POST' && request.uri.path == '/backupBoard') {
-      try {
-        final body = await utf8.decoder.bind(request).join();
-        final data = json.decode(body) as Map<String, dynamic>;
-
-        final backupBase = Directory('$projectRoot/BACKUP BOARDS');
-        if (!await backupBase.exists()) {
-          await backupBase.create(recursive: true);
-        }
-
-        final now = DateTime.now();
-        final ts = '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}_${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}${now.second.toString().padLeft(2, '0')}';
-        final id = data['id']?.toString() ?? 'unknown';
-        final name = data['name']?.toString() ?? '';
-        final safeName = name.replaceAll(RegExp(r'[^a-zA-Z0-9 ]'), '').replaceAll(' ', '_');
-        final filename = '${id}_${safeName}_$ts.json';
-
-        final file = File('${backupBase.path}/$filename');
-        await file.writeAsString(JsonEncoder.withIndent('  ').convert(data));
-        print('Backup saved ${file.path}');
-
-        response.statusCode = 200;
-        response.write(json.encode({'ok': true, 'path': file.path}));
-      } catch (e, st) {
-        print('Error backing up board: $e\n$st');
         response.statusCode = 500;
         response.write(json.encode({'ok': false, 'error': e.toString()}));
       }
@@ -338,7 +317,6 @@ Future<void> _updateStorageReport(String projectRoot) async {
   try {
     final reportFile = File('$projectRoot/BOARD_STORAGE_REPORT.txt');
     final activeDir = Directory('$projectRoot/lib/data/boards');
-    final backupDir = Directory('$projectRoot/lib/data/BACKUP boards');
 
     final activeFiles = <String, String>{};
     if (await activeDir.exists()) {
@@ -349,25 +327,13 @@ Future<void> _updateStorageReport(String projectRoot) async {
       }
     }
 
-    final backupFiles = <String, String>{};
-    if (await backupDir.exists()) {
-      await for (final entity in backupDir.list(recursive: true)) {
-        if (entity is File && entity.path.endsWith('.json')) {
-          backupFiles[entity.uri.pathSegments.last] = entity.path.replaceFirst(projectRoot, '');
-        }
-      }
-    }
-
-    final duplicates = activeFiles.keys.where((k) => backupFiles.containsKey(k)).toList();
-
     final buffer = StringBuffer();
     buffer.writeln('================================================================================');
     buffer.writeln('CHARLIE CHAT BOARD DATA STORAGE REPORT');
     buffer.writeln('================================================================================');
     buffer.writeln('Last Updated: ${DateTime.now()}');
     buffer.writeln('');
-    buffer.writeln('This document tracks where your board data is stored and helps identify if ');
-    buffer.writeln('duplicates exist.');
+    buffer.writeln('This document tracks the active board data locations.');
     buffer.writeln('');
     buffer.writeln('PRIMARY SOURCE OF TRUTH (DEV MODE):');
     buffer.writeln('- Location: lib/data/boards/[Area]/[BoardID].json');
@@ -375,25 +341,13 @@ Future<void> _updateStorageReport(String projectRoot) async {
     buffer.writeln('  automatically written here by the Dev Save Server. On app startup, the app');
     buffer.writeln('  scans these folders and loads these files first.');
     buffer.writeln('');
-    buffer.writeln('BACKUP STORAGE:');
-    buffer.writeln('- Location: lib/data/BACKUP boards/[Area]/[BoardID].json');
-    buffer.writeln('- Usage: These are manual backups. The app DOES NOT read from here unless ');
-    buffer.writeln('  a developer (like me) manually copies a file from here back into the ');
-    buffer.writeln('  primary "lib/data/boards/" folder.');
-    buffer.writeln('');
     buffer.writeln('--------------------------------------------------------------------------------');
-    buffer.writeln('DUPLICATE CHECK (Summary of files found in multiple areas):');
+    buffer.writeln('ACTIVE FILES (Summary):');
     buffer.writeln('--------------------------------------------------------------------------------');
-    if (duplicates.isEmpty) {
-      buffer.writeln('No duplicates found between Active and Backup folders.');
+    if (activeFiles.isEmpty) {
+      buffer.writeln('No active board files found.');
     } else {
-      buffer.writeln('The following ${duplicates.length} boards exist in BOTH folders:');
-      for (var i = 0; i < duplicates.length; i++) {
-        final filename = duplicates[i];
-        buffer.writeln('${i + 1}. $filename');
-        buffer.writeln('   - Active: ${activeFiles[filename]}');
-        buffer.writeln('   - Backup: ${backupFiles[filename]}');
-      }
+      buffer.writeln('${activeFiles.length} active board files found.');
     }
     buffer.writeln('');
     buffer.writeln('--------------------------------------------------------------------------------');
@@ -403,8 +357,8 @@ Future<void> _updateStorageReport(String projectRoot) async {
     buffer.writeln('2. OVERWRITING: If the app starts and can\u0027t find your project root, it loads ');
     buffer.writeln('   empty defaults. If the server is running, it might then "mirror" those empty ');
     buffer.writeln('   defaults BACK to your disk, erasing your work.');
-    buffer.writeln('3. FIX APPLIED: I have added a "Safety Lock" that prevents the app from ');
-    buffer.writeln('   mirroring a board if it contains 0 images or only blank tiles.');
+    buffer.writeln('3. FIX APPLIED: A "Safety Lock" prevents the app from mirroring a board if it ');
+    buffer.writeln('   contains 0 images or only blank tiles.');
     buffer.writeln('');
     buffer.writeln('================================================================================');
     buffer.writeln('REPORT GENERATOR: Updated by dev_save_server.dart on every board save.');

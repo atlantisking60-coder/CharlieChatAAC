@@ -932,6 +932,7 @@ class _BoardEditorState extends State<BoardEditor> {
     return '';
   }
 
+  // ignore: unused_element
   Future<void> _exportBoardScreenshot(String format) async {
     try {
       final resolvedFormat = format.isEmpty ? await _pickExportFormat() : format;
@@ -1608,7 +1609,7 @@ class _BoardEditorState extends State<BoardEditor> {
                       SizedBox(width: 120.0 * (double.tryParse(colSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), height: 120.0 * (double.tryParse(rowSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), child: Material(elevation: 4, shadowColor: Colors.black26, borderRadius: BorderRadius.circular(16), clipBehavior: Clip.antiAlias, color: _colorFromHex(bgCtl.text, Colors.transparent), child: _buildTileContent(SymbolTile(id: 'preview', label: labelCtl.text, category: tile.category, imageAsset: tile.imageAsset, emoji: tile.emoji, isBoardLink: isBoardLink, isFullScreenImage: isFullScreenImage, linkedBoardId: linkedBoardId, tileSize: double.tryParse(sizeCtl.text) ?? 1.0, colSpan: int.tryParse(colSpanCtl.text) ?? 1, rowSpan: int.tryParse(rowSpanCtl.text) ?? 1, bgColor: bgCtl.text, textColor: txtCtl.text), _colorFromHex(bgCtl.text, Colors.transparent), _colorFromHex(txtCtl.text, Colors.black)))),
                     ]))),
                     const SizedBox(height: 12),
-                    if (tile.customVoice.isNotEmpty) Row(children: [ Expanded(child: ElevatedButton.icon(onPressed: () async { final player = AudioPlayer(); await player.play(DeviceFileSource(tile.customVoice)); }, icon: const Icon(Icons.play_arrow), label: const Text('Play Recording'))), const SizedBox(width: 8), Expanded(child: ElevatedButton.icon(onPressed: () { setDialogState(() { tile.customVoice = ''; }); }, icon: const Icon(Icons.delete), label: const Text('Delete')))]) else const SizedBox.shrink(),
+                    if (tile.customVoice.isNotEmpty) Row(children: [ Expanded(child: ElevatedButton.icon(onPressed: () async { final player = AudioPlayer(); await player.setVolume(1.0); await player.play(DeviceFileSource(tile.customVoice)); }, icon: const Icon(Icons.play_arrow), label: const Text('Play Recording'))), const SizedBox(width: 8), Expanded(child: ElevatedButton.icon(onPressed: () { setDialogState(() { tile.customVoice = ''; }); }, icon: const Icon(Icons.delete), label: const Text('Delete')))]) else const SizedBox.shrink(),
                   ],
                 ),
               ),
@@ -1654,7 +1655,7 @@ class _BoardEditorState extends State<BoardEditor> {
                 });
                 final service = await BoardService.getInstance();
                 await service.saveBoard(board);
-                if (mounted) Navigator.of(ctx).pop();
+                if (mounted && ctx.mounted) Navigator.of(ctx).pop();
                 setState(() => _ensureTileCapacity(board.tiles.length));
               }, child: const Text('Save')),
             ],
@@ -1737,7 +1738,7 @@ class _BoardEditorState extends State<BoardEditor> {
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Expanded(child: TextField(controller: _nameController, decoration: const InputDecoration(labelText: 'Board name'), onChanged: (v) => board.name = v)),
               const SizedBox(width: 8),
-              SizedBox(width: 160, child: DropdownButtonFormField<String>(key: ValueKey('area-${board.area}'), initialValue: board.area, decoration: const InputDecoration(labelText: 'Area'), isExpanded: true, items: const [DropdownMenuItem(value: 'Common', child: Text('Common')), DropdownMenuItem(value: 'Subject Vocab', child: Text('Subject Vocab')), DropdownMenuItem(value: 'My School', child: Text('My School')), DropdownMenuItem(value: 'Sign', child: Text('Sign')), DropdownMenuItem(value: 'Personal', child: Text('Personal'))], onChanged: (value) { if (value != null) setState(() => board.area = value); })),
+              SizedBox(width: 160, child: DropdownButtonFormField<String>(key: ValueKey('area-${board.area}'), initialValue: board.area, decoration: const InputDecoration(labelText: 'Area'), isExpanded: true, items: const [DropdownMenuItem(value: 'Common', child: Text('Common')), DropdownMenuItem(value: 'Legends', child: Text('Legends')), DropdownMenuItem(value: 'Recipes', child: Text('Recipes')), DropdownMenuItem(value: 'Subject Vocab', child: Text('Subject Vocab')), DropdownMenuItem(value: 'My School', child: Text('My School')), DropdownMenuItem(value: 'Sign', child: Text('Sign')), DropdownMenuItem(value: 'Personal', child: Text('Personal'))], onChanged: (value) { if (value != null) setState(() => board.area = value); })),
             ]),
             const SizedBox(height: 8),
             Wrap(
@@ -2303,8 +2304,14 @@ class _RecordDialogState extends State<_RecordDialog> {
       String path;
       RecordConfig config;
       if (kIsWeb) {
-        config = const RecordConfig(encoder: AudioEncoder.opus);
-        // On Web, we don't pass a path to start(); it returns a blob URL in stop()
+        config = const RecordConfig(
+          encoder: AudioEncoder.opus,
+          bitRate: 128000,
+          sampleRate: 48000,
+          autoGain: false,
+          echoCancel: false,
+          noiseSuppress: false,
+        );
         await _recorder.start(config, path: '');
       } else {
         final directory = await getApplicationDocumentsDirectory();
@@ -2312,7 +2319,14 @@ class _RecordDialogState extends State<_RecordDialog> {
         if (!await customDir.exists()) await customDir.create(recursive: true);
         
         path = '${customDir.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
-        config = const RecordConfig(encoder: AudioEncoder.aacLc);
+        config = const RecordConfig(
+          encoder: AudioEncoder.aacLc,
+          bitRate: 128000,
+          sampleRate: 44100,
+          autoGain: false,
+          echoCancel: false,
+          noiseSuppress: false,
+        );
         await _recorder.start(config, path: path);
       }
 
@@ -2350,6 +2364,7 @@ class _RecordDialogState extends State<_RecordDialog> {
       if (_isPlaying) {
         await _player.stop();
       } else {
+        await _player.setVolume(1.0);
         if (_recordedPath.startsWith('http') || _recordedPath.startsWith('blob:') || _recordedPath.startsWith('data:')) {
           await _player.play(UrlSource(_recordedPath));
         } else {

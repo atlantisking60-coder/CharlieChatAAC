@@ -7,8 +7,6 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
-  "isQuaternaryBoard": false,
-  "isQuinaryBoard": false,
   "sortOrder": 100,
   "tier": 2,
   "boxScale": 1,
@@ -20,7 +18,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_i_sign_ice_icy_frost_frosty",
+      "id": "prebuilt_i_sign_t1",
       "type": "image_viewer",
       "label": "ice, icy, frost, frosty",
       "category": "Custom",
@@ -36,7 +34,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_ice_cream_cornet",
+      "id": "prebuilt_i_sign_t2",
       "type": "image_viewer",
       "label": "ice-cream, cornet",
       "category": "Custom",
@@ -52,7 +50,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_idea_notion",
+      "id": "prebuilt_i_sign_t3",
       "type": "image_viewer",
       "label": "idea, notion",
       "category": "Custom",
@@ -68,7 +66,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_ignore_take_no_notice",
+      "id": "prebuilt_i_sign_t4",
       "type": "image_viewer",
       "label": "ignore, take no notice",
       "category": "Custom",
@@ -84,7 +82,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_ill_illness_not_well_1",
+      "id": "prebuilt_i_sign_t5",
       "type": "image_viewer",
       "label": "ill, illness, not well (1)",
       "category": "Custom",
@@ -100,7 +98,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_ill_illness_not_well_2",
+      "id": "prebuilt_i_sign_t6",
       "type": "image_viewer",
       "label": "ill, illness, not well (2)",
       "category": "Custom",
@@ -116,7 +114,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_imitation_pretend_fake_mock",
+      "id": "prebuilt_i_sign_t7",
       "type": "image_viewer",
       "label": "imitation, pretend, fake, mock",
       "category": "Custom",
@@ -132,7 +130,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_important_crucial_top",
+      "id": "prebuilt_i_sign_t8",
       "type": "image_viewer",
       "label": "important, crucial, top",
       "category": "Custom",
@@ -148,7 +146,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_improve_get_better",
+      "id": "prebuilt_i_sign_t9",
       "type": "image_viewer",
       "label": "improve, get better",
       "category": "Custom",
@@ -164,7 +162,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_improve",
+      "id": "prebuilt_i_sign_t10",
       "type": "image_viewer",
       "label": "improve",
       "category": "Custom",
@@ -180,7 +178,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_in_enter_go_in_entry",
+      "id": "prebuilt_i_sign_t11",
       "type": "image_viewer",
       "label": "in, enter, go in, entry",
       "category": "Custom",
@@ -196,7 +194,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_income_earnings",
+      "id": "prebuilt_i_sign_t12",
       "type": "image_viewer",
       "label": "income, earnings",
       "category": "Custom",
@@ -212,7 +210,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_india_indian",
+      "id": "prebuilt_i_sign_t13",
       "type": "image_viewer",
       "label": "india, indian",
       "category": "Custom",
@@ -228,7 +226,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_indoors_inside",
+      "id": "prebuilt_i_sign_t14",
       "type": "image_viewer",
       "label": "indoors, inside",
       "category": "Custom",
@@ -244,7 +242,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_inform_information",
+      "id": "prebuilt_i_sign_t15",
       "type": "image_viewer",
       "label": "inform, information",
       "category": "Custom",
@@ -260,7 +258,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_injury_hurt",
+      "id": "prebuilt_i_sign_t16",
       "type": "image_viewer",
       "label": "injury, hurt",
       "category": "Custom",
@@ -276,7 +274,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_insure_insurance",
+      "id": "prebuilt_i_sign_t17",
       "type": "image_viewer",
       "label": "insure, insurance",
       "category": "Custom",
@@ -292,7 +290,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interest_stimulate",
+      "id": "prebuilt_i_sign_t18",
       "type": "image_viewer",
       "label": "interest, stimulate",
       "category": "Custom",
@@ -308,7 +306,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_internet_net_web",
+      "id": "prebuilt_i_sign_t19",
       "type": "image_viewer",
       "label": "internet, net, web",
       "category": "Custom",
@@ -324,7 +322,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interpret_interpreter",
+      "id": "prebuilt_i_sign_t20",
       "type": "image_viewer",
       "label": "interpret, interpreter",
       "category": "Custom",
@@ -340,7 +338,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interpreter",
+      "id": "prebuilt_i_sign_t21",
       "type": "image_viewer",
       "label": "interpreter",
       "category": "Custom",
@@ -356,7 +354,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interrupt_in",
+      "id": "prebuilt_i_sign_t22",
       "type": "image_viewer",
       "label": "interrupt, in",
       "category": "Custom",
@@ -372,7 +370,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interview_converse_dialogue_discuss",
+      "id": "prebuilt_i_sign_t23",
       "type": "image_viewer",
       "label": "interview, converse, dialogue, discuss",
       "category": "Custom",
@@ -388,7 +386,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_interview_enquiry",
+      "id": "prebuilt_i_sign_t24",
       "type": "image_viewer",
       "label": "interview, enquiry",
       "category": "Custom",
@@ -404,7 +402,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_ireland_irish",
+      "id": "prebuilt_i_sign_t25",
       "type": "image_viewer",
       "label": "ireland, irish",
       "category": "Custom",
@@ -420,7 +418,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_iron_ironing_press",
+      "id": "prebuilt_i_sign_t26",
       "type": "image_viewer",
       "label": "iron, ironing, press",
       "category": "Custom",
@@ -436,7 +434,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_italy_italian",
+      "id": "prebuilt_i_sign_t27",
       "type": "image_viewer",
       "label": "italy, italian",
       "category": "Custom",
@@ -452,7 +450,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_tile_28",
+      "id": "tile_27",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -468,7 +466,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_tile_29",
+      "id": "tile_28",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -484,7 +482,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_i_sign_tile_30",
+      "id": "tile_29",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -500,5 +498,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false
 }

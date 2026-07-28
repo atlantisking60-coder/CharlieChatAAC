@@ -436,10 +436,10 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_sealife_sea_anenome",
+      "id": "prebuilt_sealife_sea_anemone",
       "type": "vocabulary",
-      "label": "sea anenome",
-      "category": "Assets",
+      "label": "sea anemone",
+      "category": "Sealife",
       "image": "assets/symbols/1. Main Boards/Animals & Habitats/Sealife/sea anemone.png",
       "emoji": "",
       "linkedBoardName": null,

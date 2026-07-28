@@ -1,7 +1,7 @@
 {
   "id": "prebuilt_letters",
   "name": "Letters",
-  "area": "Sign",
+  "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": false,
@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 0,
+  "sortOrder": 3,
   "tier": 1,
   "boxScale": 1,
   "tileHeight": 100,
@@ -435,5 +435,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": null
 }

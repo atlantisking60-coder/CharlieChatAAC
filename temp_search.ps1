@@ -1,0 +1,1 @@
+Get-ChildItem -Path "lib\data\boards\Legends\Characters\Disney Stories" -Recurse -Filter "*.json" | Select-String -Pattern "_\d{4}_" | ForEach-Object { "$($_.Path):$($_.LineNumber):$($_.Line.Trim())" }
