@@ -1,0 +1,20 @@
+Position and Direction - Word List
+====================================
+
+anti-clockwise
+backwards
+clockwise
+continuous
+direction
+distance
+down
+forwards
+interval
+left
+location
+path
+right
+rotate
+step
+turn
+up

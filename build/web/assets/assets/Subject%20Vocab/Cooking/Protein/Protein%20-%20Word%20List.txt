@@ -1,0 +1,17 @@
+Protein - Word List
+=======================
+
+beef
+chicken
+chickpeas
+duck
+egg whites
+kidney beans
+lamb
+lentils
+omelette
+pork
+seafood
+tofu
+turkey
+venison

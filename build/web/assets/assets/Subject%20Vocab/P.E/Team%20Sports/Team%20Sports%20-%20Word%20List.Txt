@@ -1,0 +1,16 @@
+Team Sports - Word List
+===========================
+
+baseball
+basketball
+cricket
+dodgeball
+football
+handball
+hockey
+ice hockey
+lacrosse
+rounders
+rugby
+volleyball
+water polo

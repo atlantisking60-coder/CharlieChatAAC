@@ -1,0 +1,14 @@
+Hazard Symbols - Word List
+==============================
+
+corrosive
+dangerous to the environment
+explosive
+flammable
+general hazard
+harmful chemicals
+health hazard
+oxidising
+pressurised gas
+serious health hazard
+toxic

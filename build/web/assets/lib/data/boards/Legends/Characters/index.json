@@ -1,0 +1,200 @@
+[
+  {
+    "name": "Arabian and Middle Eastern Tales",
+    "area": "Legends",
+    "id": "prebuilt_arabian_middle_eastern_tales",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 8
+  },
+  {
+    "name": "Arthurian Legend",
+    "area": "Legends",
+    "id": "prebuilt_arthurian_legend",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 7
+  },
+  {
+    "name": "Asian Legends and Folklore",
+    "area": "Legends",
+    "id": "prebuilt_asian_legends_folklore",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 9
+  },
+  {
+    "name": "Computer Games",
+    "area": "Legends",
+    "id": "prebuilt_computer_games",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 20
+  },
+  {
+    "name": "D&D",
+    "area": "Legends",
+    "id": "prebuilt_d_d",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 6
+  },
+  {
+    "name": "DC",
+    "area": "Legends",
+    "id": "prebuilt_dc",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 15
+  },
+  {
+    "name": "Disney Stories",
+    "area": "Legends",
+    "id": "prebuilt_disney_stories",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 5
+  },
+  {
+    "name": "Fairy Tale Characters",
+    "area": "Legends",
+    "id": "prebuilt_fairy_tale_characters",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 3,
+    "sortOrder": 4
+  },
+  {
+    "name": "Famous Monsters and Horror Icons",
+    "area": "Legends",
+    "id": "prebuilt_famous_monsters_horror_icons",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 3,
+    "sortOrder": 9
+  },
+  {
+    "name": "Gods, Titans, Heroes and Monsters",
+    "area": "Legends",
+    "id": "prebuilt_gods_titans_heroes_monsters",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 3
+  },
+  {
+    "name": "Halloween Keywords",
+    "area": "Legends",
+    "id": "prebuilt_halloween_keywords_legends",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 100
+  },
+  {
+    "name": "Heroes and Monsters (Greek and Roman)",
+    "area": "Legends",
+    "id": "prebuilt_heroes_monsters_greek_roman",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 20
+  },
+  {
+    "name": "Horror Icons",
+    "area": "Legends",
+    "id": "prebuilt_horror_icons",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 10
+  },
+  {
+    "name": "Legendary Heroes and Folk Heroes",
+    "area": "Legends",
+    "id": "prebuilt_legendary_heroes_folk_heroes",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 11
+  },
+  {
+    "name": "Literary and Gothic Characters",
+    "area": "Legends",
+    "id": "prebuilt_literary_gothic_characters",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 12
+  },
+  {
+    "name": "Marvel",
+    "area": "Legends",
+    "id": "prebuilt_marvel",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 13
+  },
+  {
+    "name": "Religion and Worldviews",
+    "area": "Legends",
+    "id": "prebuilt_religion_worldviews_legends",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 130
+  },
+  {
+    "name": "Star Trek",
+    "area": "Legends",
+    "id": "prebuilt_star_trek",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 18
+  },
+  {
+    "name": "Star Wars",
+    "area": "Legends",
+    "id": "prebuilt_star_wars",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 17
+  },
+  {
+    "name": "The Lord Of The Rings",
+    "area": "Legends",
+    "id": "prebuilt_the_lord_of_the_rings",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 19
+  },
+  {
+    "name": "The Muppets",
+    "area": "Legends",
+    "id": "prebuilt_the_muppets",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 16
+  },
+  {
+    "name": "X-Men",
+    "area": "Legends",
+    "id": "prebuilt_x_men",
+    "parentName": "Characters",
+    "isSubBoard": true,
+    "tier": 2,
+    "sortOrder": 14
+  }
+]

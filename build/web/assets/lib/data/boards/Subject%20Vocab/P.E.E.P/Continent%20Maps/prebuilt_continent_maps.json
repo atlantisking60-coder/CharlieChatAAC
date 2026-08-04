@@ -1,0 +1,21 @@
+{
+  "id": "prebuilt_continent_maps",
+  "name": "Continent Maps",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_p_e_e_p",
+  "sortOrder": 247,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0
+}

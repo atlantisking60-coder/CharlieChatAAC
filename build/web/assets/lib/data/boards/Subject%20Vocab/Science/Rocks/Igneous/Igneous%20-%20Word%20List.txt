@@ -1,0 +1,11 @@
+Igneous - Word List
+=======================
+
+basalt
+extrusive
+granite
+igneous
+intrusive
+lava
+magma
+pumice

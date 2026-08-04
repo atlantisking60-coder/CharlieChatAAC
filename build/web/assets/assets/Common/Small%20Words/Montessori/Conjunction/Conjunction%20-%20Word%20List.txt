@@ -1,0 +1,36 @@
+Conjunction - Word List
+===========================
+
+although
+and
+as
+because
+before
+but
+by
+either
+however
+if
+lest
+neither
+nor
+once
+or
+provided
+since
+so
+so that
+still
+than
+that
+though
+till
+until
+when
+whenever
+where
+whereas
+wherever
+whether
+while
+yet

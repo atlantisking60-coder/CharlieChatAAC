@@ -1,0 +1,21 @@
+{
+  "id": "prebuilt_measurements_length_and_width_perimeter_and_area",
+  "name": "Measurements (Length and Width, Perimeter and Area)",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_maths",
+  "sortOrder": 139,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0
+}

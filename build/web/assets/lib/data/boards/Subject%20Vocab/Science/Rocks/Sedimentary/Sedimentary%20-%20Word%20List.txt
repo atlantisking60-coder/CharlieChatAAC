@@ -1,0 +1,17 @@
+Sedimentary - Word List
+===========================
+
+cementation
+clastic
+clay
+compaction
+flint
+limestone
+peat
+pebble
+sand
+sandstone
+sedimentary
+shale
+stratification
+weathering

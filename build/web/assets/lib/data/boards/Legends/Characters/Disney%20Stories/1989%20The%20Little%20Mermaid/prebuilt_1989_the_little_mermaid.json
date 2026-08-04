@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_1989_the_little_mermaid",
+  "name": "1989 The Little Mermaid",
+  "area": "Legends",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 23,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "prebuilt_disney_stories"
+}

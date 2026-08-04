@@ -1,0 +1,42 @@
+Statistics - Word List
+==========================
+
+average
+bar chart
+chart
+choose
+column
+coordinate
+count
+criteria
+diagram
+explain
+graph
+grid
+group
+information
+interpret
+line graph
+make
+mean
+median
+mode
+organise
+origin
+pair
+pictogram
+pie chart
+plot
+point
+position
+quadrant
+range
+results
+row
+select
+sort
+statistics
+table
+tally
+x-axis
+y-axis

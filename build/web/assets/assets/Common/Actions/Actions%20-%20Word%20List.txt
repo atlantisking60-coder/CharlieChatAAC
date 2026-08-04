@@ -1,0 +1,24 @@
+Actions - Word List
+=======================
+
+ask
+do
+dress
+drink
+eat
+go
+stop
+play
+sleep
+talk
+listen
+enter
+leave or exit
+throw away
+throw
+mix
+mix and stir
+cook
+blow nose
+ride
+Movement

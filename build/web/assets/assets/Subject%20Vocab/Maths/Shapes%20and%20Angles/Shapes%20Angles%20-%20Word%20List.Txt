@@ -1,0 +1,41 @@
+Shapes and Angles - Word List
+===============================
+
+2d
+3d
+acute angle
+angle
+base
+crescent
+cube
+cuboid
+curved
+decagon
+diameter
+edge
+ellipsoid
+face
+heart
+hollow
+indices
+intersect
+irregular
+net
+nonagon
+obtuse angle
+parallel
+pependicular
+radius
+reflect
+reflex angle
+regular
+right angle
+rotate
+side
+solid
+straight angle
+straight
+surface
+teardrop
+torus
+translate

@@ -1,0 +1,56 @@
+{
+  "id": "prebuilt_arthurian_legend",
+  "name": "Arthurian Legend",
+  "area": "Legends",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 7,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_arthurian_legend_knight_in_silver_armor_202607241901_2",
+      "type": "vocabulary",
+      "label": "knight in silver armor 202607241901 2",
+      "category": "Arthurian Legend",
+      "image": "assets/Subject Vocab/English/Characters and Fantasy/Arthurian Legend/knight in silver armor 202607241901 2.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_arthurian_legend_merlin_wizard_symbol_blue_robe_202607241901",
+      "type": "vocabulary",
+      "label": "merlin wizard symbol blue robe 202607241901",
+      "category": "Arthurian Legend",
+      "image": "assets/Subject Vocab/English/Characters and Fantasy/Arthurian Legend/merlin wizard symbol blue robe 202607241901.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_characters"
+}

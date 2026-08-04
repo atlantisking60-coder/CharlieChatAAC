@@ -1,0 +1,13 @@
+Food Groups - Word List
+===========================
+
+carbohydrate
+dairy
+fat
+food groups
+fruit
+herb
+oil
+protein
+spice
+vegetable

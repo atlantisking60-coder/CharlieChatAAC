@@ -37,6 +37,7 @@ if errorlevel 1 (
 
 echo.
 echo [4/4] Committing and pushing to GitHub...
+git config --global core.longpaths true
 git add -f build\web
 git add .
 

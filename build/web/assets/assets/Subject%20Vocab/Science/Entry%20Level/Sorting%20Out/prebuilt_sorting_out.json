@@ -1,0 +1,72 @@
+{
+  "id": "prebuilt_sorting_out",
+  "name": "Sorting Out",
+  "area": "Subject Vocab",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_sorting_out_tile_1",
+      "type": "image",
+      "label": "crystal",
+      "category": "Sorting Out",
+      "image": "assets/Subject Vocab/Science/Entry Level/Sorting Out/crystal.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_sorting_out_tile_2",
+      "type": "image",
+      "label": "distillation",
+      "category": "Sorting Out",
+      "image": "assets/Subject Vocab/Science/Entry Level/Sorting Out/distillation.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_sorting_out_tile_3",
+      "type": "image",
+      "label": "sort",
+      "category": "Sorting Out",
+      "image": "assets/Subject Vocab/Science/Entry Level/Sorting Out/sort.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_science"
+}

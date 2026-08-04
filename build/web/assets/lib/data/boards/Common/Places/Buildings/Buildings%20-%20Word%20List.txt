@@ -1,0 +1,44 @@
+Buildings - Word List
+=========================
+
+Buildings
+Rooms and Home
+Furniture
+Habitats
+Local Places
+airport
+bank
+café
+church
+cinema
+clinic
+coffee shop
+college
+community hall
+court
+dentist
+fire station
+gp surgery
+hospital
+hotel
+ice rink
+library
+mall or shopping centre
+mosque
+museum
+office
+optician
+petrol station
+pharmacy
+police station
+post office
+prison
+restaurant
+school
+stadium
+store or shop
+synagogue
+temple
+theatre
+university
+vet

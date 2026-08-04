@@ -1,0 +1,25 @@
+Weather - Word List
+=======================
+
+weather
+rainbow
+hot
+cold
+sun
+sunny
+rain
+rainy
+wind
+windy
+cloud
+cloudy
+fog
+foggy
+snow
+snowy
+storm
+thunder and lightning
+sleet
+hail
+Seasons
+Disasters

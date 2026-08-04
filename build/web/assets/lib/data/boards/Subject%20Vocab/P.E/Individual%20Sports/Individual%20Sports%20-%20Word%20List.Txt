@@ -1,0 +1,15 @@
+Individual Sports - Word List
+=================================
+
+archery
+badminton
+boxing
+fencing
+figure skating
+golf
+gymnastics
+judo
+karate
+kickboxing
+tennis
+wrestling

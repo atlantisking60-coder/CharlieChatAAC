@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_2015_the_good_dinosaur",
+  "name": "2015 The Good Dinosaur",
+  "area": "Legends",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 60,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "prebuilt_disney_stories"
+}

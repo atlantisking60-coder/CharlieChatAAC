@@ -1,0 +1,59 @@
+Musical Genres - Word List
+==============================
+
+alternative
+ambient
+baroque
+bluegrass
+blues
+bollywood
+celtic
+classical
+country
+disco
+drum and bass
+dubstep
+electro dance music
+electronic
+enka
+flamenco
+folk
+funk rock
+funk
+garage
+gospel
+goth
+grunge
+hardcore
+heavy metal
+hip hop
+house
+indie
+industrial
+j-pop
+jazz
+k-pop
+mariachi
+merengue
+metal
+new wave
+pop punk
+pop
+progressive rock
+punk
+rap
+reggae
+rnb
+rock
+romantic
+salsa
+screamo
+ska
+soul
+soundtrack
+swing
+synth-pop
+techno
+trance
+trap
+world
