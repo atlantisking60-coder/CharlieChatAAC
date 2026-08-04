@@ -1,6 +1,6 @@
 {
-  "id": "prebuilt_personal hygiene",
-  "name": "personal hygiene",
+  "id": "prebuilt_personal_hygiene",
+  "name": "Personal Hygiene",
   "area": "Sign",
   "columns": 5,
   "backgroundColor": "transparent",
@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 0,
+  "sortOrder": 572,
   "tier": 1,
   "boxScale": 1,
   "tileHeight": 100,
@@ -500,5 +500,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "rows": 4,
+  "version": 0
 }

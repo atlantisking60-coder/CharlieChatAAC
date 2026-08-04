@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -43,6 +44,21 @@ class SymbolGrid extends StatelessWidget {
     this.scrollable = true,
     this.controller,
   });
+
+  static final Set<String> _precachedImages = <String>{};
+
+  /// Pre-load the visible board's PNG assets before the grid is painted,
+  /// giving the user's chosen board priority in the image cache.
+  void _precacheImages(BuildContext context) {
+    for (final symbol in symbols) {
+      final asset = symbol.imageAsset;
+      if (asset.isEmpty) continue;
+      if (!asset.startsWith('assets/')) continue;
+      if (asset.toLowerCase().endsWith('.svg')) continue;
+      if (!_precachedImages.add(asset)) continue;
+      unawaited(precacheImage(AssetImage(asset), context));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +240,14 @@ class SymbolGrid extends StatelessWidget {
           ));
         }
 
-        final numRows = (symbols.length / layout.columns).ceil();
+        var maxBottomRow = 0;
+        for (int index = 0; index < symbols.length; index++) {
+          if (coveredCells.contains(index)) continue;
+          final row = index ~/ layout.columns;
+          final bottomRow = row + symbols[index].rowSpan - 1;
+          if (bottomRow > maxBottomRow) maxBottomRow = bottomRow;
+        }
+        final numRows = maxBottomRow + 1;
         final totalHeight = numRows * (baseTileHeight + spacing);
 
         Widget grid = SizedBox(
@@ -232,6 +255,7 @@ class SymbolGrid extends StatelessWidget {
           child: Stack(children: positionedTiles),
         );
 
+        _precacheImages(context);
         if (!scrollable) return Padding(padding: EdgeInsets.symmetric(horizontal: spacing), child: grid);
         return SingleChildScrollView(
           controller: controller,
@@ -245,7 +269,7 @@ class SymbolGrid extends StatelessWidget {
   _GridLayout _gridLayoutFor(BuildContext context, BoxConstraints constraints, int tileCount) {
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
 
-    if (!adjustableLayout && fixedColumns != null) {
+    if (fixedColumns != null && fixedColumns! > 0) {
       final columns = fixedColumns!.clamp(1, 12);
       return _GridLayout(columns: columns);
     }

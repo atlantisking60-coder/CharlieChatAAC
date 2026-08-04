@@ -8,7 +8,7 @@
 - **AuthScreen**: Unified UI with platform-specific provider selection
 - **AuthGuard**: Navigation protection and authentication state management
 
-### Supported Platforms & Methods
+### Supported Platforms and Methods
 - **Android**: Email/Password, Google Sign-In, Guest accounts
 - **iOS**: Email/Password, Google Sign-In, Apple Sign-In, Guest accounts  
 - **Web**: Email/Password, Google Sign-In, Guest accounts

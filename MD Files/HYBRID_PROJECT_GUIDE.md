@@ -12,7 +12,7 @@ Charlie Chat is a hybrid AAC (Augmentative and Alternative Communication) applic
 ┌─────────────────────────────────────────────────────────┐
 │                    Flutter Frontend                       │
 │  (AppCreation UI - Working, Offline-First)              │
-│  - Symbol Grid & Boards                                  │
+│  - Symbol Grid and Boards                                  │
 │  - Phrase Builder                                        │
 │  - Text-to-Speech                                        │
 │  - Local Storage (SharedPreferences/Files)               │
@@ -155,7 +155,7 @@ final symbols = await apiService.searchSymbols(query: 'hello');
 - `searchSymbols()` - Search symbol library
 - `getSymbolsByCategory()` - Get symbols by category
 
-#### Sentences & Favorites
+#### Sentences and Favorites
 - `getSentences()` - Get user's sentences
 - `createSentence()` - Create sentence
 - `getFavorites()` - Get favorites

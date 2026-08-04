@@ -1,8 +1,0 @@
-Pushes & Pulls - Word List
-==============================
-
-elastic
-freefall
-lift, drag, thrust, gravity
-terminal velocity
-weightless

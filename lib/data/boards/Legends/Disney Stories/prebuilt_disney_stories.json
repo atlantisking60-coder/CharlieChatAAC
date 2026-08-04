@@ -1,0 +1,39 @@
+{
+  "id": "prebuilt_disney_stories",
+  "name": "Disney Stories",
+  "area": "Legends",
+  "columns": 1,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_disney_stories_empty",
+      "type": "symbol",
+      "label": "Disney Stories",
+      "category": "Custom",
+      "imageAsset": "assets/Empty Board.png",
+      "emoji": "",
+      "linkedBoardName": "",
+      "isFullScreenImage": false,
+      "bgColor": "#000000",
+      "textColor": "#FFFFFF",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ]
+}

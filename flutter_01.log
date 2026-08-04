@@ -3,69 +3,77 @@ Please report a bug at https://github.com/flutter/flutter/issues.
 
 ## command
 
-flutter run -d chrome --web-port=8080 --hot --web-hostname=localhost
+flutter run -d chrome --web-port=8080
 
 ## exception
 
-UnsupportedError: Unsupported operation: Cannot extract a file path from a URI with a fragment component
+PathNotFoundException: PathNotFoundException: Cannot open file, path = 'C:\Users\Craig\Downloads\Charlie Chat\assets\Legends\Creatures & Races\Creatures Races - Word List.Txt' (OS Error: The system cannot find the path specified, errno = 3)
 
 ```
-#0      _Uri.toFilePath (dart:core/uri.dart:3440:7)
-#1      ManifestAssetBundle._ensureAssetPathIsValid (package:flutter_tools/src/asset.dart:1343:32)
-#2      ManifestAssetBundle._parseAssetsFromFolder (package:flutter_tools/src/asset.dart:1168:5)
-#3      ManifestAssetBundle._parseAssets (package:flutter_tools/src/asset.dart:1037:9)
-#4      ManifestAssetBundle.build (package:flutter_tools/src/asset.dart:384:54)
+#0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+#1      _File.openSync (dart:io/file_impl.dart:572:5)
+#2      ForwardingFile.openSync (package:file/src/forwarding/forwarding_file.dart:74:16)
+#3      ErrorHandlingFile.copySync.<anonymous closure> (package:flutter_tools/src/base/error_handling_io.dart:292:22)
+#4      _runSync (package:flutter_tools/src/base/error_handling_io.dart:552:14)
+#5      ErrorHandlingFile.copySync (package:flutter_tools/src/base/error_handling_io.dart:291:5)
+#6      writeBundle.<anonymous closure> (package:flutter_tools/src/bundle_builder.dart:234:19)
 <asynchronous suspension>
-#5      ResidentWebRunner._updateDevFS (package:flutter_tools/src/isolated/resident_web_runner.dart:773:26)
+#7      Future.wait.<anonymous closure> (dart:async/future.dart:546:21)
 <asynchronous suspension>
-#6      ResidentWebRunner.run.<anonymous closure> (package:flutter_tools/src/isolated/resident_web_runner.dart:330:41)
+#8      writeBundle (package:flutter_tools/src/bundle_builder.dart:171:3)
 <asynchronous suspension>
-#7      asyncGuard.<anonymous closure> (package:flutter_tools/src/base/async_guard.dart:108:24)
+#9      WebDevFS.update (package:flutter_tools/src/isolated/devfs_web.dart:342:9)
+<asynchronous suspension>
+#10     ResidentWebRunner._updateDevFS (package:flutter_tools/src/isolated/resident_web_runner.dart:797:35)
+<asynchronous suspension>
+#11     ResidentWebRunner.run.<anonymous closure> (package:flutter_tools/src/isolated/resident_web_runner.dart:330:41)
+<asynchronous suspension>
+#12     asyncGuard.<anonymous closure> (package:flutter_tools/src/base/async_guard.dart:108:24)
 <asynchronous suspension>
 ```
 
 ## flutter doctor
 
 ```
-[✓] Flutter (Channel stable, 3.44.0, on Microsoft Windows [Version 10.0.26200.8894], locale en-GB) [759ms]
-    • Flutter version 3.44.0 on channel stable at C:\Users\Craig\flutter
-    • Upstream repository https://github.com/flutter/flutter.git
-    • Framework revision 559ffa3f75 (2 months ago), 2026-05-15 14:13:13 -0700
-    • Engine revision 4c525dac5e
-    • Dart version 3.12.0
-    • DevTools version 2.57.0
-    • Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, enable-swift-package-manager, omit-legacy-version-file, enable-lldb-debugging, enable-uiscene-migration
+[32m[✓][39m Flutter (Channel stable, 3.44.0, on Microsoft Windows [Version 10.0.26200.8973], locale en-GB) [810ms]
+    [32m•[39m Flutter version 3.44.0 on channel stable at C:\Users\Craig\flutter
+    [32m•[39m Upstream repository https://github.com/flutter/flutter.git
+    [32m•[39m Framework revision 559ffa3f75 (3 months ago), 2026-05-15 14:13:13 -0700
+    [32m•[39m Engine revision 4c525dac5e
+    [32m•[39m Dart version 3.12.0
+    [32m•[39m DevTools version 2.57.0
+    [32m•[39m Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android,
+      enable-ios, cli-animations, enable-native-assets, enable-swift-package-manager, omit-legacy-version-file,
+      enable-lldb-debugging, enable-uiscene-migration
 
-[!] Windows Version (Problem detected with Windows installation) [2.6s]
-    ! Get-Process failed to complete
+[33m[!][39m Windows Version (Problem detected with Windows installation) [4.4s]
+    [33m![39m Get-Process failed to complete
 
-[!] Android toolchain - develop for Android devices (Android SDK version 37.0.0) [1,469ms]
-    • Android SDK at C:\Users\Craig\AppData\Local\Android\sdk
-    • Emulator version 36.6.11.0 (build_id 15507667) (CL:N/A)
-    • Platform android-CinnamonBun-ext23, build-tools 37.0.0
-    • Java binary at: C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe
-      This JDK was found in the system PATH.
+[32m[✓][39m Android toolchain - develop for Android devices (Android SDK version 37.0.0) [6.7s]
+    [32m•[39m Android SDK at C:\Users\Craig\AppData\Local\Android\sdk
+    [32m•[39m Emulator version 36.6.11.0 (build_id 15507667) (CL:N/A)
+    [32m•[39m Platform android-CinnamonBun-ext23, build-tools 37.0.0
+    [32m•[39m Java binary at: C:\Program Files\Android\Android Studio\jbr\bin\java
+      This is the JDK bundled with the latest Android Studio installation on this machine.
       To manually set the JDK path, use: `flutter config --jdk-dir="path/to/jdk"`.
-    ✗ Could not determine java version
-    ✗ Android license status unknown.
-      Run `flutter doctor --android-licenses` to accept the SDK licenses.
-      See https://flutter.dev/to/windows-android-setup for more details.
+    [32m•[39m Java version OpenJDK Runtime Environment (build 21.0.10+-14961533-b1163.108)
+    [32m•[39m All Android licenses accepted.
 
-[✓] Chrome - develop for the web [278ms]
-    • Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+[32m[✓][39m Chrome - develop for the web [406ms]
+    [32m•[39m Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 
-[✓] Visual Studio - develop Windows apps (Visual Studio Build Tools 2026 18.6.2) [276ms]
-    • Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools
-    • Visual Studio Build Tools 2026 version 18.6.11822.322
-    • Windows 10 SDK version 10.0.26100.0
+[32m[✓][39m Visual Studio - develop Windows apps (Visual Studio Build Tools 2026 18.6.2) [405ms]
+    [32m•[39m Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools
+    [32m•[39m Visual Studio Build Tools 2026 version 18.6.11822.322
+    [32m•[39m Windows 10 SDK version 10.0.26100.0
 
-[✓] Connected device (3 available) [3.0s]
-    • Windows (desktop) • windows • windows-x64    • Microsoft Windows [Version 10.0.26200.8894]
-    • Chrome (web)      • chrome  • web-javascript • Google Chrome 150.0.7871.182
-    • Edge (web)        • edge    • web-javascript • Microsoft Edge 150.0.4078.99
+[32m[✓][39m Connected device (3 available) [2.5s]
+    [32m•[39m Windows (desktop) • windows • windows-x64    • Microsoft Windows [Version 10.0.26200.8973]
+    [32m•[39m Chrome (web)      • chrome  • web-javascript • Google Chrome 150.0.7871.187
+    [32m•[39m Edge (web)        • edge    • web-javascript • Microsoft Edge 150.0.4078.105
 
-[✓] Network resources [308ms]
-    • All expected network resources are available.
+[32m[✓][39m Network resources [563ms]
+    [32m•[39m All expected network resources are available.
 
-! Doctor found issues in 2 categories.
+[33m![39m Doctor found issues in 1 category.
 ```

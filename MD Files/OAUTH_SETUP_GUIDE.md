@@ -10,12 +10,12 @@ This guide explains how to configure OAuth providers for Charlie Chat authentica
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Select your Firebase project
-3. Go to "APIs & Services" → "Credentials"
+3. Go to "APIs and Services" → "Credentials"
 4. Click "Create Credentials" → "OAuth 2.0 Client ID"
 
 ### 2. Web Application Credentials
 
-**For Web & Windows:**
+**For Web and Windows:**
 - Application type: Web application
 - Name: Charlie Chat Web
 - Authorized JavaScript origins:
@@ -44,7 +44,7 @@ keytool -list -v -keystore your-release-key.keystore -alias your-alias
 
 ### 4. iOS/macOS Credentials
 
-**For iOS & macOS:**
+**For iOS and macOS:**
 - Application type: iOS
 - Name: Charlie Chat iOS
 - Bundle ID: `com.charliechat.app`
@@ -62,7 +62,7 @@ In Google Cloud Console, enable these APIs:
 ### 1. Apple Developer Portal
 
 1. Go to [Apple Developer Portal](https://developer.apple.com/)
-2. Go to "Certificates, Identifiers & Profiles"
+2. Go to "Certificates, Identifiers and Profiles"
 3. Select "Identifiers" → Click "+"
 
 ### 2. Create App ID
@@ -142,7 +142,7 @@ In Google Cloud Console, enable these APIs:
 
 ### 5. Create Client Secret
 
-1. Go to "Certificates & secrets"
+1. Go to "Certificates and secrets"
 2. Click "New client secret"
 3. Description: Charlie Chat Secret
 4. Expiration: Choose appropriate period

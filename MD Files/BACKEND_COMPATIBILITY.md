@@ -1204,7 +1204,7 @@ export class SyncController {
 
 ---
 
-## 7. Monitoring & Logging
+## 7. Monitoring and Logging
 
 ### Application Monitoring
 

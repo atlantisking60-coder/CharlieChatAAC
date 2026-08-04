@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 1,
+  "sortOrder": 392,
   "tier": 1,
   "boxScale": 1,
   "tileHeight": 100,
@@ -404,5 +404,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "rows": 4,
+  "version": 0
 }

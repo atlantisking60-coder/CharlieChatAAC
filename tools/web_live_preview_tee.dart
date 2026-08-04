@@ -100,6 +100,11 @@ void main(List<String> args) async {
     exit(1);
   }
 
+  // Board JSONs live in lib/data/boards but are declared in pubspec.yaml as
+  // lib/... assets.  flutter build web does not actually copy them into
+  // build/web/assets/lib/, so serve them from the source tree on the fly.
+  final libRoot = p.absolute('lib');
+
   String contentTypeFor(String ext) {
     return switch (ext.toLowerCase()) {
       '.html' || '.htm' => 'text/html; charset=utf-8',
@@ -127,18 +132,60 @@ void main(List<String> args) async {
     response.headers.add('Access-Control-Allow-Origin', '*');
     response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS');
 
-    final uriPath = Uri.decodeComponent(request.uri.path);
+    // request.uri.path is already decoded by Dart; don't decode percent signs
+    // again because some build/web asset folders contain literal '%20'.
+    final uriPath = request.uri.path;
     final relative = uriPath.startsWith('/') ? uriPath.substring(1) : uriPath;
     final safeRelative = relative
         .split('/')
         .where((s) => s.isNotEmpty && s != '..')
         .join('/');
-    var filePath = p.join(webRoot, safeRelative);
+
+    // Flutter web asset paths declared under lib/ are requested at
+    // /assets/lib/..., so map them back to the project lib/ directory.
+    var filePath = safeRelative.startsWith('assets/lib/')
+        ? p.join(libRoot, safeRelative.substring('assets/lib/'.length))
+        : p.join(webRoot, safeRelative);
 
     if (Directory(filePath).existsSync()) {
       filePath = p.join(filePath, 'index.html');
     }
     if (!File(filePath).existsSync()) {
+      if (safeRelative.startsWith('assets/') && !safeRelative.startsWith('assets/lib/')) {
+        // Flutter's web build encodes spaces as %20 in the on-disk asset names,
+        // while the browser request may use real spaces or %26. Normalise so
+        // '1. Main Boards' and 'Animals and Habitats' still resolve.
+        final encodedSafe = safeRelative
+            .replaceAll(' ', '%20')
+            .replaceAll('%26', '&');
+        if (encodedSafe != safeRelative) {
+          final encodedPath = p.join(webRoot, encodedSafe);
+          if (File(encodedPath).existsSync() || Directory(encodedPath).existsSync()) {
+            filePath = encodedPath;
+          }
+        }
+
+        // Some runtime requests drop the leading 'assets/' asset prefix.
+        if (!File(filePath).existsSync()) {
+          final altPath = p.join(webRoot, 'assets', safeRelative);
+          if (File(altPath).existsSync() || Directory(altPath).existsSync()) {
+            filePath = altPath;
+          }
+        }
+      }
+    }
+    if (Directory(filePath).existsSync()) {
+      filePath = p.join(filePath, 'index.html');
+    }
+    if (!File(filePath).existsSync()) {
+      // Real asset requests (have an extension) should 404, not get index.html.
+      final isAsset = safeRelative.contains('.') && !safeRelative.endsWith('/');
+      if (isAsset) {
+        response.statusCode = HttpStatus.notFound;
+        response.write('Not found');
+        await response.close();
+        return;
+      }
       filePath = p.join(webRoot, 'index.html');
     }
 

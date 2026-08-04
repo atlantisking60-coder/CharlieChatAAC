@@ -1,0 +1,22 @@
+{
+  "id": "prebuilt_body_parts",
+  "name": "Body Parts",
+  "area": "Common",
+  "columns": 6,
+  "backgroundColor": "transparent",
+  "adjustableLayout": true,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 11,
+  "tier": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 7,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

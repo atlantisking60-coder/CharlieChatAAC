@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../services/board_service.dart';
 import '../services/sync_service.dart';
 
 class SyncStatusScreen extends StatefulWidget {
@@ -65,6 +66,10 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
   Future<void> _pushAll() async {
     setState(() => _loading = true);
     try {
+      // Push every local board to the dev server as prebuilt source files.
+      final boardService = await BoardService.getInstance();
+      await boardService.pushAllToProject();
+      // Legacy cloud-sync placeholder still runs to mark records as synced.
       await _syncService.pushAllPending();
     } finally {
       await _load();
@@ -96,7 +101,7 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.cloud_upload),
-            tooltip: 'Push all pending',
+            tooltip: 'Push all to project',
             onPressed: _pushAll,
           ),
           IconButton(

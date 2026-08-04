@@ -93,7 +93,7 @@ class _BackupSectionState extends State<BackupSection> {
       children: [
         const SettingsSectionHeader(
           icon: Icons.backup_outlined,
-          title: 'Backup & Restore',
+          title: 'Backup and Restore',
           subtitle: 'Export your boards and settings or restore from a previous backup',
         ),
 

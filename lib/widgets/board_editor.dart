@@ -125,10 +125,11 @@ class BoardEditor extends StatefulWidget {
   final String initialArea;
   final String? initialParentBoardId;
   final int initialTier;
+  final List<Board> availableBoards;
   final Future<void> Function(Board) onSave;
 
   const BoardEditor(
-      {super.key, this.board, this.initialSymbol, this.initialIndex, this.initialMergeIndex, this.initialArea = 'Common', this.initialParentBoardId, this.initialTier = 1, required this.onSave});
+      {super.key, this.board, this.initialSymbol, this.initialIndex, this.initialMergeIndex, this.initialArea = 'Common', this.initialParentBoardId, this.initialTier = 1, this.availableBoards = const [], required this.onSave});
 
   @override
   State<BoardEditor> createState() => _BoardEditorState();
@@ -152,24 +153,30 @@ class _BoardEditorState extends State<BoardEditor> {
   int? _mergeSourceIndex;
   Timer? _resizeTimer;
   bool _isDragging = false;
+  final _scrollController = ScrollController();
+  bool _showScrollToTop = false;
 
   @override
   void initState() {
     super.initState();
     _loadInitialData();
-    board = widget.board ??
-        Board(
-            id: DateTime.now().microsecondsSinceEpoch.toString(),
-            name: 'New Board',
-            area: widget.initialArea,
-            parentBoardId: widget.initialParentBoardId,
-            tier: widget.initialTier,
-            rows: defaultBoardRows,
-            columns: defaultBoardColumns,
-            adjustableLayout: false,
-            backgroundColor: defaultBoardColor,
-            boxScale: 1.0,
-            tiles: []);
+    if (widget.board != null) {
+      // Work on a deep copy so canceling the editor doesn't mutate the source board.
+      board = Board.fromMap(widget.board!.toMap());
+    } else {
+      board = Board(
+          id: DateTime.now().microsecondsSinceEpoch.toString(),
+          name: 'New Board',
+          area: widget.initialArea,
+          parentBoardId: widget.initialParentBoardId,
+          tier: widget.initialTier,
+          rows: defaultBoardRows,
+          columns: defaultBoardColumns,
+          adjustableLayout: false,
+          backgroundColor: defaultBoardColor,
+          boxScale: 1.0,
+          tiles: []);
+    }
     _nameController = TextEditingController(text: board.name);
     _rowsController = TextEditingController(text: board.rows.toString());
     _columnsController = TextEditingController(text: board.columns.toString());
@@ -207,6 +214,13 @@ class _BoardEditorState extends State<BoardEditor> {
         editTile(widget.initialIndex!);
       });
     }
+
+    _scrollController.addListener(() {
+      final show = _scrollController.offset > 10;
+      if (show != _showScrollToTop) {
+        setState(() { _showScrollToTop = show; });
+      }
+    });
   }
 
   @override
@@ -214,6 +228,7 @@ class _BoardEditorState extends State<BoardEditor> {
     _nameController.dispose();
     _rowsController.dispose();
     _columnsController.dispose();
+    _scrollController.dispose();
     _ocrService.dispose();
     super.dispose();
   }
@@ -260,11 +275,14 @@ class _BoardEditorState extends State<BoardEditor> {
   }
 
   /// [chooseFromOptions] controls behaviour:
-  ///   false (default) — "guess" mode: always auto-picks the best match,
+  ///   false (default) — "guess" mode: auto-picks the best match,
   ///                     never shows a popup, never keeps the current image.
   ///   true  — "choose" mode: always shows the selection popup so the user
   ///                     can pick from up to 9 candidates.
-  Future<void> _autoFindTileImage(int index, {bool chooseFromOptions = false}) async {
+  ///
+  /// [fromAssetsOnly] restricts guess mode to local assets and picks the
+  /// most relevant local asset that is not the tile's current image.
+  Future<void> _autoFindTileImage(int index, {bool chooseFromOptions = false, bool fromAssetsOnly = false, bool fromSignAssets = false, bool fromBoardsAssets = false}) async {
     final tile = board.tiles[index];
     if (tile.label.isEmpty) return;
 
@@ -275,6 +293,44 @@ class _BoardEditorState extends State<BoardEditor> {
       final searchLabel = rawLabel.replaceAll(RegExp(r'\s*\([^)]*\)\s*'), ' ').trim();
       final query = searchLabel.toLowerCase();
       if (query.isEmpty) return;
+
+      if ((fromAssetsOnly || fromSignAssets || fromBoardsAssets) && !chooseFromOptions) {
+        // Restricted-assets predict mode: cycle through the top 9 local options
+        // in the same order shown in the 'Pick from Choices' dialog.
+        final cleanQuery = query
+            .toLowerCase()
+            .split(RegExp(r'\s+'))
+            .where((w) => w != 'the' && w.isNotEmpty)
+            .join(' ');
+        final searchText = cleanQuery.isEmpty ? query : cleanQuery;
+        final assetPrefix = fromSignAssets
+            ? 'assets/Sign/'
+            : fromBoardsAssets
+                ? 'assets/BOARDS/'
+                : 'assets/';
+
+        final raw = await _externalSymbolService.searchAssets(searchText, limit: 100);
+        if (raw.isEmpty) return;
+
+        final lowerPrefix = assetPrefix.toLowerCase();
+        final results = _externalSymbolService
+            .sortByRelevance(raw, searchText, preferredSets: _activeProfile?.preferredSymbolSets)
+            .where((r) => r.source == 'Assets' && r.imageUrl.toLowerCase().startsWith(lowerPrefix))
+            .toList();
+        if (results.isEmpty) return;
+
+        final top = results.take(9).toList();
+        final currentIndex = top.indexWhere((r) => r.imageUrl == tile.imageAsset);
+        final nextIndex = (currentIndex + 1) % top.length;
+        final selected = top[nextIndex];
+
+        setState(() {
+          board.tiles[index] = tile.copyWith(imageAsset: selected.imageUrl, category: selected.source);
+        });
+        await BoardService.getInstance();
+        /* auto-save disabled — only the Save Board button persists */
+        return;
+      }
 
       final results = await _externalSymbolService.searchAll(query, limit: 10, preferredSets: _activeProfile?.preferredSymbolSets);
       // Always skip the current image so we never "keep" what's already there.
@@ -288,8 +344,8 @@ class _BoardEditorState extends State<BoardEditor> {
         setState(() {
           board.tiles[index] = tile.copyWith(imageAsset: best.imageUrl, category: best.source);
         });
-        final service = await BoardService.getInstance();
-        await service.saveBoard(board);
+        await BoardService.getInstance();
+        /* auto-save disabled — only the Save Board button persists */
       } else {
         // CHOOSE mode: show the selection popup.
         if (!mounted) return;
@@ -304,8 +360,9 @@ class _BoardEditorState extends State<BoardEditor> {
           setState(() {
             board.tiles[index] = tile.copyWith(imageAsset: selected.imageUrl, category: selected.source);
           });
-          final service = await BoardService.getInstance();
-          await service.saveBoard(board);
+          await BoardService.getInstance();
+          /* auto-save disabled — only the Save Board button persists */
+          await _maybeTagAsset(tile.label, selected.imageUrl, assetLabel: selected.label);
         }
       }
     } catch (e) {
@@ -317,14 +374,14 @@ class _BoardEditorState extends State<BoardEditor> {
 
   Future<void> _loadAvailableBoards() async {
     final service = await BoardService.getInstance();
-    final boards = await service.listBoards();
+    final boards = await service.listBoards(includeTiles: false);
     if (!mounted) return;
     setState(() {
       _availableBoards = boards.where((b) => b.id != board.id).toList();
     });
   }
 
-  Future<String?> _createNewBoardFromDialog() async {
+  Future<Board?> _createNewBoardFromDialog() async {
     final nameController = TextEditingController();
     final name = await showDialog<String>(
       context: context,
@@ -382,7 +439,10 @@ class _BoardEditorState extends State<BoardEditor> {
     }
     await service.saveBoard(newBoard);
     await _loadAvailableBoards();
-    return newBoard.id;
+    if (!_availableBoards.any((b) => b.id == newBoard.id)) {
+      setState(() => _availableBoards.add(newBoard));
+    }
+    return newBoard;
   }
 
   Future<void> importPictureFolder({bool fullScreen = false}) async {
@@ -475,7 +535,7 @@ class _BoardEditorState extends State<BoardEditor> {
     if (newTiles.isNotEmpty) {
       _populateBoard(newTiles);
       final service = await BoardService.getInstance();
-      await service.saveBoard(board);
+      /* auto-save disabled — only the Save Board button persists */
     }
   }
 
@@ -500,9 +560,46 @@ class _BoardEditorState extends State<BoardEditor> {
           board.adjustableLayout = false;
           board.tiles = result.tiles;
         });
-        
-        final service = await BoardService.getInstance();
-        await service.saveBoard(board);
+
+        // Persist each tile's picture to the project assets. If an identical
+        // image already exists, the dev server returns the existing asset path.
+        final mirroredTiles = List<SymbolTile>.from(board.tiles);
+        for (var i = 0; i < mirroredTiles.length; i++) {
+          final tile = mirroredTiles[i];
+          if (tile.imageAsset.isEmpty ||
+              tile.imageAsset.startsWith('assets/') ||
+              tile.imageAsset.startsWith('http') ||
+              tile.imageAsset.startsWith('blob:')) continue;
+
+          List<int>? bytes;
+          if (tile.imageAsset.startsWith('data:')) {
+            final parts = tile.imageAsset.split(',');
+            if (parts.length > 1) {
+              bytes = base64Decode(parts.last);
+            }
+          } else if (!kIsWeb) {
+            final file = File(tile.imageAsset);
+            if (await file.exists()) bytes = await file.readAsBytes();
+          }
+
+          if (bytes == null || bytes.isEmpty) continue;
+
+          final safeLabel = tile.label.trim().isEmpty
+              ? 'tile'
+              : tile.label.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_');
+          final filename = '${i}_${safeLabel}_${DateTime.now().millisecondsSinceEpoch}.png';
+          final mirrored = await _mirrorImageToProject(
+            filename,
+            bytes,
+            boardId: board.id,
+            boardArea: board.area,
+            boardName: board.name,
+          );
+          if (mirrored != null && mirrored.isNotEmpty) {
+            mirroredTiles[i] = tile.copyWith(imageAsset: mirrored);
+          }
+        }
+        setState(() => board.tiles = mirroredTiles);
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -560,7 +657,12 @@ class _BoardEditorState extends State<BoardEditor> {
           final isBroken = await _isImageBroken(tile.imageAsset);
           if (tile.imageAsset.isEmpty || isBroken) {
             final query = tile.label.trim().toLowerCase();
-            final results = await _externalSymbolService.searchAll(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets);
+            // Prefer local assets first for reliable, offline-friendly fills.
+            final priorityPaths = _priorityAssetPaths();
+            var results = await _externalSymbolService.searchAssets(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
+            if (results.isEmpty) {
+              results = await _externalSymbolService.searchAll(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
+            }
             if (results.isNotEmpty) {
               setState(() {
                 board.tiles[i] = tile.copyWith(imageAsset: results.first.imageUrl, category: results.first.source);
@@ -577,7 +679,7 @@ class _BoardEditorState extends State<BoardEditor> {
         });
       }
       final service = await BoardService.getInstance();
-      await service.saveBoard(board);
+      /* auto-save disabled — only the Save Board button persists */
     } catch (e) {
       debugPrint('Error filling pictures: $e');
     } finally {
@@ -629,7 +731,7 @@ class _BoardEditorState extends State<BoardEditor> {
     }
     _populateBoard(tiles);
     final service = await BoardService.getInstance();
-    await service.saveBoard(board);
+    /* auto-save disabled — only the Save Board button persists */
     setState(() {
       _isPopulating = false;
       _populateProgress = 0.0;
@@ -702,7 +804,7 @@ class _BoardEditorState extends State<BoardEditor> {
     }
     _populateBoard(tiles);
     final service = await BoardService.getInstance();
-    await service.saveBoard(board);
+    /* auto-save disabled — only the Save Board button persists */
     setState(() {
       _isPopulating = false;
       _populateProgress = 0.0;
@@ -873,38 +975,46 @@ class _BoardEditorState extends State<BoardEditor> {
       id: 'tile_${DateTime.now().microsecondsSinceEpoch}_${lowerWord.hashCode}',
       label: lowerWord,
       category: 'Custom',
-      imageAsset: _findAssetForWordSync(lowerWord),
+      imageAsset: '',
       emoji: '',
       bgColor: 'transparent',
       textColor: '#000000',
     );
   }
 
-  String _findAssetForWordSync(String word) {
-    final assetPaths = [
-      'assets/symbols/1. Main Boards/$word.png',
-      'assets/symbols/$word.png',
-    ];
-    for (final path in assetPaths) {
-      return path;
-    }
-    return '';
-  }
-
   Future<SymbolTile> _tileFromWordWithSymbol(String word) async {
     final tile = _tileFromWord(word);
-    final assetPath = await _findAssetForWord(word);
-    if (assetPath.isNotEmpty) {
-      tile.imageAsset = assetPath;
-      return tile;
-    }
-    final symbols = await _externalSymbolService.searchAll(word, limit: 1);
-    if (symbols.isNotEmpty) {
-      tile.imageAsset = symbols.first.imageUrl;
-    } else {
-      tile.imageAsset = _placeholderImage;
+    // Only ever auto-guess a picture for a brand-new tile that has no image.
+    // An imageAsset already saved in the JSON must not be overwritten here.
+    if (tile.imageAsset.isEmpty) {
+      final assetPath = await _findAssetForWord(word);
+      if (assetPath.isNotEmpty) {
+        tile.imageAsset = assetPath;
+      } else {
+        final symbols = await _externalSymbolService.searchAll(word, limit: 1, priorityPaths: _priorityAssetPaths());
+        if (symbols.isNotEmpty) {
+          tile.imageAsset = symbols.first.imageUrl;
+        } else {
+          tile.imageAsset = _placeholderImage;
+        }
+      }
     }
     return tile;
+  }
+
+  List<String> _priorityAssetPaths() {
+    final area = board.area.toLowerCase();
+    final name = board.name.toLowerCase();
+    if (area == 'sign' || name.contains('sign')) {
+      return ['assets/Sign/'];
+    }
+    if (area == 'subject vocab' || name.contains('subject vocab')) {
+      return ['assets/Subject Vocab/'];
+    }
+    if (name.contains('montessori') || area == 'montessori') {
+      return ['assets/Common/Small Words/Montessori/'];
+    }
+    return [];
   }
 
   Future<String> _findAssetForWord(String word) async {
@@ -917,6 +1027,7 @@ class _BoardEditorState extends State<BoardEditor> {
       final slugUnderscore = normalized.replaceAll(' ', '_');
       final alphanumeric = normalized.replaceAll(RegExp(r'[^a-z0-9]'), '');
       final imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
+      final matches = <ExternalSymbol>[];
       for (final assetPath in assetList) {
         if (!assetPath.startsWith('assets/')) continue;
         final ext = assetPath.toLowerCase();
@@ -924,8 +1035,24 @@ class _BoardEditorState extends State<BoardEditor> {
         final basename = assetPath.split('/').last.toLowerCase();
         final nameWithoutExt = basename.replaceAll(RegExp(r'\.(png|jpg|jpeg|gif|webp|svg)$'), '');
         final assetAlphanumeric = nameWithoutExt.replaceAll(RegExp(r'[^a-z0-9]'), '');
-        if (nameWithoutExt == normalized || nameWithoutExt == slug || nameWithoutExt == slugUnderscore || assetAlphanumeric == alphanumeric) return assetPath;
+        if (nameWithoutExt == normalized ||
+            nameWithoutExt == slug ||
+            nameWithoutExt == slugUnderscore ||
+            assetAlphanumeric == alphanumeric) {
+          matches.add(ExternalSymbol(id: assetPath, label: word, imageUrl: assetPath, source: 'Assets'));
+        }
       }
+      if (matches.isEmpty) return '';
+      // Prefer exact filename matches that live in the board's priority area.
+      final priorityPaths = _priorityAssetPaths();
+      for (final prefix in priorityPaths) {
+        final lowerPrefix = prefix.toLowerCase();
+        for (final m in matches) {
+          if (m.imageUrl.toLowerCase().startsWith(lowerPrefix)) return m.imageUrl;
+        }
+      }
+      // Fall back to the first exact filename match found.
+      return matches.first.imageUrl;
     } catch (e) {
       debugPrint('Error finding asset for word "$word": $e');
     }
@@ -1068,9 +1195,10 @@ class _BoardEditorState extends State<BoardEditor> {
     showModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Edit tile'),
@@ -1081,10 +1209,26 @@ class _BoardEditorState extends State<BoardEditor> {
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome),
-              title: const Text('Auto find picture - guess'),
+              title: const Text('Auto find picture - guess from assets'),
               onTap: () {
                 Navigator.of(ctx).pop();
-                _autoFindTileImage(index, chooseFromOptions: false);
+                _autoFindTileImage(index, fromAssetsOnly: true);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.auto_awesome),
+              title: const Text('Auto find picture - guess from sign'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _autoFindTileImage(index, fromSignAssets: true);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.folder),
+              title: const Text('Auto find picture - guess from boards'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _autoFindTileImage(index, fromBoardsAssets: true);
               },
             ),
             ListTile(
@@ -1108,6 +1252,38 @@ class _BoardEditorState extends State<BoardEditor> {
                 );
               },
             ),
+            if (board.tiles[index].colSpan > 1 || board.tiles[index].rowSpan > 1)
+              ListTile(
+                leading: const Icon(Icons.call_split),
+                title: const Text('Un-merge tile'),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  setState(() {
+                    board.tiles[index] = board.tiles[index].copyWith(colSpan: 1, rowSpan: 1);
+                  });
+                  await BoardService.getInstance();
+                  /* auto-save disabled — only the Save Board button persists */
+                },
+              ),
+            if (_isBlankTile(board.tiles[index]))
+              ListTile(
+                leading: const Icon(Icons.arrow_upward),
+                title: const Text('Move everything up'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _moveEverythingUp(index);
+                },
+              ),
+            if (!_isBlankTile(board.tiles[index]))
+              ListTile(
+                leading: const Icon(Icons.arrow_downward),
+                title: const Text('Shift down by...'),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  final count = await _showShiftDownDialog();
+                  if (count != null) _shiftDown(index, count);
+                },
+              ),
             ListTile(
               leading: const Icon(Icons.delete),
               title: const Text('Delete tile'),
@@ -1116,14 +1292,120 @@ class _BoardEditorState extends State<BoardEditor> {
                 setState(() {
                   board.tiles[index] = _blankTile(index);
                 });
-                final service = await BoardService.getInstance();
-                await service.saveBoard(board);
+                await BoardService.getInstance();
+                /* auto-save disabled — only the Save Board button persists */
               },
             ),
           ],
         ),
       ),
+    ),
     );
+  }
+
+  void _moveEverythingUp(int index) {
+    if (index < 0 || index >= board.tiles.length - 1) return;
+    setState(() {
+      for (var i = index; i < board.tiles.length - 1; i++) {
+        board.tiles[i] = board.tiles[i + 1];
+      }
+      board.tiles[board.tiles.length - 1] = _blankTile(board.tiles.length - 1);
+      _ensureTileCapacity(board.tiles.length);
+    });
+  }
+
+  Future<int?> _showShiftDownDialog() async {
+    var selected = 1;
+    return await showDialog<int>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          title: const Text('Shift down by how many tiles?'),
+          content: DropdownButtonFormField<int>(
+            value: selected,
+            items: [for (var i = 1; i <= 9; i++) DropdownMenuItem(value: i, child: Text('$i'))],
+            onChanged: (v) => setState(() => selected = v ?? 1),
+            decoration: const InputDecoration(labelText: 'Tiles'),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.of(ctx).pop(selected), child: const Text('OK')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _shiftDown(int index, int count) {
+    if (index < 0 || index >= board.tiles.length || count <= 0) return;
+    setState(() {
+      final newTiles = <SymbolTile>[
+        ...board.tiles.sublist(0, index),
+        ...List.generate(count, (i) => _blankTile(index + i)),
+        ...List<SymbolTile>.from(board.tiles.sublist(index)),
+      ];
+      board.tiles = newTiles;
+      _ensureTileCapacity(board.tiles.length);
+    });
+  }
+
+  Future<void> _showVersionHistory() async {
+    setState(() => _isSaving = true);
+    try {
+      final service = await BoardService.getInstance();
+      final versions = await service.listVersions(board.id, area: board.area);
+      if (!mounted) return;
+      final chosen = await showDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Restore Previous Version'),
+          content: SizedBox(
+            width: 300,
+            child: versions.isEmpty
+                ? const Text('No saved versions yet. Backups are created each time a board is saved (up to 3).')
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: versions.length,
+                    itemBuilder: (ctx, i) {
+                      final v = versions[i];
+                      return ListTile(
+                        title: Text(v['saved'] ?? v['filename']),
+                        leading: const Icon(Icons.restore),
+                        onTap: () => Navigator.of(ctx).pop(v['filename'] as String?),
+                      );
+                    },
+                  ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          ],
+        ),
+      );
+      if (chosen != null && mounted) {
+        final ok = await service.restoreVersion(board.id, chosen, area: board.area);
+        if (!mounted) return;
+        if (ok) {
+          final reloaded = await service.loadBoard(board.id);
+          if (reloaded != null && mounted) {
+            setState(() {
+              board = reloaded;
+              _nameController.text = board.name;
+              _rowsController.text = board.rows.toString();
+              _columnsController.text = board.columns.toString();
+              _mergeTilesEnabled = board.tiles.any((t) => t.colSpan > 1 || t.rowSpan > 1);
+            });
+            _ensureTileCapacity(board.tiles.length);
+          }
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Version restored.')));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not restore version.')));
+        }
+      }
+    } catch (e) {
+      debugPrint('Show version history error: $e');
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
   }
 
   Future<SymbolTile> _tileFromFile(File file,
@@ -1151,8 +1433,14 @@ class _BoardEditorState extends State<BoardEditor> {
     var imagePath = '';
     if (kIsWeb) {
       if (file.name.isNotEmpty && file.bytes != null) {
-        _mirrorImageToProject(file.name, file.bytes!);
-        imagePath = 'data:image/png;base64,${base64Encode(file.bytes!)}';
+        final mirrored = await _mirrorImageToProject(
+          file.name,
+          file.bytes!,
+          boardId: boardId,
+          boardArea: board.area,
+          boardName: board.name,
+        );
+        imagePath = mirrored ?? 'data:image/png;base64,${base64Encode(file.bytes!)}';
       }
     } else {
       if (file.path != null && file.path!.isNotEmpty) {
@@ -1257,7 +1545,8 @@ class _BoardEditorState extends State<BoardEditor> {
     }
   }
 
-  Future<String?> _mirrorImageToProject(String filename, List<int> bytes) async {
+  Future<String?> _mirrorImageToProject(String filename, List<int> bytes,
+      {String? boardId, String? boardArea, String? boardName}) async {
     try {
       final uri = Uri.parse('http://localhost:8787/saveImage');
       final response = await http.post(
@@ -1266,6 +1555,9 @@ class _BoardEditorState extends State<BoardEditor> {
         body: json.encode({
           'filename': filename,
           'data': base64Encode(bytes),
+          'boardId': boardId,
+          'area': boardArea,
+          'name': boardName,
         }),
       ).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
@@ -1303,6 +1595,20 @@ class _BoardEditorState extends State<BoardEditor> {
     final dot = filename.lastIndexOf('.');
     final base = dot > 0 ? filename.substring(0, dot) : filename;
     return base.replaceAll(RegExp(r'[_-]+'), ' ').trim().toLowerCase();
+  }
+
+  Future<void> _maybeTagAsset(String tileLabel, String imageAsset,
+      {String? assetLabel}) async {
+    if (tileLabel.trim().isEmpty || imageAsset.trim().isEmpty) return;
+    if (!imageAsset.startsWith('assets/')) return;
+    if (assetLabel != null && _labelsEquivalent(tileLabel, assetLabel)) return;
+    await _externalSymbolService.addTag(imageAsset, tileLabel.trim().toLowerCase());
+  }
+
+  bool _labelsEquivalent(String a, String b) {
+    final aNorm = a.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+    final bNorm = b.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+    return aNorm.isNotEmpty && aNorm == bNorm;
   }
 
   List<String> get _allColorOptions {
@@ -1474,8 +1780,14 @@ class _BoardEditorState extends State<BoardEditor> {
                           if (!isBoardLink) linkedBoardId = '';
                           if (v == 'link_to_board') {
                             labelCtl.text = _toTitleCase(labelCtl.text);
+                            if (bgCtl.text == 'transparent' || bgCtl.text.isEmpty) bgCtl.text = '#000000';
+                            if (txtCtl.text == '#000000' || txtCtl.text.isEmpty) txtCtl.text = '#FFFFFF';
                           } else if (v == 'normal_word') {
                             labelCtl.text = labelCtl.text.toLowerCase();
+                            bgCtl.text = 'transparent';
+                            txtCtl.text = '#000000';
+                          } else if (v == 'open_picture') {
+                            if (bgCtl.text == 'transparent' || bgCtl.text.isEmpty) bgCtl.text = '#FFCDD2';
                           }
                         });
                       },
@@ -1489,14 +1801,14 @@ class _BoardEditorState extends State<BoardEditor> {
                             builder: (ctx) => _BoardSelectionDialog(boards: _availableBoards, initialSelectedId: linkedBoardId, initialQuery: labelCtl.text.trim(), title: 'Select Destination Board'),
                           );
                           if (selected == 'CREATE_NEW') {
-                            final newId = await _createNewBoardFromDialog();
-                            if (newId != null) setDialogState(() { linkedBoardId = newId; if (labelCtl.text.trim().isEmpty) labelCtl.text = _boardNameForId(newId) ?? ''; });
+                            final newBoard = await _createNewBoardFromDialog();
+                            if (newBoard != null) setDialogState(() { linkedBoardId = newBoard.id; if (labelCtl.text.trim().isEmpty) labelCtl.text = newBoard.name; });
                           } else if (selected != 'DIALOG_DISMISSED') {
                             setDialogState(() { linkedBoardId = (selected == 'NONE' ? '' : selected) ?? ''; final boardName = _boardNameForId(linkedBoardId); if (boardName != null && labelCtl.text.trim().isEmpty) labelCtl.text = boardName; });
                           }
                         },
                         icon: const Icon(Icons.link_rounded),
-                        label: Text(linkedBoardId.isEmpty ? 'Select Destination Board' : 'Linked to: ${_boardNameForId(linkedBoardId)}'),
+                        label: Text(linkedBoardId.isEmpty ? 'Select Destination Board' : 'Linked to: ${_boardNameForId(linkedBoardId) ?? '(Unknown board)'}'),
                         style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50), alignment: Alignment.centerLeft),
                       ),
                     ],
@@ -1537,8 +1849,9 @@ class _BoardEditorState extends State<BoardEditor> {
                             tile.imageAsset = resolvedAsset;
                             tile.category = selected.category;
                           });
-                          final service = await BoardService.getInstance();
-                          await service.saveBoard(board);
+                          await BoardService.getInstance();
+                          /* auto-save disabled — only the Save Board button persists */
+                          await _maybeTagAsset(tile.label, resolvedAsset, assetLabel: selected.label);
                         }
                       }, icon: const Icon(Icons.search, size: 16), label: const Text('Online Search', overflow: TextOverflow.ellipsis))),
                       const SizedBox(width: 8),
@@ -1618,7 +1931,12 @@ class _BoardEditorState extends State<BoardEditor> {
               TextButton(onPressed: () { setState(() { board.tiles[index] = _blankTile(index); }); Navigator.of(ctx).pop(); }, child: const Text('Delete', style: TextStyle(color: Colors.red))),
               TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
               TextButton(onPressed: () async {
-                final newLabel = labelCtl.text.trim();
+                var newLabel = labelCtl.text.trim();
+                if (tileType == 'normal_word') {
+                  newLabel = newLabel.toLowerCase();
+                } else if (tileType == 'link_to_board') {
+                  newLabel = _toTitleCase(newLabel);
+                }
                 var newImageAsset = tile.imageAsset;
                 if (wasBlank && newLabel.isNotEmpty && newImageAsset.isEmpty && !imageExplicitlyRemoved && !imageUpdated) {
                   final autoTile = await _tileFromWordWithSymbol(newLabel);
@@ -1637,24 +1955,9 @@ class _BoardEditorState extends State<BoardEditor> {
                   tile.isBoardLink = isBoardLink;
                   tile.isFullScreenImage = isFullScreenImage;
                   tile.linkedBoardId = linkedBoardId;
-                  if (isBoardLink) { tile.bgColor = '#000000'; tile.textColor = '#FFFFFF'; }
-                  else if (isFullScreenImage) { tile.bgColor = '#FFCDD2'; tile.textColor = '#000000'; }
-
-                  // Requirement: if a tile is resized to be taller, make all tiles on that row be resized to that same size too.
-                  // We synchronize rowSpan for the entire row to maintain a consistent grid height.
-                  if (board.columns > 0) {
-                    final rowIndex = index ~/ board.columns;
-                    final startOfRow = rowIndex * board.columns;
-                    final endOfRow = (rowIndex + 1) * board.columns;
-                    for (int i = startOfRow; i < endOfRow; i++) {
-                      if (i < board.tiles.length) {
-                        board.tiles[i].rowSpan = newRowSpan;
-                      }
-                    }
-                  }
                 });
-                final service = await BoardService.getInstance();
-                await service.saveBoard(board);
+                await BoardService.getInstance();
+                /* auto-save disabled — only the Save Board button persists */
                 if (mounted && ctx.mounted) Navigator.of(ctx).pop();
                 setState(() => _ensureTileCapacity(board.tiles.length));
               }, child: const Text('Save')),
@@ -1730,10 +2033,13 @@ class _BoardEditorState extends State<BoardEditor> {
   @override
   Widget build(BuildContext context) {
     final boardBg = board.backgroundColor == 'transparent' ? Colors.transparent : _colorFromHex(board.backgroundColor, Colors.transparent);
-    return Container(
-      color: boardBg,
-      child: SingleChildScrollView(
-        child: Column(
+    return Stack(
+      children: [
+        Container(
+          color: boardBg,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Expanded(child: TextField(controller: _nameController, decoration: const InputDecoration(labelText: 'Board name'), onChanged: (v) => board.name = v)),
@@ -1757,6 +2063,7 @@ class _BoardEditorState extends State<BoardEditor> {
                 ElevatedButton.icon(onPressed: _alphabetiseTiles, icon: const Icon(Icons.sort_by_alpha), label: const Text('Alphabetise')),
                 ElevatedButton.icon(onPressed: _isPopulating ? null : _fillPictures, icon: _isPopulating ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_search), label: const Text('Fill Pics')),
                 ElevatedButton.icon(onPressed: () => _shareToArchive(), icon: const Icon(Icons.share), label: const Text('Share to Archive')),
+                ElevatedButton.icon(onPressed: _showVersionHistory, icon: const Icon(Icons.history), label: const Text('Restore Version')),
                 ElevatedButton.icon(onPressed: () async {
                   final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(title: const Text('Start Again'), content: const Text('This will erase all words currently on this board. Are you sure?'), actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')), FilledButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Confirm'))]));
                   if (confirmed == true) {
@@ -1765,8 +2072,8 @@ class _BoardEditorState extends State<BoardEditor> {
                       board.tiles.clear();
                       _ensureTileCapacity(0);
                     });
-                    final service = await BoardService.getInstance();
-                    await service.saveBoard(board);
+                    await BoardService.getInstance();
+                    /* auto-save disabled — only the Save Board button persists */
                   }
                 }, icon: const Icon(Icons.refresh), label: const Text('Start Again')),
                 ElevatedButton.icon(onPressed: () async {
@@ -1854,7 +2161,10 @@ class _BoardEditorState extends State<BoardEditor> {
                 OutlinedButton.icon(onPressed: () async {
                   final selected = await showDialog<String?>(context: context, builder: (ctx) => _BoardSelectionDialog(boards: _availableBoards, initialSelectedId: board.parentBoardId, title: 'Select Parent Board'));
                   if (selected != 'DIALOG_DISMISSED') setState(() => board.parentBoardId = (selected == 'NONE' ? null : selected));
-                }, icon: const Icon(Icons.account_tree_outlined), label: Text(board.parentBoardId == null || board.parentBoardId!.isEmpty ? 'Set Parent board (tab placement)' : 'Parent: ${_boardNameForId(board.parentBoardId!)}'), style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50), alignment: Alignment.centerLeft)),
+                },
+                icon: const Icon(Icons.account_tree_outlined),
+                label: Text(board.parentBoardId == null || board.parentBoardId!.isEmpty ? 'Set Parent board (tab placement)' : 'Parent: ${_boardNameForId(board.parentBoardId!) ?? '(Unknown board)'}'),
+                style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50), alignment: Alignment.centerLeft)),
               ],
               const Divider(),
               const Text('Convert all tiles to:', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -1862,15 +2172,9 @@ class _BoardEditorState extends State<BoardEditor> {
               DropdownButtonFormField<String>(decoration: const InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8)), hint: const Text('Select tile type'), items: const [DropdownMenuItem(value: 'normal_word', child: Text('Normal word')), DropdownMenuItem(value: 'link_to_board', child: Text('Link to board')), DropdownMenuItem(value: 'open_picture', child: Text('Open picture in full screen'))], onChanged: (v) { if (v != null) _convertAllTiles(v); }),
               const SizedBox(height: 8),
               Row(children: [
-                Expanded(child: TextField(enabled: !board.adjustableLayout, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Rows'), controller: _rowsController, onSubmitted: (_) => _applySizeChange(), onChanged: (value) {
-                  _resizeTimer?.cancel();
-                  _resizeTimer = Timer(const Duration(seconds: 10), _applySizeChange);
-                })),
+                Expanded(child: TextField(enabled: !board.adjustableLayout, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Rows'), controller: _rowsController, onSubmitted: (_) => _applySizeChange())),
                 const SizedBox(width: 12),
-                Expanded(child: TextField(enabled: !board.adjustableLayout, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Columns'), controller: _columnsController, onSubmitted: (_) => _applySizeChange(), onChanged: (value) {
-                  _resizeTimer?.cancel();
-                  _resizeTimer = Timer(const Duration(seconds: 10), _applySizeChange);
-                })),
+                Expanded(child: TextField(enabled: !board.adjustableLayout, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Columns'), controller: _columnsController, onSubmitted: (_) => _applySizeChange())),
               ]),
             ]))),
             const SizedBox(height: 12),
@@ -1897,17 +2201,24 @@ class _BoardEditorState extends State<BoardEditor> {
                         tileImage = persisted.isNotEmpty ? _convertToAssetPath(persisted) : '';
                       }
                       setState(() { board.tiles[emptyIndex] = SymbolTile(id: 'tile_$emptyIndex', label: label, category: 'Custom', imageAsset: tileImage, bgColor: 'transparent', textColor: '#000000', tileSize: 1.0); _ensureTileCapacity(board.tiles.length); });
-                      final service = await BoardService.getInstance(); await service.saveBoard(board);
+                      await BoardService.getInstance(); /* auto-save disabled — only the Save Board button persists */
                     }
                   }
                 }
-              }, child: Padding(padding: const EdgeInsets.only(bottom: 8), child: SingleChildScrollView(child: (() {
+              }, child: Padding(padding: const EdgeInsets.only(bottom: 8), child: SingleChildScrollView(physics: const NeverScrollableScrollPhysics(), child: (() {
                 final coveredCells = _computeCoveredCells(board.tiles, layout.columns);
                 final maxWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
                 final columns = layout.columns;
                 final spacing = 10.0;
                 final childWidth = (maxWidth - (columns + 1) * spacing) / columns;
-                final numRows = (board.tiles.length / columns).ceil();
+                var maxBottomRow = 0;
+                for (int index = 0; index < board.tiles.length; index++) {
+                  if (coveredCells.contains(index)) continue;
+                  final row = index ~/ columns;
+                  final bottomRow = row + board.tiles[index].rowSpan - 1;
+                  if (bottomRow > maxBottomRow) maxBottomRow = bottomRow;
+                }
+                final numRows = maxBottomRow + 1;
                 final List<Widget> positionedTiles = [];
                 for (int r = 0; r < numRows; r++) {
                   for (int c = 0; c < columns; c++) {
@@ -1919,7 +2230,7 @@ class _BoardEditorState extends State<BoardEditor> {
                   Color txt = t.textColor == 'transparent' ? Colors.transparent : _colorFromHex(t.textColor, Colors.black);
                   final tileWidth = childWidth * t.colSpan + spacing * (t.colSpan - 1);
                   final tileHeight = childWidth * t.rowSpan + spacing * (t.rowSpan - 1);
-                   final tileChild = GestureDetector(behavior: HitTestBehavior.opaque, onTap: () {
+                   final tileChild = GestureDetector(behavior: HitTestBehavior.opaque, onLongPress: () => _showTileMenu(index), onTap: () {
                       if (_mergeSourceIndex != null) {
                         _handleMergeClick(_mergeSourceIndex!, index);
                       } else {
@@ -1931,7 +2242,7 @@ class _BoardEditorState extends State<BoardEditor> {
                     final bool isDesktop = (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS);
                     final tileWidget = DragTarget<int>(onWillAcceptWithDetails: (details) => details.data != index, onAcceptWithDetails: (details) async {
                       final draggedIndex = details.data;
-                      if (draggedIndex != index) { setState(() { final draggedTile = board.tiles[draggedIndex]; board.tiles[draggedIndex] = board.tiles[index]; board.tiles[index] = draggedTile; }); try { final service = await BoardService.getInstance(); await service.saveBoard(board); } catch (e) { debugPrint('Error saving board after swap: $e'); } }
+                      if (draggedIndex != index) { setState(() { final draggedTile = board.tiles[draggedIndex]; board.tiles[draggedIndex] = board.tiles[index]; board.tiles[index] = draggedTile; }); try { final service = await BoardService.getInstance(); /* auto-save disabled — only the Save Board button persists */ } catch (e) { debugPrint('Error saving board after swap: $e'); } }
                     }, builder: (context, candidateData, rejectedData) {
                       final active = candidateData.isNotEmpty;
                       final wrapped = active ? Container(decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor, width: 2), borderRadius: BorderRadius.circular(16),), child: tileChild) : tileChild;
@@ -1966,7 +2277,7 @@ class _BoardEditorState extends State<BoardEditor> {
                               final draggedTile = board.tiles.removeAt(draggedIdx);
                               board.tiles.insert(adjusted.clamp(0, board.tiles.length), draggedTile);
                             });
-                            try { final service = await BoardService.getInstance(); await service.saveBoard(board); } catch (e) { debugPrint('Error saving board after reorder: $e'); }
+                            try { final service = await BoardService.getInstance(); /* auto-save disabled — only the Save Board button persists */ } catch (e) { debugPrint('Error saving board after reorder: $e'); }
                           },
                           builder: (context, candidateData, rejectedData) {
                             final isActive = candidateData.isNotEmpty;
@@ -1991,10 +2302,28 @@ class _BoardEditorState extends State<BoardEditor> {
                 );
               })()))));
             }),
+            const SizedBox(height: 80),
           ],
         ),
       ),
-    );
+    ),
+    if (_showScrollToTop)
+      Positioned(
+        right: 16,
+        bottom: 48,
+        child: FloatingActionButton.small(
+          onPressed: () {
+            _scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOut,
+            );
+          },
+          child: const Icon(Icons.keyboard_arrow_up, size: 24),
+        ),
+      ),
+  ],
+);
   }
 
   void _handleMergeClick(int sourceIndex, int targetIndex) {
@@ -2002,10 +2331,10 @@ class _BoardEditorState extends State<BoardEditor> {
       setState(() => _mergeSourceIndex = null);
       return;
     }
-    
+
     final targetTile = board.tiles[targetIndex];
     final isTargetBlank = targetTile.label.isEmpty && targetTile.imageAsset.isEmpty && targetTile.emoji.isEmpty;
-    
+
     if (!isTargetBlank) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Target tile must be empty.')),
@@ -2014,37 +2343,36 @@ class _BoardEditorState extends State<BoardEditor> {
       return;
     }
 
-    // Check adjacency
-    final row1 = sourceIndex ~/ board.columns;
-    final col1 = sourceIndex % board.columns;
-    final row2 = targetIndex ~/ board.columns;
-    final col2 = targetIndex % board.columns;
-    
-    final isAdjacent = (row1 == row2 && (col1 - col2).abs() == 1) || (col1 == col2 && (row1 - row2).abs() == 1);
-    
-    if (!isAdjacent) {
+    final sourceTile = board.tiles[sourceIndex];
+    final columns = board.columns;
+    final row1 = sourceIndex ~/ columns;
+    final col1 = sourceIndex % columns;
+    final row2 = targetIndex ~/ columns;
+    final col2 = targetIndex % columns;
+
+    final rightEdge = col1 + sourceTile.colSpan - 1;
+    final bottomEdge = row1 + sourceTile.rowSpan - 1;
+
+    final canMergeRight = row1 == row2 && col2 == rightEdge + 1;
+    final canMergeDown = col1 == col2 && row2 == bottomEdge + 1;
+
+    if (!canMergeRight && !canMergeDown) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Target tile must be adjacent (above, below, left, or right).')),
+        const SnackBar(content: Text('Target tile must be directly to the right or below the merged area.')),
       );
       setState(() => _mergeSourceIndex = null);
       return;
     }
 
     setState(() {
-      final sourceTile = board.tiles[sourceIndex];
-      if (row1 == row2) {
-        // Horizontal merge
-        sourceTile.colSpan += 1;
-      } else {
-        // Vertical merge
-        sourceTile.rowSpan += 1;
-      }
+      if (canMergeRight) sourceTile.colSpan += 1;
+      if (canMergeDown) sourceTile.rowSpan += 1;
       // "Delete" the target tile to make it part of the span (it will be overlapped)
       board.tiles[targetIndex] = _blankTile(targetIndex);
       _mergeSourceIndex = null;
     });
-    
-    BoardService.getInstance().then((s) => s.saveBoard(board));
+
+    // Merge is only persisted when the user presses the Save Board button.
   }
 
   static Set<int> _computeCoveredCells(List<SymbolTile> tiles, int columns) {
@@ -2075,34 +2403,6 @@ class _BoardEditorState extends State<BoardEditor> {
     final columns = int.tryParse(_columnsController.text) ?? board.columns;
 
     if (rows == board.rows && columns == board.columns) return;
-
-    if (rows < board.rows || columns < board.columns) {
-      final newCount = rows * columns;
-      int lastContentIdx = -1;
-      for (int i = 0; i < board.tiles.length; i++) {
-        if (board.tiles[i].label.isNotEmpty || board.tiles[i].imageAsset.isNotEmpty) {
-          lastContentIdx = i;
-        }
-      }
-      if (lastContentIdx >= newCount) {
-        final confirmed = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text('Shrink Board?'),
-            content: const Text('Reducing board dimensions will hide some existing tiles from view. They will not be deleted, just hidden. Continue?'),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-              FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('OK'))
-            ],
-          ),
-        );
-        if (confirmed != true) {
-          _rowsController.text = board.rows.toString();
-          _columnsController.text = board.columns.toString();
-          return;
-        }
-      }
-    }
     _resizeBoard(rows, columns);
   }
 
@@ -2110,7 +2410,12 @@ class _BoardEditorState extends State<BoardEditor> {
     if (text.isEmpty) return text;
     return text.split(' ').map((word) {
       if (word.isEmpty) return word;
-      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+      final match = RegExp(r'[a-zA-Z]').firstMatch(word);
+      if (match == null) return word;
+      final idx = match.start;
+      return word.substring(0, idx) +
+          word[idx].toUpperCase() +
+          word.substring(idx + 1).toLowerCase();
     }).join(' ');
   }
 
@@ -2124,14 +2429,10 @@ class _BoardEditorState extends State<BoardEditor> {
   }
 
   void _resizeBoard(int newRows, int newCols) {
-    final oldTiles = board.tiles;
-    final newCount = newRows * newCols;
     setState(() {
       board.rows = newRows;
       board.columns = newCols;
-      board.tiles = List.generate(newCount, (i) {
-        return i < oldTiles.length ? oldTiles[i] : _blankTile(i);
-      });
+      _ensureTileCapacity(board.tiles.length);
     });
   }
 
@@ -2145,12 +2446,14 @@ class _BoardEditorState extends State<BoardEditor> {
             tile.linkedBoardId = '';
             tile.bgColor = 'transparent';
             tile.textColor = '#000000';
+            tile.label = tile.label.toLowerCase();
             break;
           case 'link_to_board':
             tile.isBoardLink = true;
             tile.isFullScreenImage = false;
             tile.bgColor = '#000000';
             tile.textColor = '#FFFFFF';
+            tile.label = _toTitleCase(tile.label);
             break;
           case 'open_picture':
             tile.isBoardLink = false;
@@ -2206,7 +2509,7 @@ class _BoardEditorState extends State<BoardEditor> {
   }
 
   _EditorGridLayout _editorGridLayoutFor(BoxConstraints constraints) {
-    if (!board.adjustableLayout) return _EditorGridLayout(columns: board.columns.clamp(1, 12), childAspectRatio: 1.0);
+    if (board.columns > 0) return _EditorGridLayout(columns: board.columns.clamp(1, 12), childAspectRatio: 1.0);
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
     final targetTileExtent = (118.0 * board.boxScale).clamp(82.0, 180.0);
     var columns = (width / targetTileExtent).floor().clamp(2, 10);
@@ -2250,13 +2553,11 @@ class FullScreenImageView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Full Image')), 
       body: SizedBox.expand(
-        child: Center(
-          child: Hero(
-            tag: imagePath,
-            child: imagePath.startsWith('http') 
-              ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.network(imagePath, fit: BoxFit.contain) : Image.network(imagePath, fit: BoxFit.contain)) 
-              : (imagePath.startsWith('assets/') ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.asset(imagePath, fit: BoxFit.contain) : Image.asset(imagePath, fit: BoxFit.contain)) : (kIsWeb ? Image.network(imagePath, fit: BoxFit.contain) : Image.file(File(imagePath), fit: BoxFit.contain))),
-          ),
+        child: Hero(
+          tag: imagePath,
+          child: imagePath.startsWith('http') 
+            ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.network(imagePath, fit: BoxFit.contain) : Image.network(imagePath, fit: BoxFit.contain)) 
+            : (imagePath.startsWith('assets/') ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.asset(imagePath, fit: BoxFit.contain) : Image.asset(imagePath, fit: BoxFit.contain)) : (kIsWeb ? Image.network(imagePath, fit: BoxFit.contain) : Image.file(File(imagePath), fit: BoxFit.contain))),
         ),
       ),
     );

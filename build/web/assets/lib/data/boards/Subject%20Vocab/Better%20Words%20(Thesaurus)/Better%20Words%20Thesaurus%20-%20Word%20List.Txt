@@ -1,12 +1,12 @@
 Better Words (Thesaurus) - Word List
 ========================================
 
-Nouns & Abstract Nouns Thesaurus
+Nouns and Abstract Nouns Thesaurus
 Feelings Thesaurus
 Appearance Thesaurus
 'Good' Thesaurus
 'Bad' Thesaurus
-People & Places Thesaurus
+People and Places Thesaurus
 Actions (Verbs) Thesaurus
 Move Actions Thesaurus
 Say Actions Thesaurus

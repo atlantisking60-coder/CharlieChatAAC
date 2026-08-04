@@ -14,7 +14,7 @@ The user wants to expand the "Disney Stories" board to include a comprehensive l
 I will update existing boards and create new ones in `lib/data/boards/Common/People/Characters/Disney Stories/`. All boards will have their `sortOrder` updated to match the new 10-increment sequence (10 to 730).
 
 #### Existing Boards to Update:
-- Snow White & The Seven Dwarfs (1937) -> sortOrder: 10
+- Snow White and The Seven Dwarfs (1937) -> sortOrder: 10
 - Pinocchio (1940) -> sortOrder: 20
 - Fantasia (1940) -> sortOrder: 30
 - Dumbo (1941) -> sortOrder: 40
@@ -22,7 +22,7 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 - Cinderella (1950) -> sortOrder: 60
 - Alice In Wonderland (1951) -> sortOrder: 70
 - Peter Pan (1953) -> sortOrder: 80
-- Lady & The Tramp (1955) -> sortOrder: 90
+- Lady and The Tramp (1955) -> sortOrder: 90
 - Sleeping Beauty (1959) -> sortOrder: 100
 - 101 Dalmatians (1961) -> sortOrder: 110
 - The Sword In The Stone (1963) -> sortOrder: 120
@@ -31,7 +31,7 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 - Winnie The Pooh (1977) -> sortOrder: 160
 - The Rescuers (1977) -> sortOrder: 170
 - The Little Mermaid (1989) -> sortOrder: 220
-- Beauty & The Beast (1991) -> sortOrder: 240
+- Beauty and The Beast (1991) -> sortOrder: 240
 - Aladdin (1992) -> sortOrder: 250
 - The Nightmare Before Christmas (1993) -> sortOrder: 260
 - The Lion King (1994) -> sortOrder: 270
@@ -43,10 +43,10 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 
 #### New Boards to Create (in correct sort order):
 - The Aristocats (1970) (140)
-- The Fox & The Hound (1981) (180)
+- The Fox and The Hound (1981) (180)
 - The Black Cauldron (1985) (190)
 - The Great Mouse Detective (1986) (200)
-- Oliver & Company (1988) (210)
+- Oliver and Company (1988) (210)
 - The Rescuers Down Under (1990) (230)
 - Toy Story (1995) (280)
 - A Bug's Life (1998) (320)
@@ -54,7 +54,7 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 - The Emperor's New Groove (2000) (360)
 - Monsters, Inc. (2001) (370)
 - Atlantis - The Lost Empire (2001) (380)
-- Lilo & Stitch (2002) (390)
+- Lilo and Stitch (2002) (390)
 - Treasure Planet (2002) (400)
 - Finding Nemo (2003) (410)
 - Brother Bear (2003) (420)
@@ -67,7 +67,7 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 - WALL-E (2008) (490)
 - Bolt (2008) (50)
 - Up (2009) (510)
-- The Princess & The Frog (2009) (520)
+- The Princess and The Frog (2009) (520)
 - Tangled (2010) (530)
 - Brave (2012) (540)
 - Wreck-It Ralph (2012) (550)
@@ -80,7 +80,7 @@ I will update existing boards and create new ones in `lib/data/boards/Common/Peo
 - Coco (2017) (620)
 - Onward (2020) (630)
 - Soul (2020) (640)
-- Raya & The Last Dragon (2021) (650)
+- Raya and The Last Dragon (2021) (650)
 - Encanto (2021) (660)
 - Luca (2021) (670)
 - Turning Red (2022) (680)

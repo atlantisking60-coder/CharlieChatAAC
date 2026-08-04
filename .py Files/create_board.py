@@ -26,17 +26,19 @@ def main():
     # 1. Area
     print("Available areas:")
     print("  1. Common")
-    print("  2. Sign")
-    print("  3. Subject Vocab")
+    print("  2. Subject Vocab")
+    print("  3. Sign")
     print("  4. My School")
-    print("  5. Personal")
-    areas = ["Common", "Sign", "Subject Vocab", "My School", "Personal"]
-    area_idx = input("Choose area [1-5]: ").strip()
+    print("  5. Legends")
+    print("  6. Recipes")
+    print("  7. Personal")
+    areas = ["Common", "Subject Vocab", "Sign", "My School", "Legends", "Recipes", "Personal"]
+    area_idx = input("Choose area [1-7]: ").strip()
     try:
         area_idx = int(area_idx)
     except ValueError:
         area_idx = 1
-    if area_idx < 1 or area_idx > 5:
+    if area_idx < 1 or area_idx > 7:
         area_idx = 1
     area = areas[area_idx - 1]
     print(f"  -> {area}")

@@ -1,0 +1,47 @@
+Vegetables - Word List
+==========================
+
+artichoke
+arugula
+asparagus
+aubergine
+beans
+beetroot
+broccoli
+cabbage
+carrot
+cassava
+cauliflower
+celeriac
+celery
+chilli pepper
+corn
+cucumber
+garlic
+green pepper
+kale
+kohlrabi
+leek
+lettuce
+mushroom
+okra
+onion
+pak choi
+parsnip
+peas
+pepper
+potato
+radish
+red onion
+red pepper
+shallot
+soybeans
+spinach
+spring onion
+sprouts
+squash
+sweet potato (yam)
+sweetcorn
+turnip
+watercress
+yellow pepper

@@ -1,0 +1,54 @@
+Clothes - Word List
+=======================
+
+clothes
+bag
+belt
+blouse
+boots
+boxer shorts
+bra
+briefs
+cap
+coat
+coverall
+dress
+gloves
+hat
+heels
+hoodie
+jacket
+jeans
+jewellry
+jumpsuit
+nightgown
+panties
+pants
+purse
+raincoat
+robe
+sandals
+scarf
+shirt
+shoes
+shorts
+skirt
+slippers
+sneakers
+socks
+suit
+sunglasses
+sweater
+t-shirt
+tie
+tights
+trainers
+trench coat
+trousers
+uggs
+umbrella
+underwear
+uniform
+watch
+wellington boots
+woolly hat

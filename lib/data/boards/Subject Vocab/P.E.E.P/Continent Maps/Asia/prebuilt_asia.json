@@ -1,0 +1,21 @@
+{
+  "id": "prebuilt_asia",
+  "name": "Asia",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_continent_maps",
+  "sortOrder": 249,
+  "tier": 3,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0
+}

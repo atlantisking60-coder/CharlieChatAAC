@@ -1,0 +1,21 @@
+{
+  "id": "prebuilt_attractive_forces",
+  "name": "Attractive Forces",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_science",
+  "sortOrder": 157,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0
+}

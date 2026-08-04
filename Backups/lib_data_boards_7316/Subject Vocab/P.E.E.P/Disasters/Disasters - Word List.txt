@@ -1,0 +1,39 @@
+Disasters - Word List
+=========================
+
+avalanche
+blizzard
+clean water
+conflict
+deforestation
+drought
+earthquake
+eruption
+explosion
+flood
+fundraising
+heatwave
+homeless
+house
+hurricane
+identification
+landslide
+medical supplies
+mental health
+monsoon
+nuclear meltdown
+oil spill
+pandemic
+personal items
+refugee
+rest
+shelter
+storm
+structural damage
+tent
+terrorism
+tornado
+tsunami
+volcano
+war
+wildfire

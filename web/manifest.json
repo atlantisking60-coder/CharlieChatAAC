@@ -1,11 +1,11 @@
 {
-    "name": "Charlie Chat",
-    "short_name": "Charlie Chat",
+    "name": "charlie_chat",
+    "short_name": "charlie_chat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Charlie Chat AAC - Communication app for all devices",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

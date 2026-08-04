@@ -16,10 +16,17 @@ for p in BOARDS_DIR.rglob('*.json'):
     except Exception as e:
         issues.append(f'{p}: JSON error {e}')
         continue
+    if not isinstance(d, dict):
+        continue
     ids[d.get('id')] = d.get('name')
 
 for p in BOARDS_DIR.rglob('*.json'):
-    d = load(p)
+    try:
+        d = load(p)
+    except Exception:
+        continue
+    if not isinstance(d, dict):
+        continue
     rel = p.relative_to(BOARDS_DIR)
     parts = rel.parts
     area = parts[0]

@@ -3,7 +3,7 @@ Time - Word List
 
 Time (Clocks)
 Months
-Events & Occasions
+Events and Occasions
 yesterday
 today
 tomorrow

@@ -28,7 +28,7 @@ If I go into the reptiles sub-board, of the animals board, not only has the dino
 -----
 when clicking to search online symbols, or edit tile, or anywhere that has a writing option, always start the cursor in the writing box, so that if users or talk into speech to text, it is actually writing.
 -----
-do not ever allow the app to override which picture has been used for a tile, if a particular picture has been manually selected by the user already. many of my selected pictures on tiles are being overridden by the app for some reason, no matter how many times I reselect them (even though the correct pictures & path are referenced in the JSON files). stop this override from happening.
+do not ever allow the app to override which picture has been used for a tile, if a particular picture has been manually selected by the user already. many of my selected pictures on tiles are being overridden by the app for some reason, no matter how many times I reselect them (even though the correct pictures and path are referenced in the JSON files). stop this override from happening.
 if I look at the JSON file prebuilt_baycroft_expects.JSON, I can see that several tiles have their image selected as a long string starting with "data:image/png;base64," this seems very odd given that these exact images are in our assets folder, so this should surely just read as an asset path such as: "image": "assets/symbols/BOARDS/Animals/Fish.png"
 why is it doing this?
 -----

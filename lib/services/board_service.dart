@@ -35,8 +35,11 @@ const String darkBlueBoardColor = '#1E3A8A';
 /// [runtimeBoardHierarchy] — the compiled const merged with any admin edits
 /// persisted in SharedPreferences.  User-created entries are per-user and
 /// not included here — they are tracked separately in the user's hierarchy doc.
-List<String> get prebuiltBoardNames =>
-    runtimeBoardHierarchy.map((e) => e.name).toSet().toList();
+List<String> get prebuiltBoardNames {
+  final names = runtimeBoardHierarchy.map((e) => e.name).toList();
+  final seen = <String>{};
+  return names.where((n) => seen.add(n)).toList();
+}
 
 const Set<String> lightGreenPrebuiltBoards = {
   // Previously contained My School / Subject Vocab boards; now all areas use the default background.
@@ -47,6 +50,11 @@ const Set<String> darkBluePrebuiltBoards = {
 };
 
 const Set<String> _retiredBoardIds = {
+  'prebuilt_new_board',
+  'prebuilt_adjectives',
+  'prebuilt_rooms_home',
+  'prebuilt_events_occasions',
+  'prebuilt_habitats_science',
 };
 
 String prebuiltBoardId(String name) {
@@ -61,6 +69,7 @@ class Board {
   String name;
   String area;
   String? parentBoardId;
+  String? linkedBoardId;
   int rows;
   int columns;
   bool adjustableLayout;
@@ -83,6 +92,7 @@ class Board {
     required this.name,
     this.area = 'Common',
     this.parentBoardId,
+    this.linkedBoardId,
     required this.rows,
     required this.columns,
     required this.tiles,
@@ -106,6 +116,7 @@ class Board {
         'name': name,
         'area': area,
         'parentBoardId': parentBoardId,
+        'linkedBoardId': linkedBoardId,
         'rows': rows,
         'columns': columns,
         'adjustableLayout': adjustableLayout,
@@ -124,11 +135,12 @@ class Board {
         'version': version,
       };
 
-  factory Board.fromMap(Map<String, dynamic> m) => Board(
+  factory Board.fromMap(Map<String, dynamic> m, {bool includeTiles = true}) => Board(
         id: m['id'] ?? '',
         name: m['name'] ?? 'Board',
         area: m['area'] ?? 'Common',
         parentBoardId: m['parentBoardId'] as String?,
+        linkedBoardId: m['linkedBoardId'] as String?,
         rows: m['rows'] ?? defaultBoardRows,
         columns: m['columns'] ?? defaultBoardColumns,
         adjustableLayout: m['adjustableLayout'] ?? false,
@@ -139,10 +151,12 @@ class Board {
         tileWidth:
             (m['tileWidth'] is num) ? (m['tileWidth'] as num).toDouble() : 100.0,
         backgroundColor: m['backgroundColor'] ?? defaultBoardColor,
-        tiles: (m['tiles'] as List<dynamic>?)
-                ?.map((e) => SymbolTile.fromMap(Map<String, dynamic>.from(e)))
-                .toList() ??
-            [],
+        tiles: includeTiles
+            ? ((m['tiles'] as List<dynamic>?)
+                    ?.map((e) => SymbolTile.fromMap(Map<String, dynamic>.from(e)))
+                    .toList() ??
+                [])
+            : [],
         isSubBoard: m['isSubBoard'] ?? false,
         isTertiaryBoard: m['isTertiaryBoard'] ?? false,
         isQuaternaryBoard: m['isQuaternaryBoard'] ?? false,
@@ -156,6 +170,7 @@ class Board {
 
 class BoardService {
   static BoardService? _instance;
+  static BoardService? get current => _instance;
   Directory? _dataDir;
   SharedPreferences? _prefs;
   late SharedPreferences _deletionPrefs;
@@ -210,7 +225,16 @@ class BoardService {
   /// Returns true if the current profile is the admin profile.
   bool get isAdmin => _isAdmin;
 
+  /// If set, this board will be loaded before other prebuilt boards during startup.
+  String? _priorityBoardId;
+
+  /// Mark a board as the user's chosen priority so it loads first.
+  void setPriorityBoardId(String id) => _priorityBoardId = id;
+
   Future<void> _syncDevBoards() async {
+    // On web, the dev server is accessed on-demand by _loadBoard/_loadBoardFromAssets.
+    // Bulk-syncing all boards here overwhelms localStorage and is unnecessary.
+    if (kIsWeb) return;
     try {
       final uri = Uri.parse('http://localhost:8787/listBoards');
       final response = await http.get(uri).timeout(const Duration(seconds: 10));
@@ -231,6 +255,40 @@ class BoardService {
 
   String _getBoardKey(String boardId) {
     return 'board_${_currentProfileId ?? 'default'}_$boardId';
+  }
+
+  String _getSortOrderKey(String boardId) {
+    return 'board_sortorder_${_currentProfileId ?? 'default'}_$boardId';
+  }
+
+  Future<void> _saveSortOrder(Board board) async {
+    if (_prefs == null) return;
+    await _prefs!.setInt(_getSortOrderKey(board.id), board.sortOrder);
+  }
+
+  String _getTabOrderKey(String area) {
+    return 'board_taborder_${_currentProfileId ?? 'default'}_$area';
+  }
+
+  List<String>? getTabOrder(String area) {
+    if (_prefs == null) return null;
+    final raw = _prefs!.getString(_getTabOrderKey(area));
+    if (raw == null || raw.isEmpty) return null;
+    try {
+      return (json.decode(raw) as List).cast<String>();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> saveTabOrder(String area, List<String> names) async {
+    if (_prefs == null) return;
+    await _prefs!.setString(_getTabOrderKey(area), json.encode(names));
+  }
+
+  Future<void> clearTabOrder(String area) async {
+    if (_prefs == null) return;
+    await _prefs!.remove(_getTabOrderKey(area));
   }
 
   /// STORAGE INITIALIZATION
@@ -257,6 +315,18 @@ class BoardService {
     _deletedBoardIds.addAll(
       _deletionPrefs.getStringList('deleted_board_ids_v2') ?? const [],
     );
+    // Recover any prebuilt boards that were auto-deleted by the duplicate-name
+    // bug. Only genuinely retired prebuilt IDs should stay deleted.
+    final recovered = _deletedBoardIds
+        .where((id) => id.startsWith('prebuilt_') && !_retiredBoardIds.contains(id))
+        .toSet();
+    if (recovered.isNotEmpty) {
+      _deletedBoardIds.removeAll(recovered);
+      await _deletionPrefs.setStringList(
+        'deleted_board_ids_v2',
+        _deletedBoardIds.toList(),
+      );
+    }
     if (kIsWeb) {
       _prefs = _deletionPrefs;
     } else {
@@ -279,6 +349,9 @@ class BoardService {
       await loadUserCustomHierarchyEntries(userId);
       await ensureEmptyUserHierarchy(userId);
     }
+
+    // Retire any boards that should never be loaded before we populate from assets.
+    await retireSpecifiedBoards();
 
     await _initializeEmptyBoardLibrary();
     await _clearAccidentallyPopulatedPhonicsBoards();
@@ -312,6 +385,10 @@ class BoardService {
           return bPrebuilt.compareTo(aPrebuilt);
         });
         for (final dup in entry.value.skip(1)) {
+          if (dup.id.startsWith('prebuilt_')) {
+            debugPrint('Skipping prebuilt duplicate "${dup.name}" (id: ${dup.id})');
+            continue;
+          }
           debugPrint('Removing duplicate board "${dup.name}" (id: ${dup.id})');
           await deleteBoard(dup.id);
         }
@@ -329,6 +406,8 @@ class BoardService {
 
   Future<void> retireSpecifiedBoards() async {
     for (final id in _retiredBoardIds) {
+      // Mark as deleted first so later loading steps skip it even if it doesn't exist in storage yet.
+      await _markBoardDeleted(id);
       if (await loadBoard(id) != null) await deleteBoard(id);
     }
   }
@@ -479,114 +558,7 @@ class BoardService {
     return id.split('_').map((w) => w.isEmpty ? '' : '${w[0].toUpperCase()}${w.substring(1)}').join(' ');
   }
 
-  /// Force the cached Small Words board to use the Montessori images for the
-  /// word-category ranges. This runs on startup so source-JSON edits show up
-  /// even if the asset bundle is cached.
-  Future<void> migrateSmallWordsImages() async {
-    const boardId = 'prebuilt_small_words';
-    final board = await loadBoard(boardId);
-    if (board == null) return;
-
-    const base = 'assets/symbols/3. Lesson Vocab/English/Montessori';
-    const conjunction = '$base/conjunction [montessori].png';
-    const linkingVerb = '$base/linking verb [montessori].png';
-    const auxiliaryVerb = '$base/auxiliary verb [montessori].png';
-    const adverb = '$base/adverb [montessori].png';
-    const adjective = '$base/adjective [montessori].png';
-    const participle = '$base/participle (end in -ing, -ed, -en, -d, -t, -n, or -ne) [montessori].png';
-    const interjection = '$base/interjection [montessori].png';
-
-    const imageForLabel = <String, String>{
-      // Conjunctions
-      'and': conjunction,
-      'or': conjunction,
-      'but': conjunction,
-      'so': conjunction,
-      'yet': conjunction,
-      'nor': conjunction,
-      'for': conjunction,
-      'if': conjunction,
-      'although': conjunction,
-      'because': conjunction,
-      'since': conjunction,
-      'however': conjunction,
-      'therefore': conjunction,
-      'until': conjunction,
-      'while': conjunction,
-      'unless': conjunction,
-      // Linking verbs
-      'is': linkingVerb,
-      'am': linkingVerb,
-      'are': linkingVerb,
-      'was': linkingVerb,
-      'were': linkingVerb,
-      'be': linkingVerb,
-      'have': linkingVerb,
-      'has': linkingVerb,
-      'had': linkingVerb,
-      'do': linkingVerb,
-      'does': linkingVerb,
-      'did': linkingVerb,
-      'will': linkingVerb,
-      'would': linkingVerb,
-      // Auxiliary verbs
-      'can': auxiliaryVerb,
-      'could': auxiliaryVerb,
-      'shall': auxiliaryVerb,
-      'should': auxiliaryVerb,
-      'may': auxiliaryVerb,
-      'might': auxiliaryVerb,
-      'must': auxiliaryVerb,
-      "don't": auxiliaryVerb,
-      "didn't": auxiliaryVerb,
-      // Adverbs
-      'not': adverb,
-      'then': adverb,
-      'as': adverb,
-      'even': adverb,
-      'just': adverb,
-      'only': adverb,
-      'really': adverb,
-      'actually': adverb,
-      'definitely': adverb,
-      'particularly': adverb,
-      'simply': adverb,
-      // Adjectives
-      'these': adjective,
-      'those': adjective,
-      // Participles
-      'been': participle,
-      'being': participle,
-      'doing': participle,
-      'done': participle,
-      // Interjections
-      'ah': interjection,
-      'ugh': interjection,
-      'oh': interjection,
-      'wow': interjection,
-      // Conjunctions (relative)
-      'than': conjunction,
-      'which': conjunction,
-      'who': conjunction,
-      'whose': conjunction,
-      'whom': conjunction,
-    };
-
-    var changed = false;
-    for (final tile in board.tiles) {
-      final newImage = imageForLabel[tile.label];
-      if (newImage != null && tile.imageAsset != newImage) {
-        tile.imageAsset = newImage;
-        changed = true;
-      }
-    }
-
-    if (changed) {
-      board.version = 2;
-      await _writeBoard(board, mirrorToDisk: false);
-      debugPrint('Migrated Small Words tile images to Montessori set');
-    }
-  }
+  // Legacy Small Words migration removed to avoid touching non-existent boards.
 
 /// DEVELOPER SYNC SETTING
 /// This allows the Desktop app to talk directly to your 
@@ -603,8 +575,40 @@ class BoardService {
 /// boards (Letters, Numbers, etc.) exist, and if not, creates 
 /// them from the local asset folders.
 
+  /// Whether [name] is one of the grammar sub-boards nested under Small Words.
+  bool _isSmallWordsSub(String name) {
+    return runtimeBoardHierarchy.any(
+      (e) => e.name == name && e.parentName == 'Small Words',
+    );
+  }
+
   Future<void> _ensurePrebuiltBoards() async {
-    await Future.wait(prebuiltBoardNames.map((name) async {
+    // If a priority board has been chosen, load it first so the user sees it
+    // while the rest of the prebuilt boards load in the background.
+    String? priorityName;
+    if (_priorityBoardId != null) {
+      for (final n in prebuiltBoardNames) {
+        if (prebuiltBoardId(n) == _priorityBoardId) {
+          priorityName = n;
+          break;
+        }
+      }
+    }
+    final orderedNames = priorityName != null
+        ? [priorityName, ...prebuiltBoardNames.where((n) => n != priorityName)]
+        : prebuiltBoardNames.toList();
+
+    // Small Words grammar sub-boards are loaded last.
+    final rest = orderedNames.skip(1).toList();
+    rest.sort((a, b) {
+      final aSub = _isSmallWordsSub(a);
+      final bSub = _isSmallWordsSub(b);
+      if (aSub == bSub) return 0;
+      return aSub ? 1 : -1;
+    });
+    final sortedNames = [orderedNames.first, ...rest];
+
+    final Future<void> Function(String) loadOne = (name) async {
       final id = prebuiltBoardId(name);
       if (_deletedBoardIds.contains(id)) return;
       final key = _getBoardKey(id);
@@ -669,6 +673,7 @@ class BoardService {
           if (response.statusCode == 200) {
              final board = _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
              await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: false);
+             _boardCache[board.id] = board;
              return;
           }
         } catch (_) {}
@@ -681,6 +686,7 @@ class BoardService {
           final board = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
           // We load from disk, but we DON'T mirror it back to disk (it's already there)
           await _writeBoard(board, mirrorToDisk: false);
+          _boardCache[board.id] = board;
           return;
         } catch (e) {
           debugPrint('Error loading board $name from JSON: $e');
@@ -691,6 +697,7 @@ class BoardService {
       final assetBoard = await _loadBoardFromAssets(id, name);
       if (assetBoard != null) {
         await _writeBoard(assetBoard, mirrorToDisk: false, cacheInWebStorage: false);
+        _boardCache[assetBoard.id] = assetBoard;
         return;
       }
 
@@ -719,7 +726,8 @@ class BoardService {
 /// This logic looks at the boards you asked to be pre-filled
 /// and generates the tile list using paths in your assets folder.
 
-      List<SymbolTile> initialTiles = [];
+      List<SymbolTile> initialTiles = _generateMainBoardTiles(name);
+      if (false) { // auto-populate disabled
       if (name == 'Letters' || name == 'Letters (Subject)') {
         initialTiles = _generateAlphabetTiles();
       } else if (name == 'Numbers' || name == 'Numbers (Subject)') {
@@ -793,13 +801,13 @@ class BoardService {
         initialTiles = _generateMovementTiles();
       } else if (name == 'Buildings') {
         initialTiles = _generateBuildingsTiles();
-      } else if (name == 'Rooms & Home') {
+      } else if (name == 'Rooms and Home') {
         initialTiles = _generateRoomsAndHomeTiles();
       } else if (name == 'Furniture') {
         initialTiles = _generateFurnitureTiles();
       } else if (name == 'Local Places') {
         initialTiles = _generateLocalPlacesTiles();
-      } else if (name == 'Jobs & Careers') {
+      } else if (name == 'Jobs and Careers') {
         initialTiles = _generateJobsAndCareersTiles();
       } else if (name == 'Weather') {
         initialTiles = _generateWeatherTiles();
@@ -807,7 +815,7 @@ class BoardService {
         initialTiles = _generateDisastersTiles();
       } else if (name == 'Seasons') {
         initialTiles = _generateSeasonsTiles();
-      } else if (name == 'Events & Occasions') {
+      } else if (name == 'Events and Occasions') {
         initialTiles = _generateEventsAndOccasionsTiles();
       } else if (name == 'Body Parts') {
         initialTiles = _generateBodyPartsTiles();
@@ -842,6 +850,7 @@ class BoardService {
       } else if (name == 'Phase 2 Phonics') {
         initialTiles = _generatePhase2PhonicsTiles();
       }
+      } // end auto-populate disabled
 
       // Determine if this is a sub-board or tertiary board from the hierarchy
       final isTertiaryBoard = hierarchyTier(name) >= 3;
@@ -891,6 +900,7 @@ class BoardService {
         parentBoardId: parentId,
         adjustableLayout: !useFixedLayout && initialTiles.isNotEmpty,
         backgroundColor: backgroundColor,
+        iconAssetPath: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png',
         tiles: initialTiles.isNotEmpty ? initialTiles : List.generate(
           rows * columns,
           (index) => SymbolTile(
@@ -906,7 +916,13 @@ class BoardService {
         isTertiaryBoard: isTertiaryBoard,
       );
       await _writeBoard(board, mirrorToDisk: false);
-    }));
+    };
+
+    // Load the priority board first so the user can start using the app.
+    // Remaining boards are loaded on demand when the user selects their tab.
+    if (sortedNames.isNotEmpty) {
+      await loadOne(sortedNames.first);
+    }
 
     // MIGRATE: Consolidate 'A-Z Of Sign' and 'A to Z Of Sign'
     final oldSignIds = ['prebuilt_a_to_z_of_sign', 'prebuilt_a_z_of_sign'];
@@ -1157,38 +1173,7 @@ class BoardService {
     return tiles;
   }
 
-  List<SymbolTile> _generateCommonWordsTiles() {
-    final common = [
-      // Prepended from old 'Common' board
-      'I', 'want', 'do not want', 'help', 'yes', 'no',
-      // Original words (with edits)
-      'good morning', 'good afternoon', 'please', 'thank you', 'sorry', 'goodbye',
-      'read', 'write', 'talk', 'sign', 'point', 'raise a hand',
-      'focus', 'silence', 'listen', 'watch', 'finish',
-      'help', 'stop', 'go', 'need', 'want', 'toilet', 'wash',
-      'snack', 'eat', 'drink', 'play', 'rest', 'brain break',
-      'run', 'first aid', 'ear defenders', 'sensory toys', 'weighted blanket', 'colouring',
-      'cubbie', 'caloo equipment', 'hanging bars', 'swing', 'roundabout', 'blow nose'
-    ];
-    
-    return common.indexed.map((entry) {
-      final (index, w) = entry;
-      String imagePath = 'assets/symbols/1. Main Boards/Common/$w.png';
-      if (w == 'thank you') {
-        imagePath = 'assets/symbols/1. Main Boards/Common/thank-you.png';
-      } else if (w == 'finish') {
-        imagePath = 'assets/symbols/1. Main Boards/Common/finished.png';
-      } else if (const {'caloo equipment', 'hanging bars', 'swing', 'roundabout'}.contains(w)) {
-        imagePath = 'assets/symbols/3. Lesson Vocab/Break & Lunchtime/$w.png';
-      }
-      return SymbolTile(
-        id: 'common_${index}_${w.replaceAll(' ', '_')}',
-        label: w,
-        category: 'Common',
-        imageAsset: imagePath,
-      );
-    }).toList();
-  }
+  // Legacy Common Words generator removed to avoid duplicate and non-existent asset paths.
 
   List<SymbolTile> _generateFeelingsTiles() {
     final tiles = <SymbolTile>[];
@@ -1223,7 +1208,7 @@ class BoardService {
         id: 'feeling_${word.replaceAll(' ', '_')}',
         label: word,
         category: 'Feelings',
-        imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$word.png',
+        imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$word.png',
       ));
     }
     
@@ -1244,7 +1229,7 @@ class BoardService {
       id: 'feelings_wheel',
       label: 'Feelings Wheel',
       category: 'Feelings',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/baycroft\'s wheel of emotions.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/baycroft\'s wheel of emotions.png',
       isFullScreenImage: true,
     ));
     
@@ -1252,7 +1237,7 @@ class BoardService {
       id: 'putchik_wheel',
       label: 'Putchik\'s Wheel Of Emotions',
       category: 'Feelings',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/putchik\'s wheel of emotions.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/putchik\'s wheel of emotions.png',
       isFullScreenImage: true,
     ));
     
@@ -1269,7 +1254,7 @@ class BoardService {
       id: 'sad_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Sad',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1283,7 +1268,7 @@ class BoardService {
       id: 'mad_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Mad',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1298,7 +1283,7 @@ class BoardService {
       id: 'scared_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Scared',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1312,7 +1297,7 @@ class BoardService {
       id: 'joyful_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Joyful',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1326,7 +1311,7 @@ class BoardService {
       id: 'strong_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Strong',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1340,7 +1325,7 @@ class BoardService {
       id: 'calm_${w.replaceAll(' ', '_')}',
       label: w,
       category: 'Calm',
-      imageAsset: 'assets/symbols/1. Main Boards/Feelings & Emotions/$w.png',
+      imageAsset: 'assets/symbols/1. Main Boards/Feelings and Emotions/$w.png',
     )).toList();
   }
 
@@ -1446,7 +1431,7 @@ class BoardService {
       'woman', 'mother', 'father', 'aunt', 'uncle', 'carer', 'boy',
       'sister', 'brother', 'cousin', 'family friend', 'stranger', 'girl',
       'baby', 'toddler', 'teenager', 'adult', 'middle aged', 'old aged',
-      'called', '', 'School People', 'Characters', 'Jobs & Careers'
+      'called', '', 'School People', 'Characters', 'Jobs and Careers'
     ];
     
     for (final word in people) {
@@ -1457,7 +1442,7 @@ class BoardService {
           category: 'People',
           imageAsset: '',
         ));
-      } else if (word == 'School People' || word == 'Characters' || word == 'Jobs & Careers') {
+      } else if (word == 'School People' || word == 'Characters' || word == 'Jobs and Careers') {
         // Board links with black background and white text
         String boardName = word;
         String imagePath = 'assets/symbols/BOARDS/English/$boardName.png';
@@ -1496,7 +1481,7 @@ class BoardService {
       'teacher', 'teaching assistant', 'yellow lanyard',
       'tutor team', 'duty staff', 'head teacher',
       'office staff', 'first aid staff', 'dinner hall',
-      'drivers & escorts', 'speech & language', 'friends'
+      'drivers and escorts', 'speech and language', 'friends'
     ];
     
     for (final word in schoolPeople) {
@@ -1553,7 +1538,7 @@ class BoardService {
     ];
     
     for (final word in animalTypes) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/$word.png';
       tiles.add(SymbolTile(
         id: 'animal_type_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1573,7 +1558,7 @@ class BoardService {
     ];
     
     for (final word in mammals) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Mammals/$word.png';
       tiles.add(SymbolTile(
         id: 'mammal_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1593,7 +1578,7 @@ class BoardService {
     ];
     
     for (final word in birds) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Birds/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Birds/$word.png';
       tiles.add(SymbolTile(
         id: 'bird_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1613,7 +1598,7 @@ class BoardService {
     ];
     
     for (final word in reptiles) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Reptiles/$word.png';
       tiles.add(SymbolTile(
         id: 'reptile_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1633,7 +1618,7 @@ class BoardService {
     ];
     
     for (final word in amphibians) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Amphibians/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Amphibians/$word.png';
       tiles.add(SymbolTile(
         id: 'amphibian_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1653,7 +1638,7 @@ class BoardService {
     ];
     
     for (final word in insects) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Insects/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Insects/$word.png';
       tiles.add(SymbolTile(
         id: 'insect_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1671,7 +1656,7 @@ class BoardService {
     final arachnids = ['mite', 'scorpion', 'spider', 'tick'];
     
     for (final word in arachnids) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Arachnids/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Arachnids/$word.png';
       tiles.add(SymbolTile(
         id: 'arachnid_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1722,7 +1707,7 @@ class BoardService {
         ));
       } else {
         final folder = sealifeWords.contains(word) ? 'Sealife' : 'Invertebrates';
-        String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/$folder/$word.png';
+        String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/$folder/$word.png';
         final isCategory = categoryWords.contains(word);
         tiles.add(SymbolTile(
           id: 'invertebrate_${word.replaceAll(' ', '_')}',
@@ -1746,7 +1731,7 @@ class BoardService {
     ];
     
     for (final word in fish) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Fish/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Fish/$word.png';
       tiles.add(SymbolTile(
         id: 'fish_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1785,7 +1770,7 @@ class BoardService {
           textColor: '#000000',
         ));
       } else {
-        String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Habitats/$word.png';
+        String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Habitats/$word.png';
         tiles.add(SymbolTile(
           id: 'habitat_${word.replaceAll(' ', '_')}',
           label: word,
@@ -1812,7 +1797,7 @@ class BoardService {
     ];
     
     for (final word in sealife) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Sealife/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Sealife/$word.png';
       tiles.add(SymbolTile(
         id: 'sealife_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1836,7 +1821,7 @@ class BoardService {
     ];
     
     for (final word in natureVocab) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Nature Vocabulary/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Nature Vocabulary/$word.png';
       tiles.add(SymbolTile(
         id: 'nature_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1861,7 +1846,7 @@ class BoardService {
     ];
     
     for (final word in bodyParts) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Animal Body Parts/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Animal Body Parts/$word.png';
       tiles.add(SymbolTile(
         id: 'animal_body_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1885,7 +1870,7 @@ class BoardService {
     ];
     
     for (final word in childAnimals) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Child Animals/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Child Animals/$word.png';
       tiles.add(SymbolTile(
         id: 'child_animal_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1905,7 +1890,7 @@ class BoardService {
     ];
     
     for (final word in groups) {
-      String imagePath = 'assets/symbols/1. Main Boards/Animals & Habitats/Groups of Animals/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Animals and Habitats/Groups of Animals/$word.png';
       tiles.add(SymbolTile(
         id: 'group_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1924,7 +1909,7 @@ class BoardService {
       'ask', 'do', 'dress', 'drink', 'eat',
       'go', 'stop', 'play', 'sleep', 'talk',
       'listen', 'enter', 'leave or exit', 'throw away', 'throw',
-      'mix', 'mix & stir', 'cook', 'blow nose', 'ride', 'Movement'
+      'mix', 'mix and stir', 'cook', 'blow nose', 'ride', 'Movement'
     ];
     
     for (final word in actions) {
@@ -1956,7 +1941,7 @@ class BoardService {
 
   List<SymbolTile> _generateMovementTiles() {
     final tiles = <SymbolTile>[];
-    
+
     final movements = [
       'crawl', 'dive', 'float', 'fly',
       'gallop', 'glide', 'hop', 'hover',
@@ -1965,9 +1950,18 @@ class BoardService {
       'slither', 'sneak', 'stomp', 'stretch',
       'swim', 'waddle', 'wait', 'walk'
     ];
-    
+
+    final imageFor = {
+      'float': 'assets/Subject Vocab/Science/Material Properties/float.png',
+      'glide': 'assets/Subject Vocab/Better Words (Thesaurus)/Actions Verbs Thesaurus/Fly/glide.png',
+      'hover': 'assets/Subject Vocab/Better Words (Thesaurus)/Actions Verbs Thesaurus/Fly/hover.png',
+      'jog': 'assets/Subject Vocab/Better Words (Thesaurus)/Actions Verbs Thesaurus/Move/jog.png',
+      'sneak': 'assets/Common/Actions/Movement/sneak or creep.png',
+      'stretch': 'assets/Subject Vocab/Science/Material Properties/stretch.png',
+    };
+
     for (final word in movements) {
-      String imagePath = 'assets/symbols/1. Main Boards/Actions/Movement/$word.png';
+      final imagePath = imageFor[word] ?? 'assets/Common/Actions/Movement/$word.png';
       tiles.add(SymbolTile(
         id: 'movement_${word.replaceAll(' ', '_')}',
         label: word,
@@ -1975,7 +1969,7 @@ class BoardService {
         imageAsset: imagePath,
       ));
     }
-    
+
     return tiles;
   }
 
@@ -1983,7 +1977,7 @@ class BoardService {
     final tiles = <SymbolTile>[];
     
     final buildings = [
-      'Buildings', 'Rooms & Home', 'Furniture', 'Habitats', 'Local Places',
+      'Buildings', 'Rooms and Home', 'Furniture', 'Habitats', 'Local Places',
       'airport', 'bank', 'cafe', 'church', 'cinema', 'clinic',
       'coffee shop', 'college', 'community centre', 'court', 'dentist', 'fire station',
       'gp surgery', 'hospital', 'hotel', 'ice rink', 'library', 'mall or shopping centre',
@@ -1993,7 +1987,7 @@ class BoardService {
     ];
     
     for (final word in buildings) {
-      if (word == 'Buildings' || word == 'Rooms & Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
+      if (word == 'Buildings' || word == 'Rooms and Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
         // Board links with black background and white text
         tiles.add(SymbolTile(
           id: 'buildings_link_${word.replaceAll(' ', '_').toLowerCase()}',
@@ -2023,7 +2017,7 @@ class BoardService {
     final tiles = <SymbolTile>[];
     
     final rooms = [
-      'Buildings', 'Rooms & Home', 'Furniture', 'Habitats', 'Local Places',
+      'Buildings', 'Rooms and Home', 'Furniture', 'Habitats', 'Local Places',
       'home', 'office', 'attic', 'shower room', 'guest room',
       'bedroom', 'study', 'stairs', 'bathroom', '(home) gym',
       'kitchen', 'dining room', 'hallway', 'toilet', 'laundry',
@@ -2032,12 +2026,12 @@ class BoardService {
     ];
     
     for (final word in rooms) {
-      if (word == 'Buildings' || word == 'Rooms & Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
+      if (word == 'Buildings' || word == 'Rooms and Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
         // Board links with black background and white text
         tiles.add(SymbolTile(
           id: 'rooms_link_${word.replaceAll(' ', '_').toLowerCase()}',
           label: _toTitleCase(word),
-          category: 'Rooms & Home',
+          category: 'Rooms and Home',
           imageAsset: 'assets/symbols/BOARDS/English/$word.png',
           isBoardLink: true,
           linkedBoardId: prebuiltBoardId(word),
@@ -2045,11 +2039,11 @@ class BoardService {
           textColor: '#000000',
         ));
       } else {
-        String imagePath = 'assets/symbols/1. Main Boards/Places/Rooms & Home/$word.png';
+        String imagePath = 'assets/symbols/1. Main Boards/Places/Rooms and Home/$word.png';
         tiles.add(SymbolTile(
           id: 'room_${word.replaceAll(' ', '_')}',
           label: word,
-          category: 'Rooms & Home',
+          category: 'Rooms and Home',
           imageAsset: imagePath,
         ));
       }
@@ -2062,7 +2056,7 @@ class BoardService {
     final tiles = <SymbolTile>[];
     
     final furniture = [
-      'Buildings', 'Rooms & Home', 'Furniture', 'Habitats', 'Local Places',
+      'Buildings', 'Rooms and Home', 'Furniture', 'Habitats', 'Local Places',
       'armchair', 'barbeque', 'bath', 'bean bag', 'bed', 'bedside table',
       'book', 'bookshelf', 'bunk bed', 'chair', 'chest of drawers', 'chest, trunk',
       'coat rack', 'coffee table', 'cot', 'cupboard', 'dining table', 'dishwasher',
@@ -2074,7 +2068,7 @@ class BoardService {
     ];
     
     for (final word in furniture) {
-      if (word == 'Buildings' || word == 'Rooms & Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
+      if (word == 'Buildings' || word == 'Rooms and Home' || word == 'Furniture' || word == 'Habitats' || word == 'Local Places') {
         // Board links with black background and white text
         tiles.add(SymbolTile(
           id: 'furniture_link_${word.replaceAll(' ', '_').toLowerCase()}',
@@ -2130,11 +2124,11 @@ class BoardService {
     ];
     
     for (final word in jobs) {
-      String imagePath = 'assets/symbols/1. Main Boards/Jobs & Careers/$word.png';
+      String imagePath = 'assets/symbols/1. Main Boards/Jobs and Careers/$word.png';
       tiles.add(SymbolTile(
         id: 'job_${word.replaceAll(' ', '_')}',
         label: word,
-        category: 'Jobs & Careers',
+        category: 'Jobs and Careers',
         imageAsset: imagePath,
       ));
     }
@@ -2150,7 +2144,7 @@ class BoardService {
       'sun', 'sunny', 'rain', 'rainy',
       'wind', 'windy', 'cloud', 'cloudy',
       'fog', 'foggy', 'snow', 'snowy',
-      'storm', 'thunder & lightning', 'sleet', 'hail',
+      'storm', 'thunder and lightning', 'sleet', 'hail',
       'Seasons', '', '', 'rainbow'
     ];
     
@@ -2257,7 +2251,7 @@ class BoardService {
         tiles.add(SymbolTile(
           id: 'events_link_${word.replaceAll(' ', '_').toLowerCase()}',
           label: _toTitleCase(word),
-          category: 'Events & Occasions',
+          category: 'Events and Occasions',
           imageAsset: 'assets/symbols/BOARDS/English/$word.png',
           isBoardLink: true,
           linkedBoardId: prebuiltBoardId(word),
@@ -2265,11 +2259,11 @@ class BoardService {
           textColor: '#000000',
         ));
       } else {
-        String imagePath = 'assets/symbols/1. Main Boards/Time/Events & Occasions/$word.png';
+        String imagePath = 'assets/symbols/1. Main Boards/Time/Events and Occasions/$word.png';
         tiles.add(SymbolTile(
           id: 'event_${word.replaceAll(' ', '_')}',
           label: word,
-          category: 'Events & Occasions',
+          category: 'Events and Occasions',
           imageAsset: imagePath,
         ));
       }
@@ -2475,7 +2469,7 @@ class BoardService {
     ];
     
     for (final word in skills) {
-      String imagePath = 'assets/symbols/2. Baycroft Specific/Thinking Skills & Blank Levels/$word.png';
+      String imagePath = 'assets/symbols/2. Baycroft Specific/Thinking Skills and Blank Levels/$word.png';
       tiles.add(SymbolTile(
         id: 'thinking_${word.replaceAll(' ', '_')}',
         label: word,
@@ -2495,7 +2489,7 @@ class BoardService {
     ];
     
     for (final word in issues) {
-      String imagePath = 'assets/symbols/2. Baycroft Specific/Baycroft Expects & Words For When Things Go Wrong/$word.png';
+      String imagePath = 'assets/symbols/2. Baycroft Specific/Baycroft Expects and Words For When Things Go Wrong/$word.png';
       tiles.add(SymbolTile(
         id: 'wrong_${word.replaceAll(' ', '_')}',
         label: word,
@@ -2514,7 +2508,7 @@ class BoardService {
       'breaktime', 'lunchtime', 'tutor time', 'english', 'maths', 'science',
       'T.F.L', 'personal development', 'peep', 'epic', 'p.e.', 'art',
       'performing arts', 'sustainability', 'cooking', 'resistant materials',
-      'textiles', 'religion & worldviews', 'music', 'horticulture', 'retail',
+      'textiles', 'religion and worldviews', 'music', 'horticulture', 'retail',
       'photography', 'information technology', 'construction', 'engineering',
       'living life skills', 'prepare for adulthood'
     ];
@@ -2569,7 +2563,7 @@ class BoardService {
     return boards.where((board) => !_deletedBoardIds.contains(board.id)).toList();
   }
 
-  Future<List<Board>> listBoards({String? area}) async {
+  Future<List<Board>> listBoards({String? area, bool includeTiles = true}) async {
     if (!kIsWeb && _projectRoot != null) {
       final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
       if (await root.exists()) {
@@ -2581,6 +2575,7 @@ class BoardService {
             final modified = await entity.lastModified();
             final board = _boardFromJson(
               json.decode(await entity.readAsString()) as Map<String, dynamic>,
+              includeTiles: includeTiles,
             );
             final previousModified = modifiedById[board.id];
             if (previousModified == null || modified.isAfter(previousModified)) {
@@ -2603,7 +2598,7 @@ class BoardService {
         for (var f in files) {
           try {
             final m = json.decode(await f.readAsString()) as Map<String, dynamic>;
-            boards.add(Board.fromMap(m));
+            boards.add(Board.fromMap(m, includeTiles: includeTiles));
           } catch (e) {
             debugPrint('listBoards: failed to load fallback ${f.path}: $e');
           }
@@ -2621,7 +2616,21 @@ class BoardService {
         for (final key in keys.where((key) => key.startsWith(prefix))) {
           try {
             final m = json.decode(_prefs!.getString(key)!) as Map<String, dynamic>;
-            final board = Board.fromMap(m);
+            final board = Board.fromMap(m, includeTiles: includeTiles);
+            // Cached prebuilt boards can have stale hierarchy metadata (tier,
+            // area, parent). Trust the compiled/runtime hierarchy instead.
+            if (board.id.startsWith('prebuilt_')) {
+              final areaFromHierarchy = _areaForBoardName(board.name);
+              if (areaFromHierarchy != null) board.area = areaFromHierarchy;
+              final tier = hierarchyTier(board.name);
+              board.tier = tier;
+              board.isSubBoard = tier > 1;
+              board.isTertiaryBoard = tier > 2;
+              board.isQuaternaryBoard = tier > 3;
+              board.isQuinaryBoard = tier > 4;
+              final parentId = hierarchyParentId(board.name);
+              board.parentBoardId = parentId ?? '';
+            }
             boardsById[board.id] = board;
           } catch (e) {
             debugPrint('listBoards: failed to decode web key $key: $e');
@@ -2629,15 +2638,35 @@ class BoardService {
         }
       }
 
-      // Inject prebuilt boards missing from storage
+      // Inject prebuilt boards missing from storage as lightweight placeholders.
+      // The full JSON is only loaded when the user selects the board's tab.
       for (final name in prebuiltBoardNames) {
         if (area != null && _areaForBoardName(name) != area) continue;
         final id = prebuiltBoardId(name);
         if (!boardsById.containsKey(id) && !_deletedBoardIds.contains(id)) {
-          final assetBoard = await _loadBoardFromAssets(id, name);
-          if (assetBoard != null) {
-            boardsById[id] = assetBoard;
-          }
+          final tier = hierarchyTier(name);
+          final parentName = hierarchyParent(name);
+          final parentId = (parentName != null && parentName.isNotEmpty)
+              ? prebuiltBoardId(parentName)
+              : null;
+          final index = runtimeBoardHierarchy
+              .indexWhere((e) => e.name.toLowerCase() == name.toLowerCase());
+          final sortOrder = index >= 0 ? index : 0;
+          boardsById[id] = Board(
+            id: id,
+            name: name,
+            area: _areaForBoardName(name),
+            parentBoardId: parentId,
+            rows: defaultBoardRows,
+            columns: defaultBoardColumns,
+            tiles: const [],
+            isSubBoard: tier > 1,
+            isTertiaryBoard: tier > 2,
+            isQuaternaryBoard: tier > 3,
+            isQuinaryBoard: tier > 4,
+            tier: tier,
+            sortOrder: sortOrder,
+          );
         }
       }
       
@@ -2653,7 +2682,7 @@ class BoardService {
           try {
             final content = await file.readAsString();
             final m = json.decode(content) as Map<String, dynamic>;
-            final board = Board.fromMap(m);
+            final board = Board.fromMap(m, includeTiles: includeTiles);
             boardsById[board.id] = board;
           } catch (e) {
             debugPrint('listBoards: failed to load native file ${file.path}: $e');
@@ -2666,27 +2695,27 @@ class BoardService {
 
   List<Board> _sortBoards(List<Board> boards) {
     boards.sort((a, b) {
-      // 1. Top-level prebuilt boards are ordered by the compiled hierarchy.
-      //    This overrides any stale / auto-generated sortOrder values.
       final aIndex = prebuiltBoardNames.indexOf(a.name);
       final bIndex = prebuiltBoardNames.indexOf(b.name);
-      if (a.tier == 1 && b.tier == 1 && aIndex >= 0 && bIndex >= 0) {
+      final aPrebuilt = aIndex >= 0;
+      final bPrebuilt = bIndex >= 0;
+
+      // Prebuilt boards are always ordered by the compiled hierarchy.
+      // This ignores stale / auto-generated sortOrder values and ensures
+      // the landing board for each area is always first.
+      if (aPrebuilt && bPrebuilt) {
         return aIndex.compareTo(bIndex);
       }
+      if (aPrebuilt) return -1;
+      if (bPrebuilt) return 1;
 
-      // 2. Check manual sortOrder (used for sub-boards / children)
+      // For any remaining boards, fall back to sortOrder then name.
       if (a.sortOrder != 0 && b.sortOrder != 0) {
         return a.sortOrder.compareTo(b.sortOrder);
       }
       if (a.sortOrder != 0) return -1;
       if (b.sortOrder != 0) return 1;
 
-      // 3. Check prebuilt hierarchy order for remaining boards
-      if (aIndex >= 0 && bIndex >= 0) return aIndex.compareTo(bIndex);
-      if (aIndex >= 0) return -1;
-      if (bIndex >= 0) return 1;
-
-      // 4. Alphabetical for custom boards or sub-boards
       return a.name.toLowerCase().compareTo(b.name.toLowerCase());
     });
     return boards;
@@ -2717,26 +2746,50 @@ class BoardService {
 
     final key = _getBoardKey(id);
     if (kIsWeb) {
-      final raw = _prefs!.getString(key);
-      if (raw == null) {
-        // Fallback for prebuilt boards not in storage
-        if (id.startsWith('prebuilt_')) {
-          return _loadBoardFromAssets(id, _nameFromBoardId(id));
-        }
-        return null;
+      // For prebuilt boards the JSON file is the source of truth; ignore any
+      // stale or empty cached copy in localStorage.
+      if (id.startsWith('prebuilt_')) {
+        final asset = await _loadBoardFromAssets(id, _nameFromBoardId(id));
+        if (asset != null) return asset;
       }
-      return Board.fromMap(json.decode(raw));
+      final raw = _prefs!.getString(key);
+      if (raw == null) return null;
+      return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
     } else {
       final f = File('${_dataDir!.path}/$key.json');
       if (!await f.exists()) return null;
       final m = json.decode(await f.readAsString()) as Map<String, dynamic>;
-      return Board.fromMap(m);
+      return _boardFromJson(m);
     }
+  }
+
+  // In-memory board cache. Keyed by board id.
+  final Map<String, Board> _boardCache = {};
+
+  /// Clear a specific board from the in-memory cache.
+  void clearBoardCache(String id) => _boardCache.remove(id);
+
+  /// Clear all cached boards.
+  void clearAllBoardCache() => _boardCache.clear();
+
+  /// Returns a board from the cache, or loads it from storage if not present.
+  /// This is the preferred call for lazy board loading.
+  Future<Board?> getBoard(String id) async {
+    final cached = _boardCache[id];
+    if (cached != null) return cached;
+    final board = await loadBoard(id);
+    if (board != null) _boardCache[id] = board;
+    return board;
+  }
+
+  /// Persist just the board's sortOrder without re-writing the full board JSON.
+  Future<void> saveSortOrder(Board board) async {
+    await _saveSortOrder(board);
   }
 
   final Map<String, Completer<void>> _saveInProgress = {};
 
-  Future<void> saveBoard(Board board) async {
+  Future<void> saveBoard(Board board, {bool recordSync = true}) async {
     // Save Guard: Prevent concurrent saves of the same board to avoid race conditions and redundant IO
     if (_saveInProgress.containsKey(board.id)) {
       debugPrint('Save already in progress for board ${board.id}, waiting...');
@@ -2748,14 +2801,18 @@ class BoardService {
 
     try {
       await _clearBoardDeletion(board.id);
-      await _writeBoard(board, cacheInWebStorage: !board.id.startsWith('prebuilt_'));
+      await _writeBoard(board,
+          cacheInWebStorage: true,
+          mirrorToDisk: true);
+      _boardCache[board.id] = board;
+      await _saveSortOrder(board);
 
       // Register new board in the appropriate hierarchy.
       // Runs on ALL platforms so web and native present identically.
       // Root-level utility boards like Favorites are excluded.
       if (board.id == 'prebuilt_favorites') {
         // Favorites lives at root, not in any area hierarchy.
-      } else if (!isInBoardHierarchy(board.name)) {
+      } else if (!board.id.startsWith('link_') && !isInBoardHierarchy(board.name)) {
         String? parentName;
         if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
           final parent = await loadBoard(board.parentBoardId!);
@@ -2781,16 +2838,20 @@ class BoardService {
         }
       }
 
-      try {
-        final sync = await SyncService.init().timeout(const Duration(seconds: 2));
-        await sync.recordChange(
-          entityType: SyncEntityType.board,
-          entityId: board.id,
-          operation: SyncOperation.upsert,
-          payload: board.toMap(),
-        ).timeout(const Duration(seconds: 2));
-      } catch (e) {
-        debugPrint('Sync failed (ignoring): $e');
+      if (recordSync) {
+        try {
+          final sync = await SyncService.init().timeout(const Duration(seconds: 2));
+          await sync.recordChange(
+            entityType: SyncEntityType.board,
+            entityId: board.id,
+            operation: SyncOperation.upsert,
+            payload: board.toMap(),
+          ).timeout(const Duration(seconds: 2));
+          // Automatically push the pending queue after a board save.
+          await sync.pushAllPending().timeout(const Duration(seconds: 5));
+        } catch (e) {
+          debugPrint('Sync failed (ignoring): $e');
+        }
       }
 
       // Auto-sync tile labels to image search tags.
@@ -2804,6 +2865,49 @@ class BoardService {
         completer.complete();
       }
     }
+  }
+
+  /// Promote a user-created board to a prebuilt (admin only).
+  /// It receives a `prebuilt_` id, is removed from its old local key, and
+  /// re-saved so it is loaded from source on the next run.
+  Future<void> publishAsPrebuilt(Board board) async {
+    final oldId = board.id;
+    if (board.id.startsWith('prebuilt_')) {
+      // Already prebuilt; just re-save to mirror to disk.
+      await saveBoard(board);
+      return;
+    }
+    board.id = prebuiltBoardId(board.name);
+    await deleteBoard(oldId);
+    await saveBoard(board);
+  }
+
+  /// Push every local board (including user ones) to the project as prebuilt
+  /// boards. Intended for the offline sync / admin "push to project" action.
+  Future<void> pushAllToProject() async {
+    final all = await listBoards();
+    for (final board in all) {
+      try {
+        final key = _getBoardKey(board.id);
+        if (board.id.startsWith('prebuilt_')) {
+          // Only push the local (edited) copy to the project, never the source.
+          final hasLocal = kIsWeb
+              ? (_prefs?.containsKey(key) ?? false)
+              : (await File('${_dataDir!.path}/$key.json').exists());
+          if (hasLocal) {
+            final local = await loadBoard(board.id);
+            if (local != null) {
+              await _writeBoard(local, mirrorToDisk: true, cacheInWebStorage: true);
+            }
+          }
+        } else {
+          await publishAsPrebuilt(board);
+        }
+      } catch (e) {
+        debugPrint('pushAllToProject failed for ${board.id}: $e');
+      }
+    }
+    _mirrorHierarchyToDevServer();
   }
 
   /// Scans every tile on [board].  For each tile whose label (lowercased)
@@ -2820,7 +2924,7 @@ class BoardService {
         final imageFilename = p.basenameWithoutExtension(tile.imageAsset).toLowerCase();
         final tileLabel = tile.label.toLowerCase();
         if (imageFilename == tileLabel) continue;
-        final assetId = tile.imageAsset.hashCode.toString();
+        final assetId = tile.imageAsset;
         updates.putIfAbsent(assetId, () => []).add(tileLabel);
       }
       await meta.batchAddTags(updates);
@@ -2860,11 +2964,14 @@ class BoardService {
     final boardJson = _boardToJson(board);
 
     if (!kIsWeb && _projectRoot != null && mirrorToDisk) {
-      // Prefer the existing on-disk location so we don't accidentally move or
-      // delete the original file when the computed path differs.
       final existingFile = await _findProjectJsonFile(board.id);
-      final jsonFile = existingFile ?? await _projectJsonFileForBoard(board);
+      final jsonFile = await _projectJsonFileForBoard(board);
       await jsonFile.writeAsString(JsonEncoder.withIndent('  ').convert(boardJson));
+
+      if (existingFile != null &&
+          p.normalize(existingFile.path) != p.normalize(jsonFile.path)) {
+        await existingFile.delete();
+      }
 
       await _writeWordList(board, jsonFile.parent);
     }
@@ -2882,9 +2989,10 @@ class BoardService {
           await _prefs!.setString(key, encoded);
         } catch (e) {
           if (e.toString().contains('QuotaExceededError')) {
-            debugPrint('localStorage quota exceeded while saving board ${board.id}. Freeing caches and retrying.');
+            debugPrint('localStorage quota exceeded while saving board ${board.id}. Freeing caches and skipping.');
             await _freeLocalStorageSpace();
-            await _prefs!.setString(key, encoded);
+            // Skip the localStorage cache for this board; it can be re-loaded from source.
+            return;
           } else {
             rethrow;
           }
@@ -2963,6 +3071,39 @@ class BoardService {
       }
     } catch (e) {
       // Server not running; ignore.
+    }
+  }
+
+  /// List the last three versioned backups of a board from the dev server.
+  Future<List<Map<String, dynamic>>> listVersions(String boardId, {String area = 'Common'}) async {
+    if (!kIsWeb) return [];
+    try {
+      final uri = Uri.parse('http://localhost:8787/listVersions?id=$boardId&area=$area');
+      final response = await http.get(uri).timeout(const Duration(seconds: 3));
+      if (response.statusCode == 200) {
+        final body = json.decode(response.body) as Map<String, dynamic>;
+        return (body['versions'] as List<dynamic>?)
+                ?.map((v) => v as Map<String, dynamic>)
+                .toList() ??
+            [];
+      }
+    } catch (e) {
+      debugPrint('listVersions error: $e');
+    }
+    return [];
+  }
+
+  /// Restore a specific versioned backup of a board.
+  Future<bool> restoreVersion(String boardId, String filename, {String area = 'Common'}) async {
+    if (!kIsWeb) return false;
+    try {
+      final encoded = Uri.encodeComponent(filename);
+      final uri = Uri.parse('http://localhost:8787/restoreVersion?id=$boardId&area=$area&filename=$encoded');
+      final response = await http.post(uri).timeout(const Duration(seconds: 5));
+      return response.statusCode == 200;
+    } catch (e) {
+      debugPrint('restoreVersion error: $e');
+      return false;
     }
   }
 
@@ -3149,18 +3290,40 @@ class BoardService {
   /// e.g. `Common/Common Words` or `Common/Letters/Phonics/Phase 3 Phonics`.
   /// Works on all platforms including web (uses storage, not filesystem).
   Future<String> boardRelativePath(Board board) async {
-    // Root-level boards (like Favorites) live at the root of lib/data/boards/
     if (board.id == 'prebuilt_favorites') return '';
     final area = board.area.isNotEmpty ? board.area : _areaForBoardName(board.name);
     if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
-      final parentBoard = await loadBoard(board.parentBoardId!);
+      Board? parentBoard = _boardCache[board.parentBoardId!];
+      if (parentBoard == null) {
+        parentBoard = await loadBoard(board.parentBoardId!);
+      }
       if (parentBoard != null) {
         final parentPath = await boardRelativePath(parentBoard);
+        return '$parentPath/${_boardFolderName(board.name)}';
+      }
+      final parentName = _hierarchyNameForId(board.parentBoardId!);
+      if (parentName != null) {
+        final parentPath = _hierarchyRelativePath(parentName);
         return '$parentPath/${_boardFolderName(board.name)}';
       }
     }
     if (board.tier > 1) return area;
     return '$area/${_boardFolderName(board.name)}';
+  }
+
+  String? _hierarchyNameForId(String id) {
+    for (final e in runtimeBoardHierarchy) {
+      if (prebuiltBoardId(e.name) == id) return e.name;
+    }
+    return null;
+  }
+
+  String _hierarchyRelativePath(String name) {
+    final parent = hierarchyParent(name);
+    if (parent == null) {
+      return '${hierarchyArea(name)}/${_boardFolderName(name)}';
+    }
+    return '${_hierarchyRelativePath(parent)}/${_boardFolderName(name)}';
   }
 
   Future<void> clearAllBoardTiles() async {
@@ -3328,7 +3491,7 @@ class BoardService {
       'Cooking',
       'Resistant Materials',
       'Textiles',
-      'Religion & Worldviews',
+      'Religion and Worldviews',
       'Music',
       'Horticulture',
       'Retail',
@@ -3336,8 +3499,8 @@ class BoardService {
       'Construction',
       'Engineering',
       'Design Technology',
-      'Hair & Beauty',
-      'Health & Social Care',
+      'Hair and Beauty',
+      'Health and Social Care',
       'Public Services',
       'S.T.E.M.',
       'Option A',
@@ -3376,7 +3539,7 @@ class BoardService {
     final words = [
       'teacher', 'teaching assistant', 'yellow lanyard', 'tutor team',
       'duty staff', 'head teacher', 'office staff', 'first aid staff',
-      'dinner hall', 'drivers & escorts', 'speech & language', 'friends',
+      'dinner hall', 'drivers and escorts', 'speech and language', 'friends',
     ];
     return words.map((w) => SymbolTile(
       id: 'school_people_${w.replaceAll(RegExp(r"[^a-z0-9]"), '_')}',
@@ -3458,7 +3621,7 @@ class BoardService {
 
   List<SymbolTile> _generateDisneyStoriesTiles() {
     final movies = [
-      '1937 Snow White & The Seven Dwarfs',
+      '1937 Snow White and The Seven Dwarfs',
       '1940 Pinocchio',
       '1940 Fantasia',
       '1941 Dumbo',
@@ -3466,7 +3629,7 @@ class BoardService {
       '1950 Cinderella',
       '1951 Alice In Wonderland',
       '1953 Peter Pan',
-      '1955 Lady & The Tramp',
+      '1955 Lady and The Tramp',
       '1959 Sleeping Beauty',
       '1961 101 Dalmatians',
       '1963 The Sword In The Stone',
@@ -3475,12 +3638,12 @@ class BoardService {
       '1973 Robin Hood',
       '1977 Winnie The Pooh',
       '1977 The Rescuers',
-      '1981 The Fox & The Hound',
+      '1981 The Fox and The Hound',
       '1985 The Black Cauldron',
       '1986 The Great Mouse Detective',
-      '1988 Oliver & Company',
+      '1988 Oliver and Company',
       '1989 The Little Mermaid',
-      '1991 Beauty & The Beast',
+      '1991 Beauty and The Beast',
       '1992 Aladdin',
       '1993 The Nightmare Before Christmas',
       '1994 The Lion King',
@@ -3495,7 +3658,7 @@ class BoardService {
       '2000 The Emperor\'s New Groove',
       '2001 Atlantis - The Lost Empire',
       '2001 Monsters, Inc.',
-      '2002 Lilo & Stitch',
+      '2002 Lilo and Stitch',
       '2002 Treasure Planet',
       '2003 Brother Bear',
       '2003 Finding Nemo',
@@ -3507,7 +3670,7 @@ class BoardService {
       '2007 Ratatouille',
       '2008 Bolt',
       '2008 WALL-E',
-      '2009 The Princess & The Frog',
+      '2009 The Princess and The Frog',
       '2009 Up',
       '2010 Tangled',
       '2012 Wreck-It Ralph',
@@ -3521,7 +3684,7 @@ class BoardService {
       '2017 Coco',
       '2020 Onward',
       '2020 Soul',
-      '2021 Raya & The Last Dragon',
+      '2021 Raya and The Last Dragon',
       '2021 Encanto',
       '2021 Luca',
       '2022 Turning Red',
@@ -3560,99 +3723,93 @@ class BoardService {
       return hierArea;
     }
 
-    // 2. Legacy fallback for boards not yet in the hierarchy.
-    final schoolNames = {
-      'My School Main', 'Baycroft Expects', 'Thinking Skills', 'When Things Go Wrong', 'Blank Levels', 'My School Lessons', 'Class Equipment', 'People At School',
-    };
-    final subjectVocabNames = {
-      'Subject Vocabulary', 'Lessons', 'Better Words (Thesaurus)', 'My School','Sentence Creator', 'Small Words (Subject)', 'Letters (Subject)', 'Numbers (Subject)', 'Breaktime', 'Lunchtime', 'Tutor Time', 'English', 'Maths', 'Science', 'T.F.L. / I.T.', 'P.D.', 'P.E.E.P.', 'E.P.I.C.', 'P.E.', 'Art', 'Performing Arts', 'Sustainability', 'Cooking', 'Resistant Materials', 'Textiles', 'Religion & Worldviews', 'Music', 'Horticulture', 'Retail', 'Photography', 'Construction', 'Engineering', 'Design Technology', 'Hair & Beauty', 'Health & Social Care', 'Public Services', 'S.T.E.M.', 'Option A', 'Option B', 'Option C', 'Tech Rotation',
-    };
-    final signNames = {
-      'Sign Main', 'A-Z Of Sign', 'Manners & Greetings', 'Family & People',
-      'Animals & Nature', 'Transport & Vehicles', 'Food & Drink', 'Home & Household',
-      'Feelings & Health', 'School & Instructions', 'Descriptions & Attributes',
-      'Descriptions & Attributes (Adjectives)', 'Outside', 'Time & Days', 'Questions',
-      'Personal Actions', 'Shared Activities', 'Shared Activities (Verbs)',
-      'Leisure Activities & Interests', 'General Objects', 'Clothing & Personal',
-      'Personal Possessions', 'Personal Hygiene', 'Gender & Sexuality', 'Sport',
-      'Religion & Customs', 'Other Countries', 'Public Notices', 'Computer Items',
-      'Grammatical Elements', 'Quantity & Measurement', 'Colours', 'Letters', 'Money',
-      'Numbers', 'Places', 'Prepositions', 'Weather',
-      'Q (Sign)', 'V (Sign)', 'X (Sign)', 'Y (Sign)', 'Z (Sign)',
-    };
-    if (schoolNames.contains(name)) return 'My School';
-    if (subjectVocabNames.contains(name)) return 'Subject Vocab';
-    if (signNames.contains(name)) return 'Sign';
-    if (name == 'Personal' || name == 'People At Home') return 'Personal';
+    // 2. No legacy fallback: the 7 starter boards are the single source of truth.
     return 'Common';
   }
 
-  Future<Board?> _loadBoardFromAssets(String id, String name) async {
+  Future<Board?> _loadBoardFromAssets(String id, String name, {bool includeTiles = true}) async {
     final area = _areaForBoardName(name);
 
-    // In the web preview, ask the dev server for the latest board JSON first.
+    // In live web preview, prefer the dev server copy so edits made in the
+    // preview persist over the compiled asset bundle.
     if (kIsWeb && Uri.base.host == 'localhost') {
       try {
         final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
         final response = await http.get(uri).timeout(const Duration(seconds: 2));
         if (response.statusCode == 200) {
-          return _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
+          return _boardFromJson(json.decode(response.body) as Map<String, dynamic>, includeTiles: includeTiles);
         }
       } catch (_) {}
     }
 
-    // 1. Try the direct flat path: lib/data/boards/{area}/{id}.json
-    final directPath = 'lib/data/boards/$area/$id.json';
-    try {
-      final raw = await rootBundle.loadString(directPath);
-      return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
-    } catch (_) {}
-
-    // 2. Try the nested path: lib/data/boards/{area}/{BoardName}/{id}.json
-    final nestedPath = 'lib/data/boards/$area/${_boardFolderName(name)}/$id.json';
-    try {
-      final raw = await rootBundle.loadString(nestedPath);
-      return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
-    } catch (_) {}
-
-    // 3. Search the asset manifest for any path under lib/data/boards/
-    //    that ends with /{id}.json.  Try the guessed area first, then
-    //    fall back to a full search across all areas.
+    // Find the canonical asset key for this board in the manifest.
+    // On the web the manifest keys are prefixed with 'assets/' and may be
+    // URL-encoded, so we decode and compare but keep the original key for the
+    // actual load.
+    String? originalAsset;
     try {
       final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
       final allAssets = manifest.listAssets();
 
-      // On web, manifest paths are prefixed with 'assets/' and may have
-      // URL-encoded spaces (%20).  Strip the prefix and decode for
-      // comparison, but keep the original path for rootBundle.loadString().
-      String decode(String p) => Uri.decodeComponent(p);
-      String normalize(String p) {
-        final stripped = p.startsWith('assets/') ? p.substring(7) : p;
-        return decode(stripped);
-      }
-
-      // 3a. Try the area-specific prefix first (faster).
-      final areaPrefix = 'lib/data/boards/$area/';
-      for (var i = 0; i < allAssets.length; i++) {
-        final original = allAssets[i];
-        final np = normalize(original);
-        if (np.startsWith(areaPrefix) && np.endsWith('/$id.json')) {
-          final raw = await rootBundle.loadString(original);
-          return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+      String _fullyDecode(String p) {
+        while (p.contains('%')) {
+          try {
+            final next = Uri.decodeComponent(p);
+            if (next == p) break;
+            p = next;
+          } catch (_) {
+            break;
+          }
         }
+        return p;
       }
 
-      // 3b. Full search across all board areas.
+      String _normalize(String p) {
+        final stripped = p.startsWith('assets/') ? p.substring(7) : p;
+        return _fullyDecode(stripped);
+      }
+
+      final areaPrefix = 'lib/data/boards/$area/';
       final boardsPrefix = 'lib/data/boards/';
       for (var i = 0; i < allAssets.length; i++) {
         final original = allAssets[i];
-        final np = normalize(original);
-        if (np.startsWith(boardsPrefix) && np.endsWith('/$id.json')) {
-          final raw = await rootBundle.loadString(original);
-          return _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+        final np = _normalize(original);
+        if (np.startsWith(areaPrefix) && np.endsWith('/$id.json')) {
+          originalAsset = original;
+          break;
+        }
+      }
+
+      if (originalAsset == null) {
+        for (var i = 0; i < allAssets.length; i++) {
+          final original = allAssets[i];
+          final np = _normalize(original);
+          if (np.startsWith(boardsPrefix) && np.endsWith('/$id.json')) {
+            originalAsset = original;
+            break;
+          }
         }
       }
     } catch (_) {}
+
+    // Built-in prebuilt boards that are not in the asset bundle have no
+    // backing JSON; skip them instead of generating 404s.
+    if (originalAsset == null && id.startsWith('prebuilt_')) {
+      return null;
+    }
+
+    if (originalAsset != null) {
+      try {
+        final raw = await rootBundle.loadString(originalAsset);
+        final board = _boardFromJson(json.decode(raw) as Map<String, dynamic>, includeTiles: includeTiles);
+        if (board != null && _prefs != null) {
+          final stored = _prefs!.getInt(_getSortOrderKey(board.id));
+          if (stored != null) board.sortOrder = stored;
+        }
+        return board;
+      } catch (_) {}
+    }
+
     return null;
   }
 
@@ -3746,10 +3903,22 @@ class BoardService {
     if (kIsWeb || _projectRoot == null) return null;
     final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
     if (!await root.exists()) return null;
+    final matches = <File>[];
     await for (final entity in root.list(recursive: true)) {
-      if (entity is File && p.basename(entity.path) == '$id.json') return entity;
+      if (entity is File && p.basename(entity.path) == '$id.json') {
+        matches.add(entity);
+      }
     }
-    return null;
+    if (matches.isEmpty) return null;
+    matches.sort((a, b) {
+      final aHas = a.path.contains(' (Montessori)');
+      final bHas = b.path.contains(' (Montessori)');
+      if (aHas && !bHas) return -1;
+      if (!aHas && bHas) return 1;
+      // Prefer deeper canonical paths.
+      return b.path.split(p.separator).length.compareTo(a.path.split(p.separator).length);
+    });
+    return matches.first;
   }
 
   String _boardFolderName(String name) {
@@ -3767,21 +3936,7 @@ class BoardService {
       if (!await rootDir.exists()) await rootDir.create(recursive: true);
       return File(p.join(rootDir.path, '${board.id}.json'));
     }
-    final area = board.area.isNotEmpty ? board.area : _areaForBoardName(board.name);
-    final areaRoot = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards', area));
-    Directory? parentDirectory;
-    if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
-      final parentFile = await _findProjectJsonFile(board.parentBoardId!);
-      if (parentFile != null) parentDirectory = parentFile.parent;
-    }
-
-    final boardDirectory = Directory(
-      p.join((parentDirectory ?? areaRoot).path, _boardFolderName(board.name)),
-    );
-    if (!await boardDirectory.exists()) {
-      await boardDirectory.create(recursive: true);
-    }
-    return File(p.join(boardDirectory.path, '${board.id}.json'));
+    return boardJsonPathUnder(board, _projectRoot!);
   }
 
   String _linkedBoardNameFromId(String linkedBoardId) {
@@ -3798,14 +3953,14 @@ class BoardService {
   /// Public wrapper so the board editor can import JSON files.
   Board boardFromJson(Map<String, dynamic> json) => _boardFromJson(json);
 
-  Board _boardFromJson(Map<String, dynamic> json) {
+  Board _boardFromJson(Map<String, dynamic> json, {bool includeTiles = true}) {
     final id = json['id'] as String? ?? '';
     final name = json['name'] as String? ?? 'Board';
     final columns = (json['columns'] as num?)?.toInt() ?? (json['layout']?['columns'] as num?)?.toInt() ?? defaultBoardColumns;
     final layout = json['layout'] as Map<String, dynamic>?;
     // Look for rows in 'layout' (canonical) or top-level (toMap/SharedPreferences)
     final rows = (layout?['rows'] as num?)?.toInt() ?? (json['rows'] as num?)?.toInt() ?? defaultBoardRows;
-    final tilesJson = (json['tiles'] as List<dynamic>?) ?? [];
+    final tilesJson = includeTiles ? (json['tiles'] as List<dynamic>?) ?? [] : [] as List<dynamic>;
     final tiles = tilesJson.map((t) {
       final tileMap = Map<String, dynamic>.from(t);
       var tile = _tileFromJson(tileMap, boardName: name);
@@ -3819,7 +3974,7 @@ class BoardService {
         tile = tile.copyWith(imageAsset: tile.imageAsset.replaceFirst('assets/assets/', 'assets/'));
       }
       // Redirect legacy lesson paths to the consolidated Subjects folder (Case-Sensitive on Web!)
-      if (tile.imageAsset.contains('3. Lesson Vocab/Tutor Time, Events & Clubs/')) {
+      if (tile.imageAsset.contains('3. Lesson Vocab/Tutor Time, Events and Clubs/')) {
         final fileName = tile.imageAsset.split('/').last;
         // Asset paths on Web are case-sensitive. Most files in Subjects/ are Title Case.
         final fixedName = '${_toTitleCase(fileName.replaceAll('.png', '')).trim()}.png';
@@ -3829,6 +3984,24 @@ class BoardService {
       if (tile.imageAsset.contains('2. Baycroft Specific/People At School/')) {
         final fileName = tile.imageAsset.split('/').last;
         tile = tile.copyWith(imageAsset: 'assets/symbols/2. Baycroft Specific/People At School/$fileName');
+      }
+      
+      // Redirect legacy 1. Main Boards paths to the new Common/... layout.
+      // Common Words board lives in assets/Common/Common Words/.
+      if (tile.imageAsset.contains('1. Main Boards/Common/')) {
+        final fileName = tile.imageAsset.split('/').last;
+        tile = tile.copyWith(imageAsset: 'assets/Common/Common Words/$fileName');
+      } else if (tile.imageAsset.startsWith('assets/symbols/1. Main Boards/')) {
+        final rest = tile.imageAsset.substring('assets/symbols/1. Main Boards/'.length);
+        tile = tile.copyWith(imageAsset: 'assets/Common/$rest');
+      }
+      
+      // Redirect legacy BOARDS and Subjects prefixes to the current top-level folders.
+      if (tile.imageAsset.startsWith('assets/symbols/BOARDS/')) {
+        tile = tile.copyWith(imageAsset: tile.imageAsset.replaceFirst('assets/symbols/BOARDS/', 'assets/BOARDS/'));
+      }
+      if (tile.imageAsset.startsWith('assets/symbols/Subjects/')) {
+        tile = tile.copyWith(imageAsset: tile.imageAsset.replaceFirst('assets/symbols/Subjects/', 'assets/Subject Vocab/'));
       }
       
       return tile;
@@ -3899,19 +4072,19 @@ class BoardService {
 
     final linkedBoardName = json['linkedBoardName'] as String?;
     final id = json['id'] as String? ?? 'tile_${DateTime.now().millisecondsSinceEpoch}';
-    
-    // Determine logical flags from the type and fields
-    final isBoardLink = rawType == 'board_link' || (linkedBoardName != null && linkedBoardName.isNotEmpty);
-    final isFullScreenImage = rawType == 'image_viewer' || (json['isFullScreenImage'] as bool?) == true;
-    
-    String linkedBoardId = '';
-    if (linkedBoardName != null && linkedBoardName.isNotEmpty) {
-      if (linkedBoardName.startsWith('prebuilt_')) {
-        linkedBoardId = linkedBoardName;
-      } else {
-        linkedBoardId = prebuiltBoardId(linkedBoardName);
-      }
+
+    // Prefer the saved linkedBoardId; only fall back to deriving from name.
+    String linkedBoardId = (json['linkedBoardId'] as String?) ?? '';
+    if (linkedBoardId.isEmpty && linkedBoardName != null && linkedBoardName.isNotEmpty) {
+      linkedBoardId = linkedBoardName.startsWith('prebuilt_')
+          ? linkedBoardName
+          : prebuiltBoardId(linkedBoardName);
     }
+
+    // Determine logical flags from the type and fields
+    final explicitBoardLink = (json['isBoardLink'] as bool?) == true;
+    final isBoardLink = rawType == 'board_link' || explicitBoardLink || linkedBoardId.isNotEmpty;
+    final isFullScreenImage = rawType == 'image_viewer' || (json['isFullScreenImage'] as bool?) == true;
     
     var bgColor = (json['bgColor'] as String?) ?? 'transparent';
     var textColor = (json['textColor'] as String?) ?? '#000000';
@@ -3946,6 +4119,9 @@ class BoardService {
   }
 
   void _normalizePersistentIds(Board board) {
+    // Link placeholders already have a unique, stable id; do not remap them to
+    // the original prebuilt id, otherwise they would overwrite the real board.
+    if (board.id.startsWith('link_')) return;
     board.id = prebuiltBoardId(board.name);
     final usedIds = <String>{};
     for (var index = 0; index < board.tiles.length; index++) {
@@ -4023,8 +4199,10 @@ class BoardService {
       'type': type,
       'label': tile.label,
       'category': tile.category,
-      'image': imageAsset.isNotEmpty ? imageAsset : null,
+      'imageAsset': imageAsset.isNotEmpty ? imageAsset : null,
       'emoji': tile.emoji,
+      'isBoardLink': tile.isBoardLink,
+      'linkedBoardId': tile.linkedBoardId,
       'linkedBoardName': linkedBoardName,
       'isFullScreenImage': tile.isFullScreenImage,
       'bgColor': tile.bgColor,
@@ -4034,5 +4212,57 @@ class BoardService {
       'rowSpan': tile.rowSpan,
       'customVoice': tile.customVoice,
     };
+  }
+
+  List<SymbolTile> _generateCommonWordsTiles() {
+    final words = [
+      'I', 'blow nose', 'brain break', 'colouring', 'cubbie', 'do not want',
+      'drink', 'ear defenders', 'eat', 'finished', 'first aid', 'focus', 'go',
+      'good afternoon', 'good morning', 'goodbye', 'help', 'listen', 'need',
+      'no', 'play', 'please', 'point', 'raise a hand', 'read', 'rest', 'run',
+      'sensory toys', 'sign', 'silence', 'snack', 'sorry', 'stop', 'talk',
+      'thank-you', 'toilet', 'want', 'wash', 'watch', 'weighted blanket',
+      'write', 'yes',
+    ];
+    return words.map((w) => SymbolTile(
+      id: 'common_${w.replaceAll(' ', '_').toLowerCase()}',
+      label: w,
+      category: 'Common',
+      imageAsset: 'assets/Common/Common Words/$w.png',
+    )).toList();
+  }
+
+  List<SymbolTile> _generateMainBoardTiles(String name) {
+    if (name == 'Common Words') return _generateCommonWordsTiles();
+
+    final area = _areaForBoardName(name);
+    if (area == name) {
+      final children = hierarchyTopLevel(area)
+          .where((n) => n.toLowerCase() != name.toLowerCase());
+      if (children.isNotEmpty) {
+        return children.map((child) {
+          final id = prebuiltBoardId(child);
+          return SymbolTile(
+            id: 'main_link_${id.replaceAll('prebuilt_', '')}',
+            label: child,
+            category: area,
+            imageAsset: '',
+            isBoardLink: true,
+            linkedBoardId: id,
+            bgColor: '#000000',
+            textColor: '#FFFFFF',
+          );
+        }).toList();
+      }
+    }
+
+    return [
+      SymbolTile(
+        id: 'main_${name.toLowerCase().replaceAll(' ', '_')}',
+        label: name,
+        category: name,
+        imageAsset: '',
+      ),
+    ];
   }
 }

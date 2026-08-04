@@ -1,4 +1,4 @@
-/// Single source of truth for the board hierarchy across all 5 areas.
+/// Single source of truth for the board hierarchy across all 7 areas.
 
 ///
 
@@ -87,1138 +87,604 @@ class BoardHierarchyEntry {
 
 
 const List<BoardHierarchyEntry> boardHierarchy = [
-
-  // ──────────────────────────────────────────────
-
-  //  COMMON AREA  (matches AREA_COMMON.md tab + hierarchy order)
-
-  // ──────────────────────────────────────────────
-
+  // --- COMMON AREA ---
   BoardHierarchyEntry('Common Words', 'Common'),
-
   BoardHierarchyEntry('Small Words', 'Common'),
-
-  BoardHierarchyEntry('Noun', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Proper Noun', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Abstract Noun', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Collective Noun', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Article', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Pronoun', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Adjective', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Transitive Verb', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Intransitive Verb', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Linking Verb', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Auxiliary Verb', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Adverb', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Preposition', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Conjunction', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Interjection', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Gerund', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Participle', 'Common', 'Small Words'),
-
-  BoardHierarchyEntry('Other', 'Common', 'Small Words'),
-
+  BoardHierarchyEntry('Nouns (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Proper Nouns (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Abstract Nouns (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Collective Nouns (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Articles (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Pronouns (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Adjectives (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Verbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Transitive Verbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Intransitive Verbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Linking Verbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Auxiliary Verbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Adverbs (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Prepositions (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Conjunctions (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Interjections (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Gerunds (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Participles (Montessori)', 'Common', 'Small Words'),
+  BoardHierarchyEntry('Others (Montessori)', 'Common', 'Small Words'),
   BoardHierarchyEntry('Letters', 'Common'),
-
   BoardHierarchyEntry('Phonics', 'Common', 'Letters'),
-
   BoardHierarchyEntry('Phase 2 Phonics', 'Common', 'Phonics'),
-
   BoardHierarchyEntry('Phase 3 Phonics', 'Common', 'Phonics'),
-
   BoardHierarchyEntry('Phase 4 Phonics', 'Common', 'Phonics'),
-
   BoardHierarchyEntry('Phase 5 Phonics', 'Common', 'Phonics'),
-
   BoardHierarchyEntry('Phase 6 Phonics', 'Common', 'Phonics'),
-
   BoardHierarchyEntry('Numbers', 'Common'),
-
   BoardHierarchyEntry('Feelings', 'Common'),
-
   BoardHierarchyEntry('Sad', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Mad', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Scared', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Joyful', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Strong', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Calm', 'Common', 'Feelings'),
-
   BoardHierarchyEntry('Actions', 'Common'),
-
   BoardHierarchyEntry('Movement', 'Common', 'Actions'),
-
   BoardHierarchyEntry('People', 'Common'),
-
   BoardHierarchyEntry('School People', 'Common', 'People'),
-
   BoardHierarchyEntry('Places', 'Common'),
-
   BoardHierarchyEntry('Buildings', 'Common', 'Places'),
-
-  BoardHierarchyEntry('Rooms & Home', 'Common', 'Places'),
-
-  BoardHierarchyEntry('Home Management', 'Common', 'Rooms & Home'),
-
-  BoardHierarchyEntry('Furniture', 'Common', 'Rooms & Home'),
-
-  BoardHierarchyEntry('Appliances', 'Common', 'Rooms & Home'),
-
-  BoardHierarchyEntry('Food Equipment', 'Common', 'Rooms & Home'),
-
+  BoardHierarchyEntry('Rooms and Home', 'Common', 'Places'),
+  BoardHierarchyEntry('Home Management', 'Common', 'Rooms and Home'),
+  BoardHierarchyEntry('Furniture', 'Common', 'Rooms and Home'),
+  BoardHierarchyEntry('Appliances', 'Common', 'Rooms and Home'),
+  BoardHierarchyEntry('Food Equipment', 'Common', 'Rooms and Home'),
   BoardHierarchyEntry('Habitats', 'Common', 'Places'),
-
   BoardHierarchyEntry('Local Places', 'Common', 'Places'),
-
   BoardHierarchyEntry('Colours', 'Common'),
-
   BoardHierarchyEntry('Shades Of Colours', 'Common', 'Colours'),
-
   BoardHierarchyEntry('Prepositions', 'Common'),
-
   BoardHierarchyEntry('Body Parts', 'Common'),
-
   BoardHierarchyEntry('Medical', 'Common', 'Body Parts'),
-
   BoardHierarchyEntry('Internal Organs', 'Common', 'Body Parts'),
-
-  BoardHierarchyEntry('Jobs & Careers', 'Common'),
-
+  BoardHierarchyEntry('Jobs and Careers', 'Common'),
   BoardHierarchyEntry('Animals', 'Common'),
-
   BoardHierarchyEntry('Mammals', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Birds', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Reptiles', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Dinosaurs', 'Common', 'Reptiles'),
-
   BoardHierarchyEntry('Amphibians', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Insects', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Arachnids', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Invertebrates', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Fish', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Sealife', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Nature Vocabulary', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Body Parts Of Animals', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Child Animals', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Groups Of Animals', 'Common', 'Animals'),
-
   BoardHierarchyEntry('Weather', 'Common'),
-
   BoardHierarchyEntry('Seasons', 'Common', 'Weather'),
-
   BoardHierarchyEntry('Disasters', 'Common', 'Weather'),
-
   BoardHierarchyEntry('Time', 'Common'),
-
   BoardHierarchyEntry('Time (Clocks)', 'Common', 'Time'),
-
   BoardHierarchyEntry('Months', 'Common', 'Time'),
-
-  BoardHierarchyEntry('Events & Occasions', 'Common', 'Time'),
-
-  BoardHierarchyEntry('Passover Keywords', 'Common', 'Events & Occasions'),
-
-  BoardHierarchyEntry('Easter Keywords', 'Common', 'Events & Occasions'),
-
-  BoardHierarchyEntry('Halloween Keywords', 'Common', 'Events & Occasions'),
-
-  BoardHierarchyEntry('Bonfire Night Keywords', 'Common', 'Events & Occasions'),
-
-  BoardHierarchyEntry('Christmas Keywords', 'Common', 'Events & Occasions'),
-
-  BoardHierarchyEntry('Special Days', 'Common', 'Events & Occasions'),
-
+  BoardHierarchyEntry('Events and Occasions', 'Common', 'Time'),
+  BoardHierarchyEntry('Passover Keywords', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('Easter Keywords', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('Halloween Keywords', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('Bonfire Night Keywords', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('Christmas Keywords', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('Special Days', 'Common', 'Events and Occasions'),
+  BoardHierarchyEntry('1. January', 'Common', 'Special Days'),
+  BoardHierarchyEntry('2. February', 'Common', 'Special Days'),
+  BoardHierarchyEntry('3. March', 'Common', 'Special Days'),
+  BoardHierarchyEntry('4. April', 'Common', 'Special Days'),
+  BoardHierarchyEntry('5. May', 'Common', 'Special Days'),
+  BoardHierarchyEntry('6. June', 'Common', 'Special Days'),
+  BoardHierarchyEntry('7. July', 'Common', 'Special Days'),
+  BoardHierarchyEntry('8. August', 'Common', 'Special Days'),
+  BoardHierarchyEntry('9. September', 'Common', 'Special Days'),
+  BoardHierarchyEntry('10. October', 'Common', 'Special Days'),
+  BoardHierarchyEntry('11. November', 'Common', 'Special Days'),
+  BoardHierarchyEntry('12. December', 'Common', 'Special Days'),
   BoardHierarchyEntry('Clothes', 'Common'),
-
   BoardHierarchyEntry('Toys', 'Common'),
-
   BoardHierarchyEntry('Money', 'Common'),
-
   BoardHierarchyEntry('Transport', 'Common'),
-
   BoardHierarchyEntry('World Map', 'Common'),
-
-
-
-  // ──────────────────────────────────────────────
-
-  //  LEGENDS AREA  (matches AREA_LEGENDS.md tab + hierarchy order)
-
-  // ──────────────────────────────────────────────
-
-BoardHierarchyEntry('Real Life Heroes', 'Legends'),
-  BoardHierarchyEntry('Characters', 'Legends'),
-
-  BoardHierarchyEntry('Creatures & Races', 'Legends'),
-
-  BoardHierarchyEntry('Gods, Titans, Heroes & Monsters', 'Legends'),
-
-  BoardHierarchyEntry('Family Trees', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Egyptian Gods', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Norse Gods', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Aesir (29+1)', 'Legends', 'Norse Gods'),
-
-  BoardHierarchyEntry('Jotnar (14+1)', 'Legends', 'Norse Gods'),
-
-  BoardHierarchyEntry('Norse Locations', 'Legends', 'Norse Gods'),
-
-  BoardHierarchyEntry('Norse Races', 'Legends', 'Norse Gods'),
-
-  BoardHierarchyEntry('Vanir (6+1)', 'Legends', 'Norse Gods'),
-
-  BoardHierarchyEntry('Greek Gods', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Olympians', 'Legends', 'Greek Gods'),
-
-  BoardHierarchyEntry('Titans', 'Legends', 'Greek Gods'),
-
-  BoardHierarchyEntry('Roman Gods', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Roman Unique Gods', 'Legends', 'Roman Gods'),
-
-  BoardHierarchyEntry('Heroes & Monsters (Greek & Roman)', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Hindu Gods', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Christian Angels Demons', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Other Mythology', 'Legends', 'Gods, Titans, Heroes & Monsters'),
-
-  BoardHierarchyEntry('Fairy Tale Characters', 'Legends'),
-
-  BoardHierarchyEntry('Disney Stories', 'Legends'),
-
-  BoardHierarchyEntry('Mickey & Friends', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1937 Snow White & The Seven Dwarfs', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1940 Fantasia', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1940 Pinocchio', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1941 Dumbo', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1942 Bambi', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1950 Cinderella', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1951 Alice In Wonderland', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1953 Peter Pan', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1955 Lady & The Tramp', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1959 Sleeping Beauty', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1961 101 Dalmatians', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1963 The Sword In The Stone', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1967 The Jungle Book', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1970 The Aristocats', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1973 Robin Hood', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1977 The Rescuers', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1977 Winnie The Pooh', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1981 The Fox & The Hound', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1985 The Black Cauldron', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1986 The Great Mouse Detective', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1988 Oliver & Company', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1989 The Little Mermaid', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1990 The Rescuers Down Under', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1991 Beauty & The Beast', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1992 Aladdin', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1993 The Nightmare Before Christmas', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1994 The Lion King', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1995 Pocahontas', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1995 Toy Story', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1996 The Hunchback Of Notre Dame', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1997 Hercules', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1998 A Bug\'s Life', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1998 Mulan', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('1999 Tarzan', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2000 Dinosaur', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2000 The Emperor\'s New Groove', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2001 Atlantis - The Lost Empire', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2001 Monsters, Inc', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2002 Lilo & Stitch', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2002 Treasure Planet', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2003 Brother Bear', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2003 Finding Nemo', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2004 Home On The Range', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2004 The Incredibles', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2005 Chicken Little', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2006 Cars', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2007 Meet The Robinsons', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2007 Ratatouille', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2008 Bolt', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2008 WALL-E', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2009 The Princess & The Frog', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2009 Up', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2010 Tangled', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2012 Brave', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2012 Wreck-It Ralph', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2013 Frozen', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2014 Big Hero 6', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2015 Inside Out', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2015 The Good Dinosaur', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2016 Moana', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2016 Zootopia', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2017 Coco', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2020 Onward', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2020 Soul', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2021 Encanto', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2021 Luca', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2021 Raya & The Last Dragon', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2022 Lightyear', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2022 Strange World', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2022 Turning Red', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2023 Elemental', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2023 Wish', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('2025 Elio', 'Legends', 'Disney Stories'),
-
-  BoardHierarchyEntry('D&D', 'Legends'),
-
-  BoardHierarchyEntry('Arthurian Legend', 'Legends'),
-
-  BoardHierarchyEntry('Arabian & Middle Eastern Tales', 'Legends'),
-
-  BoardHierarchyEntry('Asian Legends & Folklore', 'Legends'),
-
-  BoardHierarchyEntry('Horror Icons', 'Legends'),
-
-  BoardHierarchyEntry('Legendary Heroes & Folk Heroes', 'Legends'),
-
-  BoardHierarchyEntry('Literary & Gothic Characters', 'Legends'),
-
-  BoardHierarchyEntry('Marvel', 'Legends'),
-
-  BoardHierarchyEntry('X-Men', 'Legends'),
-
-  BoardHierarchyEntry('DC', 'Legends'),
-
-  BoardHierarchyEntry('The Muppets', 'Legends'),
-
-  BoardHierarchyEntry('Star Wars', 'Legends'),
-
-  BoardHierarchyEntry('Star Trek', 'Legends'),
-
-  BoardHierarchyEntry('Starships', 'Legends', 'Star Trek'),
-
-  BoardHierarchyEntry('The Lord Of The Rings', 'Legends'),
-
-  BoardHierarchyEntry('Computer Games', 'Legends'),
-
-  BoardHierarchyEntry('Misc', 'Legends'),
-
-
-
-  // ──────────────────────────────────────────────
-
-  //  RECIPES AREA
-
-  // ──────────────────────────────────────────────
-
-  BoardHierarchyEntry('Recipes Main', 'Recipes'),
-
-
-
-  // ──────────────────────────────────────────────
-
-  //  SUBJECT VOCAB AREA  (matches AREA_SUBJECT_VOCAB.md)
-
-  // ──────────────────────────────────────────────
-
-  BoardHierarchyEntry('Subject Vocabulary', 'Subject Vocab'),
-
+  BoardHierarchyEntry('Canada and Greenland', 'Common', 'World Map'),
+  BoardHierarchyEntry('North America', 'Common', 'World Map'),
+  BoardHierarchyEntry('Central America', 'Common', 'World Map'),
+  BoardHierarchyEntry('South America', 'Common', 'World Map'),
+  BoardHierarchyEntry('Europe', 'Common', 'World Map'),
+  BoardHierarchyEntry('Asia (North)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Asia (West)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Asia (Central)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Asia (East)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Asia (South)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Africa', 'Common', 'World Map'),
+  BoardHierarchyEntry('Oceania', 'Common', 'World Map'),
+  // --- SUBJECT VOCAB AREA ---
+  BoardHierarchyEntry('Subject Vocab', 'Subject Vocab'),
   BoardHierarchyEntry('Better Words (Thesaurus)', 'Subject Vocab'),
-
   BoardHierarchyEntry('Actions Verbs Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
   BoardHierarchyEntry('Appearance Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
-  BoardHierarchyEntry(' Bad Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
+  BoardHierarchyEntry('Bad Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
   BoardHierarchyEntry('Feelings Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
-  BoardHierarchyEntry(' Good Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
+  BoardHierarchyEntry('Good Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
   BoardHierarchyEntry('Move Actions Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
   BoardHierarchyEntry('Nouns Abstract Nouns Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
   BoardHierarchyEntry('People Places Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
   BoardHierarchyEntry('Say Actions Thesaurus', 'Subject Vocab', 'Better Words (Thesaurus)'),
-
   BoardHierarchyEntry('Lessons', 'Subject Vocab'),
-
   BoardHierarchyEntry('Sentence Creator', 'Subject Vocab'),
-
   BoardHierarchyEntry('Small Words (Subject)', 'Subject Vocab'),
-
   BoardHierarchyEntry('Letters (Subject)', 'Subject Vocab'),
-
   BoardHierarchyEntry('Numbers (Subject)', 'Subject Vocab'),
-
   BoardHierarchyEntry('Breaktime', 'Subject Vocab'),
-
   BoardHierarchyEntry('Lunchtime', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Tutor Time, Events & Clubs', 'Subject Vocab'),
-
+  BoardHierarchyEntry('Tutor Time, Events and Clubs', 'Subject Vocab'),
   BoardHierarchyEntry('English', 'Subject Vocab'),
-
   BoardHierarchyEntry('Maths', 'Subject Vocab'),
-
   BoardHierarchyEntry('Algebra', 'Subject Vocab', 'Maths'),
-
   BoardHierarchyEntry('Numbers', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Fractions & Percentages', 'Subject Vocab', 'Maths'),
-
+  BoardHierarchyEntry('Fractions and Percentages', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Maths Resources', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Measurements (Length & Width, Perimeter & Area)', 'Subject Vocab', 'Maths'),
-
+  BoardHierarchyEntry('Measurements (Length and Width, Perimeter and Area)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Money', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Position & Direction', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Ratios & Proportion', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Shapes & Angles', 'Subject Vocab', 'Maths'),
-
+  BoardHierarchyEntry('Position and Direction', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Ratios and Proportion', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Shapes and Angles', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Statistics', 'Subject Vocab', 'Maths'),
-
   BoardHierarchyEntry('Time', 'Subject Vocab', 'Maths'),
-
-  BoardHierarchyEntry('Weight & Capacity', 'Subject Vocab', 'Maths'),
-
+  BoardHierarchyEntry('Weight and Capacity', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Science', 'Subject Vocab'),
-
   BoardHierarchyEntry('Chemical Compositions', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('PH Scale', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Animals & Humans', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Animals and Humans', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Ecosystems', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Components', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Electrical Safety', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Alternative & Renewable Energy', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Alternative and Renewable Energy', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Hot Stuff - Thermal Processes', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Are You Overreacting', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Attractive Forces', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Babies', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Body Wars', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Casualty', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Clean Air & Water', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Clean Air and Water', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Controlling Systems', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Creepy Crawlies', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Driving Along', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Elements', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Everything In Its Place', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Extinction', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Fly Me To The Moon', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Food Factory', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Fooling Your Senses', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Fuels', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Full Spectrum', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Getting The Message', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Heavy Metals', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Let\'S Get Together', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Let\'s Get Together', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Medical Rays', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('My Genes', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Novel Materials', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Nuclear Power', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Our Electrical Supply', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Physical Or Chemical Change', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Pushes & Pulls', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Pushes and Pulls', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Sorting Out', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('You Only Have One Life', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Equipment', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Evolution & Genes', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Evolution and Genes', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Forces', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Hazard Symbols', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Intro', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Levers, Pulleys & Gears', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Light & Sound', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Levers, Pulleys and Gears', 'Subject Vocab', 'Science'),
+  BoardHierarchyEntry('Light and Sound', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Material Properties', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Matter', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Breathing Vs Respiration', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Cells & Organelles', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Cells and Organelles', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Circulatory System', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Digestive System', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Levels Of Organisation', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Specific Muscles', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('The Skeleton', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Plants', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Reactions', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Earth\'S Layers', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Earth\'s Layers', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Fossil Formation', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Igneous', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Metamorphic', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Sedimentary', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Soil Formation', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Types Of Rock', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Digestion & Excretion', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Digestion and Excretion', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Exercise', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Health', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Healthy Lifestyle', 'Subject Vocab', 'Science'),
-
-  BoardHierarchyEntry('Mental & Social Health', 'Subject Vocab', 'Science'),
-
+  BoardHierarchyEntry('Mental and Social Health', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Nutrition', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('Universe', 'Subject Vocab', 'Science'),
-
   BoardHierarchyEntry('T.F.L. / I.T.', 'Subject Vocab'),
-
   BoardHierarchyEntry('Company Logos', 'Subject Vocab', 'T.F.L. / I.T.'),
-
   BoardHierarchyEntry('Programs', 'Subject Vocab', 'T.F.L. / I.T.'),
-
   BoardHierarchyEntry('TFL Equipment', 'Subject Vocab', 'T.F.L. / I.T.'),
-
   BoardHierarchyEntry('Personal Development', 'Subject Vocab'),
-
   BoardHierarchyEntry('Being Responsible', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Diversity', 'Subject Vocab', 'Personal Development'),
-
-  BoardHierarchyEntry('Health & Wellbeing', 'Subject Vocab', 'Personal Development'),
-
+  BoardHierarchyEntry('Health and Wellbeing', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Hygiene', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Making Friends', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Relationships', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Intimate Relationships', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Unhealthy Relationships', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Sexuality', 'Subject Vocab', 'Personal Development'),
-
-  BoardHierarchyEntry('Drugs & Alcohol Awareness', 'Subject Vocab', 'Personal Development'),
-
+  BoardHierarchyEntry('Drugs and Alcohol Awareness', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('NSPCC Pants', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Sun Safety', 'Subject Vocab', 'Personal Development'),
-
   BoardHierarchyEntry('Digital Literacy', 'Subject Vocab', 'Personal Development'),
-
-  BoardHierarchyEntry('Media & Social Media', 'Subject Vocab', 'Personal Development'),
-
+  BoardHierarchyEntry('Media and Social Media', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('P.E.E.P.', 'Subject Vocab'),
-
   BoardHierarchyEntry('Ancient Greece', 'Subject Vocab', 'P.E.E.P.'),
-
-  BoardHierarchyEntry('Places & People (Anglo-Saxons)', 'Subject Vocab', 'P.E.E.P.'),
-
-  BoardHierarchyEntry('Biomes & Climate', 'Subject Vocab', 'P.E.E.P.'),
-
+  BoardHierarchyEntry('Places and People (Anglo-Saxons)', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Biomes and Climate', 'Subject Vocab', 'P.E.E.P.'),
   BoardHierarchyEntry('Blue Planet', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Bone Finders', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Unsorted', 'Subject Vocab', 'P.E.E.P.'),
-
-  BoardHierarchyEntry('WW Aftermath & Leadership', 'Subject Vocab', 'P.E.E.P.'),
-
+  BoardHierarchyEntry('WW Aftermath and Leadership', 'Subject Vocab', 'P.E.E.P.'),
   BoardHierarchyEntry('WW Homefront', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('WW1', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('WW2', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Continent Maps', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Africa', 'Subject Vocab', 'Continent Maps'),
-
   BoardHierarchyEntry('Asia', 'Subject Vocab', 'Continent Maps'),
-
-  BoardHierarchyEntry('Canada & Greenland', 'Subject Vocab', 'Continent Maps'),
-
-  BoardHierarchyEntry('Central America & The Caribbean', 'Subject Vocab', 'Continent Maps'),
-
+  BoardHierarchyEntry('Canada and Greenland', 'Subject Vocab', 'Continent Maps'),
+  BoardHierarchyEntry('Central America and The Caribbean', 'Subject Vocab', 'Continent Maps'),
   BoardHierarchyEntry('Europe', 'Subject Vocab', 'Continent Maps'),
-
   BoardHierarchyEntry('North American States', 'Subject Vocab', 'Continent Maps'),
-
   BoardHierarchyEntry('Oceania', 'Subject Vocab', 'Continent Maps'),
-
-  BoardHierarchyEntry('Oceans & Poles', 'Subject Vocab', 'Continent Maps'),
-
+  BoardHierarchyEntry('Oceans and Poles', 'Subject Vocab', 'Continent Maps'),
   BoardHierarchyEntry('South America', 'Subject Vocab', 'Continent Maps'),
-
   BoardHierarchyEntry('States', 'Subject Vocab', 'Continent Maps'),
-
   BoardHierarchyEntry('Disasters', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Egypt', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Emergencies', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Houses', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Explorers', 'Subject Vocab', 'P.E.E.P.'),
-
-  BoardHierarchyEntry('Flags', 'Subject Vocab', 'P.E.E.P.'),
-
+  BoardHierarchyEntry('Egyptian Gods', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Heroes and Monsters', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Aesir (29+1)', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Jotnar (14+1)', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Norse Locations', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Norse Races', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Vanir (6+1)', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Olympians', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Roman Unique Gods', 'Subject Vocab', 'P.E.E.P.'),
+  BoardHierarchyEntry('Titans', 'Subject Vocab', 'P.E.E.P.'),
   BoardHierarchyEntry('Great Britain', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Industrial Revolution', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Journeys Through Time', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Keywords', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Heroes', 'Subject Vocab', 'P.E.E.P.'),
-
-  BoardHierarchyEntry('Maps & Atlas', 'Subject Vocab', 'P.E.E.P.'),
-
+  BoardHierarchyEntry('Maps and Atlas', 'Subject Vocab', 'P.E.E.P.'),
   BoardHierarchyEntry('Crew', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Famous Real Pirates', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Fictional Pirates', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Prehistoric', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Romans', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Seasons', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('People', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('Victorians', 'Subject Vocab', 'P.E.E.P.'),
-
   BoardHierarchyEntry('E.P.I.C.', 'Subject Vocab'),
-
   BoardHierarchyEntry('P.E.', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Adventure & Extreme Sports', 'Subject Vocab', 'P.E.'),
-
-  BoardHierarchyEntry('Creativity & Brainpower', 'Subject Vocab', 'P.E.'),
-
+  BoardHierarchyEntry('Adventure and Extreme Sports', 'Subject Vocab', 'P.E.'),
+  BoardHierarchyEntry('Creativity and Brainpower', 'Subject Vocab', 'P.E.'),
   BoardHierarchyEntry('Gym Equipment', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Individual Sports', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Leisure Sports', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Outdoors', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('P.E. Games', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('P.E. Keywords', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Relaxation', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Sports Day Events', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Team Sports', 'Subject Vocab', 'P.E.'),
-
   BoardHierarchyEntry('Technology', 'Subject Vocab', 'P.E.'),
-
-  BoardHierarchyEntry('Water & Winter Sports', 'Subject Vocab', 'P.E.'),
-
+  BoardHierarchyEntry('Water and Winter Sports', 'Subject Vocab', 'P.E.'),
   BoardHierarchyEntry('Art', 'Subject Vocab'),
-
   BoardHierarchyEntry('7', 'Subject Vocab', 'Art'),
-
   BoardHierarchyEntry('8', 'Subject Vocab', 'Art'),
-
   BoardHierarchyEntry('9', 'Subject Vocab', 'Art'),
-
   BoardHierarchyEntry('Performing Arts', 'Subject Vocab'),
-
   BoardHierarchyEntry('Sustainability', 'Subject Vocab'),
-
   BoardHierarchyEntry('Cooking', 'Subject Vocab'),
-
   BoardHierarchyEntry('Carbohydrates', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Cooking Equipment', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Dairy', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Good Fats', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Food Groups', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Fruit', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Herbs', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Key Terminology', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Meal Times', 'Subject Vocab', 'Cooking'),
-
-  BoardHierarchyEntry('Desserts & Puddings', 'Subject Vocab', 'Cooking'),
-
+  BoardHierarchyEntry('Desserts and Puddings', 'Subject Vocab', 'Cooking'),
   BoardHierarchyEntry('More Symbols', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Protein', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Photos', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Spices', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Vegetables', 'Subject Vocab', 'Cooking'),
-
   BoardHierarchyEntry('Resistant Materials', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Equipment', 'Subject Vocab', 'Resistant Materials'),
-
   BoardHierarchyEntry('Textiles', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Religion & Worldviews', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Angels', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Belonging & Baptism', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Community', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Creation Stories', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Good & Evil', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Hindu Traditions', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Holy Books', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Islam Belonging', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Love & Belonging', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Love & Easter', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Love, Rules, Choice, Consequences', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('People Making A Difference', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Special Festivals', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Special People', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Special Things', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Gods & Characters', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Buddhism', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Christianity', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Islam', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Judaism', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Paganism', 'Subject Vocab', 'Religion & Worldviews'),
-
-  BoardHierarchyEntry('Z Sikhism', 'Subject Vocab', 'Religion & Worldviews'),
-
+  BoardHierarchyEntry('Religion and Worldviews', 'Subject Vocab'),
+  BoardHierarchyEntry('Angels', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Belonging and Baptism', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Community', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Creation Stories', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Good and Evil', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Hindu Traditions', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Holy Books', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Islam Belonging', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Love and Belonging', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Love and Easter', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Love, Rules, Choice, Consequences', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('People Making A Difference', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Special Festivals', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Special People', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Special Things', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Buddhism', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Christianity', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Gods and Characters', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Islam', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Judaism', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Paganism', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Z Sikhism', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Music', 'Subject Vocab'),
-
   BoardHierarchyEntry('Musical Genres', 'Subject Vocab', 'Music'),
-
   BoardHierarchyEntry('Musical Instruments', 'Subject Vocab', 'Music'),
-
   BoardHierarchyEntry('Horticulture', 'Subject Vocab'),
-
   BoardHierarchyEntry('Equipment For Horticulture', 'Subject Vocab', 'Horticulture'),
-
-  BoardHierarchyEntry('Flowers (combined from boards 1, 2, 3 & 4)', 'Subject Vocab', 'Horticulture'),
-
+  BoardHierarchyEntry('Flowers (combined from boards 1, 2, 3 and 4)', 'Subject Vocab', 'Horticulture'),
   BoardHierarchyEntry('Retail', 'Subject Vocab'),
-
   BoardHierarchyEntry('Environment', 'Subject Vocab', 'Retail'),
-
   BoardHierarchyEntry('Legislation', 'Subject Vocab', 'Retail'),
-
   BoardHierarchyEntry('Marketing', 'Subject Vocab', 'Retail'),
-
   BoardHierarchyEntry('Operations', 'Subject Vocab', 'Retail'),
-
-  BoardHierarchyEntry('Payment & Finance', 'Subject Vocab', 'Retail'),
-
+  BoardHierarchyEntry('Payment and Finance', 'Subject Vocab', 'Retail'),
   BoardHierarchyEntry('Staff', 'Subject Vocab', 'Retail'),
-
   BoardHierarchyEntry('Photography', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Artistic & Conceptual', 'Subject Vocab', 'Photography'),
-
+  BoardHierarchyEntry('Artistic and Conceptual', 'Subject Vocab', 'Photography'),
   BoardHierarchyEntry('Artists, Context, Process, Assessment', 'Subject Vocab', 'Photography'),
-
-  BoardHierarchyEntry('Editing & Post Production', 'Subject Vocab', 'Photography'),
-
+  BoardHierarchyEntry('Editing and Post Production', 'Subject Vocab', 'Photography'),
   BoardHierarchyEntry('Equipment (Photography)', 'Subject Vocab', 'Photography'),
-
-  BoardHierarchyEntry('Lighting & Composition', 'Subject Vocab', 'Photography'),
-
-  BoardHierarchyEntry('Technical & Analytical', 'Subject Vocab', 'Photography'),
-
+  BoardHierarchyEntry('Lighting and Composition', 'Subject Vocab', 'Photography'),
+  BoardHierarchyEntry('Technical and Analytical', 'Subject Vocab', 'Photography'),
   BoardHierarchyEntry('Construction', 'Subject Vocab'),
-
   BoardHierarchyEntry('Design Technology', 'Subject Vocab'),
-
   BoardHierarchyEntry('Engineering', 'Subject Vocab'),
-
   BoardHierarchyEntry('Living Life Skills', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Arts & Crafts', 'Subject Vocab', 'Living Life Skills'),
-
-  BoardHierarchyEntry('Environment & Community', 'Subject Vocab', 'Living Life Skills'),
-
-  BoardHierarchyEntry('Finance & Numeracy', 'Subject Vocab', 'Living Life Skills'),
-
+  BoardHierarchyEntry('Arts and Crafts', 'Subject Vocab', 'Living Life Skills'),
+  BoardHierarchyEntry('Environment and Community', 'Subject Vocab', 'Living Life Skills'),
+  BoardHierarchyEntry('Finance and Numeracy', 'Subject Vocab', 'Living Life Skills'),
   BoardHierarchyEntry('Home Equipment', 'Subject Vocab', 'Living Life Skills'),
-
   BoardHierarchyEntry('Office Practice', 'Subject Vocab', 'Living Life Skills'),
-
   BoardHierarchyEntry('Identify, Collaborate', 'Subject Vocab', 'Living Life Skills'),
-
   BoardHierarchyEntry('Road Safety', 'Subject Vocab', 'Living Life Skills'),
-
   BoardHierarchyEntry('Prepare For Adulthood', 'Subject Vocab'),
-
   BoardHierarchyEntry('Belonging To A Community', 'Subject Vocab', 'Prepare For Adulthood'),
-
   BoardHierarchyEntry('Careers', 'Subject Vocab', 'Prepare For Adulthood'),
-
   BoardHierarchyEntry('Wider World', 'Subject Vocab', 'Prepare For Adulthood'),
-
-  BoardHierarchyEntry('Hair & Beauty', 'Subject Vocab'),
-
-  BoardHierarchyEntry('Health & Social Care', 'Subject Vocab'),
-
+  BoardHierarchyEntry('Hair and Beauty', 'Subject Vocab'),
+  BoardHierarchyEntry('Health and Social Care', 'Subject Vocab'),
   BoardHierarchyEntry('Public Services', 'Subject Vocab'),
-
   BoardHierarchyEntry('S.T.E.M.', 'Subject Vocab'),
-
   BoardHierarchyEntry('Option A', 'Subject Vocab'),
-
   BoardHierarchyEntry('Option B', 'Subject Vocab'),
-
   BoardHierarchyEntry('Option C', 'Subject Vocab'),
-
   BoardHierarchyEntry('Tech Rotation', 'Subject Vocab'),
-
-
-
-  // ──────────────────────────────────────────────
-
-  //  SIGN AREA  (matches AREA_SIGN.md)
-
-  // ──────────────────────────────────────────────
-
-  BoardHierarchyEntry('Sign Main', 'Sign'),
-
-  BoardHierarchyEntry('A-Z Of Sign', 'Sign'),
-
-  BoardHierarchyEntry('A (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('B (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('C (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('D (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('E (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('F (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('G (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('H (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('I (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('J (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('K (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('L (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('M (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('N (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('O (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('P (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('Q (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('R (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('S (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('T (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('U (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('V (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('W (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('X (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('Y (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('Z (Sign)', 'Sign', 'A-Z Of Sign'),
-
-  BoardHierarchyEntry('Manners & Greetings', 'Sign'),
-
-  BoardHierarchyEntry('Family & People', 'Sign'),
-
-  BoardHierarchyEntry('Feelings & Health', 'Sign'),
-
-  BoardHierarchyEntry('Questions', 'Sign'),
-
-  BoardHierarchyEntry('Grammatical Elements', 'Sign'),
-
-  BoardHierarchyEntry('Prepositions', 'Sign'),
-
-  BoardHierarchyEntry('Descriptions & Attributes', 'Sign'),
-
-  BoardHierarchyEntry('Colours', 'Sign'),
-
-  BoardHierarchyEntry('Numbers', 'Sign'),
-
-  BoardHierarchyEntry('Quantity & Measurement', 'Sign'),
-
-  BoardHierarchyEntry('Time & Days', 'Sign'),
-
-  BoardHierarchyEntry('Letters', 'Sign'),
-
-  BoardHierarchyEntry('Food & Drink', 'Sign'),
-
-  BoardHierarchyEntry('Personal Actions', 'Sign'),
-
-  BoardHierarchyEntry('Shared Activities', 'Sign'),
-
-  BoardHierarchyEntry('Personal Hygiene', 'Sign'),
-
-  BoardHierarchyEntry('Clothing & Personal', 'Sign'),
-
-  BoardHierarchyEntry('Personal Possessions', 'Sign'),
-
-  BoardHierarchyEntry('Home & Household', 'Sign'),
-
-  BoardHierarchyEntry('General Objects', 'Sign'),
-
-  BoardHierarchyEntry('Computer Items', 'Sign'),
-
-  BoardHierarchyEntry('School & Instructions', 'Sign'),
-
-  BoardHierarchyEntry('Leisure Activities & Interests', 'Sign'),
-
-  BoardHierarchyEntry('Sport', 'Sign'),
-
-  BoardHierarchyEntry('Animals & Nature', 'Sign'),
-
-  BoardHierarchyEntry('Weather', 'Sign'),
-
-  BoardHierarchyEntry('Outside', 'Sign'),
-
-  BoardHierarchyEntry('Places', 'Sign'),
-
-  BoardHierarchyEntry('Transport & Vehicles', 'Sign'),
-
-  BoardHierarchyEntry('Money', 'Sign'),
-
-  BoardHierarchyEntry('Public Notices', 'Sign'),
-
-  BoardHierarchyEntry('Other Countries', 'Sign'),
-
-  BoardHierarchyEntry('Religion & Customs', 'Sign'),
-
-  BoardHierarchyEntry('Gender & Sexuality', 'Sign'),
-
-
-
-  // ──────────────────────────────────────────────
-
-  //  MY SCHOOL AREA  (matches AREA_MY_SCHOOL.md)
-
-  // ──────────────────────────────────────────────
-
+  // --- MY SCHOOL AREA ---
   BoardHierarchyEntry('My School Main', 'My School'),
-
   BoardHierarchyEntry('Baycroft Expects', 'My School'),
-
   BoardHierarchyEntry('Thinking Skills', 'My School'),
-
   BoardHierarchyEntry('When Things Go Wrong', 'My School'),
-
   BoardHierarchyEntry('Blank Levels', 'My School'),
-
   BoardHierarchyEntry('My School Lessons', 'My School'),
-
   BoardHierarchyEntry('Class Equipment', 'My School'),
-
   BoardHierarchyEntry('People At School', 'My School'),
-
+  BoardHierarchyEntry('Safeguarding Team', 'My School', 'People At School'),
+  BoardHierarchyEntry('Senior Leadership', 'My School', 'People At School'),
+  BoardHierarchyEntry('Office and Other Helpful People', 'My School', 'People At School'),
+  BoardHierarchyEntry('7EmS', 'My School', 'People At School'),
+  BoardHierarchyEntry('7LDo', 'My School', 'People At School'),
+  BoardHierarchyEntry('7MCa', 'My School', 'People At School'),
+  BoardHierarchyEntry('7NGr', 'My School', 'People At School'),
+  BoardHierarchyEntry('8LBr', 'My School', 'People At School'),
+  BoardHierarchyEntry('8MGr', 'My School', 'People At School'),
+  BoardHierarchyEntry('8SLP', 'My School', 'People At School'),
+  BoardHierarchyEntry('9EBl', 'My School', 'People At School'),
+  BoardHierarchyEntry('9LMc', 'My School', 'People At School'),
+  BoardHierarchyEntry('9RCo', 'My School', 'People At School'),
+  BoardHierarchyEntry('10BCl', 'My School', 'People At School'),
+  BoardHierarchyEntry('10KLa', 'My School', 'People At School'),
+  BoardHierarchyEntry('10RLi', 'My School', 'People At School'),
+  BoardHierarchyEntry('11HSu', 'My School', 'People At School'),
+  BoardHierarchyEntry('11STo', 'My School', 'People At School'),
+  BoardHierarchyEntry('RLP', 'My School', 'People At School'),
+  BoardHierarchyEntry('KL', 'My School', 'People At School'),
+  BoardHierarchyEntry('AW', 'My School', 'People At School'),
+  BoardHierarchyEntry('Governors and Friends Of Baycroft', 'My School', 'People At School'),
+  // --- LEGENDS AREA ---
+  BoardHierarchyEntry('Real Life Heroes', 'Legends'),
+  BoardHierarchyEntry('Characters', 'Legends'),
+  BoardHierarchyEntry('Creatures and Races', 'Legends'),
+  BoardHierarchyEntry('Gods, Titans, Heroes and Monsters', 'Legends'),
+  BoardHierarchyEntry('Family Trees', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Egyptian Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Norse Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Greek Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Roman Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Heroes and Monsters (Greek and Roman)', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Hindu Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Christian Angels Demons', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Other Mythology', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Fairy Tale Characters', 'Legends'),
+  BoardHierarchyEntry('Disney Stories', 'Legends'),
+  BoardHierarchyEntry('Mickey and Friends', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1937 Snow White and The Seven Dwarfs', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1940 Fantasia', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1940 Pinocchio', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1941 Dumbo', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1942 Bambi', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1950 Cinderella', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1951 Alice In Wonderland', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1953 Peter Pan', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1955 Lady and The Tramp', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1959 Sleeping Beauty', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1961 101 Dalmatians', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1963 The Sword In The Stone', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1967 The Jungle Book', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1970 The Aristocats', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1973 Robin Hood', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1977 The Rescuers', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1977 Winnie The Pooh', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1981 The Fox and The Hound', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1985 The Black Cauldron', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1986 The Great Mouse Detective', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1988 Oliver and Company', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1989 The Little Mermaid', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1990 The Rescuers Down Under', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1991 Beauty and The Beast', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1992 Aladdin', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1993 The Nightmare Before Christmas', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1994 The Lion King', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1995 Pocahontas', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1995 Toy Story', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1996 The Hunchback Of Notre Dame', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1997 Hercules', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1998 A Bug\'s Life', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1998 Mulan', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1999 Tarzan', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2000 Dinosaur', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2000 The Emperor\'s New Groove', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2001 Atlantis - The Lost Empire', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2001 Monsters, Inc', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2002 Lilo and Stitch', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2002 Treasure Planet', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2003 Brother Bear', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2003 Finding Nemo', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2004 Home On The Range', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2004 The Incredibles', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2005 Chicken Little', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2006 Cars', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2007 Meet The Robinsons', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2007 Ratatouille', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2008 Bolt', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2008 WALL-E', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2009 The Princess and The Frog', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2009 Up', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2010 Tangled', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2012 Brave', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2012 Wreck-It Ralph', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2013 Frozen', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2014 Big Hero 6', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2015 Inside Out', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2015 The Good Dinosaur', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2016 Moana', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2016 Zootopia', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2017 Coco', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2020 Onward', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2020 Soul', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2021 Encanto', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2021 Luca', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2021 Raya and The Last Dragon', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2022 Lightyear', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2022 Strange World', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2022 Turning Red', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2023 Elemental', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2023 Wish', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2025 Elio', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('D&D', 'Legends'),
+  BoardHierarchyEntry('Arthurian Legend', 'Legends'),
+  BoardHierarchyEntry('Arabian and Middle Eastern Tales', 'Legends'),
+  BoardHierarchyEntry('Asian Legends and Folklore', 'Legends'),
+  BoardHierarchyEntry('Horror Icons', 'Legends'),
+  BoardHierarchyEntry('Legendary Heroes and Folk Heroes', 'Legends'),
+  BoardHierarchyEntry('Literary and Gothic Characters', 'Legends'),
+  BoardHierarchyEntry('Marvel', 'Legends'),
+  BoardHierarchyEntry('X-Men', 'Legends'),
+  BoardHierarchyEntry('DC', 'Legends'),
+  BoardHierarchyEntry('The Muppets', 'Legends'),
+  BoardHierarchyEntry('Star Wars', 'Legends'),
+  BoardHierarchyEntry('Star Trek', 'Legends'),
+  BoardHierarchyEntry('Starships', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('The Lord Of The Rings', 'Legends'),
+  BoardHierarchyEntry('Computer Games', 'Legends'),
+  BoardHierarchyEntry('Misc', 'Legends'),
+  // --- RECIPES AREA ---
+  BoardHierarchyEntry('Recipes', 'Recipes'),
+  // --- SIGN AREA ---
+  BoardHierarchyEntry('Sign', 'Sign'),
+  BoardHierarchyEntry('A-Z Of Sign', 'Sign'),
+  BoardHierarchyEntry('A (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('B (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('C (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('D (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('E (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('F (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('G (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('H (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('I (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('J (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('K (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('L (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('M (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('N (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('O (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('P (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('Q (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('R (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('S (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('T (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('U (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('V (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('W (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('X (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('Y (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('Z (Sign)', 'Sign', 'A-Z Of Sign'),
+  BoardHierarchyEntry('Manners and Greetings', 'Sign'),
+  BoardHierarchyEntry('Family and People', 'Sign'),
+  BoardHierarchyEntry('Feelings and Health', 'Sign'),
+  BoardHierarchyEntry('Questions', 'Sign'),
+  BoardHierarchyEntry('Grammatical Elements', 'Sign'),
+  BoardHierarchyEntry('Prepositions', 'Sign'),
+  BoardHierarchyEntry('Descriptions and Attributes', 'Sign'),
+  BoardHierarchyEntry('Colours', 'Sign'),
+  BoardHierarchyEntry('Numbers', 'Sign'),
+  BoardHierarchyEntry('Quantity and Measurement', 'Sign'),
+  BoardHierarchyEntry('Time and Days', 'Sign'),
+  BoardHierarchyEntry('Letters', 'Sign'),
+  BoardHierarchyEntry('Food and Drink', 'Sign'),
+  BoardHierarchyEntry('Personal Actions', 'Sign'),
+  BoardHierarchyEntry('Shared Activities', 'Sign'),
+  BoardHierarchyEntry('Personal Hygiene', 'Sign'),
+  BoardHierarchyEntry('Clothing and Personal', 'Sign'),
+  BoardHierarchyEntry('Personal Possessions', 'Sign'),
+  BoardHierarchyEntry('Home and Household', 'Sign'),
+  BoardHierarchyEntry('General Objects', 'Sign'),
+  BoardHierarchyEntry('Computer Items', 'Sign'),
+  BoardHierarchyEntry('School and Instructions', 'Sign'),
+  BoardHierarchyEntry('Leisure Activities and Interests', 'Sign'),
+  BoardHierarchyEntry('Sport', 'Sign'),
+  BoardHierarchyEntry('Animals and Nature', 'Sign'),
+  BoardHierarchyEntry('Weather', 'Sign'),
+  BoardHierarchyEntry('Outside', 'Sign'),
+  BoardHierarchyEntry('Places', 'Sign'),
+  BoardHierarchyEntry('Transport and Vehicles', 'Sign'),
+  BoardHierarchyEntry('Money', 'Sign'),
+  BoardHierarchyEntry('Public Notices', 'Sign'),
+  BoardHierarchyEntry('Other Countries', 'Sign'),
+  BoardHierarchyEntry('Religion and Customs', 'Sign'),
+  BoardHierarchyEntry('Gender and Sexuality', 'Sign'),
+  // --- PERSONAL AREA ---
+  BoardHierarchyEntry('Personal', 'Personal'),
 ];
 
 
@@ -1245,7 +711,7 @@ BoardHierarchyEntry('Real Life Heroes', 'Legends'),
 
 /// stored yet it defaults to a copy of the compiled const list.
 
-final List<BoardHierarchyEntry> runtimeBoardHierarchy = [];
+final List<BoardHierarchyEntry> runtimeBoardHierarchy = List.of(boardHierarchy);
 
 
 
@@ -1283,11 +749,11 @@ Future<void> loadRuntimeHierarchy() async {
 
   final raw = prefs.getString(_runtimeHierarchyPrefsKey);
 
-  if (raw != null && raw.isNotEmpty) {
+  if (raw != null && raw.isNotEmpty) { // use persisted if available
 
     try {
 
-      final list = json.decode(raw) as List;
+      final list = json.decode(raw!) as List;
 
       final loaded = list.map((e) =>
 
@@ -1772,22 +1238,35 @@ List<String> hierarchyTopLevel(String area) {
 }
 
 
-
 /// Merged view of all entries (runtime + user custom).
 
+/// Uses a composite key (name + area) so that boards with the same name in
+/// different areas (e.g. "Numbers" in both Common and Subject Vocab) do not
+/// overwrite each other.  User-created entries augment the prebuilt list.
+
 List<BoardHierarchyEntry> get _allEntries {
+
+  final prebuiltNames = boardHierarchy.map((e) => e.name.toLowerCase()).toSet();
 
   final map = <String, BoardHierarchyEntry>{};
 
   for (final e in runtimeBoardHierarchy) {
 
-    map[e.name.toLowerCase()] = e;
+    map['${e.name.toLowerCase()}::${e.area.toLowerCase()}'] = e;
 
   }
 
+  // User custom entries should not re-order or re-parent prebuilt boards.
+
   for (final e in userCustomHierarchyEntries) {
 
-    map[e.name.toLowerCase()] = e;
+    final key = '${e.name.toLowerCase()}::${e.area.toLowerCase()}';
+
+    if (!prebuiltNames.contains(e.name.toLowerCase()) || !map.containsKey(key)) {
+
+      map[key] = e;
+
+    }
 
   }
 

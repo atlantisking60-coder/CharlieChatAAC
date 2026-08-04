@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 import 'data/symbol_data.dart';
+import 'data/board_hierarchy.dart';
 import 'models/symbol_tile.dart';
 import 'services/board_service.dart';
 import 'services/cross_platform_tts_service.dart';
@@ -57,6 +58,26 @@ enum AppMode {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Surface build/runtime errors directly instead of leaving a white screen.
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    debugPrint('FLUTTER ERROR: ${details.exception}');
+    debugPrint('STACK: ${details.stack}');
+  };
+  ErrorWidget.builder = (details) {
+    return Material(
+      child: Container(
+        color: Colors.red,
+        padding: const EdgeInsets.all(24),
+        child: SelectableText(
+          'Error:\n${details.exception}\n\n${details.stack ?? ''}',
+          style: const TextStyle(color: Colors.white, fontSize: 14),
+        ),
+      ),
+    );
+  };
+
   try {
     if (FirebaseConfigValidator.isConfigured()) {
       await Firebase.initializeApp(
@@ -207,7 +228,10 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
 
   void _activeProfileChanged(String profileId) {
     _profiles = _profileService.profiles;
-    final profile = _profiles.firstWhere((p) => p.id == profileId, orElse: () => _profiles.first);
+    final profile = _profiles.firstWhere(
+      (p) => p.id == profileId,
+      orElse: () => _profiles.isNotEmpty ? _profiles.first : UserProfile.defaultProfile(),
+    );
     setState(() {
       _activeProfileId = profileId;
       _selectedProfileId = profileId;
@@ -399,8 +423,12 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _sentenceController = TextEditingController();
   late CrossPlatformTtsService _tts;
-  String _selectedCategory = allCategories.first;
+  String _selectedCategory = allCategories.isNotEmpty ? allCategories.first : 'All';
   bool _loading = true;
+  bool _isLoadingActiveBoard = false;
+  String? _boardLoadError;
+  String? _missingBoardId;
+  String? _missingBoardName;
   FavoritesService? _favoritesService;
   PhraseHistoryService? _phraseService;
   late ProfileService _profileService;
@@ -426,19 +454,7 @@ class _HomePageState extends State<HomePage> {
   bool _showScrollToTop = false;
 
   // Sub-boards that are hidden from the top-level tab bar but shown as a second row when their parent is active.
-  static const List<String> _subBoardNames = [
-    'Sad', 'Mad', 'Scared', 'Joyful', 'Strong', 'Calm',
-    'Shades Of Colours',
-    'Adjectives', 'Phonics', 'Phase 2 Phonics', 'Phase 3 Phonics', 'Phase 4 Phonics', 'Phase 5 Phonics', 'Phase 6 Phonics',
-    'School People', 'Jobs & Careers',
-    'Buildings', 'Rooms & Home', 'Furniture', 'Habitats', 'Local Places',
-    'Mammals', 'Birds', 'Reptiles', 'Amphibians', 'Insects', 'Arachnids', 'Invertebrates', 'Fish', 'Sealife', 'Nature Vocabulary', 'Body Parts Of Animals', 'Child Animals', 'Groups Of Animals',
-    'A (Sign)', 'B (Sign)', 'C (Sign)', 'D (Sign)', 'E (Sign)', 'F (Sign)',
-    'G (Sign)', 'H (Sign)', 'I (Sign)', 'J (Sign)', 'K (Sign)', 'L (Sign)',
-    'M (Sign)', 'N (Sign)', 'O (Sign)', 'P (Sign)', 'Q (Sign)', 'R (Sign)',
-    'S (Sign)', 'T (Sign)', 'U (Sign)', 'V (Sign)', 'W (Sign)', 'X (Sign)',
-    'Y (Sign)', 'Z (Sign)',
-  ];
+  static const List<String> _subBoardNames = [];
   final Map<String, SymbolTile> _typedWordCache = {};
   List<SymbolTile> _localAssetResults = [];
   String _lastAssetSearchQuery = '';
@@ -471,26 +487,23 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
       boardService.setCurrentProfileId(_activeProfile?.id ?? 'default');
 
+      // Default sub-tab order for Common > Time > Events and Occasions.
+      if (boardService.getTabOrder('prebuilt_events_and_occasions') == null) {
+        await boardService.saveTabOrder('prebuilt_events_and_occasions', [
+          'Passover Keywords',
+          'Easter Keywords',
+          'Halloween Keywords',
+          'Bonfire Night Keywords',
+          'Christmas Keywords',
+          'Special Days',
+        ]);
+      }
+
+      // Load the Common area tab list as placeholders, then fill the active
+      // board. Only the selected board's tiles are loaded at startup.
+      _currentMode = AppMode.home;
       await _loadBoards(area: 'Common');
       if (!mounted) return;
-
-      // Determine initial mode and tab based on profile starting board setting
-      final startingBoardId = _activeProfile?.startingBoardId ?? '';
-      if (startingBoardId.isNotEmpty) {
-        _currentMode = _getModeForBoard(startingBoardId);
-      } else {
-        _currentMode = AppMode.home;
-      }
-      
-      _buildTabs();
-
-      // Load remaining areas in the background so the Common boards appear fast.
-      _loadBoards().then((_) {
-        if (mounted) _buildTabs();
-        _migrateTileLabelsToImageTags();
-      }).catchError((e) {
-        debugPrint('Error loading remaining boards: $e');
-      });
 
       _boardScrollController.addListener(() {
         // Requirement: Make the scroll to top button less sensitive
@@ -546,8 +559,87 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadBoards({String? area}) async {
     final service = await BoardService.getInstance();
-    _boards = await service.listBoards(area: area);
+    _boards = await service.listBoards(area: area, includeTiles: false);
     _buildTabs();
+    await _loadFullActiveBoard();
+  }
+
+  Future<void> _loadFullActiveBoard() async {
+    if (_activeTab?.type != TopTabType.board || _activeTab?.board == null) return;
+    final service = await BoardService.getInstance();
+    service.setPriorityBoardId(_activeTab!.board!.id);
+    if (mounted) setState(() => _isLoadingActiveBoard = true);
+    final full = await service.getBoard(_activeTab!.board!.id);
+    if (!mounted) return;
+    if (full == null) {
+      setState(() => _isLoadingActiveBoard = false);
+      final missingBoard = _createAutoMissingBoard(
+        _activeTab!.board!.id,
+        _activeTab!.board!.name,
+        area: _activeTab!.board!.area,
+      );
+      await _upsertBoard(missingBoard);
+      return;
+    }
+    setState(() {
+      _isLoadingActiveBoard = false;
+      _boardLoadError = null;
+      _missingBoardId = null;
+      _missingBoardName = null;
+      final index = _boards.indexWhere((b) => b.id == full.id);
+      if (index >= 0) _boards[index] = full;
+      _activeTab = TopTab(
+        id: _activeTab!.id,
+        label: _activeTab!.label,
+        icon: _activeTab!.icon,
+        iconAssetPath: _activeTab!.iconAssetPath,
+        type: _activeTab!.type,
+        board: full,
+        parentBoard: _activeTab!.parentBoard,
+      );
+    });
+  }
+
+  Future<void> _loadInitialBoard() async {
+    final service = await BoardService.getInstance();
+    final commonWordsId = prebuiltBoardId('Common Words');
+    service.setPriorityBoardId(commonWordsId);
+    final board = await service.getBoard(commonWordsId);
+    _boards = board != null ? [board] : [];
+  }
+
+  Future<void> _loadRemainingCommonBoards() async {
+    final service = await BoardService.getInstance();
+    final commonWordsId = prebuiltBoardId('Common Words');
+    final common = await service.listBoards(area: 'Common', includeTiles: false);
+    final fullCommonWords = _boards.cast<Board?>().firstWhere(
+          (b) => b?.id == commonWordsId,
+          orElse: () => null,
+        );
+    _boards = common;
+    if (fullCommonWords != null) {
+      final idx = _boards.indexWhere((b) => b.id == commonWordsId);
+      if (idx >= 0) _boards[idx] = fullCommonWords;
+    }
+    if (mounted) _buildTabs();
+    await _loadFullActiveBoard();
+  }
+
+  Future<void> _loadRemainingAreaBoards() async {
+    final service = await BoardService.getInstance();
+    final commonWordsId = prebuiltBoardId('Common Words');
+    final all = await service.listBoards(includeTiles: false);
+    final fullCommonWords = _boards.cast<Board?>().firstWhere(
+          (b) => b?.id == commonWordsId,
+          orElse: () => null,
+        );
+    _boards = all;
+    if (fullCommonWords != null) {
+      final idx = _boards.indexWhere((b) => b.id == commonWordsId);
+      if (idx >= 0) _boards[idx] = fullCommonWords;
+    }
+    if (mounted) _buildTabs();
+    await _loadFullActiveBoard();
   }
 
   /// Fire-and-forget migration: for every tile on every board whose label
@@ -594,11 +686,11 @@ class _HomePageState extends State<HomePage> {
     // Specific icon path mappings for boards
     final iconMappings = {
       // HOME mode icons
-      'ANIMALS': 'assets/symbols/BOARDS/Animals/Animals.png',
-      'JOBS & CAREERS': 'assets/symbols/BOARDS/Jobs.png',
-      'TIME': 'assets/symbols/BOARDS/Time, Months, Events/Time.png',
-      'MORE BOARDS': 'assets/symbols/BOARDS/More ++.png',
-      'MORE WORDS': 'assets/symbols/BOARDS/More ++.png',
+      'ANIMALS': 'assets/BOARDS/Animals/Animals.png',
+      'JOBS and CAREERS': 'assets/BOARDS/Jobs.png',
+      'TIME': 'assets/BOARDS/Time, Months, Events/Time.png',
+      'MORE BOARDS': 'assets/BOARDS/More ++.png',
+      'MORE WORDS': 'assets/BOARDS/More ++.png',
       
       // SCHOOL mode icons (subject vocab boards) - assets/symbols/Subjects
       'SENTENCE CREATOR': 'assets/symbols/Subjects/English.png',
@@ -616,90 +708,90 @@ class _HomePageState extends State<HomePage> {
       'Performing Arts': 'assets/symbols/Subjects/Performing Arts.png',
       'Sustainability': 'assets/symbols/Subjects/Sustainability.png',
       'Cooking': 'assets/symbols/Subjects/Cooking.png',
-      'Resistant Materials': 'assets/symbols/Subjects/Resistant Materials & Construction.png',
+      'Resistant Materials': 'assets/symbols/Subjects/Resistant Materials and Construction.png',
       'Textiles': 'assets/symbols/Subjects/Textiles.png',
-      'Religion & Worldviews': 'assets/symbols/Subjects/Religion & Worldviews.png',
+      'Religion and Worldviews': 'assets/symbols/Subjects/Religion and Worldviews.png',
       'Music': 'assets/symbols/Subjects/Music.png',
       'Horticulture': 'assets/symbols/Subjects/Horticulture.png',
       'Retail': 'assets/symbols/Subjects/Retail.png',
       'Photography': 'assets/symbols/Subjects/Photography.png',
       'Information Technology': 'assets/symbols/Subjects/I.T.png',
-      'Construction': 'assets/symbols/Subjects/Resistant Materials & Construction.png',
+      'Construction': 'assets/symbols/Subjects/Resistant Materials and Construction.png',
       'Engineering': 'assets/symbols/Subjects/Engineering.png',
       'Living Life Skills': 'assets/symbols/Subjects/Living Life Skills.png',
       'Prepare For Adulthood': 'assets/symbols/Subjects/Prepare For Adulthood.png',
-      'Break & Lunch': 'assets/symbols/Subjects/Breaktime.png',
+      'Break and Lunch': 'assets/symbols/Subjects/Breaktime.png',
       'Tutor Time': 'assets/symbols/Subjects/Tutor Time.png',
       
       // SIGN mode icons
-      'Sign': 'assets/symbols/BOARDS/Signs.png',
-      'BSL': 'assets/symbols/BOARDS/Signs.png',
-      'Makaton': 'assets/symbols/BOARDS/Signs.png',
-      'A-Z Of Sign': 'assets/symbols/BOARDS/Letters.png',
-      'Sign A-Z': 'assets/symbols/BOARDS/Letters.png',
-      'Manners & Greetings': 'assets/symbols/BOARDS/People.png',
-      'Family & People': 'assets/symbols/BOARDS/Family Tree.png',
-      'Animals & Nature': 'assets/symbols/BOARDS/Animals/Animals.png',
-      'Transport & Vehicles': 'assets/symbols/BOARDS/Transport.png',
-      'Food & Drink': 'assets/symbols/BOARDS/Cooking & Food/Food.png',
-      'Home & Household': 'assets/symbols/BOARDS/Home.png',
-      'Feelings & Health': 'assets/symbols/BOARDS/Feelings.png',
-      'School & Instructions': 'assets/symbols/BOARDS/People At School.png',
-      'Descriptions & Attributes': 'assets/symbols/BOARDS/English/Adjectives.png',
-      'Prepositions': 'assets/symbols/BOARDS/Prepositions.png',
-      'Outside': 'assets/symbols/BOARDS/Town.png',
-      'Time & Days': 'assets/symbols/BOARDS/Time, Months, Events/Time.png',
-      'Questions': 'assets/symbols/BOARDS/English/How.png',
-      'Letters': 'assets/symbols/BOARDS/Letters.png',
-      'Numbers': 'assets/symbols/BOARDS/Numbers.png',
-      'Personal Actions': 'assets/symbols/BOARDS/Actions.png',
-      'Shared Activities': 'assets/symbols/BOARDS/People & Places.png',
-      'Leisure Activities & Interests': 'assets/symbols/BOARDS/Sports, Activities & P.E/Sports.png',
-      'General Objects': 'assets/symbols/BOARDS/Furniture.png',
-      'Clothing & Personal': 'assets/symbols/BOARDS/Clothes.png',
-      'Personal Possessions': 'assets/symbols/BOARDS/Toys.png',
-      'Personal Hygiene': 'assets/symbols/BOARDS/Medical.png',
-      'Gender & Sexuality': 'assets/symbols/BOARDS/People.png',
-      'Places': 'assets/symbols/BOARDS/Places.png',
-      'Sport': 'assets/symbols/BOARDS/Sports, Activities & P.E/Sports.png',
-      'Religion & Customs': 'assets/symbols/BOARDS/Religion & Worldviews/Community.png',
-      'Other Countries': 'assets/symbols/BOARDS/Countryside.png',
-      'Public Notices': 'assets/symbols/BOARDS/Signs.png',
-      'Money': 'assets/symbols/BOARDS/Money UK.png',
-      'Computer Items': 'assets/symbols/BOARDS/Class Equipment.png',
-      'Grammatical Elements': 'assets/symbols/BOARDS/Small Words.png',
-      'Quantity & Measurement': 'assets/symbols/BOARDS/Numbers.png',
+      'Sign': 'assets/BOARDS/Signs.png',
+      'BSL': 'assets/BOARDS/Signs.png',
+      'Makaton': 'assets/BOARDS/Signs.png',
+      'A-Z Of Sign': 'assets/BOARDS/Letters.png',
+      'Sign A-Z': 'assets/BOARDS/Letters.png',
+      'Manners and Greetings': 'assets/BOARDS/People.png',
+      'Family and People': 'assets/BOARDS/Family Tree.png',
+      'Animals and Nature': 'assets/BOARDS/Animals/Animals.png',
+      'Transport and Vehicles': 'assets/BOARDS/Transport.png',
+      'Food and Drink': 'assets/BOARDS/Cooking and Food/Food.png',
+      'Home and Household': 'assets/BOARDS/Home.png',
+      'Feelings and Health': 'assets/BOARDS/Feelings.png',
+      'School and Instructions': 'assets/BOARDS/People At School.png',
+      'Descriptions and Attributes': 'assets/BOARDS/English/Adjectives.png',
+      'Prepositions': 'assets/BOARDS/Prepositions.png',
+      'Outside': 'assets/BOARDS/Town.png',
+      'Time and Days': 'assets/BOARDS/Time, Months, Events/Time.png',
+      'Questions': 'assets/BOARDS/English/How.png',
+      'Letters': 'assets/BOARDS/Letters.png',
+      'Numbers': 'assets/BOARDS/Numbers.png',
+      'Personal Actions': 'assets/BOARDS/Actions.png',
+      'Shared Activities': 'assets/BOARDS/People and Places.png',
+      'Leisure Activities and Interests': 'assets/BOARDS/Sports, Activities and P.E/Sports.png',
+      'General Objects': 'assets/BOARDS/Furniture.png',
+      'Clothing and Personal': 'assets/BOARDS/Clothes.png',
+      'Personal Possessions': 'assets/BOARDS/Toys.png',
+      'Personal Hygiene': 'assets/BOARDS/Medical.png',
+      'Gender and Sexuality': 'assets/BOARDS/People.png',
+      'Places': 'assets/BOARDS/Places.png',
+      'Sport': 'assets/BOARDS/Sports, Activities and P.E/Sports.png',
+      'Religion and Customs': 'assets/BOARDS/Religion and Worldviews/Community.png',
+      'Other Countries': 'assets/BOARDS/Countryside.png',
+      'Public Notices': 'assets/BOARDS/Signs.png',
+      'Money': 'assets/BOARDS/Money UK.png',
+      'Computer Items': 'assets/BOARDS/Class Equipment.png',
+      'Grammatical Elements': 'assets/BOARDS/Small Words.png',
+      'Quantity and Measurement': 'assets/BOARDS/Numbers.png',
       
       // SUB-BOARD icons (second tab row)
-      'Sad': 'assets/symbols/BOARDS/Feelings/Sad.png',
-      'Mad': 'assets/symbols/BOARDS/Feelings/Mad.png',
-      'Scared': 'assets/symbols/BOARDS/Feelings/Scared.png',
-      'Joyful': 'assets/symbols/BOARDS/Feelings/Joyful.png',
-      'Strong': 'assets/symbols/BOARDS/Feelings/Strong.png',
-      'Calm': 'assets/symbols/BOARDS/Feelings/Calm.png',
-      'Shades Of Colours': 'assets/symbols/BOARDS/Shades Of Colours.png',
-      'Adjectives': 'assets/symbols/BOARDS/English/Adjectives.png',
-      'Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 2.png',
-      'Phase 2 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 2.png',
-      'Phase 3 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 3.png',
-      'Phase 4 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 4.png',
-      'Phase 5 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 5.png',
-      'Phase 6 Phonics': 'assets/symbols/BOARDS/English/Phonics - Phase 6.png',
-      'School People': 'assets/symbols/BOARDS/People At School.png',
-      'Mammals': 'assets/symbols/BOARDS/Animals/Mammals.png',
-      'Birds': 'assets/symbols/BOARDS/Animals/Birds.png',
-      'Reptiles': 'assets/symbols/BOARDS/Animals/Reptiles.png',
-      'Amphibians': 'assets/symbols/BOARDS/Animals/Amphibians.png',
-      'Insects': 'assets/symbols/BOARDS/Animals/Insects.png',
-      'Arachnids': 'assets/symbols/BOARDS/Animals/Arachnids.png',
-      'Invertebrates': 'assets/symbols/BOARDS/Animals/Invertebrates.png',
-      'Fish': 'assets/symbols/BOARDS/Animals/Fish.png',
-      'Habitats': 'assets/symbols/BOARDS/Animals/Habitats.png',
-      'Sealife': 'assets/symbols/BOARDS/Animals/Sealife.png',
-      'Nature Vocabulary': 'assets/symbols/BOARDS/Animals/Animals.png',
-      'Body Parts Of Animals': 'assets/symbols/BOARDS/Animals/Animal Body Parts.png',
-      'Child Animals': 'assets/symbols/BOARDS/Animals/Child Animals.png',
-      'Groups Of Animals': 'assets/symbols/BOARDS/Animals/Groups of Animals.png',
+      'Sad': 'assets/BOARDS/Feelings/Sad.png',
+      'Mad': 'assets/BOARDS/Feelings/Mad.png',
+      'Scared': 'assets/BOARDS/Feelings/Scared.png',
+      'Joyful': 'assets/BOARDS/Feelings/Joyful.png',
+      'Strong': 'assets/BOARDS/Feelings/Strong.png',
+      'Calm': 'assets/BOARDS/Feelings/Calm.png',
+      'Shades Of Colours': 'assets/BOARDS/Shades Of Colours.png',
+      'Adjectives': 'assets/BOARDS/English/Adjectives.png',
+      'Phonics': 'assets/BOARDS/English/Phonics - Phase 2.png',
+      'Phase 2 Phonics': 'assets/BOARDS/English/Phonics - Phase 2.png',
+      'Phase 3 Phonics': 'assets/BOARDS/English/Phonics - Phase 3.png',
+      'Phase 4 Phonics': 'assets/BOARDS/English/Phonics - Phase 4.png',
+      'Phase 5 Phonics': 'assets/BOARDS/English/Phonics - Phase 5.png',
+      'Phase 6 Phonics': 'assets/BOARDS/English/Phonics - Phase 6.png',
+      'School People': 'assets/BOARDS/People At School.png',
+      'Mammals': 'assets/BOARDS/Animals/Mammals.png',
+      'Birds': 'assets/BOARDS/Animals/Birds.png',
+      'Reptiles': 'assets/BOARDS/Animals/Reptiles.png',
+      'Amphibians': 'assets/BOARDS/Animals/Amphibians.png',
+      'Insects': 'assets/BOARDS/Animals/Insects.png',
+      'Arachnids': 'assets/BOARDS/Animals/Arachnids.png',
+      'Invertebrates': 'assets/BOARDS/Animals/Invertebrates.png',
+      'Fish': 'assets/BOARDS/Animals/Fish.png',
+      'Habitats': 'assets/BOARDS/Animals/Habitats.png',
+      'Sealife': 'assets/BOARDS/Animals/Sealife.png',
+      'Nature Vocabulary': 'assets/BOARDS/Animals/Animals.png',
+      'Body Parts Of Animals': 'assets/BOARDS/Animals/Animal Body Parts.png',
+      'Child Animals': 'assets/BOARDS/Animals/Child Animals.png',
+      'Groups Of Animals': 'assets/BOARDS/Animals/Groups of Animals.png',
       'A (Sign)': 'assets/symbols/1. Main Boards/Alphabet/a.png',
       'B (Sign)': 'assets/symbols/1. Main Boards/Alphabet/b.png',
       'C (Sign)': 'assets/symbols/1. Main Boards/Alphabet/c.png',
@@ -728,26 +820,20 @@ class _HomePageState extends State<HomePage> {
       'Z (Sign)': 'assets/symbols/1. Main Boards/Alphabet/z.png',
       
       // MY SCHOOL mode icons
-      'MY SCHOOL': 'assets/symbols/BOARDS/People At School.png',
-      'Baycroft Expects': 'assets/symbols/BOARDS/Baycroft Expects.png',
-      'Thinking Skills': 'assets/symbols/BOARDS/Thinking Skills.png',
-      'When Things Go Wrong': 'assets/symbols/BOARDS/Words For When Things Go Wrong.png',
-      'Blank Levels': 'assets/symbols/BOARDS/Blank Levels.png',
-      'My School Lessons': 'assets/symbols/BOARDS/Lesson Vocabulary.png',
-      'People At School': 'assets/symbols/BOARDS/People At School.png',
+      'MY SCHOOL': 'assets/BOARDS/People At School.png',
+      'Baycroft Expects': 'assets/BOARDS/Baycroft Expects.png',
+      'Thinking Skills': 'assets/BOARDS/Thinking Skills.png',
+      'When Things Go Wrong': 'assets/BOARDS/Words For When Things Go Wrong.png',
+      'Blank Levels': 'assets/BOARDS/Blank Levels.png',
+      'My School Lessons': 'assets/BOARDS/Lesson Vocabulary.png',
+      'People At School': 'assets/BOARDS/People At School.png',
 
       // PERSONAL mode icons
-      'PEOPLE AT HOME': 'assets/symbols/BOARDS/Home.png',
-      'World Map': 'assets/symbols/BOARDS/Places.png',
-      'Internal Organs': 'assets/symbols/BOARDS/Body Parts.png',
+      'PEOPLE AT HOME': 'assets/BOARDS/Home.png',
+      'World Map': 'assets/BOARDS/Places.png',
+      'Internal Organs': 'assets/BOARDS/Body Parts.png',
     };
 
-    // Small Words child tabs use Montessori icons named after the board
-    if (board.parentBoardId == 'prebuilt_small_words') {
-      return _sanitizeIconAssetPath(
-          'assets/symbols/BOARDS/English/Montessori/${board.name}.png');
-    }
-    
     // Check if we have a specific mapping for this board name
     final upperBoardName = boardName.toUpperCase();
     for (final entry in iconMappings.entries) {
@@ -758,7 +844,7 @@ class _HomePageState extends State<HomePage> {
     
     // Fallback to dynamic path construction
     final fileName = boardName.replaceAll(' ', ' ');
-    return _sanitizeIconAssetPath('assets/symbols/BOARDS/$fileName.png');
+    return _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
   }
 
   static const _fallbackLanguages = [
@@ -826,11 +912,14 @@ class _HomePageState extends State<HomePage> {
     _parentBoard = _activeTab!.parentBoard;
   }
 
+  String _tabLabelForBoard(Board board) =>
+      board.id.startsWith('link_') ? board.name.replaceAll(RegExp(r' \\(\\d+\\)$'), '') : board.name;
+
   void _buildTabsInternal([String? oldActiveId]) {
     final allTabs = <TopTab>[];
     
-    // Boards that belong to Home mode (Common area) in specific order
-    final homeBoardNames = [
+    // Boards that belong to Home mode (Common area) in AREA_COMMON.md order
+    const commonTopLevelOrder = [
       'Common Words',
       'Small Words',
       'Letters',
@@ -842,7 +931,7 @@ class _HomePageState extends State<HomePage> {
       'Colours',
       'Prepositions',
       'Body Parts',
-      'Jobs & Careers',
+      'Jobs and Careers',
       'Animals',
       'Weather',
       'Time',
@@ -852,86 +941,42 @@ class _HomePageState extends State<HomePage> {
       'Transport',
       'World Map',
     ];
+    final commonOrder = {
+      for (var i = 0;
+          i < (BoardService.current?.getTabOrder('Common') ?? commonTopLevelOrder).length;
+          i++)
+        (BoardService.current?.getTabOrder('Common') ?? commonTopLevelOrder)[i]
+            .toLowerCase(): i,
+    };
+    final homeBoardNames = hierarchyTopLevel('Common')..sort((a, b) {
+      final aIdx = commonOrder[a.toLowerCase()] ?? 999;
+      final bIdx = commonOrder[b.toLowerCase()] ?? 999;
+      return aIdx.compareTo(bIdx);
+    });
     // Boards that belong to Legends mode (in exact order)
-    final legendsBoardNames = [
-      'Characters',
-      'Creatures & Races',
-      'Gods, Titans, Heroes & Monsters',
-      'Fairy Tale Characters',
-      'Disney Stories',
-      'D&D',
-      'Arthurian Legend',
-      'Arabian & Middle Eastern Tales',
-      'Asian Legends & Folklore',
-      'Horror Icons',
-      'Legendary Heroes & Folk Heroes',
-      'Literary & Gothic Characters',
-      'Marvel',
-      'X-Men',
-      'DC',
-      'The Muppets',
-      'Star Wars',
-      'Star Trek',
-      'The Lord Of The Rings',
-      'Computer Games',
-      'Misc',
-    ];
+    final legendsBoardNames = ['Legends'];
     // Boards that belong to School mode (in order: main first)
-    final schoolBoardNames = [
-      'Subject Vocabulary',
-      'Better Words (Thesaurus)',
-      'Lessons',
-      'Sentence Creator',
-      'Small Words (Subject)',
-      'Letters (Subject)',
-      'Numbers (Subject)',
-      'Breaktime',
-      'Lunchtime',
-      'Tutor Time, Events & Clubs',
-      'English',
-      'Maths',
-      'Science',
-      'T.F.L. / I.T.',
-      'Personal Development',
-      'P.E.E.P.',
-      'E.P.I.C.',
-      'P.E.',
-      'Art',
-      'Performing Arts',
-      'Sustainability',
-      'Cooking',
-      'Resistant Materials',
-      'Textiles',
-      'Religion & Worldviews',
-      'Music',
-      'Horticulture',
-      'Retail',
-      'Photography',
-      'Construction',
-      'Design Technology',
-      'Engineering',
-      'Living Life Skills',
-      'Prepare For Adulthood',
-      'Hair & Beauty',
-      'Health & Social Care',
-      'Public Services',
-      'S.T.E.M.',
-      'Option A',
-      'Option B',
-      'Option C',
-      'Tech Rotation',
-    ];
+    final schoolBoardNames = ['Subject Vocab'];
     // Boards that belong to My School mode (in order: main first)
-    final mySchoolBoardNames = [
-      'My School Main',
-      'Baycroft Expects',
-      'Thinking Skills',
-      'When Things Go Wrong',
-      'Blank Levels',
-      'My School Lessons',
-      'Class Equipment',
-      'People At School',
-    ];
+    final mySchoolOrder = BoardService.current?.getTabOrder('My School') ?? [];
+    final mySchoolOrderMap = {
+      for (var i = 0; i < mySchoolOrder.length; i++)
+        mySchoolOrder[i].toLowerCase(): i,
+    };
+    final mySchoolBoardNames = hierarchyTopLevel('My School')..sort((a, b) {
+      final aSaved = mySchoolOrderMap[a.toLowerCase()];
+      final bSaved = mySchoolOrderMap[b.toLowerCase()];
+      if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+      if (aSaved != null) return -1;
+      if (bSaved != null) return 1;
+      final aIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == a.toLowerCase());
+      final bIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == b.toLowerCase());
+      if (aIdx == -1) return 1;
+      if (bIdx == -1) return -1;
+      return aIdx.compareTo(bIdx);
+    });
 
     
     // Build tabs based on current mode
@@ -954,7 +999,7 @@ class _HomePageState extends State<HomePage> {
           if (board != null && !board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -974,7 +1019,7 @@ class _HomePageState extends State<HomePage> {
               !addedHomeBoardNames.contains(board.name.toLowerCase())) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1006,7 +1051,7 @@ class _HomePageState extends State<HomePage> {
           if (board != null && !board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1020,7 +1065,7 @@ class _HomePageState extends State<HomePage> {
               !addedLegendsBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1045,7 +1090,7 @@ class _HomePageState extends State<HomePage> {
           if (board.area == 'Recipes' && !board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1066,57 +1111,15 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
             icon: Icons.favorite,
             type: TopTabType.favorites));
-        // Add Sign as main board
-        final signMainBoard = _boards.cast<Board?>().firstWhere(
-          (b) => b?.name.toLowerCase() == 'sign main' && b?.area == _activeArea(),
-          orElse: () => null,
-        );
-        if (signMainBoard != null) {
-          allTabs.add(TopTab(
-              id: signMainBoard.id,
-              label: signMainBoard.name,
-              iconAssetPath: _getBoardIconPath(signMainBoard),
-              type: TopTabType.board,
-              board: signMainBoard));
-        }
-        final signBoardNames = [
-          'Sign Main',
-          'A-Z Of Sign',
-          'Manners & Greetings',
-          'Family & People',
-          'Feelings & Health',
-          'Questions',
-          'Grammatical Elements',
-          'Prepositions',
-          'Descriptions & Attributes',
-          'Colours',
-          'Numbers',
-          'Quantity & Measurement',
-          'Time & Days',
-          'Letters',
-          'Food & Drink',
-          'Personal Actions',
-          'Shared Activities',
-          'Personal Hygiene',
-          'Clothing & Personal',
-          'Personal Possessions',
-          'Home & Household',
-          'General Objects',
-          'Computer Items',
-          'School & Instructions',
-          'Leisure Activities & Interests',
-          'Sport',
-          'Animals & Nature',
-          'Weather',
-          'Outside',
-          'Places',
-          'Transport & Vehicles',
-          'Money',
-          'Public Notices',
-          'Other Countries',
-          'Religion & Customs',
-          'Gender & Sexuality'
-        ];
+        final signBoardNames = hierarchyTopLevel('Sign')..sort((a, b) {
+          final aIdx = runtimeBoardHierarchy
+              .indexWhere((e) => e.name.toLowerCase() == a.toLowerCase());
+          final bIdx = runtimeBoardHierarchy
+              .indexWhere((e) => e.name.toLowerCase() == b.toLowerCase());
+          if (aIdx == -1) return 1;
+          if (bIdx == -1) return -1;
+          return aIdx.compareTo(bIdx);
+        });
         final addedSignBoardIds = <String>{};
         for (final boardName in signBoardNames) {
           final matches = _boards.where((b) => b.name.toLowerCase() == boardName.toLowerCase()).toList();
@@ -1130,7 +1133,7 @@ class _HomePageState extends State<HomePage> {
           if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1144,7 +1147,7 @@ class _HomePageState extends State<HomePage> {
               !addedSignBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1191,7 +1194,7 @@ class _HomePageState extends State<HomePage> {
               !addedSchoolBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1225,7 +1228,7 @@ class _HomePageState extends State<HomePage> {
           if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1238,7 +1241,7 @@ class _HomePageState extends State<HomePage> {
               !addedMySchoolBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1263,7 +1266,7 @@ class _HomePageState extends State<HomePage> {
           if (board.area == 'Personal' && !board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
-                label: board.name,
+                label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
@@ -1279,22 +1282,14 @@ class _HomePageState extends State<HomePage> {
     
     // Note: Settings moved to AppBar actions
 
-    // 1. Sort tabs by sortOrder if available, while keeping Favorites first and Editor last
+    // 1. Keep Favorites first and Editor last, otherwise preserve the
+    //    hierarchy order the tabs were built in (initialOrder).
     final initialOrder = {for (int i = 0; i < allTabs.length; i++) allTabs[i].id: i};
     allTabs.sort((a, b) {
       if (a.id == 'favorites') return -1;
       if (b.id == 'favorites') return 1;
       if (a.type == TopTabType.editor) return 1;
       if (b.type == TopTabType.editor) return -1;
-
-      final orderA = a.board?.sortOrder ?? 0;
-      final orderB = b.board?.sortOrder ?? 0;
-
-      if (orderA != 0 && orderB != 0) {
-        return orderA.compareTo(orderB);
-      }
-      if (orderA != 0) return -1;
-      if (orderB != 0) return 1;
 
       return (initialOrder[a.id] ?? 0).compareTo(initialOrder[b.id] ?? 0);
     });
@@ -1324,7 +1319,7 @@ class _HomePageState extends State<HomePage> {
                 : null;
             startingTab = TopTab(
               id: board.id,
-              label: board.name,
+              label: _tabLabelForBoard(board),
               iconAssetPath: _getBoardIconPath(board),
               type: TopTabType.board,
               board: board,
@@ -1373,7 +1368,7 @@ class _HomePageState extends State<HomePage> {
             : null;
         _activeTab = TopTab(
           id: board.id,
-          label: board.name,
+          label: _tabLabelForBoard(board),
           iconAssetPath: _getBoardIconPath(board),
           type: TopTabType.board,
           board: board,
@@ -1389,11 +1384,7 @@ class _HomePageState extends State<HomePage> {
     _syncParentBoardForActiveTab();
   }
 
-  static const Set<String> _animalSubBoards = {
-    'Mammals', 'Birds', 'Reptiles', 'Amphibians', 'Insects', 'Arachnids',
-    'Invertebrates', 'Fish', 'Habitats', 'Sealife', 'Nature Vocabulary',
-    'Body Parts of Animals', 'Child Animals', 'Groups of Animals',
-  };
+  static const Set<String> _animalSubBoards = {};
 
   /// Returns sub-board tabs for any parent board that links to sub-boards.
   List<TopTab> _subTabsForBoard(Board? board) {
@@ -1411,19 +1402,23 @@ class _HomePageState extends State<HomePage> {
     final children = _boards.where((b) => b.parentBoardId == board.id).toList();
     
     // Also include linked boards that are marked as sub-boards in the tiles
-    final linkedSubBoardNames = <String>{};
+    final linkedSubBoardIds = <String>{};
     for (final tile in board.tiles) {
       if (tile.isBoardLink && tile.linkedBoardId.isNotEmpty) {
         final linked = _boards.cast<Board?>().firstWhere((b) => b?.id == tile.linkedBoardId, orElse: () => null);
         if (linked != null && linked.tier > board.tier) {
-          linkedSubBoardNames.add(linked.name);
+          linkedSubBoardIds.add(linked.id);
         }
       }
     }
     
     // Animal special case — only for the Animals parent board itself
     if (board.name.toUpperCase() == 'ANIMALS') {
-      linkedSubBoardNames.addAll(_animalSubBoards);
+      // Animal sub-boards are referenced by name, not by stored board IDs.
+      for (final animalName in _animalSubBoards) {
+        final matched = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == animalName.toUpperCase() && b?.area == board.area, orElse: () => null);
+        if (matched != null) linkedSubBoardIds.add(matched.id);
+      }
     }
 
     final childrenTabs = <TopTab>[];
@@ -1433,7 +1428,7 @@ class _HomePageState extends State<HomePage> {
       if (seenIds.add(child.id)) {
         childrenTabs.add(TopTab(
           id: child.id,
-          label: child.name,
+          label: _tabLabelForBoard(child),
           iconAssetPath: _getBoardIconPath(child),
           type: TopTabType.board,
           board: child,
@@ -1442,12 +1437,12 @@ class _HomePageState extends State<HomePage> {
       }
     }
     
-    for (final name in linkedSubBoardNames) {
-      final b = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == name.toUpperCase() && b?.area == board.area, orElse: () => null);
+    for (final linkedId in linkedSubBoardIds) {
+      final b = _boards.cast<Board?>().firstWhere((b) => b?.id == linkedId, orElse: () => null);
       if (b != null && seenIds.add(b.id)) {
         childrenTabs.add(TopTab(
           id: b.id,
-          label: b.name,
+          label: _tabLabelForBoard(b),
           iconAssetPath: _getBoardIconPath(b),
           type: TopTabType.board,
           board: b,
@@ -1456,11 +1451,26 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    // Sort by board sortOrder, then by label
+    // Sort by saved parent tab order, then board sortOrder, then by label
+    final savedOrder = BoardService.current?.getTabOrder(board.id) ?? [];
+    final orderMap = <String, int>{
+      for (var i = 0; i < savedOrder.length; i++) savedOrder[i].toLowerCase(): i,
+    };
     childrenTabs.sort((a, b) {
       // SPECIAL CASE: A-Z Of Sign sub-tabs should ALWAYS be alphabetical
       if (board.name.toLowerCase() == 'a-z of sign' || board.id == 'prebuilt_a-z_of_sign') {
         return a.label.toLowerCase().compareTo(b.label.toLowerCase());
+      }
+
+      // 0. Check explicit tab order saved via Edit Tab Order
+      if (savedOrder.isNotEmpty) {
+        final aName = a.board?.name.toLowerCase() ?? a.label.toLowerCase();
+        final bName = b.board?.name.toLowerCase() ?? b.label.toLowerCase();
+        final aIdx = orderMap[aName];
+        final bIdx = orderMap[bName];
+        if (aIdx != null && bIdx != null) return aIdx.compareTo(bIdx);
+        if (aIdx != null) return -1;
+        if (bIdx != null) return 1;
       }
 
       // 1. Check manual sortOrder (only applies if both have boards)
@@ -1472,7 +1482,7 @@ class _HomePageState extends State<HomePage> {
         if (b.board!.sortOrder != 0) return 1;
       }
 
-      // 2. Check prebuilt hierarchy order (Authoritative sequence for system boards & shortcuts)
+      // 2. Check prebuilt hierarchy order (Authoritative sequence for system boards and shortcuts)
       final aIndex = prebuiltBoardNames.indexOf(a.label);
       final bIndex = prebuiltBoardNames.indexOf(b.label);
       
@@ -1505,7 +1515,7 @@ class _HomePageState extends State<HomePage> {
     _navigationHistory.clear();
     final profile = _profiles.firstWhere(
       (profile) => profile.id == profileId,
-      orElse: () => _profiles.first,
+      orElse: () => _profiles.isNotEmpty ? _profiles.first : UserProfile.defaultProfile(),
     );
     
     // Check if profile requires authentication
@@ -1919,7 +1929,7 @@ class _HomePageState extends State<HomePage> {
       }
       
       // 2. Tag match
-      if (_metadataService.matchesQuery(tile.id, q)) {
+      if (_metadataService.matchesQuery(tile.imageAsset, q)) {
         result.add(tile);
         seen.add(uniqueKey);
         return;
@@ -1980,7 +1990,7 @@ class _HomePageState extends State<HomePage> {
 
     if (q.length == 1) {
       if (_isSearchableShortQuery(q)) {
-        return l == q || _metadataService.matchesQuery(tile.id, q);
+        return l == q || _metadataService.matchesQuery(tile.imageAsset, q);
       }
       return true;
     }
@@ -1999,7 +2009,7 @@ class _HomePageState extends State<HomePage> {
     if (l.contains(q)) return true;
 
     // Tag match
-    if (_metadataService.matchesQuery(tile.id, q)) return true;
+    if (_metadataService.matchesQuery(tile.imageAsset, q)) return true;
 
     final normL = l.replaceAll(RegExp(r'[aeiouy]'), '*');
     final normQ = q.replaceAll(RegExp(r'[aeiouy]'), '*');
@@ -2144,13 +2154,13 @@ class _HomePageState extends State<HomePage> {
             _activeTab = null;
             _parentBoard = null;
             _navigationHistory.clear();
-            _buildTabs();
-            
-            // Reset tab scroll position to the start
-            for (final controller in _tabScrollControllers.values) {
-              if (controller.hasClients) controller.jumpTo(0);
-            }
           });
+          _loadBoards(area: _activeArea());
+
+          // Reset tab scroll position to the start
+          for (final controller in _tabScrollControllers.values) {
+            if (controller.hasClients) controller.jumpTo(0);
+          }
         },
         style: FilledButton.styleFrom(
           backgroundColor: isSelected 
@@ -2193,23 +2203,43 @@ class _HomePageState extends State<HomePage> {
     _addToPhrase(symbol);
   }
 
-  void _openLinkedBoard(String boardId) {
+  void _openLinkedBoard(String boardId) async {
     if (boardId.isEmpty || _boards.isEmpty) return;
     _pushHistory();
-    final board = _boards.cast<Board?>().firstWhere(
+    Board? pending = _boards.cast<Board?>().firstWhere(
           (b) => b?.id == boardId,
           orElse: () => null,
-        ) ??
-        _createEmptySubboard(boardId);
+        );
+    // Placeholder tab entries have no tiles; load the real board before opening.
+    if (pending == null || pending.tiles.isEmpty) {
+      final full = await (await BoardService.getInstance()).getBoard(boardId);
+      if (full != null) pending = full;
+    }
+    final board = pending ?? _createEmptySubboard(boardId);
+    if (!_boards.any((b) => b.id == boardId)) {
+      _boards.add(board);
+    }
+    if (!mounted) return;
 
-    setState(() {
-      final targetMode = _getModeForBoard(board.id);
-      if (_currentMode != targetMode) {
+    final targetMode = _getModeForBoard(board.id);
+    if (_currentMode != targetMode) {
+      setState(() {
         _currentMode = targetMode;
         _activeTab = null;
         _parentBoard = null;
-        _buildTabsInternal(); // Rebuild for new mode
+      });
+      await _loadBoards(area: board.area);
+      if (!mounted) return;
+    }
+
+    setState(() {
+      final boardIndex = _boards.indexWhere((b) => b.id == board.id);
+      if (boardIndex >= 0) {
+        _boards[boardIndex] = board;
+      } else if (!_boards.any((b) => b.id == board.id)) {
+        _boards.add(board);
       }
+      _buildTabsInternal();
 
       // 1. Establish parent relationship
       Board? parent;
@@ -2242,7 +2272,7 @@ class _HomePageState extends State<HomePage> {
         // Not a top tab, create orphan sub-tab
         targetTab = TopTab(
           id: board.id,
-          label: board.name,
+          label: _tabLabelForBoard(board),
           iconAssetPath: _getBoardIconPath(board),
           type: TopTabType.board,
           board: board,
@@ -2258,31 +2288,58 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Board _createAutoMissingBoard(String id, String name,
+      {String? area, bool isSubBoard = false}) {
+    final tile = SymbolTile(
+      id: '${id}_empty',
+      label: name,
+      category: 'Custom',
+      imageAsset: 'assets/Empty Board.png',
+      isBoardLink: false,
+      bgColor: '#000000',
+      textColor: '#FFFFFF',
+    );
+    return Board(
+      id: id,
+      name: name,
+      area: area ?? hierarchyArea(name),
+      rows: 1,
+      columns: 1,
+      adjustableLayout: false,
+      backgroundColor: defaultBoardColor,
+      tiles: [tile],
+      isSubBoard: isSubBoard,
+      tier: isSubBoard ? 2 : 1,
+    );
+  }
+
   Board _createEmptySubboard(String boardId) {
     final name = _boardNameFromId(boardId) ?? _titleCaseFromId(boardId);
-    final board = Board(
-      id: boardId,
+    final board = _createAutoMissingBoard(
+      boardId,
+      name,
+      area: hierarchyArea(name),
+      isSubBoard: true,
+    );
+    if (!_boards.any((b) => b.id == boardId)) {
+      _boards.add(board);
+    }
+    BoardService.getInstance().then((s) => s.saveBoard(board));
+    return board;
+  }
+
+  Board _createMissingBoardPlaceholder(String id, String name) {
+    return Board(
+      id: id,
       name: name,
+      area: _activeArea(),
       rows: defaultBoardRows,
       columns: defaultBoardColumns,
       adjustableLayout: true,
       backgroundColor: defaultBoardColor,
-      tiles: List.generate(
-        defaultBoardRows * defaultBoardColumns,
-        (index) => SymbolTile(
-          id: 'tile_$index',
-          label: '',
-          category: 'Custom',
-          imageAsset: '',
-          bgColor: 'transparent',
-          textColor: '#000000',
-        ),
-      ),
-      isSubBoard: true,
+      tiles: const [],
+      isSubBoard: false,
     );
-    _boards.add(board);
-    BoardService.getInstance().then((s) => s.saveBoard(board));
-    return board;
   }
 
   String? _boardNameFromId(String id) {
@@ -2317,7 +2374,7 @@ class _HomePageState extends State<HomePage> {
     } catch (_) {
       tab = TopTab(
         id: board.id,
-        label: board.name,
+        label: _tabLabelForBoard(board),
         iconAssetPath: _getBoardIconPath(board),
         type: TopTabType.board,
         board: board,
@@ -2704,8 +2761,10 @@ class _HomePageState extends State<HomePage> {
       await service.saveBoard(board).timeout(const Duration(seconds: 10));
       debugPrint('Board saved successfully');
 
-      // Reload board from storage to ensure we have the latest version
-      final reloadedBoard = await service.loadBoard(board.id);
+      // Reload board from cache to ensure we have the latest version.
+      // For web prebuilt boards this avoids loading the original source JSON
+      // and discarding the edits we just saved.
+      final reloadedBoard = await service.getBoard(board.id);
       if (reloadedBoard != null) {
         board = reloadedBoard;
       }
@@ -2738,6 +2797,10 @@ class _HomePageState extends State<HomePage> {
         targetMode = AppMode.school;
       } else if (area == 'Personal') {
         targetMode = AppMode.personal;
+      } else if (area == 'Legends') {
+        targetMode = AppMode.legends;
+      } else if (area == 'Recipes') {
+        targetMode = AppMode.recipes;
       }
       _currentMode = targetMode;
 
@@ -2755,15 +2818,24 @@ class _HomePageState extends State<HomePage> {
 
       _buildTabsInternal(targetTabId);
 
-      _activeTab = _tabs.firstWhere(
-        (tab) => tab.id == targetTabId,
-        orElse: () => _tabs.firstWhere(
-          (tab) => tab.type == TopTabType.board,
-          orElse: () => _tabs.first,
-        ),
-      );
+      _activeTab = _tabs.isNotEmpty
+          ? _tabs.firstWhere(
+              (tab) => tab.id == targetTabId,
+              orElse: () => _tabs.firstWhere(
+                (tab) => tab.type == TopTabType.board,
+                orElse: () => _tabs.first,
+              ),
+            )
+          : TopTab(
+              id: board.id,
+              label: _tabLabelForBoard(board),
+              iconAssetPath: _getBoardIconPath(board),
+              type: TopTabType.board,
+              board: board,
+              parentBoard: _parentBoard,
+            );
 
-      if (board.tier > 1) {
+      if (board.tier > 1 && _activeTab != null) {
         final subTabs = _subTabsForBoard(_parentBoard);
         final subTab = subTabs.firstWhere((t) => t.id == board.id,
             orElse: () => _activeTab!);
@@ -2782,6 +2854,7 @@ class _HomePageState extends State<HomePage> {
         body: BoardEditor(
           board: board,
           initialMergeIndex: mergeIndex,
+          availableBoards: _boards,
           onSave: (savedBoard) async {
             await _upsertBoard(savedBoard);
             if (!mounted) return;
@@ -2790,9 +2863,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     ));
-    await _loadBoards();
+    // _upsertBoard already updated the active tab when the merge was saved.
     if (!mounted) return;
-    setState(() => _buildTabsInternal(savedBoardId ?? board.id));
   }
 
   String _activeArea() {
@@ -2828,6 +2900,7 @@ class _HomePageState extends State<HomePage> {
         body: BoardEditor(
           board: board,
           initialIndex: index,
+          availableBoards: _boards,
           initialArea: board?.area ?? initialArea ?? _activeArea(),
           initialParentBoardId: board == null ? initialParentBoardId : null,
           initialTier: board == null ? (initialTier ?? 1) : board.tier,
@@ -2839,11 +2912,9 @@ class _HomePageState extends State<HomePage> {
       ),
     ));
 
-    // Reload everything to catch background saves (tile edits/deletions)
-    final service = await BoardService.getInstance();
-    _boards = await service.listBoards();
+    // _upsertBoard already updated _boards and rebuilt the tabs when the
+    // board was saved, so no need to reload the entire list again.
     if (!mounted) return;
-
     setState(() {
       _buildTabsInternal(savedBoardId ?? editingBoardId);
     });
@@ -2899,7 +2970,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _handleTabTap(TopTab tab) {
+  Future<void> _handleTabTap(TopTab tab) async {
     if (tab.id == _activeTab?.id) return;
     _pushHistory();
     if (_boardScrollController.hasClients) {
@@ -2915,8 +2986,61 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     if (tab.type == TopTabType.board && tab.board != null) {
+      final service = await BoardService.getInstance();
+      _boardLoadError = null;
+      _missingBoardId = null;
+      _missingBoardName = null;
+      final full = await service.getBoard(tab.board!.id);
+      if (full == null) {
+        final missingBoard = _createAutoMissingBoard(
+          tab.board!.id,
+          tab.board!.name,
+          area: tab.board!.area,
+        );
+        await _upsertBoard(missingBoard);
+        return;
+      }
+
+      // Link tabs (e.g. Characters under Common > People) should not open the
+      // placeholder link board; they should load the original board in its own
+      // area and select its real tab.
+      if (full.linkedBoardId != null && full.linkedBoardId!.isNotEmpty) {
+        final original = await service.getBoard(full.linkedBoardId!);
+        if (original == null) return;
+        if (original.area != _activeArea()) {
+          await _loadBoards(area: original.area);
+        }
+        final target = _tabs.cast<TopTab?>().firstWhere(
+              (t) => t?.board?.id == original.id,
+              orElse: () => TopTab(
+                id: original.id,
+                label: original.name,
+                iconAssetPath: _getBoardIconPath(original),
+                type: TopTabType.board,
+                board: original,
+                parentBoard: null,
+              ),
+            )!;
+        _handleTabTap(target);
+        return;
+      }
+
+      if (!mounted) return;
       setState(() {
-        _activeTab = tab;
+        _boardLoadError = null;
+        _missingBoardId = null;
+        _missingBoardName = null;
+        final index = _boards.indexWhere((b) => b.id == full.id);
+        if (index >= 0) _boards[index] = full;
+        _activeTab = TopTab(
+          id: tab.id,
+          label: tab.label,
+          icon: tab.icon,
+          iconAssetPath: tab.iconAssetPath,
+          type: tab.type,
+          board: full,
+          parentBoard: tab.parentBoard,
+        );
         _selectedCategory = 'All';
         _showAllBoardSymbols = false;
         _parentBoard = tab.parentBoard;
@@ -2950,12 +3074,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   ImageProvider? _getProfileImageProvider(String img) {
-    if (img.isEmpty || img == 'assets/charlie_chat_aac_logo.png' || img == 'assets/symbols/baycroft.png') {
-      return const AssetImage('assets/charlie_chat_aac_default_profile.png');
+    if (img.isEmpty || img == 'assets/symbols/baycroft.png') {
+      return const AssetImage('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png');
     }
     if (img.startsWith('data:')) return MemoryImage(base64Decode(img.split(',').last));
-    if (kIsWeb) return NetworkImage(img);
     if (img.startsWith('assets/')) return AssetImage(img);
+    if (kIsWeb) return NetworkImage(img);
     return FileImage(File(img));
   }
 
@@ -2982,36 +3106,29 @@ class _HomePageState extends State<HomePage> {
     return _isAncestor(ancestorId, parent);
   }
 
-  Future<void> _showReorderTabsDialog(List<TopTab> boardTabs) async {
-    final reordered = await showDialog<List<TopTab>>(
+  Future<void> _showReorderTabsDialog(List<TopTab> boardTabs, {Board? rowParent}) async {
+    await showDialog<List<TopTab>>(
       context: context,
       builder: (ctx) => _ReorderTabsDialog(
         tabs: boardTabs,
         onDelete: _deleteTabFromReorderDialog,
+        onAdd: (tabs) => _addExistingBoardToTabRow(tabs, parent: rowParent),
         onSaveComplete: _loadBoards,
       ),
     );
-    if (reordered == null) return;
-
-    final service = await BoardService.getInstance();
-    int currentOrder = 1;
-    for (final tab in reordered) {
-      if (tab.type == TopTabType.board && tab.board != null) {
-        tab.board!.sortOrder = currentOrder++;
-        await service.saveBoard(tab.board!);
-      }
-    }
-
-    _loadBoards();
+    // _saveOrder / reset already persisted and called onSaveComplete (_loadBoards).
   }
 
   Future<bool> _deleteTabFromReorderDialog(TopTab tab) async {
+    final board = tab.board;
+    if (board == null) return false;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text('Delete ${tab.label}?'),
+        title: Text('Remove ${tab.label}?'),
         content: const Text(
-          'This will permanently delete this board and all its tiles. This action cannot be undone.',
+          'This will remove this board from the current tab row. It will not be deleted and can still be reached from linked tiles.',
         ),
         actions: [
           TextButton(
@@ -3021,15 +3138,176 @@ class _HomePageState extends State<HomePage> {
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Yes, delete'),
+            child: const Text('Remove'),
           ),
         ],
       ),
     );
-    if (confirmed != true || tab.board == null) return false;
-    await (await BoardService.getInstance()).deleteBoard(tab.board!.id);
+    if (confirmed != true) return false;
+
+    final service = await BoardService.getInstance();
+    if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
+      // Promote out of the current tab row
+      final newParentId = tab.parentBoard?.parentBoardId;
+      board.parentBoardId = newParentId ?? '';
+      if (newParentId != null && newParentId.isNotEmpty) {
+        final newParent = _boards.cast<Board?>().firstWhere(
+              (b) => b?.id == newParentId,
+              orElse: () => null,
+            );
+        board.isSubBoard = true;
+        board.isTertiaryBoard = newParent?.isSubBoard ?? false;
+      } else {
+        board.isSubBoard = false;
+        board.isTertiaryBoard = false;
+      }
+    } else {
+      // Top-level tab: hide from the top tab bar without deleting
+      board.isSubBoard = true;
+    }
+    // Load the full board (with tiles) before saving, otherwise the tile-less
+    // placeholder used in the tab list would overwrite the board with no tiles.
+    final fullBoard = await service.loadBoard(board.id) ?? board;
+    fullBoard.isSubBoard = board.isSubBoard;
+    fullBoard.isTertiaryBoard = board.isTertiaryBoard;
+    fullBoard.parentBoardId = board.parentBoardId;
+    await service.saveBoard(fullBoard);
+    service.clearBoardCache(board.id);
     await _loadBoards();
     return true;
+  }
+
+  Future<TopTab?> _addExistingBoardToTabRow(List<TopTab> currentTabs, {Board? parent}) async {
+    final rowParent = parent ??
+        currentTabs.cast<TopTab?>().firstWhere(
+              (t) => t != null && t.parentBoard != null,
+              orElse: () => null,
+            )?.parentBoard;
+
+    final service = await BoardService.getInstance();
+    final allBoards = await service.listBoards(includeTiles: false);
+
+    // Allow any board to be linked, except other link-boards and the row's parent.
+    final candidates = allBoards
+        .where((b) =>
+            !b.id.startsWith('link_') &&
+            (rowParent == null || b.id != rowParent.id))
+        .toList()
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+    final selectedId = await _pickExistingBoard(candidates);
+    if (selectedId == null) return null;
+
+    final original = await service.getBoard(selectedId);
+    if (original == null) return null;
+
+    final targetArea = rowParent?.area ?? _activeArea();
+    final parentId = rowParent?.id;
+
+    // Find a unique internal id and name for the new secondary tab.
+    final existingIds = <String>{for (final b in allBoards) b.id};
+    final existingNames = <String>{for (final b in allBoards) b.name.toLowerCase()};
+
+    String linkId;
+    String linkName;
+    int n = 1;
+    do {
+      linkName = n == 1 ? original.name : '${original.name} ($n)';
+      linkId = n == 1 ? 'link_${original.id}' : 'link_${original.id}_$n';
+      n++;
+    } while (existingIds.contains(linkId));
+
+    final isSub = rowParent != null;
+    final tier = (rowParent?.tier ?? 1) + (isSub ? 1 : 0);
+
+    final linkBoard = Board(
+      id: linkId,
+      name: linkName,
+      area: targetArea,
+      parentBoardId: parentId,
+      linkedBoardId: original.id,
+      rows: defaultBoardRows,
+      columns: defaultBoardColumns,
+      adjustableLayout: false,
+      tiles: const [],
+      boxScale: original.boxScale,
+      tileHeight: original.tileHeight,
+      tileWidth: original.tileWidth,
+      backgroundColor: original.backgroundColor,
+      isSubBoard: isSub,
+      isTertiaryBoard: tier >= 3,
+      isQuaternaryBoard: tier >= 4,
+      isQuinaryBoard: tier >= 5,
+      sortOrder: 0,
+      tier: tier,
+      iconAssetPath: original.iconAssetPath,
+      version: original.version,
+    );
+
+    await service.saveBoard(linkBoard, recordSync: false);
+    service.clearBoardCache(linkBoard.id);
+
+    return TopTab(
+      id: linkBoard.id,
+      label: linkName,
+      iconAssetPath: _getBoardIconPath(linkBoard),
+      type: TopTabType.board,
+      board: linkBoard,
+      parentBoard: rowParent,
+    );
+  }
+
+  Future<String?> _pickExistingBoard(List<Board> candidates) async {
+    var query = '';
+    return await showDialog<String?>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) {
+          final displayed = candidates
+              .where((b) => b.name.toLowerCase().contains(query.toLowerCase()))
+              .toList()
+            ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+          return AlertDialog(
+            title: const Text('Add Existing Board'),
+            content: SizedBox(
+              width: double.maxFinite,
+              height: 400,
+              child: Column(
+                children: [
+                  TextField(
+                    autofocus: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Search boards...',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                    onChanged: (v) => setState(() => query = v),
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: displayed.isEmpty
+                        ? const Center(child: Text('No matching boards.'))
+                        : ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: displayed.length,
+                            itemBuilder: (context, i) => ListTile(
+                              title: Text(displayed[i].name),
+                              onTap: () => Navigator.pop(ctx, displayed[i].id),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   int _getCurrentRowLevel(List<TopTab> tabs) {
@@ -3112,8 +3390,16 @@ class _HomePageState extends State<HomePage> {
       backgroundColor = HSVColor.fromAHSV(1.0, hue, 0.7, 0.95).toColor();
       foregroundColor = Colors.black;
     }
-    return Container(
-      key: ValueKey(tab.id),
+    return GestureDetector(
+      onLongPress: () {
+        if (tab.type == TopTabType.board && tab.board != null && !tab.board!.id.startsWith('link_')) {
+          _showReorderTabsDialog(_subTabsForBoard(tab.board), rowParent: tab.board);
+        } else {
+          _refreshBoardCache(tab);
+        }
+      },
+      child: Container(
+        key: ValueKey(tab.id),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       child: Tooltip(
         message: tab.label,
@@ -3149,7 +3435,32 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
+    ),
+  );
+  }
+
+  Future<void> _refreshBoardCache(TopTab tab) async {
+    if (tab.board == null) return;
+    final service = await BoardService.getInstance();
+    service.clearBoardCache(tab.board!.id);
+    final full = await service.getBoard(tab.board!.id);
+    if (full == null) return;
+    if (!mounted) return;
+    setState(() {
+      final index = _boards.indexWhere((b) => b.id == full.id);
+      if (index >= 0) _boards[index] = full;
+      if (_activeTab?.id == tab.id) {
+        _activeTab = TopTab(
+          id: tab.id,
+          label: tab.label,
+          icon: tab.icon,
+          iconAssetPath: tab.iconAssetPath,
+          type: tab.type,
+          board: full,
+          parentBoard: tab.parentBoard,
+        );
+      }
+    });
   }
 
   List<List<TopTab>> _buildTabRows() {
@@ -3212,6 +3523,37 @@ class _HomePageState extends State<HomePage> {
     return rows;
   }
 
+  Widget _buildBoardLoadingPlaceholder(BuildContext context) {
+    final name = _activeTab?.label ?? 'board';
+    return Container(
+      constraints: const BoxConstraints(minHeight: 300),
+      color: Theme.of(context).colorScheme.surface,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(
+                'Loading $name...',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Please wait while the board and its assets are prepared.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildBoardScaffold(BuildContext context, AacLayout layout) {
     if (_loading) {
       return Scaffold(
@@ -3226,10 +3568,12 @@ class _HomePageState extends State<HomePage> {
     
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 56,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
-            'assets/charlie_chat_aac_logo.png',
+            'assets/Logos and Profile Pics/charlie_chat_aac_logo.png',
+            height: 40,
             fit: BoxFit.contain,
             cacheWidth: 100, // Optimize loading
             errorBuilder: (context, error, stackTrace) {
@@ -3273,7 +3617,7 @@ class _HomePageState extends State<HomePage> {
                     backgroundImage: _getProfileImageProvider(_activeProfile!.settings.profileImage),
                   )
                 : Image.asset(
-                    'assets/charlie_chat_aac_default_profile.png',
+                    'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png',
                     width: 28,
                     height: 28,
                     errorBuilder: (context, error, stackTrace) =>
@@ -3335,7 +3679,39 @@ class _HomePageState extends State<HomePage> {
                         vertical: layout.isPhone ? 6 : 10),
                     child: _buildSentenceBuilder(),
                   ),
-                  if (_loading)
+                  if (_boardLoadError != null)
+                    Container(
+                      width: double.infinity,
+                      color: Colors.redAccent,
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _boardLoadError!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          if (_missingBoardId != null)
+                            TextButton(
+                              onPressed: () => _openBoardEditor(
+                                board: _createMissingBoardPlaceholder(
+                                  _missingBoardId!,
+                                  _missingBoardName ?? _titleCaseFromId(_missingBoardId!),
+                                ),
+                              ),
+                              child: const Text(
+                                'Create this new board',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                        ],
+                      ),
+                    )
+                  else if (_loading)
                     const LinearProgressIndicator(minHeight: 2),
                   Expanded(
                     child: CustomScrollView(
@@ -3358,7 +3734,9 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               RepaintBoundary(
                                 key: _boardViewKey,
-                                child: SymbolGrid(
+                                child: _isLoadingActiveBoard
+                                    ? _buildBoardLoadingPlaceholder(context)
+                                    : SymbolGrid(
                                   symbols: _displaySymbols,
                                   favoriteIds: _favoritesService?.favorites ?? {},
                                   onTap: _handleSymbolTap,
@@ -3394,7 +3772,7 @@ class _HomePageState extends State<HomePage> {
                                     child: const Text('Show More'),
                                   ),
                                 ),
-                              SizedBox(height: layout.gridSpacing),
+                              const SizedBox(height: 240),
                             ],
                           ),
                         ),
@@ -3405,15 +3783,18 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
       floatingActionButton: _showScrollToTop
-          ? FloatingActionButton.small(
-              onPressed: () {
-                _boardScrollController.animateTo(
-                  0,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOut,
-                );
-              },
-              child: const Icon(Icons.keyboard_arrow_up, size: 24),
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: FloatingActionButton.small(
+                onPressed: () {
+                  _boardScrollController.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeOut,
+                  );
+                },
+                child: const Icon(Icons.keyboard_arrow_up, size: 24),
+              ),
             )
           : null,
     );
@@ -3657,8 +4038,9 @@ class _HomePageState extends State<HomePage> {
 class _ReorderTabsDialog extends StatefulWidget {
   final List<TopTab> tabs;
   final Future<bool> Function(TopTab tab) onDelete;
-  final VoidCallback onSaveComplete;
-  const _ReorderTabsDialog({required this.tabs, required this.onDelete, required this.onSaveComplete});
+  final Future<TopTab?> Function(List<TopTab> currentTabs) onAdd;
+  final Future<void> Function() onSaveComplete;
+  const _ReorderTabsDialog({required this.tabs, required this.onDelete, required this.onAdd, required this.onSaveComplete});
 
   @override
   State<_ReorderTabsDialog> createState() => _ReorderTabsDialogState();
@@ -3693,12 +4075,16 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
 
     try {
       final service = await BoardService.getInstance();
-      int currentOrder = 1;
+      String? orderKey;
+      final names = <String>[];
       for (final tab in _localList) {
         if (tab.type == TopTabType.board && tab.board != null) {
-          tab.board!.sortOrder = currentOrder++;
-          await service.saveBoard(tab.board!);
+          orderKey ??= tab.parentBoard?.id ?? tab.board!.area;
+          names.add(tab.board!.name);
         }
+      }
+      if (orderKey != null && names.isNotEmpty) {
+        await service.saveTabOrder(orderKey, names);
       }
       if (mounted) {
         setState(() {
@@ -3710,7 +4096,7 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
           if (mounted) setState(() => _statusMessage = null);
         });
         // Trigger a reload of the UI tabs in the background
-        widget.onSaveComplete();
+        await widget.onSaveComplete();
       }
     } catch (e) {
       if (mounted) {
@@ -3810,25 +4196,12 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
                           ),
                         const SizedBox(width: 4),
                         IconButton(
-                          icon: const Icon(Icons.delete_outline, color: Colors.red),
-                          tooltip: 'Delete board',
+                          icon: const Icon(Icons.remove_circle_outline, color: Colors.red),
+                          tooltip: 'Remove from tab row',
                           onPressed: () async {
-                            final confirmed = await showDialog<bool>(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text('Delete ${tab.label}?'),
-                                content: const Text('This will permanently delete this board and all its tiles.'),
-                                actions: [
-                                  TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-                                  FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Delete')),
-                                ],
-                              ),
-                            );
-                            if (confirmed == true) {
-                                final deleted = await widget.onDelete(tab);
-                                if (deleted && mounted) {
-                                  setState(() => _localList.removeAt(index));
-                                }
+                            final removed = await widget.onDelete(tab);
+                            if (removed && mounted) {
+                              setState(() => _localList.removeAt(index));
                             }
                           },
                         ),
@@ -3836,7 +4209,7 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
                     ),
                   );
                 },
-                onReorderItem: (oldIndex, newIndex) {
+                onReorder: (oldIndex, newIndex) {
                   setState(() {
                     final item = _localList.removeAt(oldIndex);
                     final insertIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
@@ -3849,6 +4222,17 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
         ),
       ),
       actions: [
+        TextButton.icon(
+          onPressed: () async {
+            final added = await widget.onAdd(_localList);
+            if (added != null && mounted) {
+              setState(() => _localList.add(added));
+            }
+          },
+          icon: const Icon(Icons.add),
+          label: const Text('Add Existing Board'),
+        ),
+        const SizedBox(width: 8),
         TextButton(
           onPressed: () async {
             final navigator = Navigator.of(context);
@@ -3865,27 +4249,30 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
             );
             if (confirmed == true) {
               final service = await BoardService.getInstance();
+              String? orderKey;
               for (final tab in _localList) {
                 if (tab.board != null) {
-                  tab.board!.sortOrder = 0;
-                  await service.saveBoard(tab.board!);
+                  orderKey ??= tab.parentBoard?.id ?? tab.board!.area;
                 }
+              }
+              if (orderKey != null) {
+                await service.clearTabOrder(orderKey);
               }
               if (mounted) {
                  setState(() => _statusMessage = 'Order reset to default.');
                  widget.onSaveComplete();
                  Future.delayed(const Duration(seconds: 2), () {
-                    if (mounted) navigator.pop(_localList);
+                    if (mounted) navigator.pop();
                  });
               }
             }
           },
           child: const Text('Reset to Default', style: TextStyle(color: Colors.redAccent)),
         ),
-        const Spacer(),
+        const SizedBox(width: 20),
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
         FilledButton(onPressed: _isSaving ? null : _saveOrder, child: const Text('Save Order')),
-        FilledButton.tonal(onPressed: () => Navigator.pop(context, _localList), child: const Text('Done')),
+        FilledButton.tonal(onPressed: () => Navigator.pop(context), child: const Text('Done')),
       ],
     );
   }

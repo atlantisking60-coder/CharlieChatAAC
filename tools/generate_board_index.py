@@ -15,7 +15,7 @@ for root, dirs, files in os.walk(boards_dir):
         if file.endswith('.json'):
             file_path = os.path.join(root, file)
             try:
-                with open(file_path, 'r', encoding='utf-8') as f:
+                with open(file_path, 'r', encoding='utf-8-sig') as f:
                     data = json.load(f)
                     board_index.append({
                         'id': data.get('id', ''),

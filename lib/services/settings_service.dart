@@ -49,7 +49,7 @@ class AppSettings {
   final bool autoSyncOnLaunch;
 
   const AppSettings({
-    this.themeMode = ThemeMode.system,
+    this.themeMode = ThemeMode.light,
     this.voiceRate = 0.80,
     this.voicePitch = 0.90,
     this.voiceVolume = 1.0,
@@ -197,12 +197,10 @@ class AppSettings {
   }
 
   factory AppSettings.fromMap(Map<String, dynamic> map) {
-    final themeValue = map['themeMode']?.toString() ?? 'system';
-    final themeMode = themeValue == 'light'
-        ? ThemeMode.light
-        : themeValue == 'dark'
-            ? ThemeMode.dark
-            : ThemeMode.system;
+    final themeValue = map['themeMode']?.toString() ?? 'light';
+    final themeMode = themeValue == 'dark'
+        ? ThemeMode.dark
+        : ThemeMode.light;
     return AppSettings(
       themeMode: themeMode,
       voiceRate: (map['voiceRate'] is num)
@@ -298,12 +296,10 @@ class SettingsService {
   /// individual value from the device's storage.
   ///
   AppSettings get settings {
-    final themeValue = _prefs.getString(_themeKey) ?? 'system';
-    final themeMode = themeValue == 'light'
-        ? ThemeMode.light
-        : themeValue == 'dark'
-            ? ThemeMode.dark
-            : ThemeMode.system;
+    final themeValue = _prefs.getString(_themeKey) ?? 'light';
+    final themeMode = themeValue == 'dark'
+        ? ThemeMode.dark
+        : ThemeMode.light;
     final voiceRate = _prefs.getDouble(_rateKey) ?? 0.80;
     final voicePitch = _prefs.getDouble(_pitchKey) ?? 1.0;
     final voiceVolume = _prefs.getDouble(_volumeKey) ?? 1.0;

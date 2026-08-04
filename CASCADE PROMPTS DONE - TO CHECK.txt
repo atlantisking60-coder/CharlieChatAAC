@@ -4,11 +4,11 @@ CASCADE PROMPTS TO DO:
 
 Within settings, backup to file is not available on web, but it should be. make it so.
 -----
-under the subject vocab area is a board called lessons, give each of the tiles in this area the appropriate picture, from our searchable assets Or from this folder path: Charlie Chat\assets\symbols\Subjects , adding the following lessons as their own tiles: 'Hair & Beauty', 'Health & Social Care', 'Public Services', 'Design Technology'. use the icons in that folder, and ensure that of the words on this board are in alphabetical order including these four new ones.
+under the subject vocab area is a board called lessons, give each of the tiles in this area the appropriate picture, from our searchable assets Or from this folder path: Charlie Chat\assets\symbols\Subjects , adding the following lessons as their own tiles: 'Hair and Beauty', 'Health and Social Care', 'Public Services', 'Design Technology'. use the icons in that folder, and ensure that of the words on this board are in alphabetical order including these four new ones.
 -----
 under the people board, give the tile 'jobs and careers' this icon: C:\Users\Craig\Downloads\Charlie Chat\assets\symbols\BOARDS\Jobs.png. 
 Give the 'school people' tile this icon: C:\Users\Craig\Downloads\Charlie Chat\assets\symbols\BOARDS\People At School.png
-make sure that 'School People', 'Characters' and 'Jobs & Careers' all appear as sub-board tabs underneath the people board tab, and that the tiles for them existing on this people board have white writing and black backgrounds.
+make sure that 'School People', 'Characters' and 'Jobs and Careers' all appear as sub-board tabs underneath the people board tab, and that the tiles for them existing on this people board have white writing and black backgrounds.
 The 'School People' Sub-board should display the 12 words listed under the board 'People At School' under the 'My School' area. Copy these over, then delete them from 'People At School'.
 -----
 Under the Birds sub-board, a tile is currently showing as 'Türkiye', when it should simply read 'turkey' and pull the appropriate animal picture from the assets folder related to this board. please fix.
@@ -17,7 +17,7 @@ alphabetize the Arachnids sub board's words/tiles.
 -----
 on the invertebrates sub board, give the following tiles a light blue background: arthropods, cnidarians, mollusks, annelids, echinoderms, poriferans, platyhelminthes, nematodes, rotifers, bryozoans.
 also give the arachnids and insects tabs black backgrounds and white writing and find the appropriate icons for them in: assets\symbols\BOARDS\Animals.
-For the other words currently missing pictures search for them within our assets database, or within subfolders at this location: C:\Users\Craig\Downloads\Charlie Chat\assets\symbols\1. Main Boards\Animals & Habitats. failing that search the free online databases.
+For the other words currently missing pictures search for them within our assets database, or within subfolders at this location: C:\Users\Craig\Downloads\Charlie Chat\assets\symbols\1. Main Boards\Animals and Habitats. failing that search the free online databases.
 when on this invertebrates board, it currently displays only arachnids and insects as sub boards (as they appear on this sub-board). instead Display the subboards: [ Mammals, Birds, Reptiles, Amphibians, Insects, Arachnids, Invertebrates, Fish, Habitats, Sealife, Nature Vocabulary, Body Parts Of Animals, Child Animals, Groups Of Animals ], just like the other animal sub boards do.
 -----
 -----
@@ -27,7 +27,7 @@ When editing a board do not show the red writing "bottom overflowed buy 15 pixel
 -----
 for all of the board that I name in a moment, Ignore the current path selected for their icons, and instead search our assets database for the pictures that match. replace the saved path for each picture With this new picture from the assets search:
 BOARDS:
-Actions, Jobs & Careers, Numbers, 
+Actions, Jobs and Careers, Numbers, 
 -----
 when searching for an image, don't make the user have to press enter or search, instead start showing results after two letters have been typed.
 -----
@@ -40,7 +40,7 @@ names the tiles based on the name of each picture that they pick.
 -----
 under 'populate', add an option under 'picture folder', called 'picture folder (View full size)'. if users use this option, any pictures that they pick should add the picture and the word based on the file, but should have FFCDD2 as the background colour, and clicking on that tile should open the image in full size.
 ---
-under Edit Board, underneath the options for adjustable layout and sub-board, add another option to change all tiles on the board into one of three options: Normal word, Link to board, & open picture in full screen. these should match the options you have on Edit tile. however selecting this changes all of the existing tiles on that board and changes them to the appropriate type.
+under Edit Board, underneath the options for adjustable layout and sub-board, add another option to change all tiles on the board into one of three options: Normal word, Link to board, and open picture in full screen. these should match the options you have on Edit tile. however selecting this changes all of the existing tiles on that board and changes them to the appropriate type.
 -----
 -----
 under Edit Board Make certain that users still have the ability to drag and drop To swap tiles around in positioning. currently trying to do so on the web preview causes the page to freeze and nothing moves to its new position. fix this please.

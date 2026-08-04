@@ -39,13 +39,13 @@ const _entries = [
   _SettingsEntry(id: 'appearance',   label: 'Appearance',   icon: Icons.palette_outlined,         description: 'Theme, colours, symbol size'),
   _SettingsEntry(id: 'accessibility',label: 'Accessibility',icon: Icons.accessibility_new_rounded,description: 'Motion, contrast, touch targets'),
   _SettingsEntry(id: 'profiles',     label: 'Profiles',     icon: Icons.people_outline_rounded,   description: 'Manage user profiles'),
-  _SettingsEntry(id: 'cloud_sync',   label: 'Cloud Sync',   icon: Icons.cloud_outlined,           description: 'Sync settings & boards'),
+  _SettingsEntry(id: 'cloud_sync',   label: 'Cloud Sync',   icon: Icons.cloud_outlined,           description: 'Sync settings and boards'),
   _SettingsEntry(id: 'privacy',      label: 'Privacy',      icon: Icons.shield_outlined,          description: 'Analytics, history, data'),
   _SettingsEntry(id: 'language',     label: 'Language',     icon: Icons.language_rounded,         description: 'App language, symbol labels'),
   _SettingsEntry(id: 'manage_boards', label: 'Manage Boards', icon: Icons.grid_view_rounded,      description: 'Organize, move, and delete boards'),
   _SettingsEntry(id: 'custom_symbols', label: 'Custom Symbols', icon: Icons.add_photo_alternate_outlined, description: 'Upload and manage your own images'),
   _SettingsEntry(id: 'edit_symbols', label: 'Edit Symbols', icon: Icons.edit_note_rounded, description: 'Manage symbol tags and metadata'),
-  _SettingsEntry(id: 'backup',       label: 'Backup & Restore', icon: Icons.backup_outlined,     description: 'Export and import data'),
+  _SettingsEntry(id: 'backup',       label: 'Backup and Restore', icon: Icons.backup_outlined,     description: 'Export and import data'),
   _SettingsEntry(id: 'about',        label: 'About',        icon: Icons.info_outline_rounded,     description: 'Version, licences, support'),
 ];
 

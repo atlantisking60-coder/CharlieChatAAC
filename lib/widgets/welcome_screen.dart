@@ -252,52 +252,52 @@ class WelcomeScreen extends StatelessWidget {
   String _getDayAssetPath(int weekday) {
     switch (weekday) {
       case 1:
-        return 'assets/symbols/1. Main Boards/Time/monday.png';
+        return 'assets/Common/Time/monday.png';
       case 2:
-        return 'assets/symbols/1. Main Boards/Time/tuesday.png';
+        return 'assets/Common/Time/tuesday.png';
       case 3:
-        return 'assets/symbols/1. Main Boards/Time/wednesday.png';
+        return 'assets/Common/Time/wednesday.png';
       case 4:
-        return 'assets/symbols/1. Main Boards/Time/thursday.png';
+        return 'assets/Common/Time/thursday.png';
       case 5:
-        return 'assets/symbols/1. Main Boards/Time/friday.png';
+        return 'assets/Common/Time/friday.png';
       case 6:
-        return 'assets/symbols/1. Main Boards/Time/saturday.png';
+        return 'assets/Common/Time/saturday.png';
       case 7:
-        return 'assets/symbols/1. Main Boards/Time/sunday.png';
+        return 'assets/Common/Time/sunday.png';
       default:
-        return 'assets/symbols/1. Main Boards/Time/monday.png';
+        return 'assets/Common/Time/monday.png';
     }
   }
 
   String _getMonthAssetPath(int month) {
     switch (month) {
       case 1:
-        return 'assets/symbols/1. Main Boards/Time/Months/january.png';
+        return 'assets/Common/Time/Months/january.png';
       case 2:
-        return 'assets/symbols/1. Main Boards/Time/Months/february.png';
+        return 'assets/Common/Time/Months/february.png';
       case 3:
-        return 'assets/symbols/1. Main Boards/Time/Months/march.png';
+        return 'assets/Common/Time/Months/march.png';
       case 4:
-        return 'assets/symbols/1. Main Boards/Time/Months/april.png';
+        return 'assets/Common/Time/Months/april.png';
       case 5:
-        return 'assets/symbols/1. Main Boards/Time/Months/may.png';
+        return 'assets/Common/Time/Months/may.png';
       case 6:
-        return 'assets/symbols/1. Main Boards/Time/Months/june.png';
+        return 'assets/Common/Time/Months/june.png';
       case 7:
-        return 'assets/symbols/1. Main Boards/Time/Months/july.png';
+        return 'assets/Common/Time/Months/july.png';
       case 8:
-        return 'assets/symbols/1. Main Boards/Time/Months/august.png';
+        return 'assets/Common/Time/Months/august.png';
       case 9:
-        return 'assets/symbols/1. Main Boards/Time/Months/september.png';
+        return 'assets/Common/Time/Months/september.png';
       case 10:
-        return 'assets/symbols/1. Main Boards/Time/Months/october.png';
+        return 'assets/Common/Time/Months/october.png';
       case 11:
-        return 'assets/symbols/1. Main Boards/Time/Months/november.png';
+        return 'assets/Common/Time/Months/november.png';
       case 12:
-        return 'assets/symbols/1. Main Boards/Time/Months/december.png';
+        return 'assets/Common/Time/Months/december.png';
       default:
-        return 'assets/symbols/1. Main Boards/Time/Months/january.png';
+        return 'assets/Common/Time/Months/january.png';
     }
   }
 }
@@ -401,7 +401,7 @@ class _DateNumberTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/symbols/Dates/$dayNumber.png',
+            'assets/Dates/$dayNumber.png',
             height: 80,
             fit: BoxFit.contain,
             errorBuilder: (_, __, ___) => const Icon(Icons.calendar_today, size: 80),
@@ -428,18 +428,18 @@ class _YearTile extends StatelessWidget {
     final zodiacIndex = index < 0 ? index + 12 : index;
     
     const assets = [
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rat.png',           // 0: Rat
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/cow.png',           // 1: Ox
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/tiger.png',         // 2: Tiger
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/rabbit.png',        // 3: Rabbit
-      'assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/komodo dragon.png', // 4: Dragon (Fallback to Komodo)
-      'assets/symbols/1. Main Boards/Animals & Habitats/Reptiles/snake.png',        // 5: Snake
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/horse.png',         // 6: Horse
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/goat.png',          // 7: Goat
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/monkey.png',        // 8: Monkey
-      'assets/symbols/1. Main Boards/Animals & Habitats/Birds/rooster.png',         // 9: Rooster
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/dog.png',           // 10: Dog
-      'assets/symbols/1. Main Boards/Animals & Habitats/Mammals/pig.png'            // 11: Pig
+      'assets/Common/Animals/Mammals/rat.png',           // 0: Rat
+      'assets/Common/Animals/Mammals/cow.png',           // 1: Ox
+      'assets/Common/Animals/Mammals/tiger.png',         // 2: Tiger
+      'assets/Common/Animals/Mammals/rabbit.png',        // 3: Rabbit
+      'assets/Common/Animals/Reptiles/komodo dragon.png', // 4: Dragon (Fallback to Komodo)
+      'assets/Common/Animals/Reptiles/snake.png',        // 5: Snake
+      'assets/Common/Animals/Mammals/horse.png',         // 6: Horse
+      'assets/Common/Animals/Mammals/goat.png',          // 7: Goat
+      'assets/Common/Animals/Mammals/monkey.png',        // 8: Monkey
+      'assets/Common/Animals/Birds/rooster.png',         // 9: Rooster
+      'assets/Common/Animals/Mammals/dog.png',           // 10: Dog
+      'assets/Common/Animals/Mammals/pig.png'            // 11: Pig
     ];
     
     if (zodiacIndex >= 0 && zodiacIndex < assets.length) {
@@ -550,7 +550,7 @@ class _ProfileTile extends StatelessWidget {
                     foregroundColor: colorScheme.primary,
                     backgroundImage: _getProfileImageProvider(),
                     child: profile.settings.profileImage.isEmpty
-                        ? ClipOval(child: Image.asset('assets/charlie_chat_aac_default_profile.png'))
+                        ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
                         : null,
                   ),
                   const Spacer(),
@@ -579,12 +579,12 @@ class _ProfileTile extends StatelessWidget {
 
   ImageProvider? _getProfileImageProvider() {
     final img = profile.settings.profileImage;
-    if (img.isEmpty || img == 'assets/charlie_chat_aac_logo.png' || img == 'assets/symbols/baycroft.png') {
-      return const AssetImage('assets/charlie_chat_aac_default_profile.png');
+    if (img.isEmpty || img == 'assets/symbols/baycroft.png') {
+      return const AssetImage('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png');
     }
     if (img.startsWith('data:')) return MemoryImage(base64Decode(img.split(',').last));
-    if (kIsWeb) return NetworkImage(img);
     if (img.startsWith('assets/')) return AssetImage(img);
+    if (kIsWeb) return NetworkImage(img);
     return FileImage(File(img));
   }
 }

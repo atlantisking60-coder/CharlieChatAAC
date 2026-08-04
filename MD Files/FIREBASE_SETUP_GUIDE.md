@@ -108,7 +108,7 @@ target_link_libraries(${BINARY_NAME} PRIVATE firebase_auth)
 ### Google Sign-In
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Select your Firebase project
-3. Go to "APIs & Services" → "Credentials"
+3. Go to "APIs and Services" → "Credentials"
 4. Create OAuth 2.0 Client ID:
    - Application type: Web application
    - Authorized redirect URIs:
@@ -117,7 +117,7 @@ target_link_libraries(${BINARY_NAME} PRIVATE firebase_auth)
 
 ### Apple Sign-In
 1. Go to [Apple Developer Portal](https://developer.apple.com/)
-2. Go to "Certificates, Identifiers & Profiles"
+2. Go to "Certificates, Identifiers and Profiles"
 3. Create App ID with "Sign In with Apple" capability
 4. Create Services ID:
    - Description: `Charlie Chat`

@@ -1,0 +1,23 @@
+Money - Word List
+=====================
+
+10p
+1p
+20p
+2p
+50p
+5p
+bill
+card
+change
+Coin
+decimal
+money
+note
+value or worth
+£1
+£10
+£2
+£20
+£5
+£50

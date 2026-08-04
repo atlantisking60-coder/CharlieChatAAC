@@ -14,7 +14,7 @@
 - ✅ Platform-aware code that gracefully handles web limitations
 - ✅ Cross-platform TTS service with web fallback
 
-### 2. **Native Platforms** (iOS & Android)
+### 2. **Native Platforms** (iOS and Android)
 - ✅ `CrossPlatformTtsService` handles TTS for all platforms
 - ✅ `PlatformService` provides platform detection and file picker wrappers
 - ✅ Main app updated to use cross-platform services
@@ -30,7 +30,7 @@
 ### 4. **Supported Browsers**
 - ✅ Chrome 90+
 - ✅ Firefox 88+
-- ✅ Safari 14+ (macOS & iOS)
+- ✅ Safari 14+ (macOS and iOS)
 - ✅ Edge 90+
 - ✅ Mobile browsers (iOS Safari 12+, Chrome Mobile 90+)
 

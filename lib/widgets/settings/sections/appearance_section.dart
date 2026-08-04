@@ -341,7 +341,7 @@ class _ContrastToggle extends StatelessWidget {
                           fontSize: 14,
                           color: value ? Colors.white : cs.onSurface)),
                   const SizedBox(height: 2),
-                  Text('Black & white for maximum readability',
+                  Text('Black and white for maximum readability',
                       style: TextStyle(
                           fontSize: 11,
                           color: value ? Colors.white70 : cs.onSurfaceVariant)),

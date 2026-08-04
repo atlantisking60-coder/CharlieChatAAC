@@ -1,0 +1,41 @@
+barnacle
+brittle star
+clam
+coral
+cuttlefish
+dolphin
+eel
+eel
+great white shark
+hammerhead shark
+humpback whale
+hydra
+jellyfish
+kelp
+krill
+manta ray
+mollusc
+mussel
+nautilus
+octopus
+orca
+otter
+oyster
+phytoplankton
+plankton
+sand dollar
+sea anenome
+sea cucumber
+sea lion
+sea sponge
+sea urchin
+seahorse
+seal
+seaweed
+shark
+squid
+starfish
+tadpole
+walrus
+whale shark
+whale

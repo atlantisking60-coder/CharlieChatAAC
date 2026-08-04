@@ -34,14 +34,14 @@ class ProfilesSection extends StatefulWidget {
 class _ProfilesSectionState extends State<ProfilesSection> {
   ImageProvider? _getProfileImageProvider() {
     final img = widget.settings.profileImage;
-    if (img.isEmpty || img == 'assets/charlie_chat_aac_logo.png' || img == 'assets/symbols/baycroft.png') {
-      return const AssetImage('assets/charlie_chat_aac_default_profile.png');
+    if (img.isEmpty || img == 'assets/symbols/baycroft.png') {
+      return const AssetImage('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png');
     }
     if (img.startsWith('data:')) {
       return MemoryImage(base64Decode(img.split(',').last));
     }
-    if (kIsWeb) return NetworkImage(img);
     if (img.startsWith('assets/')) return AssetImage(img);
+    if (kIsWeb) return NetworkImage(img);
     return FileImage(File(img));
   }
 
@@ -98,7 +98,7 @@ class _ProfilesSectionState extends State<ProfilesSection> {
                           backgroundImage: imageProvider,
                           backgroundColor: cs.primaryContainer,
                           child: imageProvider == null
-                              ? ClipOval(child: Image.asset('assets/charlie_chat_aac_default_profile.png'))
+                              ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
                               : null,
                         ),
                         Positioned(

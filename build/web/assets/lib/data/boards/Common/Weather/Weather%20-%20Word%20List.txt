@@ -18,7 +18,7 @@ foggy
 snow
 snowy
 storm
-thunder & lightning
+thunder and lightning
 sleet
 hail
 Seasons

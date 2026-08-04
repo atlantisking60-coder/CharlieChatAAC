@@ -1,0 +1,22 @@
+{
+  "id": "prebuilt_prepositions",
+  "name": "Prepositions",
+  "area": "Common",
+  "columns": 7,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 10,
+  "tier": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 9,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

@@ -1,0 +1,26 @@
+{
+  "area": "Common",
+  "parentBoardId": "prebuilt_weather",
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 2,
+  "columns": 4,
+  "rows": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "adjustableLayout": false,
+  "backgroundColor": "transparent",
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "id": "link_prebuilt_disasters",
+  "name": "Disasters",
+  "linkedBoardId": "prebuilt_disasters"
+}

@@ -1,0 +1,233 @@
+afghanistan
+albania
+algeria
+american samoa
+andorra
+angola
+anguilla
+antigua
+Antigua and Barbuda
+argentina
+armenia
+aruba
+australia
+austria
+azerbaijan
+bahamas
+bahrain
+bangladesh
+barbados
+belarus
+belgium
+belize
+benin
+bermuda
+bhutan
+bolivia
+bosnia
+Bosnia and Herzegovina
+botswana
+bouvet island
+brazil
+brundi
+brunei
+bulgaria
+burkina faso
+Burundi
+cambodia
+Cameroon
+cameroun
+canada
+cape verde
+Central African Republic
+chad
+
+chile
+china
+Colombia
+columbia
+comoros
+congo
+cook islands
+costa rica
+cote d'ivoire
+croatia
+Cuba
+cyprus
+czech republic
+
+Czech Republic (Czechia)
+Côte d'Ivoire
+denmark
+Djibouti
+Dominica
+dominican republic
+DR Congo
+east timor
+ecuador
+Egypt
+el salvador
+england
+Equatorial Guinea
+Eritrea
+estonia
+Eswatini
+ethiopia
+eu
+falkland islands
+Fiji
+finland
+france
+Gabon
+gambia
+georgia
+germany
+ghana
+great britain
+greece
+Grenada
+grenadines
+Guatemala
+guernsey
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Holy See
+Honduras
+
+hong kong
+hungary
+iceland
+india
+indonesia
+iran
+iraq
+ireland
+isle of man
+israel
+italy
+jamaica
+japan
+jersey
+jordan
+
+Kazakhstan
+kenya
+Kiribati
+kuwait
+kyrgystan
+Kyrgyzstan
+Laos
+latvia
+lebanon
+Lesotho
+liberia
+libya
+Liechtenstein
+lithuania
+Luxembourg
+madagascar
+malawi
+malaysia
+maldives
+mali
+malta
+Marshall Islands
+Mauritania
+mauritius
+mexico
+Micronesia
+Moldova
+monaco
+mongolia
+Montenegro
+morocco
+mozambique
+Myanmar
+namibia
+nauru
+nepal
+netherlands
+new zealand
+nicaragua
+niger
+nigeria
+norfolk island
+north korea
+North Macedonia
+norway
+Oman
+pakistan
+Palau
+palestine
+panama
+papua new guinea
+paraguay
+peru
+philippines
+poland
+portugal
+puerto rico
+qatar
+republic of congo
+romania
+russia
+rwanda
+Saint Kitts and Nevis
+saint lucia
+samoa
+San Marino
+sao tome
+Sao Tome and Principe
+saudi arabia
+scotland
+senegal
+serbia
+seychelles
+sierra leone
+singapore
+slovakia
+slovenia
+solomon islands
+somalia
+south africa
+south korea
+South Sudan
+spain
+Sri Lanka
+St. Vincent and Grenadines
+State of Palestine
+sudan
+suriname
+swaziland
+sweden
+switzerland
+syria
+taiwan
+tajikistan
+tanzania
+thailand
+Timor-Leste
+togo
+tonga
+trinidad and tobago
+tunisia
+turkey
+turkmenistan
+Tuvalu
+uganda
+ukraine
+united arab emirates
+United Kingdom
+United States
+uruguay
+usa
+uzbekistan
+vanuatu
+venezuela
+vietnam
+western sahara
+yemen
+zambia
+zimbabwe

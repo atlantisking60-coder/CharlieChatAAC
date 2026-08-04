@@ -12,7 +12,7 @@ void main() {
 
   // Add new tiles if missing
   final newLabels = {
-    'Health & Social Care': r'assets/symbols/Subjects/Health & Social Care.png',
+    'Health and Social Care': r'assets/symbols/Subjects/Health and Social Care.png',
     'Public Services': r'assets/symbols/Subjects/Public Services.png',
     'Design Technology': r'assets/symbols/Subjects/Design Technology.png',
   };
@@ -37,7 +37,7 @@ void main() {
     'performing arts': r'assets/symbols/Subjects/Performing Arts.png',
     'resistant materials': r'assets/symbols/Subjects/Resistant Materials.png',
     'textiles': r'assets/symbols/Subjects/Textiles.png',
-    'religion & worldviews': r'assets/symbols/Subjects/Religion & Worldviews.png',
+    'religion and worldviews': r'assets/symbols/Subjects/Religion and Worldviews.png',
     'sustainability': r'assets/symbols/Subjects/Sustainability.png',
     'cooking': r'assets/symbols/Subjects/Cooking.png',
     'horticulture': r'assets/symbols/Subjects/Horticulture.png',
@@ -45,7 +45,7 @@ void main() {
     'photography': r'assets/symbols/Subjects/Photography.png',
     'living life skills': r'assets/symbols/Subjects/Living Life Skills.png',
     'prepare for adulthood': r'assets/symbols/Subjects/Prepare For Adulthood.png',
-    'hair & beauty': r'assets/symbols/Subjects/Hair & Beauty.png',
+    'hair and beauty': r'assets/symbols/Subjects/Hair and Beauty.png',
     'information technology': r'assets/symbols/Subjects/I.T.png',
     'T.F.L': r'assets/symbols/Subjects/TFL.png',
     'english': r'assets/symbols/Subjects/English.png',

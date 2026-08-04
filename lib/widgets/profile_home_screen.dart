@@ -153,7 +153,7 @@ class ProfileHomeScreen extends StatelessWidget {
       // Find the admin profile and select it
       final adminProfile = profiles.firstWhere(
         (profile) => profile.id == 'admin',
-        orElse: () => profiles.first,
+        orElse: () => profiles.isNotEmpty ? profiles.first : UserProfile.defaultProfile(),
       );
       onProfileSelected(adminProfile.id);
     }
@@ -198,7 +198,7 @@ class _ProfileTile extends StatelessWidget {
                     foregroundColor: colorScheme.primary,
                     backgroundImage: _getProfileImageProvider(),
                     child: profile.settings.profileImage.isEmpty
-                        ? ClipOval(child: Image.asset('assets/charlie_chat_aac_default_profile.png'))
+                        ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
                         : null,
                   ),
                   const Spacer(),
@@ -236,17 +236,17 @@ class _ProfileTile extends StatelessWidget {
 
   ImageProvider? _getProfileImageProvider() {
     final profileImage = profile.settings.profileImage;
-    if (profileImage.isEmpty || profileImage == 'assets/charlie_chat_aac_logo.png' || profileImage == 'assets/symbols/baycroft.png') {
-      return const AssetImage('assets/charlie_chat_aac_default_profile.png');
+    if (profileImage.isEmpty || profileImage == 'assets/symbols/baycroft.png') {
+      return const AssetImage('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png');
     }
     if (profileImage.startsWith('data:')) {
       return MemoryImage(base64Decode(profileImage.split(',').last));
     }
-    if (kIsWeb) {
-      return NetworkImage(profileImage);
-    }
     if (profileImage.startsWith('assets/')) {
       return AssetImage(profileImage);
+    }
+    if (kIsWeb) {
+      return NetworkImage(profileImage);
     }
     return FileImage(File(profileImage));
   }

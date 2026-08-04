@@ -15,13 +15,13 @@ Charlie Chat is a cross-platform AAC (Augmentative and Alternative Communication
   - Hot reload for rapid development
   - Rich widget ecosystem
 
-### Storage & Database
+### Storage and Database
 - **SharedPreferences** (Key-value storage for settings)
 - **File System** (JSON-based board storage)
 - **SQLite** (via sqflite package for complex queries - future)
 - **IndexedDB** (Web storage for offline PWA)
 
-### Networking & Sync
+### Networking and Sync
 - **HTTP Client** (dart:http)
 - **WebSocket** (Real-time sync - optional)
 - **SymbolTalk API** (Custom backend integration)
@@ -31,7 +31,7 @@ Charlie Chat is a cross-platform AAC (Augmentative and Alternative Communication
 - **Web Speech API** (Web platform)
 - **Platform channels** for native TTS engines
 
-### OCR & Image Processing
+### OCR and Image Processing
 - **google_mlkit_text_recognition** (Mobile)
 - **Custom OCR service** (Desktop/Web)
 
@@ -47,7 +47,7 @@ Charlie Chat is a cross-platform AAC (Augmentative and Alternative Communication
 - **Navigator 2.0** (Current)
 - **Future upgrade to go_router** (Declarative routing)
 
-### Build & Deployment
+### Build and Deployment
 - **Flutter CLI** (Build automation)
 - **Codemagic** (iOS CI/CD)
 - **GitHub Actions** (General CI/CD)
@@ -210,7 +210,7 @@ lib/
                          ↓
 ┌─────────────────────────────────────────────────────────┐
 │                   Firebase App Distribution               │
-│              (Beta testing & internal testing)            │
+│              (Beta testing and internal testing)            │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -467,7 +467,7 @@ LayoutBuilder(
 - Fast rollback capability
 - Hotfix process for critical bugs
 
-### 6.5 Monitoring & Analytics
+### 6.5 Monitoring and Analytics
 
 **Crash Reporting:**
 - **Firebase Crashlytics** (Mobile)

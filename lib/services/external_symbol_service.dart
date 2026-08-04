@@ -924,7 +924,7 @@ class ExternalSymbolService {
     return results;
   }
 
-  Future<List<ExternalSymbol>> searchAll(String query, {int limit = 30, List<String>? preferredSets}) async {
+  Future<List<ExternalSymbol>> searchAll(String query, {int limit = 30, List<String>? preferredSets, List<String>? priorityPaths}) async {
     final cleanQuery = query.toLowerCase()
         .split(RegExp(r'\s+'))
         .where((w) => w != 'the' && w.isNotEmpty)
@@ -938,7 +938,7 @@ class ExternalSymbolService {
     final results = <ExternalSymbol>[];
 
     // Search local assets first so they appear at the top of combined results
-    final assetResults = await searchAssets(cleanQuery.isEmpty ? query : cleanQuery, limit: limit);
+    final assetResults = await searchAssets(cleanQuery.isEmpty ? query : cleanQuery, limit: limit, preferredSets: preferredSets, priorityPaths: priorityPaths);
     results.addAll(assetResults);
 
     // Search all available external APIs in parallel, including synonym-expanded queries
@@ -983,7 +983,7 @@ class ExternalSymbolService {
             return !blockedWords.any((w) => label.contains(w));
           }).toList();
 
-    return sortByRelevance(filtered, query, preferredSets: preferredSets);
+    return sortByRelevance(filtered, query, preferredSets: preferredSets, priorityPaths: priorityPaths);
   }
 
   String _arasaacImageUrl(String id) {
@@ -1056,21 +1056,81 @@ class ExternalSymbolService {
     return best;
   }
 
-  List<ExternalSymbol> sortByRelevance(List<ExternalSymbol> symbols, String query, {List<String>? preferredSets}) {
+  List<ExternalSymbol> sortByRelevance(List<ExternalSymbol> symbols, String query, {List<String>? preferredSets, List<String>? priorityPaths}) {
     final lowerQuery = query.trim().toLowerCase();
     if (lowerQuery.isEmpty) return symbols;
 
     final queryWords = lowerQuery.split(_wordSeparator).where((s) => s.isNotEmpty).toList();
     if (queryWords.isEmpty) return symbols;
 
-    // Pre-calculate scores to avoid O(N log N * Words) complexity during sort
+    // Pre-calculate scores to avoid O(N log N * Words) complexity during sort.
+    // Consider both the asset label and any user-added tags.
     final scores = <String, int>{};
     for (final s in symbols) {
-      scores[s.id] = _relevanceScoreOptimized(s.label, lowerQuery, queryWords);
+      final labelScore = _relevanceScoreOptimized(s.label, lowerQuery, queryWords);
+      final tagScore = _tagScore(s.imageUrl, lowerQuery);
+      scores[s.id] = labelScore < tagScore ? labelScore : tagScore;
     }
 
     symbols.sort((a, b) {
-      // 1. Prioritize according to preferredSets
+      final priorityCount = priorityPaths?.length ?? 0;
+      final inAppCount = priorityCount + 3;
+
+      int sourceIndex(String imageUrl) {
+        final p = imageUrl.toLowerCase();
+        if (priorityPaths != null) {
+          for (int i = 0; i < priorityPaths.length; i++) {
+            if (p.startsWith(priorityPaths[i].toLowerCase())) return i;
+          }
+        }
+        final offset = priorityCount;
+        if (!p.startsWith('assets/')) return offset + 3; // Free external sets
+        if (p.startsWith('assets/common/small words/montessori/')) return offset + 1;
+        if (p.startsWith('assets/sign/')) return offset + 2;
+        return offset; // Other in-app assets
+      }
+
+      const closeMatchMaxScore = 10;
+
+      int sortGroup(ExternalSymbol s) {
+        final sIdx = sourceIndex(s.imageUrl);
+        final score = scores[s.id] ?? 9999;
+        final sLabelLower = s.label.trim().toLowerCase();
+        final sAlpha = sLabelLower.replaceAll(RegExp(r'[^a-z0-9]'), '');
+        final qAlpha = lowerQuery.replaceAll(RegExp(r'[^a-z0-9]'), '');
+        final tags = _metadataService?.getTags(s.imageUrl) ?? [];
+        final labelExact = sLabelLower == lowerQuery || (qAlpha.isNotEmpty && sAlpha == qAlpha);
+        final tagExact = tags.any((t) => t == lowerQuery);
+        final exact = labelExact || tagExact;
+        final close = score <= closeMatchMaxScore;
+
+        if (sIdx < inAppCount) {
+          if (sIdx < priorityCount) {
+            // Priority in-app source
+            if (exact) return sIdx;
+            if (close) return priorityCount + sIdx;
+          } else {
+            // Non-priority in-app source
+            final rel = sIdx - priorityCount;
+            final base = priorityCount * 2;
+            final nonPriorityInAppCount = inAppCount - priorityCount;
+            if (exact) return base + rel;
+            if (close) return base + rel + nonPriorityInAppCount;
+          }
+        } else {
+          final extIdx = sIdx - inAppCount;
+          final base = inAppCount * 2;
+          if (exact) return base + extIdx;
+          if (close) return base + extIdx + 1;
+        }
+        return inAppCount * 2 + 2; // Everything else
+      }
+
+      final aGroup = sortGroup(a);
+      final bGroup = sortGroup(b);
+      if (aGroup != bGroup) return aGroup.compareTo(bGroup);
+
+      // Within the same group, respect the user's preferred sets.
       if (preferredSets != null && preferredSets.isNotEmpty) {
         final sourceA = a.source == 'Assets' ? 'In App Assets' : a.source;
         final sourceB = b.source == 'Assets' ? 'In App Assets' : b.source;
@@ -1085,38 +1145,34 @@ class ExternalSymbolService {
         } else if (indexB != -1) {
           return 1;
         }
-      } else {
-        // Fallback to legacy Assets priority
-        if (a.source == 'Assets' && b.source != 'Assets') return -1;
-        if (a.source != 'Assets' && b.source == 'Assets') return 1;
       }
 
-      // Within local assets, prefer symbols over sign images.
-      if (a.source == 'Assets' && b.source == 'Assets') {
-        final aIsSymbols = a.imageUrl.toLowerCase().startsWith('assets/symbols/');
-        final bIsSymbols = b.imageUrl.toLowerCase().startsWith('assets/symbols/');
-        final aIsSign = a.imageUrl.toLowerCase().startsWith('assets/sign/');
-        final bIsSign = b.imageUrl.toLowerCase().startsWith('assets/sign/');
-        if (aIsSymbols && !bIsSymbols) return -1;
-        if (bIsSymbols && !aIsSymbols) return 1;
-        if (aIsSign && !bIsSign) return 1;
-        if (bIsSign && !aIsSign) return -1;
-      }
-
-      // 2. Relevance Score
+      // Final tiebreakers
       final scoreA = scores[a.id] ?? 9999;
       final scoreB = scores[b.id] ?? 9999;
       if (scoreA != scoreB) return scoreA.compareTo(scoreB);
 
-      // 3. Label Length
       final aLen = a.label.length;
       final bLen = b.label.length;
       if (aLen != bLen) return aLen.compareTo(bLen);
 
-      // 4. Alphabetical
       return a.label.toLowerCase().compareTo(b.label.toLowerCase());
     });
     return symbols;
+  }
+
+  int _tagScore(String imageUrl, String lowerQuery) {
+    final tags = _metadataService?.getTags(imageUrl) ?? [];
+    if (tags.any((t) => t == lowerQuery)) return 0;
+    if (tags.any((t) => t.contains(lowerQuery))) return 5;
+    return 9999;
+  }
+
+  Future<void> addTag(String imageUrl, String tag) async {
+    final clean = tag.trim().toLowerCase();
+    if (clean.isEmpty) return;
+    await _ensureMetadata();
+    await _metadataService?.addTag(imageUrl, clean);
   }
 
   int _relevanceScoreOptimized(String label, String lowerQuery, List<String> queryWords) {
@@ -1238,78 +1294,17 @@ class ExternalSymbolService {
     }
   }
 
-  Future<List<ExternalSymbol>> searchAssets(String query, {int limit = 30}) async {
+  Future<List<ExternalSymbol>> searchAssets(String query, {int limit = 30, List<String>? preferredSets, List<String>? priorityPaths}) async {
     await _ensureMetadata();
     final allAssets = _assetSymbolCache ?? [];
 
     if (query.trim().isEmpty) return allAssets.take(limit).toList();
 
     try {
-      final results = <ExternalSymbol>[];
-      final lowerQuery = query.toLowerCase().trim();
-      final queryWords = lowerQuery.split(_wordSeparator)
-          .where((s) => s.isNotEmpty && s != 'the').toList();
-
-      // Build synonym-expanded word list so local assets also match synonyms
-      final allQueryWords = <String>[];
-      for (var i = 0; i < queryWords.length; i++) {
-        allQueryWords.add(queryWords[i]);
-        final synonyms = _querySynonyms[queryWords[i]];
-        if (synonyms != null) {
-          for (final syn in synonyms) {
-            allQueryWords.add(syn);
-          }
-        }
-      }
-      
-      for (final asset in allAssets) {
-        final lowerLabel = asset.label.toLowerCase();
-        final lowerPath = asset.imageUrl.toLowerCase();
-        
-        bool isMatch = false;
-        for (int i = 0; i < allQueryWords.length; i++) {
-          final word = allQueryWords[i];
-
-          // 1. Label match (Filename)
-          if (lowerLabel == word || lowerLabel.startsWith('$word ') || lowerLabel.endsWith(' $word') || lowerLabel.contains(' $word ')) {
-             isMatch = true;
-             break;
-          }
-
-          // 2. Folder match (More strict: only match folder segments)
-          final pathSegments = lowerPath.split('/');
-          if (pathSegments.any((s) => s == word)) {
-             isMatch = true;
-             break;
-          }
-
-          // 3. Direct contains match (lower priority)
-          if (lowerLabel.contains(word)) {
-            isMatch = true;
-            break;
-          }
-          // 4. Tag match
-          if (_metadataService?.matchesQuery(asset.id, word) ?? false) {
-            isMatch = true;
-            break;
-          }
-        }
-
-        if (isMatch) {
-          results.add(asset);
-        }
-      }
-      
-      // Deduplicate results by imageUrl
-      final seenPaths = <String>{};
-      final uniqueResults = <ExternalSymbol>[];
-      for (final r in results) {
-        if (seenPaths.add(r.imageUrl)) {
-          uniqueResults.add(r);
-        }
-      }
-
-      return sortByRelevance(uniqueResults, query).take(limit).toList();
+      // Score and sort every local asset so the "assets only" order mirrors
+      // the order assets appear in a full search (relevance, preferred sets,
+      // exact matches, etc.) and includes close matches as well as exact ones.
+      return sortByRelevance(allAssets, query, preferredSets: preferredSets, priorityPaths: priorityPaths).take(limit).toList();
     } catch (e) {
       debugPrint('Error searching assets: $e');
       return [];

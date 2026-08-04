@@ -1,0 +1,32 @@
+ant
+aphid
+bee
+beetle
+beetle - ground
+butterfly
+caterpillar
+centipede
+cockroach
+cricket
+dragonfly
+earthworm
+earwig
+flea
+fly
+gnat
+grasshopper
+ladybird
+locust
+millipede
+mosquito
+moth
+praying mantis
+silverfish
+slug
+snail
+stick insect
+termite
+wasp
+egg - insect
+larva
+pupa

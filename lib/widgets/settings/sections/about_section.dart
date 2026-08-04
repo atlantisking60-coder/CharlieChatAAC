@@ -54,7 +54,7 @@ class AboutSection extends StatelessWidget {
                   style: tt.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold, color: cs.onPrimaryContainer)),
               const SizedBox(height: 4),
-              Text('Augmentative & Alternative Communication',
+              Text('Augmentative and Alternative Communication',
                   style: TextStyle(
                       fontSize: 12, color: cs.onPrimaryContainer.withValues(alpha: 0.7))),
               const SizedBox(height: 12),
@@ -107,7 +107,7 @@ class AboutSection extends StatelessWidget {
           children: [
             SettingsTile(
               icon: Icons.help_outline_rounded,
-              title: 'Help & Documentation',
+              title: 'Help and Documentation',
               trailing: const Icon(Icons.chevron_right),
               onTap: () {/* TODO: open help URL */},
             ),

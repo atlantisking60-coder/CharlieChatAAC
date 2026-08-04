@@ -9,6 +9,9 @@ import '../services/board_service.dart';
 import '../services/cross_platform_tts_service.dart';
 import '../services/settings_service.dart';
 import '../services/backup_service.dart';
+import '../services/external_symbol_service.dart';
+import '../models/symbol_tile.dart';
+import 'symbol_grid.dart';
 
 class VoiceOption {
   final String name;
@@ -86,17 +89,101 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  void _showImageSourceOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.upload_file),
+              title: const Text('Upload your own picture'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _pickProfileImageFromDevice();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('Pick a picture from our app'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _pickProfileImageFromApp();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickProfileImageFromDevice() async {
+    try {
+      final result = await FilePicker.pickFiles(type: FileType.image);
+      if (!mounted) return;
+      if (result != null) {
+        // For web, use the bytes directly
+        if (kIsWeb) {
+          final bytes = await result.files.single.readAsBytes();
+          setState(() {
+            _settings = _settings.copyWith(profileImage: 'data:image/png;base64,${base64Encode(bytes)}');
+          });
+          if (mounted && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Profile image updated.')),
+            );
+          }
+        } else {
+          // For native, use the file path
+          if (result.files.single.path != null) {
+            setState(() {
+              _settings = _settings.copyWith(profileImage: result.files.single.path);
+            });
+            if (mounted && context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Profile image updated.')),
+              );
+            }
+          }
+        }
+      }
+    } catch (e) {
+      if (mounted && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error selecting image: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _pickProfileImageFromApp() async {
+    final assetPath = await showDialog<String>(
+      context: context,
+      builder: (ctx) => const _AppImageSearchDialog(),
+    );
+    if (assetPath == null || !mounted) return;
+    setState(() {
+      _settings = _settings.copyWith(profileImage: assetPath);
+    });
+    if (mounted && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile image updated.')),
+      );
+    }
+  }
+
   ImageProvider? _getProfileImageProvider() {
-    if (_settings.profileImage.isEmpty || _settings.profileImage == 'assets/charlie_chat_aac_logo.png' || _settings.profileImage == 'assets/symbols/baycroft.png') {
-      return const AssetImage('assets/charlie_chat_aac_default_profile.png');
+    if (_settings.profileImage.isEmpty || _settings.profileImage == 'assets/symbols/baycroft.png') {
+      return const AssetImage('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png');
     }
     if (_settings.profileImage.startsWith('data:')) {
       return MemoryImage(base64Decode(_settings.profileImage.split(',').last));
     }
+    if (_settings.profileImage.startsWith('assets/')) return AssetImage(_settings.profileImage);
     if (kIsWeb) {
       return NetworkImage(_settings.profileImage);
     }
-    if (_settings.profileImage.startsWith('assets/')) return AssetImage(_settings.profileImage);
     return FileImage(File(_settings.profileImage));
   }
 
@@ -123,48 +210,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leading: CircleAvatar(
                 backgroundImage: _getProfileImageProvider(),
                 child: _settings.profileImage.isEmpty
-                    ? ClipOval(child: Image.asset('assets/charlie_chat_aac_default_profile.png'))
+                    ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
                     : null,
               ),
               title: const Text('Change profile image'),
-              onTap: () async {
-                try {
-                  final result = await FilePicker.pickFiles(type: FileType.image);
-                  if (!mounted) return;
-                  if (result != null) {
-                    // For web, use the bytes directly
-                    if (kIsWeb) {
-                      final bytes = await result.files.single.readAsBytes();
-                      setState(() {
-                        _settings = _settings.copyWith(profileImage: 'data:image/png;base64,${base64Encode(bytes)}');
-                      });
-                      if (mounted && context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Profile image updated.')),
-                        );
-                      }
-                    } else {
-                      // For native, use the file path
-                      if (result.files.single.path != null) {
-                        setState(() {
-                          _settings = _settings.copyWith(profileImage: result.files.single.path);
-                        });
-                        if (mounted && context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Profile image updated.')),
-                          );
-                        }
-                      }
-                    }
-                  }
-                } catch (e) {
-                  if (mounted && context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error selecting image: $e')),
-                    );
-                  }
-                }
-              },
+              onTap: _showImageSourceOptions,
             ),
             const SizedBox(height: 24),
             _AppearanceSection(
@@ -993,7 +1043,7 @@ class _ContrastToggle extends StatelessWidget {
                           color: value ? Colors.white : cs.onSurface)),
                   const SizedBox(height: 3),
                   Text(
-                    'Black & white palette for maximum readability',
+                    'Black and white palette for maximum readability',
                     style: TextStyle(
                         fontSize: 12,
                         color: value
@@ -1012,6 +1062,88 @@ class _ContrastToggle extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// In-app image search for profile pictures
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _AppImageSearchDialog extends StatefulWidget {
+  const _AppImageSearchDialog();
+
+  @override
+  State<_AppImageSearchDialog> createState() => _AppImageSearchDialogState();
+}
+
+class _AppImageSearchDialogState extends State<_AppImageSearchDialog> {
+  final _controller = TextEditingController();
+  final _service = ExternalSymbolService();
+  var _loading = false;
+  var _results = <ExternalSymbol>[];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _search() async {
+    final query = _controller.text.trim();
+    if (query.isEmpty) return;
+    setState(() => _loading = true);
+    final results = await _service.searchAssets(query, limit: 30);
+    setState(() {
+      _loading = false;
+      _results = results;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Pick a picture from our app'),
+      content: SizedBox(
+        width: double.maxFinite,
+        height: 400,
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                hintText: 'Search pictures...',
+                border: OutlineInputBorder(),
+              ),
+              onSubmitted: (_) => _search(),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: _search,
+              child: const Text('Search'),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: _loading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _results.isEmpty
+                      ? const Center(child: Text('Search for a picture above.'))
+                      : SymbolGrid(
+                          symbols: _results.map((r) => r.toSymbolTile()).toList(),
+                          favoriteIds: const <String>{},
+                          onTap: (SymbolTile symbol) => Navigator.of(context).pop(symbol.imageAsset),
+                          onLongPress: (SymbolTile symbol) {},
+                        ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+      ],
     );
   }
 }

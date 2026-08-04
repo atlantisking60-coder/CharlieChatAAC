@@ -4,6 +4,8 @@ import '../firebase_options.dart';
 import '../providers/auth_provider.dart';
 import '../services/auth_service.dart';
 import 'auth_screen.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Authentication guard widget that wraps the app
 class AuthGuard extends ConsumerWidget {
@@ -47,42 +49,113 @@ class _SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Icon(
-                Icons.chat_bubble_outline,
-                size: 50,
-                color: Theme.of(context).primaryColor,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Icon(
+                      Icons.chat_bubble_outline,
+                      size: 50,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Charlie Chat',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'AAC Communication Platform',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  const SizedBox(height: 48),
+                  const _BetaFooter(),
+                ],
               ),
             ),
-            const SizedBox(height: 24),
-            const Text(
-              'Charlie Chat',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'AAC Communication Platform',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white70,
-              ),
-            ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+/// Beta footer shown at the bottom of the splash screen only.
+class _BetaFooter extends StatelessWidget {
+  const _BetaFooter();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 12,
+              ),
+              children: [
+                const TextSpan(
+                  text: 'This app is in beta development, please report bugs to the app developer ',
+                ),
+                TextSpan(
+                  text: 'Craig Mark',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      final uri = Uri.parse(
+                        'mailto:craig_mark@hotmail.co.uk?subject=Charlie%20Chat%20Beta%20Bug%20Report',
+                      );
+                      await launchUrl(uri);
+                    },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'PROGRESS TRACKER - AREAS COMPLETION RATE:\n'
+            'COMMON - All done except World Map.\n'
+            'SUBJECT VOCAB - Some Done.\n'
+            'SIGN - Done, but more images coming for Makaton groups.\n'
+            "MY SCHOOL - All done except for 'people at my school'.\n"
+            'LEGENDS - Started, lots of pictures to add.\n'
+            'RECIPES - Not started.\n'
+            'PERSONAL - Mostly there for users to create boards.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }

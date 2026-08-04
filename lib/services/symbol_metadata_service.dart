@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:charlie_chat/data/symbol_group_tags.dart';
 import 'sync_service.dart';
 
 class SymbolMetadata {
@@ -68,7 +69,12 @@ class SymbolMetadataService {
     }
   }
 
-  List<String> getTags(String symbolId) => _cache[symbolId]?.tags ?? [];
+  List<String> getTags(String symbolId) {
+    final userTags = _cache[symbolId]?.tags ?? [];
+    final groupTags = groupSymbolTags[symbolId] ?? [];
+    if (userTags.isEmpty && groupTags.isEmpty) return [];
+    return {...userTags, ...groupTags}.toList();
+  }
 
   /// Appends a single tag to a symbol's existing tags (no-op if tag already present).
   Future<void> addTag(String symbolId, String tag) async {

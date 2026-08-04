@@ -1,70 +1,177 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="description" content="Charlie Chat AAC - Communication app for all devices">
-  
-  <!-- Theme color for mobile browsers -->
-  <meta name="theme-color" content="#008080">
-  <meta name="msapplication-TileColor" content="#008080">
+  <meta name="description" content="A new Flutter project.">
 
-  <!-- iOS web app configuration -->
+  <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Charlie Chat">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="charlie_chat">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon and icons -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>charlie_chat</title>
   <link rel="manifest" href="manifest.json">
-
-  <!-- Progressive Web App support -->
-  <link rel="shortcut icon" href="favicon.png">
-
-  <!-- OCR Engine for Web (Tesseract.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
-  <title>Charlie Chat</title>
-  
-  <!-- Browser compatibility polyfills -->
-  <script>
-    // Polyfill for older browsers
-    if (!window.requestAnimationFrame) {
-      window.requestAnimationFrame = function(callback) {
-        return setTimeout(callback, 1000 / 60);
-      };
-    }
-  </script>
-
   <style>
     html, body {
-      width: 100%;
-      height: 100%;
       margin: 0;
       padding: 0;
-      background-color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      height: 100%;
+      overflow: hidden;
     }
     body {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: auto !important;
+      overflow: hidden !important;
+    }
+    #loading-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 26px;
+      background: #2196F3;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 12px;
+      z-index: 100000;
       display: flex;
       align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      transition: opacity 0.3s ease;
     }
-    #flutter-loading {
-      text-align: center;
-      font-size: 16px;
-      color: #666;
+    #loading-bar.hidden { opacity: 0; pointer-events: none; }
+    #loading-progress {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 0%;
+      background: rgba(255,255,255,0.3);
+      transition: width 0.3s ease;
     }
-  </style>
+    #loading-text {
+      position: relative;
+      z-index: 1;
+      padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
+  </style>
 </head>
 <body>
-  <div id="flutter-loading">Loading...</div>
+  <div id="loading-bar">
+    <div id="loading-progress"></div>
+    <span id="loading-text">Loading app...</span>
+  </div>
+  <script>
+    (function () {
+      const loadingBar = document.getElementById('loading-bar');
+      const loadingText = document.getElementById('loading-text');
+      const loadingProgress = document.getElementById('loading-progress');
+
+      const activeRequests = new Map();
+      let totalRequests = 0;
+      let completedRequests = 0;
+      let nextRequestId = 0;
+
+      function classifyResource(url) {
+        if (typeof url !== 'string') return 'Loading app resource';
+        if (url.indexOf('loadBoard') !== -1) {
+          const match = url.match(/[?&]id=([^&]+)/);
+          const id = match ? decodeURIComponent(match[1]) : 'board';
+          return 'Loading board: ' + id;
+        }
+        if (url.indexOf('assets/') !== -1) {
+          const parts = url.split('/');
+          const name = parts[parts.length - 1].split('?')[0];
+          return 'Loading board assets: ' + (name || 'asset');
+        }
+        const parts = url.split('/');
+        const name = parts[parts.length - 1].split('?')[0];
+        return 'Loading app resource: ' + (name || url);
+      }
+
+      function updateLoadingUI() {
+        const active = activeRequests.size;
+        const percent = totalRequests > 0
+          ? Math.round((completedRequests / totalRequests) * 100)
+          : 0;
+        const currentLabel = active > 0
+          ? activeRequests.values().next().value
+          : 'Loading app...';
+        if (loadingText) loadingText.textContent = currentLabel + ' (' + percent + '%)';
+        if (loadingProgress) loadingProgress.style.width = percent + '%';
+        if (active === 0) {
+          totalRequests = 0;
+          completedRequests = 0;
+          if (loadingBar) loadingBar.classList.add('hidden');
+        }
+      }
+
+      function setLoading(label) {
+        const id = ++nextRequestId;
+        activeRequests.set(id, label);
+        totalRequests++;
+        updateLoadingUI();
+        return id;
+      }
+
+      function clearLoading(id) {
+        if (activeRequests.has(id)) {
+          activeRequests.delete(id);
+          completedRequests++;
+          updateLoadingUI();
+        }
+      }
+
+      const origFetch = window.fetch;
+      window.fetch = function () {
+        const url = (typeof arguments[0] === 'string') ? arguments[0] : (arguments[0] && arguments[0].url ? arguments[0].url : 'resource');
+        const id = setLoading(classifyResource(url));
+        const p = origFetch.apply(this, arguments);
+        p.then(function () { clearLoading(id); }, function () { clearLoading(id); });
+        return p;
+      };
+
+      const origOpen = XMLHttpRequest.prototype.open;
+      const origSend = XMLHttpRequest.prototype.send;
+      XMLHttpRequest.prototype.open = function (method, url) {
+        this._ccUrl = url;
+        return origOpen.apply(this, arguments);
+      };
+      XMLHttpRequest.prototype.send = function () {
+        const id = setLoading(classifyResource(this._ccUrl || 'resource'));
+        this.addEventListener('loadend', function () { clearLoading(id); });
+        return origSend.apply(this, arguments);
+      };
+    })();
+  </script>
+
+  <script>
+    window.flutterWebRenderer = "html";
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+{
+  "id": "prebuilt_articles_montessori",
+  "name": "Articles",
+  "area": "Common",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 5,
+  "tier": 2,
+  "parentBoardId": "prebuilt_small_words",
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_articles_montessori_tile_1",
+      "type": "image",
+      "label": "a",
+      "category": "Article",
+      "image": "assets/Common/Small Words/Montessori/Article/a.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_articles_montessori_tile_2",
+      "type": "image",
+      "label": "an",
+      "category": "Article",
+      "image": "assets/Common/Small Words/Montessori/Article/an.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_articles_montessori_tile_3",
+      "type": "image",
+      "label": "the",
+      "category": "Article",
+      "image": "assets/Common/Small Words/Montessori/Article/the.png",
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ]
+}

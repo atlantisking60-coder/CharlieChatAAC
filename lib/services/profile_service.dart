@@ -92,8 +92,8 @@ class UserProfile {
         id: 'default',
         name: 'Default',
         settings: const AppSettings(
-          profileImage: 'assets/charlie_chat_aac_default_profile.png',
-          themeMode: ThemeMode.system,
+          profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png',
+          themeMode: ThemeMode.light,
           voiceRate: 0.80,
           voicePitch: 1.0,
           voiceVolume: 1.0,
@@ -133,7 +133,20 @@ class ProfileService {
 
     /** 2. Migration: Ensure all profiles named 'Default' have ID 'default' and Admin has correct password **/
     for (int i = 0; i < profiles.length; i++) {
-      final p = profiles[i];
+      var p = profiles[i];
+
+      // Normalize asset-style profile images that are missing the assets/ prefix.
+      final img = p.settings.profileImage;
+      if (img.isNotEmpty &&
+          !img.startsWith('assets/') &&
+          !img.startsWith('data:') &&
+          !img.startsWith('http') &&
+          !img.startsWith('/') &&
+          !img.contains(':')) {
+        p = p.copyWith(settings: p.settings.copyWith(profileImage: 'assets/$img'));
+        profiles[i] = p;
+        profilesChanged = true;
+      }
       if (p.name.toLowerCase() == 'default' && p.id != 'default') {
         final oldId = p.id;
         profiles[i] = p.copyWith(id: 'default');
@@ -176,10 +189,18 @@ class ProfileService {
         }
       }
 
-      if (p.settings.profileImage == 'assets/charlie_chat_aac_logo.png' ||
-          p.settings.profileImage == 'assets/symbols/baycroft.png') {
+      // Ensure the default profile uses the proper app icon.
+      if (p.id == 'default' &&
+          p.settings.profileImage != 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png') {
         profiles[i] = p.copyWith(
-          settings: p.settings.copyWith(profileImage: 'assets/charlie_chat_aac_default_profile.png'),
+          settings: p.settings.copyWith(profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'),
+        );
+        profilesChanged = true;
+      }
+
+      if (p.settings.profileImage == 'assets/symbols/baycroft.png') {
+        profiles[i] = p.copyWith(
+          settings: p.settings.copyWith(profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'),
         );
         profilesChanged = true;
       }
@@ -195,7 +216,8 @@ class ProfileService {
         password: 'baycr0ft',
         isAdmin: true,
         settings: globalSettings.settings.copyWith(
-          profileImage: 'assets/charlie_chat_aac_default_profile.png',
+          profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_logo.png',
+          themeMode: ThemeMode.light,
         ),
         tabOrder: [],
         preferredSymbolSets: const ['In App Assets'],
@@ -256,7 +278,7 @@ class ProfileService {
           id: '',
           name: '',
           settings: const AppSettings(
-            themeMode: ThemeMode.system,
+            themeMode: ThemeMode.light,
             voiceRate: 0.80,
             voicePitch: 1.0,
             voiceVolume: 1.0,

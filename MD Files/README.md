@@ -16,7 +16,7 @@ Charlie Chat - A Flutter-based AAC (augmentative and alternative communication) 
 - Cross-platform support (Web, iOS, Android, Windows)
 
 ## Architecture
-- **Frontend**: Flutter & Dart (cross-platform UI)
+- **Frontend**: Flutter and Dart (cross-platform UI)
 - **Backend**: SymbolTalk API (Ktor/PostgreSQL)
 - **Storage**: Local cache + Cloud sync via SymbolTalk backend
 

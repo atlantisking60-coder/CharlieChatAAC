@@ -114,7 +114,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   List<dynamic> _sortCommonArea(List<Board> areaBoards, List<Board> allPool) {
     final order = [
       'Common Words', 'Letters', 'Numbers', 'Feelings', 'Colours', 'Prepositions',
-      'People', 'Animals', 'Actions', 'Places', 'Jobs & Careers', 'Weather',
+      'People', 'Animals', 'Actions', 'Places', 'Jobs and Careers', 'Weather',
       'Body Parts', 'Time', 'Clothes', 'Toys'
     ];
     return _sortWithOrder(areaBoards, allPool, order);

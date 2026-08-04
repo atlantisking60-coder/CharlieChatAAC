@@ -1,0 +1,10 @@
+Building Common area from MD Files/AREA_COMMON.md
+Found 114 Common boards, 20 top-level tabs.
+Top-level tab order: Common Words, Small Words, Letters, Numbers, Feelings, Actions, People, Places, Colours, Prepositions, Body Parts, Jobs and Careers, Animals, Weather, Time, Clothes, Toys, Money, Transport, World Map
+Indexing assets/Common...
+Indexed 7072 files in assets/Common.
+Updating board hierarchy...
+Updated board_hierarchy.dart with 114 Common board entries.
+Updating prebuilt board JSONs...
+Updated 88 JSON files, remapped 6351 image paths.
+Done.

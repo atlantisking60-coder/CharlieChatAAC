@@ -36,25 +36,25 @@
 ```
 Common Words
 Small Words
-    Nouns
-    Proper Nouns
-    Abstract Nouns
-    Collective Nouns
-    Articles
-    Pronouns
-    Adjectives
-    Verbs
-    Transitive Verbs
-    Intransitive Verbs
-    Linking Verbs
-    Auxiliary Verbs
-    Adverbs
-    Prepositions
-    Conjunctions
-    Interjections
-    Gerunds
-    Participles
-    Others
+    Nouns (Montessori)
+    Proper Nouns (Montessori)
+    Abstract Nouns (Montessori)
+    Collective Nouns (Montessori)
+    Articles (Montessori)
+    Pronouns (Montessori)
+    Adjectives (Montessori)
+    Verbs (Montessori)
+    Transitive Verbs (Montessori)
+    Intransitive Verbs (Montessori)
+    Linking Verbs (Montessori)
+    Auxiliary Verbs (Montessori)
+    Adverbs (Montessori)
+    Prepositions (Montessori)
+    Conjunctions (Montessori)
+    Interjections (Montessori)
+    Gerunds (Montessori)
+    Participles (Montessori)
+    Others (Montessori)
 Letters
     Phonics
         Phase 2 Phonics

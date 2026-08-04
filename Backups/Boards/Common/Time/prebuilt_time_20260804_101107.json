@@ -1,0 +1,22 @@
+{
+  "id": "prebuilt_time",
+  "name": "Time",
+  "area": "Common",
+  "columns": 7,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 14,
+  "tier": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 8,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

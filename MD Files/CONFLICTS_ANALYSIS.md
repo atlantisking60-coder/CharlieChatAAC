@@ -51,7 +51,7 @@ This document identifies conflicts between SymbolTalk (backend API) and AppCreat
 
 ---
 
-### 3. **Board Storage & Structure**
+### 3. **Board Storage and Structure**
 
 **SymbolTalk Backend:**
 - UUID-based board IDs

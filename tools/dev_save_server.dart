@@ -3,8 +3,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as p;
+import 'package:crypto/crypto.dart';
 
 const defaultPort = 8787;
+
+final _assetHashCache = <String, String>{};
 
 String _folderName(String name) =>
     name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').replaceAll(RegExp(r'[. ]+$'), '').trim();
@@ -49,6 +52,19 @@ Future<Directory> _boardDirectory(Directory root, Map<String, dynamic> data) asy
   return directory;
 }
 
+Future<void> _prewarmAssetHashes(String projectRoot) async {
+  final root = Directory('$projectRoot/assets');
+  if (!await root.exists()) return;
+  await for (final entity in root.list(recursive: true)) {
+    if (entity is! File) continue;
+    try {
+      final bytes = await entity.readAsBytes();
+      final hash = sha256.convert(bytes).toString();
+      _assetHashCache.putIfAbsent(hash, () => entity.path);
+    } catch (_) {}
+  }
+}
+
 void main(List<String> args) async {
   final port = args.isNotEmpty ? int.tryParse(args.first) ?? defaultPort : defaultPort;
   
@@ -70,6 +86,8 @@ void main(List<String> args) async {
   print('Charlie Chat dev save server listening on http://localhost:$port');
   print('Project root: $projectRoot');
   print('Board edits will be saved to their respective nested subdirectories in lib/data/boards/');
+
+  await _prewarmAssetHashes(projectRoot);
 
   await for (final request in server) {
     final response = request.response;
@@ -190,30 +208,94 @@ void main(List<String> args) async {
         final data = json.decode(body) as Map<String, dynamic>;
         final filename = data['filename'] as String?;
         final base64Data = data['data'] as String?;
+        final boardId = data['boardId'] as String?;
 
         if (filename == null || base64Data == null) {
           response.statusCode = 400;
           response.write(json.encode({'ok': false, 'error': 'Missing filename or data'}));
         } else {
-          final dir = Directory('$projectRoot/assets/symbols/Custom');
-          if (!await dir.exists()) {
-            await dir.create(recursive: true);
+          // Route the image to the board's own asset folder when possible.
+          // If the board JSON is in lib/data/boards/<Area>/<Parent>/<Name>/,
+          // the image is saved under assets/<Area>/<Parent>/<Name>/.
+          Directory targetDir;
+          if (boardId != null && boardId.isNotEmpty) {
+            final boardRoot = Directory('$projectRoot/lib/data/boards');
+            final boardFile = await _findBoardFile(boardRoot, boardId);
+            if (boardFile != null) {
+              final relativeBoardDir = p.relative(boardFile.parent.path, from: boardRoot.path);
+              targetDir = Directory(p.join(projectRoot, 'assets', relativeBoardDir));
+            } else {
+              final area = data['area'] as String? ?? 'Custom';
+              final name = data['name'] as String? ?? 'Uploaded';
+              targetDir = Directory(p.join(projectRoot, 'assets/symbols', _folderName(area), _folderName(name)));
+            }
+          } else {
+            targetDir = Directory('$projectRoot/assets/symbols/Custom');
           }
 
-          // Requirement: if an image that already exists in our Assets Library, the app should use the existing Image.
-          // We check by filename.
-          final file = File('${dir.path}/$filename');
-          if (await file.exists()) {
-            print('Using existing image ${file.path}');
-            response.statusCode = 200;
-            response.write(json.encode({'ok': true, 'path': 'assets/symbols/Custom/$filename'}));
-          } else {
-            final bytes = base64Decode(base64Data.contains(',') ? base64Data.split(',').last : base64Data);
-            await file.writeAsBytes(bytes);
-            print('Saved new image ${file.path}');
-            response.statusCode = 200;
-            response.write(json.encode({'ok': true, 'path': 'assets/symbols/Custom/$filename'}));
+          if (!await targetDir.exists()) {
+            await targetDir.create(recursive: true);
           }
+
+          final targetFile = File(p.join(targetDir.path, filename));
+
+          final bytes = base64Decode(base64Data.contains(',') ? base64Data.split(',').last : base64Data);
+          final uploadedHash = sha256.convert(bytes).toString();
+
+          // 1. Exact content match against the whole asset library.
+          final cachedPath = _assetHashCache[uploadedHash];
+          if (cachedPath != null) {
+            final cachedFile = File(cachedPath);
+            if (await cachedFile.exists()) {
+              final assetPath = p.relative(cachedFile.path, from: projectRoot).replaceAll('\\', '/');
+              print('Using identical cached image ${cachedFile.path}');
+              response.statusCode = 200;
+              response.write(json.encode({'ok': true, 'path': assetPath}));
+              await response.close();
+              continue;
+            }
+          }
+
+          // 2. Same-name check in case the asset is already on disk.
+          File? existing;
+          if (await targetFile.exists()) {
+            existing = targetFile;
+          } else {
+            final assetsRoot = Directory('$projectRoot/assets');
+            if (await assetsRoot.exists()) {
+              await for (final entity in assetsRoot.list(recursive: true)) {
+                if (entity is File && p.basename(entity.path) == filename) {
+                  existing = entity;
+                  break;
+                }
+              }
+            }
+          }
+
+          if (existing != null && await existing.exists()) {
+            // Only reuse the existing file if it is byte-for-byte identical.
+            try {
+              final existingBytes = await existing.readAsBytes();
+              final existingHash = sha256.convert(existingBytes).toString();
+              if (existingHash == uploadedHash) {
+                _assetHashCache[uploadedHash] = existing.path;
+                final assetPath = p.relative(existing.path, from: projectRoot).replaceAll('\\', '/');
+                print('Using identical existing image ${existing.path}');
+                response.statusCode = 200;
+                response.write(json.encode({'ok': true, 'path': assetPath}));
+                await response.close();
+                continue;
+              }
+            } catch (_) {}
+            // Otherwise fall through and save under the intended target path.
+          }
+
+          await targetFile.writeAsBytes(bytes);
+          _assetHashCache[uploadedHash] = targetFile.path;
+          final assetPath = p.relative(targetFile.path, from: projectRoot).replaceAll('\\', '/');
+          print('Saved new image ${targetFile.path}');
+          response.statusCode = 200;
+          response.write(json.encode({'ok': true, 'path': assetPath}));
         }
       } catch (e, st) {
         print('Error saving image: $e\n$st');
@@ -234,7 +316,7 @@ void main(List<String> args) async {
     try {
       final body = await utf8.decoder.bind(request).join();
       final data = json.decode(body) as Map<String, dynamic>;
-      final allowContentReduction = data['allowContentReduction'] as bool? ?? true;
+      final allowContentReduction = data['allowContentReduction'] as bool? ?? false;
       final id = data['id'] as String?;
       final area = data['area'] as String?;
 
@@ -254,7 +336,7 @@ void main(List<String> args) async {
       final newTilesList = data['tiles'] as List?;
       final nonEmptyNewTiles = newTilesList?.where((t) {
         final label = t['label']?.toString() ?? '';
-        final image = t['image']?.toString() ?? '';
+        final image = t['imageAsset']?.toString() ?? t['image']?.toString() ?? '';
         return label.isNotEmpty || image.isNotEmpty;
       }).length ?? 0;
 
@@ -264,7 +346,7 @@ void main(List<String> args) async {
         final existingTilesList = existingData['tiles'] as List?;
         final nonEmptyExistingTiles = existingTilesList?.where((t) {
           final label = t['label']?.toString() ?? '';
-          final image = t['image']?.toString() ?? '';
+          final image = t['imageAsset']?.toString() ?? t['image']?.toString() ?? '';
           return label.isNotEmpty || image.isNotEmpty;
         }).length ?? 0;
         
@@ -278,7 +360,7 @@ void main(List<String> args) async {
         }
 
         // Extremely conservative: Never overwrite a board that has content with one that has ZERO content.
-        if (!allowContentReduction && nonEmptyExistingTiles > 0 && nonEmptyNewTiles == 0) {
+        if (nonEmptyExistingTiles > 0 && nonEmptyNewTiles == 0) {
            print('Safety Lock: BLOCKED complete wipe of board $id.');
            response.statusCode = 403;
            response.write(json.encode({'ok': false, 'error': 'Safety Lock: Cannot wipe board'}));

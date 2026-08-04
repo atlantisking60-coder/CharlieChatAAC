@@ -84,11 +84,11 @@ final Map<String, String> specialMappings = {
   'eighteen': 'assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/18.png',
   'nineteen': 'assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/19.png',
   'twenty': 'assets/symbols/3. Lesson Vocab/Maths/Basic/Numbers/20.png',
-  // Common Words -> Break & Lunchtime explicit mappings
-  'calooequipment': 'assets/symbols/3. Lesson Vocab/Break & Lunchtime/caloo equipment.png',
-  'hangingbars': 'assets/symbols/3. Lesson Vocab/Break & Lunchtime/hanging bars.png',
-  'roundabout': 'assets/symbols/3. Lesson Vocab/Break & Lunchtime/roundabout.png',
-  'swing': 'assets/symbols/3. Lesson Vocab/Break & Lunchtime/swing.png',
+  // Common Words -> Break and Lunchtime explicit mappings
+  'calooequipment': 'assets/symbols/3. Lesson Vocab/Break and Lunchtime/caloo equipment.png',
+  'hangingbars': 'assets/symbols/3. Lesson Vocab/Break and Lunchtime/hanging bars.png',
+  'roundabout': 'assets/symbols/3. Lesson Vocab/Break and Lunchtime/roundabout.png',
+  'swing': 'assets/symbols/3. Lesson Vocab/Break and Lunchtime/swing.png',
   // People duplicates
   'theyoneperson': 'assets/symbols/1. Main Boards/People/they (one person).png',
   'theymorethanoneperson': 'assets/symbols/1. Main Boards/People/they (more than one person).png',

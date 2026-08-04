@@ -1,3 +1,15 @@
+String _normaliseImagePath(String path) {
+  if (path.isEmpty) return path;
+  var out = path.replaceFirstMapped(
+    RegExp(r'^assets/sign/00\. A-Z of Sign/(.+)$'),
+    (m) => 'assets/Sign/A-Z Of Sign/A (Sign)/${m[1]}',
+  );
+  return out.replaceFirstMapped(
+    RegExp(r'^assets/sign/(.+?)/A-Z of Sign/(.+)$'),
+    (m) => 'assets/Sign/A-Z Of Sign/${m[1]}/${m[2]}',
+  );
+}
+
 class SymbolTile {
   String id;
   String label;
@@ -66,23 +78,40 @@ class SymbolTile {
     };
   }
 
-  factory SymbolTile.fromMap(Map<String, dynamic> m) => SymbolTile(
-        id: m['id'] ?? '',
-        label: m['label'] ?? '',
-        category: m['category'] ?? 'Home',
-        imageAsset: m['imageAsset'] ?? '',
-        emoji: m['emoji'] ?? '',
-        linkedBoardId: m['linkedBoardId'] ?? '',
-        isBoardLink: m['isBoardLink'] ?? false,
-        isFullScreenImage: m['isFullScreenImage'] ?? false,
-        tileSize:
-            (m['tileSize'] is num) ? (m['tileSize'] as num).toDouble() : 1.0,
-        bgColor: m['bgColor'] ?? 'transparent',
-        textColor: m['textColor'] ?? '#000000',
-        customVoice: m['customVoice'] ?? '',
-        colSpan: m['colSpan'] ?? 1,
-        rowSpan: m['rowSpan'] ?? 1,
-      );
+  factory SymbolTile.fromMap(Map<String, dynamic> m) {
+    final rawId = (m['id'] as String?) ?? '';
+    final rawLink = (m['linkedBoardId'] as String?) ??
+        (m['linkedBoardName'] as String?) ??
+        '';
+    final aToZ = RegExp(r'^prebuilt_a-z_of_sign_([a-z])_sign$')
+        .firstMatch(rawId.toLowerCase());
+    final linkedId = rawLink.isNotEmpty
+        ? rawLink
+        : (aToZ != null ? 'prebuilt_${aToZ.group(1)}_sign' : '');
+    final isLink = (m['isBoardLink'] as bool?) ??
+        rawLink.isNotEmpty ||
+        (aToZ != null) ||
+        (m['type'] == 'board_link');
+    return SymbolTile(
+      id: m['id'] ?? '',
+      label: m['label'] ?? '',
+      category: m['category'] ?? 'Home',
+      imageAsset: _normaliseImagePath(
+        (m['imageAsset'] as String?) ?? (m['image'] as String?) ?? '',
+      ),
+      emoji: m['emoji'] ?? '',
+      linkedBoardId: linkedId,
+      isBoardLink: isLink,
+      isFullScreenImage: m['isFullScreenImage'] ?? false,
+      tileSize:
+          (m['tileSize'] is num) ? (m['tileSize'] as num).toDouble() : 1.0,
+      bgColor: m['bgColor'] ?? 'transparent',
+      textColor: m['textColor'] ?? '#000000',
+      customVoice: m['customVoice'] ?? '',
+      colSpan: m['colSpan'] ?? 1,
+      rowSpan: m['rowSpan'] ?? 1,
+    );
+  }
 
   SymbolTile copyWith({
     String? id,

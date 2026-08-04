@@ -1,0 +1,15 @@
+Medical - Word List
+=======================
+
+gp surgery
+hospital
+dentist
+optician
+doctor
+nurse
+dentist
+optician
+reflex test
+surgery
+hearing test
+eye test

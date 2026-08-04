@@ -1,0 +1,20 @@
+Our Electrical Supply - Word List
+=====================================
+
+AC (alternating current)
+ampere, amp (A)
+bulb
+charge
+DC (direct current)
+dynamo
+earth, ground
+electrical unit
+energy consumption
+insulation
+kilowatt-hour (kWh)
+ohm's law
+ohm
+potential difference
+power rating
+resistance
+transformer

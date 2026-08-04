@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'fix_board_assets_v2.dart' as fixer;
 
-const Set<String> targetBoards = {'Actions', 'Jobs & Careers', 'Numbers'};
+const Set<String> targetBoards = {'Actions', 'Jobs and Careers', 'Numbers'};
 
 void main() {
   final assetMap = fixer.scanAssets();

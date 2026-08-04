@@ -1,0 +1,218 @@
+In all lowercase, give me a complete list of all of the files we have generated in each collection. I need the character names and the description that the files are saved as as a screen name and downloadable file name .
+FORMAT:
+[codename] ([real name if different]) - [File Name / Screen Name in Collection]
+
+I’ve reorganized the assets and found the missing collection—it was renamed to marvel villains album. I have also generated a new logo for the black panther collection since the previous attempt was throttled.
+
+here is the complete lowercase character mapping for all of today’s collections, including screen names and album logos.
+
+iron man collection
+
+album logo	robotic helmet faceplate symbol
+iron man (tony stark)	superhero symbol red gold
+tony stark	man with goatee wearing suit
+war machine (james rhodes)	superhero symbol on white background
+james rhodes	man in military uniform symbol
+ironheart (riri williams)	superhero symbol red gold suit
+riri williams	woman with curly hair wearing glasses
+pepper potts (virginia potts)	woman symbol white background
+happy hogan (harold hogan)	man in suit symbol
+mandarin (xu wenwu)	figure with dark hair green robes
+iron monger (obadiah stane)	armored villain with power core
+whiplash (ivan vanko)	villain holding electrified whips
+ultron (initial)	robotic villain with glowing mouth
+
+captain america collection
+
+album logo	shield symbol with star
+captain america (steve rogers)	soldier with shield symbol
+captain america (sam wilson)	heroic man patriotic suit shield
+falcon (sam wilson)	heroic man in flight suit
+winter soldier (bucky barnes)	soldier with cybernetic arm
+red skull (johann schmidt)	villain with red skull face
+baron zemo (helmut zemo)	villain wearing purple mask
+crossbones (brock rumlow)	villain symbol black suit
+sharon carter	woman in military uniform symbol
+peggy carter	woman in green military uniform
+
+thor collection
+
+album logo	stylized grey stone war hammer
+thor (thor odinson)	blonde warrior holding hammer
+loki (loki laufeyson)	man in horned helmet
+odin (odin borson)	elderly king with eyepatch
+hela (hela odinsdottir)	female figure with antler headpiece
+valkyrie (brunnhilde)	female warrior symbol white background
+heimdall	guardian in gold armor
+sif	female warrior holding sword
+frigg	elderly woman symbol white background
+malekith	villain with burnt face
+beta ray bill	muscular warrior with gold hammer
+jane foster	woman with hammer armor
+
+hulk collection
+
+album logo	green fist symbol white background
+hulk (bruce banner)	giant wearing purple pants
+bruce banner	man in lab coat symbol
+she-hulk (jennifer walters)	green-skinned woman athletic suit
+jennifer walters	woman in business suit glasses
+red hulk (thaddeus ross)	muscular red-skinned giant symbol
+betty ross	woman in military uniform
+abomination (emil blonsky)	muscular grey villain symbol
+leader (samuel sterns)	villain with green head suit
+skaar	green barbarian warrior with sword
+
+black widow and hawkeye collection
+
+album logo	stylized hourglass symbol white background
+black widow (natasha romanoff)	female spy in tactical suit
+yelena belova	female spy in tactical vest
+hawkeye (clint barton)	male archer with bow
+hawkeye (kate bishop)	female archer holding bow
+echo (maya lopez)	female martial artist with handprint
+ronin (clint barton)	hooded warrior holding katana
+taskmaster (antonia dreykov)	mercenary in tactical suit holding shield
+
+black panther collection
+
+album logo	panther mask silhouette white background
+black panther (t'challa)	king symbol tactical suit
+shuri	woman with braided hair armor
+okoye	female warrior holding spear
+nakia	woman wearing green tribal clothing
+m'baku	male warrior with armor
+killmonger (erik stevens)	warrior in tactical suit
+everett ross	man in business suit
+
+doctor strange collection
+
+album logo	mystical mandate pattern symbol
+doctor strange (stephen strange)	sorcerer symbol with glowing amulet
+wong	sorcerer in yellow blue robes
+the ancient one	elderly sorcerer in yellow robes
+baron mordo (karl mordo)	stern sorcerer in robes
+dormammu	giant entity flaming head energy
+clea	female sorceress in purple robes
+america chavez	young woman in denim jacket
+
+scarlet witch collection
+
+album logo	red tiara headpiece symbol
+scarlet witch (wanda maximoff)	woman with red tiara suit
+quicksilver (pietro maximoff)	man in athletic suit symbol
+vision	synthetic humanoid with red skin
+wonder man (simon williams)	muscular man symbol red emblem
+agatha harkness	older sorceress with dark hair
+wiccan (billy maximoff)	boy with magical energy
+speed (tommy maximoff)	boy in athletic suit
+
+ant-man collection
+
+album logo	silver helmet with red goggles
+ant-man (scott lang)	heroic man in armored suit
+wasp (hope van dyne)	woman in armored suit
+wasp (janet van dyne)	woman in armored suit wings
+hank pym	older man in lab coat
+yellowjacket (darren cross)	villain in armored suit
+cassie lang	young woman in armored suit
+
+guardians of the galaxy collection
+
+album logo	flame crest emblem for heroes
+star-lord (peter quill)	galactic outlaw wearing mask
+gamora	green-skinned female warrior tactical
+rocket (89p13)	creature in flight suit holding
+groot	tree-like humanoid symbol white
+drax (drax the destroyer)	muscular warrior with red markings
+mantis	woman in tactical suit symbol
+nebula	blue cyborg female warrior symbol
+yondu (yondu udonta)	blue-skinned male space pirate symbol
+cosmo (cosmo the spacedog)	golden retriever in space suit
+adam warlock	golden male humanoid in armor
+high evolutionary (herbert wyndham)	menacing male villain purple suit
+korath (korath the pursuer)	male warrior tactical space suit
+
+fantastic four collection
+
+album logo	circular emblem with number 4
+mr. fantastic (reed richards)	heroic man in suit emblem
+invisible woman (sue storm)	woman in tactical suit
+human torch (johnny storm)	young man made of flames
+thing (ben grimm)	orange character with blue eyes
+silver surfer (norrin radd)	humanoid figure soaring on surfboard
+galactus (galan)	cosmic being wearing helmet
+doctor doom (victor von doom)	villain in mask and cloak
+namor (namor mckenzie)	man with short dark hair
+mole man (harvey elder)	man in green suit holding staff
+super-skrull (kl'rt)	green alien with elemental powers
+
+the avengers collection
+
+album logo	silver letter a symbol
+nick fury	man with eyepatch wearing coat
+maria hill	woman in s.h.i.e.l.d. jumpsuit
+captain marvel (carol danvers)	woman in high-tech suit
+monica rambeau	woman in high-tech suit
+ms. marvel (kamala khan)	girl in high-tech suit
+moon knight (marc spector)	heroic figure in tactical suit
+matt murdock (daredevil)	man in business suit sunglasses
+elektra (elektra natchios)	female warrior in red suit
+jessica jones	woman in leather jacket symbol
+iron fist (danny rand)	martial artist in green suit
+blade (eric brooks)	man holding sword illustration
+ghost rider (johnny blaze)	figure with skull head flames
+
+deadpool collection
+
+album logo	red black circular emblem white
+deadpool (wade wilson)	talkative mercenary in suit
+cable (nathan summers)	soldier with cybernetic eye blaster
+domino (neena thurman)	female mercenary symbol black suit
+colossus (piotr rasputin)	muscular man in tactical suit
+negasonic teenage warhead (ellie phimister)	woman in tactical suit
+yukio	young woman purple hair tactical
+
+eternals collection
+
+album logo	cosmic energy burst symbol
+thena	female warrior holding energy spear
+ikaris	heroic man in tactical suit
+sersi	woman in tactical suit
+kingo	heroic man in armored suit
+gilgamesh	muscular man in armor
+makkari	woman in speedster suit
+phastos	man in armored suit
+druig	young man in tactical suit
+ajak	wise woman in armored suit
+
+inhumans collection
+
+album logo	silver fork-like emblem white background
+black bolt (blackagar boltagon)	heroic man with fork emblem
+medusa (medusalith amaquelin)	woman with long red hair
+lockjaw	bulldog-like creature with antenna
+karnak (karnak mander-azur)	man in green tactical suit
+gorgon (gorgon petragon)	muscular man with hooves
+crystal (crystallia amaquelin)	woman with black stripe tactical
+maximus (maximus boltagon)	man in tactical suit
+
+marvel villains album
+
+album logo	gold gauntlet with gems
+thanos	muscular titan wearing armor
+kang the conqueror (nathaniel richards)	villain in armored suit
+lizard (curtis connors)	green reptilian humanoid in lab coat
+mephisto	demonic figure in cape
+mole man (harvey elder)	man in green suit holding staff
+the hood (parker robbins)	man in tactical suit holding blaster
+taskmaster (tony masters)	mercenary in tactical suit holding shield
+modok (george tarleton)	villain in floating chair
+ego (ego the living planet)	older man with grey beard
+super-adaptoid	green robot with elemental powers
+arnim zola	robotic villain with digital screen
+red guardian (alexei shostakov)	heroic man patriotic tactical suit
+kaecilius	mystical villain sorcerer robes
+ronan (ronan the accuser)	alien villain with war hammer
+ultron	robotic villain with red eyes
+sentinel	robot with glowing eyes

@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 260,
+  "sortOrder": 556,
   "tier": 2,
   "boxScale": 1,
   "tileHeight": 100,
@@ -24,7 +24,7 @@
       "type": "image_viewer",
       "label": "zero, nil, nought, nothing",
       "category": "Custom",
-      "image": "assets/sign/00. A-Z of Sign/zero, nil, nought, nothing.png",
+      "image": "assets/sign/A-Z of Sign/Z (Sign)/zero, nil, nought, nothing.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": true,
@@ -500,5 +500,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "rows": 4,
+  "version": 0
 }
