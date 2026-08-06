@@ -303,19 +303,22 @@ class _BoardEditorState extends State<BoardEditor> {
             .where((w) => w != 'the' && w.isNotEmpty)
             .join(' ');
         final searchText = cleanQuery.isEmpty ? query : cleanQuery;
-        final assetPrefix = fromSignAssets
-            ? 'assets/Sign/'
-            : fromBoardsAssets
-                ? 'assets/BOARDS/'
-                : 'assets/';
+
+        bool matchesSource(String imageUrl) {
+          final lower = imageUrl.toLowerCase();
+          if (fromSignAssets) return lower.startsWith('assets/sign/');
+          if (fromBoardsAssets) return lower.startsWith('assets/boards/');
+          return lower.startsWith('assets/') &&
+              !lower.startsWith('assets/sign/') &&
+              !lower.startsWith('assets/boards/');
+        }
 
         final raw = await _externalSymbolService.searchAssets(searchText, limit: 100);
         if (raw.isEmpty) return;
 
-        final lowerPrefix = assetPrefix.toLowerCase();
         final results = _externalSymbolService
             .sortByRelevance(raw, searchText, preferredSets: _activeProfile?.preferredSymbolSets)
-            .where((r) => r.source == 'Assets' && r.imageUrl.toLowerCase().startsWith(lowerPrefix))
+            .where((r) => r.source == 'Assets' && matchesSource(r.imageUrl))
             .toList();
         if (results.isEmpty) return;
 
@@ -332,7 +335,11 @@ class _BoardEditorState extends State<BoardEditor> {
         return;
       }
 
-      final results = await _externalSymbolService.searchAll(query, limit: 10, preferredSets: _activeProfile?.preferredSymbolSets);
+      final results = await _externalSymbolService.searchAll(
+        query,
+        limit: chooseFromOptions ? 18 : 50,
+        preferredSets: _activeProfile?.preferredSymbolSets,
+      );
       // Always skip the current image so we never "keep" what's already there.
       final candidates = results.where((r) => r.imageUrl != tile.imageAsset).toList();
 
@@ -352,7 +359,7 @@ class _BoardEditorState extends State<BoardEditor> {
         final selected = await showDialog<ExternalSymbol>(
           context: context,
           builder: (ctx) => _SymbolSelectionDialog(
-            symbols: candidates.take(9).toList(),
+            symbols: candidates,
             title: 'Choose picture for "$rawLabel"',
           ),
         );
@@ -468,6 +475,11 @@ class _BoardEditorState extends State<BoardEditor> {
         ),
       );
     }
+    List<String> projectAssets = [];
+    try {
+      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      projectAssets = manifest.listAssets();
+    } catch (_) {}
     try {
       if (kIsWeb) {
         final result = await FilePicker.pickFiles(
@@ -480,7 +492,7 @@ class _BoardEditorState extends State<BoardEditor> {
           for (final f in result.files) {
             try {
               final tile = await _tileFromPlatformFile(f,
-                  fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true);
+                  fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true, projectAssets: projectAssets);
               newTiles.add(tile);
             } catch (e) {
               debugPrint('Error processing file ${f.name}: $e');
@@ -501,7 +513,7 @@ class _BoardEditorState extends State<BoardEditor> {
             ..sort((a, b) => a.path.compareTo(b.path));
           for (final f in files) {
             try {
-              final tile = await _tileFromFile(f, fullScreen: fullScreen, boardId: board.id);
+              final tile = await _tileFromFile(f, fullScreen: fullScreen, boardId: board.id, projectAssets: projectAssets);
               newTiles.add(tile);
             } catch (e) {
               debugPrint('Error processing file ${f.path}: $e');
@@ -518,7 +530,7 @@ class _BoardEditorState extends State<BoardEditor> {
             for (final f in pickResult.files) {
               try {
                 final tile = await _tileFromPlatformFile(f,
-                    fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true);
+                    fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true, projectAssets: projectAssets);
                 newTiles.add(tile);
               } catch (e) {
                 debugPrint('Error processing file ${f.name}: $e');
@@ -760,7 +772,7 @@ class _BoardEditorState extends State<BoardEditor> {
                 minLines: 5,
                 maxLines: 8,
                 decoration: const InputDecoration(
-                  labelText: 'Context clues',
+                  labelText: 'Topic clues (e.g. weather, animals)',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -1408,15 +1420,68 @@ class _BoardEditorState extends State<BoardEditor> {
     }
   }
 
+  String _imageMimeType(String fileName) {
+    final lower = fileName.toLowerCase();
+    if (lower.endsWith('.png')) return 'image/png';
+    if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
+    if (lower.endsWith('.webp')) return 'image/webp';
+    if (lower.endsWith('.gif')) return 'image/gif';
+    if (lower.endsWith('.svg')) return 'image/svg+xml';
+    return 'image/png';
+  }
+
+  bool _bytesEqual(Uint8List a, Uint8List b) {
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+
+  Future<String?> _findExistingAssetForUpload(String fileName, Uint8List? bytes,
+      {String? filePath, List<String> projectAssets = const []}) async {
+    if (projectAssets.isEmpty) return null;
+    final lowerName = fileName.toLowerCase();
+    final candidates = projectAssets
+        .where((a) => a.split('/').last.toLowerCase() == lowerName)
+        .toList();
+    if (candidates.isEmpty) return null;
+
+    final normalizedPath = (filePath ?? '').replaceAll('\\', '/');
+    if (normalizedPath.startsWith('assets/')) {
+      if (candidates.contains(normalizedPath)) return normalizedPath;
+    }
+
+    if (bytes == null) return null;
+    for (final candidate in candidates) {
+      try {
+        final data = await rootBundle.load(candidate);
+        final assetBytes = data.buffer.asUint8List();
+        if (bytes.length == assetBytes.length && _bytesEqual(bytes, assetBytes)) {
+          return candidate;
+        }
+      } catch (_) {}
+    }
+    return null;
+  }
+
   Future<SymbolTile> _tileFromFile(File file,
-      {bool fullScreen = false, required String boardId}) async {
+      {bool fullScreen = false, required String boardId, List<String> projectAssets = const []}) async {
     final label = _labelFromPath(file.path);
-    final persistedPath = await _persistImportedImage(file, boardId: boardId);
+    final fileBytes = await file.readAsBytes();
+    final fileName = file.path.replaceAll('\\', '/').split('/').last;
+    final existing = await _findExistingAssetForUpload(
+      fileName,
+      fileBytes,
+      filePath: file.path,
+      projectAssets: projectAssets,
+    );
+    final imagePath = existing ?? await _persistImportedImage(file, boardId: boardId);
     return SymbolTile(
       id: 'tile_${DateTime.now().microsecondsSinceEpoch}_${label.hashCode}',
       label: label,
       category: 'Custom',
-      imageAsset: persistedPath.isNotEmpty ? _convertToAssetPath(persistedPath) : '',
+      imageAsset: imagePath.isNotEmpty ? _convertToAssetPath(imagePath) : '',
       emoji: '',
       bgColor: fullScreen ? '#FFCDD2' : 'transparent',
       textColor: '#000000',
@@ -1427,49 +1492,56 @@ class _BoardEditorState extends State<BoardEditor> {
   Future<SymbolTile> _tileFromPlatformFile(PlatformFile file,
       {bool fullScreen = false,
       required String boardId,
-      bool skipOnlineSearch = false}) async {
+      bool skipOnlineSearch = false,
+      List<String> projectAssets = const []}) async {
     final sourceName = file.name.isNotEmpty ? file.name : (file.path ?? '');
     final label = _labelFromPath(sourceName);
-    var imagePath = '';
+
+    Uint8List? fileBytes;
+    String? localFilePath;
     if (kIsWeb) {
-      if (file.name.isNotEmpty && file.bytes != null) {
-        final mirrored = await _mirrorImageToProject(
-          file.name,
-          file.bytes!,
-          boardId: boardId,
-          boardArea: board.area,
-          boardName: board.name,
-        );
-        imagePath = mirrored ?? 'data:image/png;base64,${base64Encode(file.bytes!)}';
-      }
-    } else {
-      if (file.path != null && file.path!.isNotEmpty) {
-        imagePath = file.path!;
-      } else if (file.bytes != null) {
-        final tempDir = await getTemporaryDirectory();
-        final tempFile = File('${tempDir.path}/${file.name}');
-        await tempFile.writeAsBytes(file.bytes!);
-        imagePath = tempFile.path;
-      }
+      fileBytes = file.bytes;
+    } else if (file.path != null && file.path!.isNotEmpty) {
+      localFilePath = file.path!;
+      try {
+        fileBytes = await File(localFilePath).readAsBytes();
+      } catch (_) {}
+    } else if (file.bytes != null) {
+      fileBytes = file.bytes;
+      final tempDir = await getTemporaryDirectory();
+      final tempFile = File('${tempDir.path}/${file.name}');
+      await tempFile.writeAsBytes(file.bytes!);
+      localFilePath = tempFile.path;
     }
-    String persistedPath = '';
-    if (imagePath.isNotEmpty) {
-      if (!kIsWeb) {
-        final localFile = File(imagePath);
+
+    String imagePath = '';
+    if (fileBytes != null) {
+      final existing = await _findExistingAssetForUpload(
+        sourceName,
+        fileBytes,
+        filePath: file.path,
+        projectAssets: projectAssets,
+      );
+      if (existing != null && existing.isNotEmpty) {
+        imagePath = existing;
+      } else if (kIsWeb) {
+        final mime = _imageMimeType(sourceName);
+        imagePath = 'data:$mime;base64,${base64Encode(fileBytes)}';
+      } else if (localFilePath != null && localFilePath.isNotEmpty) {
+        final localFile = File(localFilePath);
         if (await localFile.exists()) {
-          persistedPath = await _persistImportedImage(localFile, boardId: boardId);
+          imagePath = await _persistImportedImage(localFile, boardId: boardId);
         } else {
-          persistedPath = imagePath;
+          imagePath = localFilePath;
         }
-      } else {
-        persistedPath = imagePath;
       }
     }
+
     return SymbolTile(
       id: 'tile_${DateTime.now().microsecondsSinceEpoch}_${label.hashCode}',
       label: label,
       category: 'Custom',
-      imageAsset: persistedPath.isNotEmpty ? _convertToAssetPath(persistedPath) : '',
+      imageAsset: imagePath.isNotEmpty ? _convertToAssetPath(imagePath) : '',
       emoji: '',
       bgColor: fullScreen ? '#FFCDD2' : 'transparent',
       textColor: '#000000',
@@ -2310,7 +2382,7 @@ class _BoardEditorState extends State<BoardEditor> {
     if (_showScrollToTop)
       Positioned(
         right: 16,
-        bottom: 48,
+        bottom: 24,
         child: FloatingActionButton.small(
           onPressed: () {
             _scrollController.animateTo(
@@ -2509,11 +2581,10 @@ class _BoardEditorState extends State<BoardEditor> {
   }
 
   _EditorGridLayout _editorGridLayoutFor(BoxConstraints constraints) {
-    if (board.columns > 0) return _EditorGridLayout(columns: board.columns.clamp(1, 12), childAspectRatio: 1.0);
+    if (board.columns > 0) return _EditorGridLayout(columns: board.columns, childAspectRatio: 1.0);
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
     final targetTileExtent = (118.0 * board.boxScale).clamp(82.0, 180.0);
-    var columns = (width / targetTileExtent).floor().clamp(2, 10);
-    if (columns < 6) columns = 6;
+    final columns = (width / targetTileExtent).floor().clamp(1, 1000);
     return _EditorGridLayout(columns: columns, childAspectRatio: 1.0);
   }
 }
@@ -2524,7 +2595,7 @@ class _SymbolSelectionDialog extends StatelessWidget {
   const _SymbolSelectionDialog({required this.symbols, required this.title});
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(title: Text(title), content: SizedBox(width: double.maxFinite, child: GridView.builder(shrinkWrap: true, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8), itemCount: symbols.length, itemBuilder: (ctx, i) {
+    return AlertDialog(title: Text(title), content: SizedBox(width: double.maxFinite, height: 400, child: GridView.builder(shrinkWrap: false, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8), itemCount: symbols.length, itemBuilder: (ctx, i) {
       final s = symbols[i];
       final isAsset = s.imageUrl.startsWith('assets/');
       final isSvg = s.imageUrl.toLowerCase().endsWith('.svg');

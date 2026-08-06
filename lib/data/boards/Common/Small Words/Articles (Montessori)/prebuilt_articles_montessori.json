@@ -1,6 +1,6 @@
 {
-  "id": "prebuilt_article",
-  "name": "Article",
+  "id": "prebuilt_articles_montessori",
+  "name": "Articles (Montessori)",
   "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",

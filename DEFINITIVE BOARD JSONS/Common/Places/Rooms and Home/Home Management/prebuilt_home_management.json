@@ -5,8 +5,8 @@
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": true,
-  "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 4,
@@ -182,11 +182,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_home_management_tile_10",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
+      "id": "prebuilt_home_management_home_management",
+      "type": "vocabulary",
+      "label": "home management",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Places/Rooms and Home/home.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -451,6 +451,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "parentBoardId": "prebuilt_rooms_and_home"
+  ]
 }

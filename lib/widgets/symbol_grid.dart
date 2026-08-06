@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,6 +27,7 @@ class SymbolGrid extends StatelessWidget {
   final bool highContrast;
   final bool viewOnly;
   final bool scrollable;
+  final bool horizontalScroll;
   final ScrollController? controller;
 
   const SymbolGrid({
@@ -42,6 +44,7 @@ class SymbolGrid extends StatelessWidget {
     this.highContrast = false,
     this.viewOnly = false,
     this.scrollable = true,
+    this.horizontalScroll = false,
     this.controller,
   });
 
@@ -72,7 +75,12 @@ class SymbolGrid extends StatelessWidget {
         final responsive = AacLayoutProvider.maybeOf(context);
         final spacing = responsive?.gridSpacing ?? 10.0;
         final maxWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
-        final childWidth = (maxWidth - (layout.columns + 1) * spacing) / layout.columns;
+        final targetTileExtent = (118.0 * boxScale).clamp(82.0, 180.0);
+        var childWidth = (maxWidth - (layout.columns + 1) * spacing) / layout.columns;
+        if (horizontalScroll && childWidth < targetTileExtent) {
+          childWidth = targetTileExtent;
+        }
+        final totalWidth = layout.columns * childWidth + (layout.columns + 1) * spacing;
         final imageHeight = childWidth - 16;
         final double labelWidth =
             (childWidth - 16).clamp(0.0, double.infinity).toDouble();
@@ -251,15 +259,47 @@ class SymbolGrid extends StatelessWidget {
         final totalHeight = numRows * (baseTileHeight + spacing);
 
         Widget grid = SizedBox(
+          width: totalWidth,
           height: totalHeight,
           child: Stack(children: positionedTiles),
         );
 
         _precacheImages(context);
-        if (!scrollable) return Padding(padding: EdgeInsets.symmetric(horizontal: spacing), child: grid);
+        if (horizontalScroll) {
+          Widget scrollableGrid = scrollable
+              ? SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: spacing),
+                  child: grid,
+                )
+              : grid;
+          final hScroll = SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            controller: controller,
+            padding: EdgeInsets.fromLTRB(0, 0, 0, spacing + 12),
+            child: scrollableGrid,
+          );
+          Widget result = hScroll;
+          if (controller != null) {
+            result = Scrollbar(
+              controller: controller,
+              thumbVisibility: true,
+              child: result,
+            );
+          }
+          return ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+              },
+            ),
+            child: result,
+          );
+        }
+        if (!scrollable) return grid;
         return SingleChildScrollView(
           controller: controller,
-          padding: EdgeInsets.fromLTRB(spacing, 0, spacing, spacing),
+          padding: EdgeInsets.only(bottom: spacing),
           child: grid,
         );
       },
@@ -270,8 +310,7 @@ class SymbolGrid extends StatelessWidget {
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
 
     if (fixedColumns != null && fixedColumns! > 0) {
-      final columns = fixedColumns!.clamp(1, 12);
-      return _GridLayout(columns: columns);
+      return _GridLayout(columns: fixedColumns!);
     }
 
     // Use responsive layout if available, otherwise fall back to width calc
@@ -279,11 +318,10 @@ class SymbolGrid extends StatelessWidget {
     int columns;
     if (responsive != null) {
       // Scale by boxScale but respect fixed board columns if set
-      columns = ((responsive.gridColumns * boxScale).round()).clamp(2, 12);
+      columns = (responsive.gridColumns * boxScale).round().clamp(1, 1000);
     } else {
       final targetTileExtent = (118.0 * boxScale).clamp(82.0, 180.0);
-      columns = (width / targetTileExtent).floor().clamp(2, 10);
-      if (columns < 6) columns = 6;
+      columns = (width / targetTileExtent).floor().clamp(1, 1000);
     }
 
     return _GridLayout(columns: columns);

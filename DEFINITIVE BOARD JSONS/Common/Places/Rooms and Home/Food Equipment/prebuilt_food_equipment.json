@@ -5,8 +5,8 @@
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": true,
-  "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 3,
@@ -182,11 +182,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_food_equipment_tile_10",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
+      "id": "prebuilt_food_equipment_food_equipment_2",
+      "type": "vocabulary",
+      "label": "food equipment",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Places/Rooms and Home/Food Equipment/mixing bowl.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -937,6 +937,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "parentBoardId": "prebuilt_rooms_and_home"
+  ]
 }

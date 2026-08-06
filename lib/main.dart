@@ -15,8 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 import 'data/symbol_data.dart';
+import 'data/board_icon_assets.dart';
+import 'data/symbol_icon_assets.dart';
 import 'data/board_hierarchy.dart';
 import 'models/symbol_tile.dart';
+import 'services/board_icon_resolver.dart';
 import 'services/board_service.dart';
 import 'services/cross_platform_tts_service.dart';
 import 'services/external_symbol_service.dart';
@@ -450,7 +453,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _boardViewKey = GlobalKey();
   final AudioPlayer _customVoicePlayer = AudioPlayer();
   final ScrollController _boardScrollController = ScrollController();
-  final Map<int, ScrollController> _tabScrollControllers = {};
+  final ScrollController _boardHorizontalScrollController = ScrollController();
+  final Map<String, ScrollController> _tabScrollControllers = {};
   bool _showScrollToTop = false;
 
   // Sub-boards that are hidden from the top-level tab bar but shown as a second row when their parent is active.
@@ -677,12 +681,93 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  String _bestBoardIconPath(String boardName, List<String> paths) {
+    final lower = boardName.toLowerCase();
+    // Prefer an exact file-name match
+    for (final path in paths) {
+      final fileName = p.basenameWithoutExtension(path).toLowerCase().trim();
+      if (fileName == lower) return _sanitizeIconAssetPath(path);
+    }
+    // Otherwise prefer the shortest (least nested) path
+    final sorted = List<String>.from(paths)..sort((a, b) => a.length.compareTo(b.length));
+    return _sanitizeIconAssetPath(sorted.first);
+  }
+
   String _getBoardIconPath(Board board) {
     if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
       return board.iconAssetPath!;
     }
     
     final boardName = board.name;
+    final searchName = boardName.toLowerCase().trim();
+
+    final clean = searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim();
+
+    String? findKey(Map<String, List<String>> map, String query) {
+      for (final key in map.keys) {
+        if (key.toLowerCase() == query) return key;
+      }
+      return null;
+    }
+
+    // Try the symbol library first (non-BOARDS assets)
+    final symbolKey = findKey(symbolIconAssetMap, searchName);
+    if (symbolKey != null) {
+      return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
+    }
+    if (clean.isNotEmpty) {
+      final cleanSymbolKey = findKey(symbolIconAssetMap, clean);
+      if (cleanSymbolKey != null) {
+        return _bestBoardIconPath(cleanSymbolKey, symbolIconAssetMap[cleanSymbolKey]!);
+      }
+    }
+
+    String? bestSymbolKey;
+    int bestSymbolScore = 0;
+    for (final key in symbolIconAssetMap.keys) {
+      final keyLower = key.toLowerCase();
+      if (keyLower.contains(searchName) ||
+          searchName.contains(keyLower) ||
+          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
+        if (key.length > bestSymbolScore) {
+          bestSymbolScore = key.length;
+          bestSymbolKey = key;
+        }
+      }
+    }
+    if (bestSymbolKey != null) {
+      return _bestBoardIconPath(bestSymbolKey, symbolIconAssetMap[bestSymbolKey]!);
+    }
+
+    // Generated from assets/BOARDS - try exact, then closest filename match
+    final boardKey = findKey(boardIconAssetMap, searchName);
+    if (boardKey != null) {
+      return _bestBoardIconPath(boardKey, boardIconAssetMap[boardKey]!);
+    }
+    if (clean.isNotEmpty) {
+      final cleanBoardKey = findKey(boardIconAssetMap, clean);
+      if (cleanBoardKey != null) {
+        return _bestBoardIconPath(cleanBoardKey, boardIconAssetMap[cleanBoardKey]!);
+      }
+    }
+
+    String? bestKey;
+    int bestScore = 0;
+    for (final key in boardIconAssetMap.keys) {
+      final keyLower = key.toLowerCase();
+      if (keyLower.contains(searchName) ||
+          searchName.contains(keyLower) ||
+          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
+        if (key.length > bestScore) {
+          bestScore = key.length;
+          bestKey = key;
+        }
+      }
+    }
+    if (bestKey != null) {
+      return _bestBoardIconPath(bestKey, boardIconAssetMap[bestKey]!);
+    }
+
     // Specific icon path mappings for boards
     final iconMappings = {
       // HOME mode icons
@@ -845,6 +930,152 @@ class _HomePageState extends State<HomePage> {
     // Fallback to dynamic path construction
     final fileName = boardName.replaceAll(' ', ' ');
     return _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
+  }
+
+  IconData _getBoardIconData(Board? board) {
+    if (board == null) return Icons.grid_view;
+    final name = board.name.toLowerCase();
+    final area = board.area.toLowerCase();
+
+    if (name.contains('animal') ||
+        name.contains('mammal') ||
+        name.contains('bird') ||
+        name.contains('fish') ||
+        name.contains('reptile') ||
+        name.contains('insect') ||
+        name.contains('amphibian') ||
+        name.contains('spider') ||
+        name.contains('nature')) return Icons.pets;
+
+    if (name.contains('people') ||
+        name.contains('person') ||
+        name.contains('family') ||
+        name.contains('jobs') ||
+        name.contains('careers')) return Icons.people;
+
+    if (name.contains('time') ||
+        name.contains('month') ||
+        name.contains('event') ||
+        name.contains('season') ||
+        name.contains('calendar')) return Icons.access_time;
+
+    if (name.contains('sign') ||
+        name.contains('bsl') ||
+        name.contains('makaton') ||
+        name.contains('alphabet') ||
+        name.contains('phonics') ||
+        name.contains('letters')) return Icons.abc;
+
+    if (name.contains('food') ||
+        name.contains('cooking') ||
+        name.contains('drink') ||
+        name.contains('meal') ||
+        name.contains('eat')) return Icons.restaurant;
+
+    if (name.contains('transport') ||
+        name.contains('vehicle') ||
+        name.contains('bus') ||
+        name.contains('car') ||
+        name.contains('travel')) return Icons.directions_bus;
+
+    if (name.contains('place') ||
+        name.contains('town') ||
+        name.contains('country') ||
+        name.contains('world') ||
+        name.contains('map')) return Icons.place;
+
+    if (name.contains('home') ||
+        name.contains('house') ||
+        name.contains('furniture') ||
+        name.contains('appliance')) return Icons.home;
+
+    if (name.contains('school') ||
+        name.contains('lesson') ||
+        name.contains('tutor') ||
+        name.contains('subject') ||
+        name.contains('class')) return Icons.school;
+
+    if (name.contains('feel') ||
+        name.contains('emotion') ||
+        name.contains('health') ||
+        name.contains('medical') ||
+        name.contains('body')) return Icons.favorite;
+
+    if (name.contains('colour') ||
+        name.contains('color') ||
+        name.contains('shade')) return Icons.palette;
+
+    if (name.contains('number') ||
+        name.contains('math') ||
+        name.contains('quantity') ||
+        name.contains('measure')) return Icons.format_list_numbered;
+
+    if (name.contains('sport') ||
+        name.contains('pe') ||
+        name.contains('exercise') ||
+        name.contains('game')) return Icons.sports;
+
+    if (name.contains('clothes') ||
+        name.contains('wear') ||
+        name.contains('dress')) return Icons.checkroom;
+
+    if (name.contains('money') ||
+        name.contains('shop') ||
+        name.contains('retail') ||
+        name.contains('buy')) return Icons.paid;
+
+    if (name.contains('weather') ||
+        name.contains('sun') ||
+        name.contains('rain') ||
+        name.contains('snow')) return Icons.wb_sunny;
+
+    if (name.contains('music') ||
+        name.contains('song') ||
+        name.contains('instrument')) return Icons.music_note;
+
+    if (name.contains('art') ||
+        name.contains('paint') ||
+        name.contains('draw')) return Icons.brush;
+
+    if (name.contains('religion') ||
+        name.contains('worldviews') ||
+        name.contains('community')) return Icons.church;
+
+    if (name.contains('computer') ||
+        name.contains('it') ||
+        name.contains('technology') ||
+        name.contains('equipment')) return Icons.computer;
+
+    if (name.contains('garden') ||
+        name.contains('plant') ||
+        name.contains('tree')) return Icons.park;
+
+    if (name.contains('toy') ||
+        name.contains('play')) return Icons.toys;
+
+    if (name.contains('question') ||
+        name.contains('how') ||
+        name.contains('why') ||
+        name.contains('what')) return Icons.help;
+
+    if (name.contains('action') ||
+        name.contains('verb') ||
+        name.contains('movement')) return Icons.directions_run;
+
+    if (name.contains('disney') ||
+        name.contains('marvel') ||
+        name.contains('star wars') ||
+        name.contains('story') ||
+        name.contains('character')) return Icons.movie;
+
+    if (area == 'sign') return Icons.sign_language;
+    if (area == 'legends') return Icons.auto_stories;
+    if (area == 'personal') return Icons.person;
+    if (area == 'my school') return Icons.school;
+    if (area == 'recipes') return Icons.restaurant;
+    if (area == 'common') return Icons.dashboard;
+
+    return Icons.grid_view;
   }
 
   static const _fallbackLanguages = [
@@ -1401,13 +1632,20 @@ class _HomePageState extends State<HomePage> {
     // Find children of THIS board
     final children = _boards.where((b) => b.parentBoardId == board.id).toList();
     
-    // Also include linked boards that are marked as sub-boards in the tiles
-    final linkedSubBoardIds = <String>{};
+    // Also include linked boards that are either unparented top-level boards or
+    // are already children of this board. This prevents a board_link tile from a
+    // tertiary board (e.g. Furniture) from showing up under its grandparent.
+    final linkedSubBoardIds = <String>[];
     for (final tile in board.tiles) {
       if (tile.isBoardLink && tile.linkedBoardId.isNotEmpty) {
         final linked = _boards.cast<Board?>().firstWhere((b) => b?.id == tile.linkedBoardId, orElse: () => null);
-        if (linked != null && linked.tier > board.tier) {
-          linkedSubBoardIds.add(linked.id);
+        if (linked != null) {
+          final parentId = linked.parentBoardId;
+          if (parentId == null || parentId.isEmpty || parentId == board.id) {
+            if (!linkedSubBoardIds.contains(linked.id)) {
+              linkedSubBoardIds.add(linked.id);
+            }
+          }
         }
       }
     }
@@ -1419,6 +1657,20 @@ class _HomePageState extends State<HomePage> {
         final matched = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == animalName.toUpperCase() && b?.area == board.area, orElse: () => null);
         if (matched != null) linkedSubBoardIds.add(matched.id);
       }
+    }
+
+    // Small Words: keep Montessori-branded grammar boards plus plain Adjectives/Prepositions only.
+    if (board.name.toLowerCase() == 'small words') {
+      children.retainWhere((b) {
+        final n = b.name.toLowerCase();
+        return n.contains('(montessori)') || n == 'adjectives' || n == 'prepositions';
+      });
+      linkedSubBoardIds.removeWhere((id) {
+        final b = _boards.cast<Board?>().firstWhere((x) => x?.id == id, orElse: () => null);
+        if (b == null) return true;
+        final n = b.name.toLowerCase();
+        return !n.contains('(montessori)') && n != 'adjectives' && n != 'prepositions';
+      });
     }
 
     final childrenTabs = <TopTab>[];
@@ -1456,24 +1708,46 @@ class _HomePageState extends State<HomePage> {
     final orderMap = <String, int>{
       for (var i = 0; i < savedOrder.length; i++) savedOrder[i].toLowerCase(): i,
     };
+    final childrenNames = childrenTabs
+        .map((t) => (t.board?.name.toLowerCase() ?? t.label.toLowerCase()))
+        .toSet();
+    final useSavedOrder = savedOrder.isNotEmpty &&
+        savedOrder.length == childrenTabs.length &&
+        savedOrder.every((s) => childrenNames.contains(s.toLowerCase()));
     childrenTabs.sort((a, b) {
       // SPECIAL CASE: A-Z Of Sign sub-tabs should ALWAYS be alphabetical
       if (board.name.toLowerCase() == 'a-z of sign' || board.id == 'prebuilt_a-z_of_sign') {
         return a.label.toLowerCase().compareTo(b.label.toLowerCase());
       }
 
-      // 0. Check explicit tab order saved via Edit Tab Order
-      if (savedOrder.isNotEmpty) {
+      // 0. Check explicit tab order saved via Edit Tab Order (only if complete)
+      if (useSavedOrder) {
         final aName = a.board?.name.toLowerCase() ?? a.label.toLowerCase();
         final bName = b.board?.name.toLowerCase() ?? b.label.toLowerCase();
         final aIdx = orderMap[aName];
         final bIdx = orderMap[bName];
         if (aIdx != null && bIdx != null) return aIdx.compareTo(bIdx);
-        if (aIdx != null) return -1;
-        if (bIdx != null) return 1;
       }
 
-      // 1. Check manual sortOrder (only applies if both have boards)
+      // 1. Use the compiled hierarchy order for prebuilt boards.
+      //    Boards that are prebuilt but not in the current hierarchy (e.g. removed
+      //    from tabs but still linked from tiles) sort alphabetically so stale
+      //    or loaded sortOrder values cannot shift them around when tapped.
+      final aPrebuilt = a.board?.id.startsWith('prebuilt_') == true;
+      final bPrebuilt = b.board?.id.startsWith('prebuilt_') == true;
+      final aIndex = prebuiltBoardNames.indexOf(a.label);
+      final bIndex = prebuiltBoardNames.indexOf(b.label);
+
+      if (aPrebuilt && bPrebuilt) {
+        if (aIndex >= 0 && bIndex >= 0) return aIndex.compareTo(bIndex);
+        if (aIndex >= 0) return -1;
+        if (bIndex >= 0) return 1;
+        return a.label.toLowerCase().compareTo(b.label.toLowerCase());
+      }
+      if (aPrebuilt) return -1;
+      if (bPrebuilt) return 1;
+
+      // 2. For user boards, respect manual sortOrder, then name.
       if (a.board != null && b.board != null) {
         if (a.board!.sortOrder != 0 && b.board!.sortOrder != 0) {
           return a.board!.sortOrder.compareTo(b.board!.sortOrder);
@@ -1481,16 +1755,6 @@ class _HomePageState extends State<HomePage> {
         if (a.board!.sortOrder != 0) return -1;
         if (b.board!.sortOrder != 0) return 1;
       }
-
-      // 2. Check prebuilt hierarchy order (Authoritative sequence for system boards and shortcuts)
-      final aIndex = prebuiltBoardNames.indexOf(a.label);
-      final bIndex = prebuiltBoardNames.indexOf(b.label);
-      
-      if (aIndex >= 0 && bIndex >= 0) {
-        return aIndex.compareTo(bIndex);
-      }
-      if (aIndex >= 0) return -1;
-      if (bIndex >= 0) return 1;
 
       // 3. Fallback to alphabetical label
       return a.label.toLowerCase().compareTo(b.label.toLowerCase());
@@ -1891,6 +2155,7 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _sentenceController.removeListener(_onSentenceChanged);
     _boardScrollController.dispose();
+    _boardHorizontalScrollController.dispose();
     _searchController.dispose();
     _sentenceController.dispose();
     _customVoicePlayer.dispose();
@@ -3146,25 +3411,11 @@ class _HomePageState extends State<HomePage> {
     if (confirmed != true) return false;
 
     final service = await BoardService.getInstance();
-    if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
-      // Promote out of the current tab row
-      final newParentId = tab.parentBoard?.parentBoardId;
-      board.parentBoardId = newParentId ?? '';
-      if (newParentId != null && newParentId.isNotEmpty) {
-        final newParent = _boards.cast<Board?>().firstWhere(
-              (b) => b?.id == newParentId,
-              orElse: () => null,
-            );
-        board.isSubBoard = true;
-        board.isTertiaryBoard = newParent?.isSubBoard ?? false;
-      } else {
-        board.isSubBoard = false;
-        board.isTertiaryBoard = false;
-      }
-    } else {
-      // Top-level tab: hide from the top tab bar without deleting
-      board.isSubBoard = true;
-    }
+    // Removing a tab just hides the board from all tab rows. The board is not
+    // deleted and can still be opened from board-link tiles.
+    board.parentBoardId = '__removed__';
+    board.isSubBoard = true;
+    board.isTertiaryBoard = false;
     // Load the full board (with tiles) before saving, otherwise the tile-less
     // placeholder used in the tab list would overwrite the board with no tiles.
     final fullBoard = await service.loadBoard(board.id) ?? board;
@@ -3310,12 +3561,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  int _getCurrentRowLevel(List<TopTab> tabs) {
-    if (tabs.isEmpty) return 0;
+  String _getTabRowKey(List<TopTab> tabs) {
+    if (tabs.isEmpty) return 'top';
     // Top-level tabs don't have a parent board
     final firstWithParent = tabs.firstWhere((t) => t.parentBoard != null, orElse: () => tabs.first);
-    if (firstWithParent.parentBoard == null) return 0;
-    return firstWithParent.parentBoard!.tier;
+    if (firstWithParent.parentBoard == null) return 'top';
+    return firstWithParent.parentBoard!.id;
   }
 
   Widget _buildTabBar(List<TopTab> tabs) {
@@ -3325,9 +3576,11 @@ class _HomePageState extends State<HomePage> {
     final editorIndex = tabs.indexWhere((t) => t.type == TopTabType.editor);
     final reorderIndex = editorIndex == -1 ? 0 : editorIndex;
     
-    // Maintain scroll controllers for each tab row level
-    final rowLevel = _getCurrentRowLevel(tabs);
-    final controller = _tabScrollControllers.putIfAbsent(rowLevel, () => ScrollController());
+    // Maintain scroll controllers per tab row so switching parents doesn't reuse
+    // the same scroll offset (which makes tabs appear to jump to the start).
+    final rowKey = _getTabRowKey(tabs);
+    final controller = _tabScrollControllers.putIfAbsent(rowKey, () => ScrollController());
+    final tabOrderKey = tabs.map((t) => t.id).join(',');
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -3336,19 +3589,24 @@ class _HomePageState extends State<HomePage> {
           PointerDeviceKind.mouse,
         },
       ),
-      child: ListView.builder(
+      child: Scrollbar(
         controller: controller,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        itemCount: tabs.length + 1,
-        itemBuilder: (context, index) {
-          if (index == reorderIndex) {
-            return _buildReorderTabButton(() => _showReorderTabsDialog(reorderableTabs));
-          }
-          final tabIndex = index < reorderIndex ? index : index - 1;
-          final tab = tabs[tabIndex];
-          return _buildTabButton(tab, tabIndex, tabs.length);
-        },
+        thumbVisibility: true,
+        child: ListView.builder(
+          key: ValueKey(tabOrderKey),
+          controller: controller,
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          itemCount: tabs.length + 1,
+          itemBuilder: (context, index) {
+            if (index == reorderIndex) {
+              return _buildReorderTabButton(() => _showReorderTabsDialog(reorderableTabs));
+            }
+            final tabIndex = index < reorderIndex ? index : index - 1;
+            final tab = tabs[tabIndex];
+            return _buildTabButton(tab, tabIndex, tabs.length);
+          },
+        ),
       ),
     );
   }
@@ -3416,17 +3674,17 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (tab.iconAssetPath != null)
-                Image.asset(
-                  tab.iconAssetPath!,
-                  width: 18,
-                  height: 18,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.grid_view, size: 18);
-                  },
+              if (tab.iconAssetPath != null && tab.iconAssetPath!.isNotEmpty)
+                buildBoardIconImage(
+                  tab.iconAssetPath,
+                  size: 18,
+                  color: foregroundColor,
+                  fallback: Icon(_getBoardIconData(tab.board), size: 18, color: foregroundColor),
                 )
               else if (tab.icon != null)
-                Icon(tab.icon, size: 18),
+                Icon(tab.icon, size: 18, color: foregroundColor)
+              else
+                Icon(_getBoardIconData(tab.board), size: 18, color: foregroundColor),
               if (!isUtilityTab) ...[
                 const SizedBox(width: 6),
                 Text(tab.label, style: const TextStyle(fontSize: 13)),
@@ -3714,9 +3972,16 @@ class _HomePageState extends State<HomePage> {
                   else if (_loading)
                     const LinearProgressIndicator(minHeight: 2),
                   Expanded(
-                    child: CustomScrollView(
-                      controller: _boardScrollController,
-                      slivers: [
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context).copyWith(
+                        dragDevices: {
+                          PointerDeviceKind.touch,
+                          PointerDeviceKind.mouse,
+                        },
+                      ),
+                      child: CustomScrollView(
+                        controller: _boardScrollController,
+                        slivers: [
                         SliverToBoxAdapter(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -3730,13 +3995,16 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         SliverToBoxAdapter(
-                          child: Column(
-                            children: [
-                              RepaintBoundary(
-                                key: _boardViewKey,
-                                child: _isLoadingActiveBoard
-                                    ? _buildBoardLoadingPlaceholder(context)
-                                    : SymbolGrid(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: layout.isPhone ? 8 : 12),
+                            child: Column(
+                              children: [
+                                RepaintBoundary(
+                                  key: _boardViewKey,
+                                  child: _isLoadingActiveBoard
+                                      ? _buildBoardLoadingPlaceholder(context)
+                                      : SymbolGrid(
                                   symbols: _displaySymbols,
                                   favoriteIds: _favoritesService?.favorites ?? {},
                                   onTap: _handleSymbolTap,
@@ -3754,8 +4022,10 @@ class _HomePageState extends State<HomePage> {
                                   highContrast: _settings?.highContrast ?? false,
                                   viewOnly: _activeTab?.type == TopTabType.board,
                                   scrollable: false,
+                                  horizontalScroll: _activeTab?.board?.adjustableLayout == false,
+                                  controller: _boardHorizontalScrollController,
                                 ),
-                              ),
+                              /*FIXME*/),
                               if (_activeTab?.type == TopTabType.board && _activeTab?.board != null &&
                                   !_activeTab!.board!.adjustableLayout &&
                                   _activeTab!.board!.rows >= 10 &&
@@ -3772,19 +4042,24 @@ class _HomePageState extends State<HomePage> {
                                     child: const Text('Show More'),
                                   ),
                                 ),
-                              const SizedBox(height: 240),
+                              _activeTab?.type == TopTabType.board && _activeTab?.board != null && _activeTab!.board!.adjustableLayout == false
+                                  ? const SizedBox(height: 56)
+                                  : const SizedBox(height: 240),
                             ],
                           ),
                         ),
+                      ),
                       ],
                     ),
                   ),
+                ),
                 ],
               ),
             ),
+      bottomNavigationBar: _buildHorizontalScrollBar(),
       floatingActionButton: _showScrollToTop
           ? Padding(
-              padding: const EdgeInsets.only(bottom: 24),
+              padding: const EdgeInsets.only(bottom: 8),
               child: FloatingActionButton.small(
                 onPressed: () {
                   _boardScrollController.animateTo(
@@ -3797,6 +4072,31 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           : null,
+    );
+  }
+
+  Widget _buildHorizontalScrollBar() {
+    final activeBoard = _activeTab?.board;
+    if (activeBoard == null || activeBoard.adjustableLayout) return const SizedBox.shrink();
+
+    return AnimatedBuilder(
+      animation: _boardHorizontalScrollController,
+      builder: (context, child) {
+        if (!_boardHorizontalScrollController.hasClients) return const SizedBox.shrink();
+        final max = _boardHorizontalScrollController.position.maxScrollExtent;
+        if (max <= 0) return const SizedBox.shrink();
+        final value = (_boardHorizontalScrollController.offset / max).clamp(0.0, 1.0);
+        return Container(
+          height: 32,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          child: Slider(
+            value: value,
+            onChanged: (v) => _boardHorizontalScrollController.jumpTo(v * max),
+            min: 0,
+            max: 1,
+          ),
+        );
+      },
     );
   }
 
@@ -3979,6 +4279,35 @@ class _HomePageState extends State<HomePage> {
                                 icon: const Icon(Icons.edit),
                                 label: const Text('Edit Board'),
                               ),
+                              if (_isLoadingActiveBoard)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        width: 14,
+                                        height: 14,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Loading...',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ],
                           ),
                         ],

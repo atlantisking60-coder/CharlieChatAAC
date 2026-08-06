@@ -1,8 +1,0 @@
-Aesir (29+1) - Word List
-============================
-
-baldr
-eir
-idun
-odin
-thor

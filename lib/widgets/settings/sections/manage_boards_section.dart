@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../models/symbol_tile.dart';
+import '../../../services/board_icon_resolver.dart';
 import '../../../services/board_service.dart';
 import '../../../services/settings_service.dart';
 import '../../external_symbol_search.dart';
@@ -245,13 +246,16 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   }
 
   Widget _buildBoardIcon(Board board, ColorScheme cs) {
-    if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.asset(board.iconAssetPath!, errorBuilder: (_, __, ___) => _defaultBoardIcon(board, cs)),
-      );
-    }
-    return _defaultBoardIcon(board, cs);
+    final iconPath = resolveBoardIconAssetPath(board);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: buildBoardIconImage(
+        iconPath,
+        size: 40,
+        color: cs.primary,
+        fallback: _defaultBoardIcon(board, cs),
+      ),
+    );
   }
 
   Future<void> _deleteBoard(Board board) async {

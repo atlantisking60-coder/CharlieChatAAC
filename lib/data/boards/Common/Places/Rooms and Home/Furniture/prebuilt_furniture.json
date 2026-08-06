@@ -5,8 +5,8 @@
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": true,
-  "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 1,
@@ -182,11 +182,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_furniture_tile_10",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
+      "id": "prebuilt_furniture_furniture_2",
+      "type": "vocabulary",
+      "label": "furniture",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Places/Rooms and Home/Furniture/bed.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -1027,6 +1027,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "parentBoardId": "prebuilt_rooms_and_home"
+  ]
 }

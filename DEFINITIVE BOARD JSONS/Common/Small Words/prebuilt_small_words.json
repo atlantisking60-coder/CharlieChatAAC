@@ -22,7 +22,7 @@
     {
       "id": "prebuilt_small_words_nouns",
       "type": "board_link",
-      "label": "Nouns",
+      "label": "Nouns (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Noun.png",
       "emoji": "",
@@ -40,7 +40,7 @@
     {
       "id": "prebuilt_small_words_proper_nouns",
       "type": "board_link",
-      "label": "Proper Nouns",
+      "label": "Proper Nouns (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Proper Noun.png",
       "emoji": "",
@@ -58,7 +58,7 @@
     {
       "id": "prebuilt_small_words_abstract_nouns",
       "type": "board_link",
-      "label": "Abstract Nouns",
+      "label": "Abstract Nouns (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Abstract Noun.png",
       "emoji": "",
@@ -76,7 +76,7 @@
     {
       "id": "prebuilt_small_words_collective_nouns",
       "type": "board_link",
-      "label": "Collective Nouns",
+      "label": "Collective Nouns (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Collective Noun.png",
       "emoji": "",
@@ -94,7 +94,7 @@
     {
       "id": "prebuilt_small_words_articles",
       "type": "board_link",
-      "label": "Articles",
+      "label": "Articles (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Article.png",
       "emoji": "",
@@ -112,7 +112,7 @@
     {
       "id": "prebuilt_small_words_pronouns",
       "type": "board_link",
-      "label": "Pronouns",
+      "label": "Pronouns (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Pronoun.png",
       "emoji": "",
@@ -148,7 +148,7 @@
     {
       "id": "prebuilt_small_words_verbs",
       "type": "board_link",
-      "label": "Verbs",
+      "label": "Verbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Transitive Verb.png",
       "emoji": "",
@@ -166,7 +166,7 @@
     {
       "id": "prebuilt_small_words_transitive_verbs",
       "type": "board_link",
-      "label": "Transitive Verbs",
+      "label": "Transitive Verbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Transitive Verb.png",
       "emoji": "",
@@ -184,7 +184,7 @@
     {
       "id": "prebuilt_small_words_intransitive_verbs",
       "type": "board_link",
-      "label": "Intransitive Verbs",
+      "label": "Intransitive Verbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Intransitive Verb.png",
       "emoji": "",
@@ -202,7 +202,7 @@
     {
       "id": "prebuilt_small_words_linking_verbs",
       "type": "board_link",
-      "label": "Linking Verbs",
+      "label": "Linking Verbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Linking Verb.png",
       "emoji": "",
@@ -220,7 +220,7 @@
     {
       "id": "prebuilt_small_words_auxiliary_verbs",
       "type": "board_link",
-      "label": "Auxiliary Verbs",
+      "label": "Auxiliary Verbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Auxiliary Verb.png",
       "emoji": "",
@@ -238,7 +238,7 @@
     {
       "id": "prebuilt_small_words_adverbs",
       "type": "board_link",
-      "label": "Adverbs",
+      "label": "Adverbs (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Adverb.png",
       "emoji": "",
@@ -274,7 +274,7 @@
     {
       "id": "prebuilt_small_words_conjunctions",
       "type": "board_link",
-      "label": "Conjunctions",
+      "label": "Conjunctions (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Conjunction.png",
       "emoji": "",
@@ -292,7 +292,7 @@
     {
       "id": "prebuilt_small_words_interjections",
       "type": "board_link",
-      "label": "Interjections",
+      "label": "Interjections (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Interjection.png",
       "emoji": "",
@@ -310,7 +310,7 @@
     {
       "id": "prebuilt_small_words_gerunds",
       "type": "board_link",
-      "label": "Gerunds",
+      "label": "Gerunds (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Gerund (Noun + Ing).png",
       "emoji": "",
@@ -328,7 +328,7 @@
     {
       "id": "prebuilt_small_words_participles",
       "type": "board_link",
-      "label": "Participles",
+      "label": "Participles (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Participle (End In -Ing, -Ed, -En, -D, -T, -N, Or -Ne).png",
       "emoji": "",
@@ -346,7 +346,7 @@
     {
       "id": "prebuilt_small_words_others",
       "type": "board_link",
-      "label": "Others",
+      "label": "Others (Montessori)",
       "category": "Assets",
       "imageAsset": "assets/BOARDS/English/Montessori/Other.png",
       "emoji": "",

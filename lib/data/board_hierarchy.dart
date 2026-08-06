@@ -190,17 +190,19 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Transport', 'Common'),
   BoardHierarchyEntry('World Map', 'Common'),
   BoardHierarchyEntry('Canada and Greenland', 'Common', 'World Map'),
-  BoardHierarchyEntry('North America', 'Common', 'World Map'),
-  BoardHierarchyEntry('Central America', 'Common', 'World Map'),
+  BoardHierarchyEntry('North American States', 'Common', 'World Map'),
+  BoardHierarchyEntry('Central America and the Caribbean', 'Common', 'World Map'),
   BoardHierarchyEntry('South America', 'Common', 'World Map'),
   BoardHierarchyEntry('Europe', 'Common', 'World Map'),
+  BoardHierarchyEntry('Africa (North)', 'Common', 'World Map'),
+  BoardHierarchyEntry('Africa (South)', 'Common', 'World Map'),
   BoardHierarchyEntry('Asia (North)', 'Common', 'World Map'),
   BoardHierarchyEntry('Asia (West)', 'Common', 'World Map'),
   BoardHierarchyEntry('Asia (Central)', 'Common', 'World Map'),
   BoardHierarchyEntry('Asia (East)', 'Common', 'World Map'),
   BoardHierarchyEntry('Asia (South)', 'Common', 'World Map'),
-  BoardHierarchyEntry('Africa', 'Common', 'World Map'),
   BoardHierarchyEntry('Oceania', 'Common', 'World Map'),
+
   // --- SUBJECT VOCAB AREA ---
   BoardHierarchyEntry('Subject Vocab', 'Subject Vocab'),
   BoardHierarchyEntry('Better Words (Thesaurus)', 'Subject Vocab'),
@@ -325,56 +327,6 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Digital Literacy', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Media and Social Media', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('P.E.E.P.', 'Subject Vocab'),
-  BoardHierarchyEntry('Ancient Greece', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Places and People (Anglo-Saxons)', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Biomes and Climate', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Blue Planet', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Bone Finders', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Unsorted', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('WW Aftermath and Leadership', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('WW Homefront', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('WW1', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('WW2', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Continent Maps', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Africa', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Asia', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Canada and Greenland', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Central America and The Caribbean', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Europe', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('North American States', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Oceania', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Oceans and Poles', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('South America', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('States', 'Subject Vocab', 'Continent Maps'),
-  BoardHierarchyEntry('Disasters', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Egypt', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Emergencies', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Houses', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Explorers', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Egyptian Gods', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Heroes and Monsters', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Aesir (29+1)', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Jotnar (14+1)', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Norse Locations', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Norse Races', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Vanir (6+1)', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Olympians', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Roman Unique Gods', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Titans', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Great Britain', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Industrial Revolution', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Journeys Through Time', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Keywords', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Heroes', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Maps and Atlas', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Crew', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Famous Real Pirates', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Fictional Pirates', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Prehistoric', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Romans', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Seasons', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('People', 'Subject Vocab', 'P.E.E.P.'),
-  BoardHierarchyEntry('Victorians', 'Subject Vocab', 'P.E.E.P.'),
   BoardHierarchyEntry('E.P.I.C.', 'Subject Vocab'),
   BoardHierarchyEntry('P.E.', 'Subject Vocab'),
   BoardHierarchyEntry('Adventure and Extreme Sports', 'Subject Vocab', 'P.E.'),
@@ -480,6 +432,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Option B', 'Subject Vocab'),
   BoardHierarchyEntry('Option C', 'Subject Vocab'),
   BoardHierarchyEntry('Tech Rotation', 'Subject Vocab'),
+
   // --- MY SCHOOL AREA ---
   BoardHierarchyEntry('My School Main', 'My School'),
   BoardHierarchyEntry('Baycroft Expects', 'My School'),
@@ -511,6 +464,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('KL', 'My School', 'People At School'),
   BoardHierarchyEntry('AW', 'My School', 'People At School'),
   BoardHierarchyEntry('Governors and Friends Of Baycroft', 'My School', 'People At School'),
+
   // --- LEGENDS AREA ---
   BoardHierarchyEntry('Real Life Heroes', 'Legends'),
   BoardHierarchyEntry('Characters', 'Legends'),
@@ -618,8 +572,10 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('The Lord Of The Rings', 'Legends'),
   BoardHierarchyEntry('Computer Games', 'Legends'),
   BoardHierarchyEntry('Misc', 'Legends'),
+
   // --- RECIPES AREA ---
   BoardHierarchyEntry('Recipes', 'Recipes'),
+
   // --- SIGN AREA ---
   BoardHierarchyEntry('Sign', 'Sign'),
   BoardHierarchyEntry('A-Z Of Sign', 'Sign'),
@@ -674,7 +630,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Leisure Activities and Interests', 'Sign'),
   BoardHierarchyEntry('Sport', 'Sign'),
   BoardHierarchyEntry('Animals and Nature', 'Sign'),
-  BoardHierarchyEntry('Weather', 'Sign'),
+  BoardHierarchyEntry('Weather (Sign)', 'Sign'),
   BoardHierarchyEntry('Outside', 'Sign'),
   BoardHierarchyEntry('Places', 'Sign'),
   BoardHierarchyEntry('Transport and Vehicles', 'Sign'),
@@ -683,8 +639,12 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Other Countries', 'Sign'),
   BoardHierarchyEntry('Religion and Customs', 'Sign'),
   BoardHierarchyEntry('Gender and Sexuality', 'Sign'),
+
   // --- PERSONAL AREA ---
   BoardHierarchyEntry('Personal', 'Personal'),
+
+  // --- COMMON AREA ---
+  BoardHierarchyEntry('Habitats (2)', 'Common')
 ];
 
 

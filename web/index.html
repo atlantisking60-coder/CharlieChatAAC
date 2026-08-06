@@ -37,6 +37,7 @@
       padding: 0;
       height: 100%;
       overflow: hidden;
+      background-color: #2196F3;
     }
     body {
       position: fixed !important;
@@ -46,7 +47,29 @@
       bottom: 0 !important;
       height: auto !important;
       overflow: hidden !important;
+      background-color: #2196F3;
     }
+    #splash-notes {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 900px;
+      padding: 16px 24px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.95);
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      background-color: rgba(0, 0, 0, 0.85);
+      border-radius: 12px 12px 0 0;
+      z-index: 99999;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #splash-notes.hidden { opacity: 0; pointer-events: none; }
+    #splash-notes a { color: #fff; pointer-events: auto; text-decoration: underline; }
     #loading-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -173,5 +196,26 @@
     window.flutterWebRenderer = "html";
   </script>
   <script src="flutter_bootstrap.js" async></script>
+  <div id="splash-notes">
+    This app is in beta development, please report bugs to the app developer <a href="mailto:craig_mark@hotmail.co.uk?subject=Charlie%20Chat%20Beta%20Bug%20Report">Craig Mark</a>.<br><br>
+    PROGRESS TRACKER - AREAS COMPLETION RATE:<br>
+    COMMON - All done except World Map.<br>
+    SUBJECT VOCAB - Some Done.<br>
+    SIGN - Done, but more images coming for Makaton groups.<br>
+    MY SCHOOL - All done except for 'people at my school'.<br>
+    LEGENDS - Started, lots of pictures to add.<br>
+    RECIPES - Not started.<br>
+    PERSONAL - Mostly there for users to create boards.
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var notes = document.getElementById('splash-notes');
+      if (notes) notes.classList.add('hidden');
+    });
+    setTimeout(function () {
+      var notes = document.getElementById('splash-notes');
+      if (notes) notes.classList.add('hidden');
+    }, 25000);
+  </script>
 </body>
 </html>

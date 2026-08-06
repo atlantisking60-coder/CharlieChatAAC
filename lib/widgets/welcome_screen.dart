@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../services/profile_service.dart';
+import 'auth_guard.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final VoidCallback onContinue;
@@ -149,11 +150,13 @@ class WelcomeScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                const SliverToBoxAdapter(child: BetaFooter()),
               ],
             );
           },
         ),
       ),
+
     );
   }
 

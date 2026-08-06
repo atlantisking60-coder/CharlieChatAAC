@@ -9,7 +9,6 @@ class BoardPopulationService {
     final input = '$title $context'.toLowerCase();
     final suggestions = <String>[
       ..._wordsForInput(input),
-      ..._keywordsFromText('$title $context'),
       ..._coreWords,
     ];
 

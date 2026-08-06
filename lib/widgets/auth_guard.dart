@@ -47,8 +47,9 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).primaryColor;
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: primary,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
@@ -67,7 +68,7 @@ class _SplashScreen extends StatelessWidget {
                     child: Icon(
                       Icons.chat_bubble_outline,
                       size: 50,
-                      color: Theme.of(context).primaryColor,
+                      color: primary,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -88,28 +89,31 @@ class _SplashScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  const _BetaFooter(),
                 ],
               ),
             ),
           ),
         ),
       ),
+      bottomNavigationBar: const BetaFooter(),
     );
   }
 }
 
-/// Beta footer shown at the bottom of the splash screen only.
-class _BetaFooter extends StatelessWidget {
-  const _BetaFooter();
+/// Beta/progress notes shown at the bottom of splash/profile screens.
+class BetaFooter extends StatelessWidget {
+  const BetaFooter();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+    return Container(
+      color: Colors.black,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
@@ -142,13 +146,9 @@ class _BetaFooter extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'PROGRESS TRACKER - AREAS COMPLETION RATE:\n'
-            'COMMON - All done except World Map.\n'
-            'SUBJECT VOCAB - Some Done.\n'
-            'SIGN - Done, but more images coming for Makaton groups.\n'
-            "MY SCHOOL - All done except for 'people at my school'.\n"
-            'LEGENDS - Started, lots of pictures to add.\n'
-            'RECIPES - Not started.\n'
-            'PERSONAL - Mostly there for users to create boards.',
+            'FINISHED: Common (except phonics boards need voice recordings), Sign (but more images coming from Makaton books), My school (except for \'people at my school\' sub-boards).\n'
+            'STARTED: Subject Vocab, Legends (loads of character pictures ready to add).\n'
+            'NOT STARTED: Recipes.',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white70,
@@ -156,6 +156,8 @@ class _BetaFooter extends StatelessWidget {
             ),
           ),
         ],
+          ),
+        ),
       ),
     );
   }

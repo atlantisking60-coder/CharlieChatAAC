@@ -55,6 +55,7 @@ const Set<String> _retiredBoardIds = {
   'prebuilt_rooms_home',
   'prebuilt_events_occasions',
   'prebuilt_habitats_science',
+  'prebuilt_habitats_2',
 };
 
 String prebuiltBoardId(String name) {
@@ -283,7 +284,22 @@ class BoardService {
 
   Future<void> saveTabOrder(String area, List<String> names) async {
     if (_prefs == null) return;
-    await _prefs!.setString(_getTabOrderKey(area), json.encode(names));
+    final encoded = json.encode(names);
+    try {
+      await _prefs!.setString(_getTabOrderKey(area), encoded);
+    } catch (e) {
+      if (e.toString().contains('QuotaExceededError')) {
+        await _freeLocalStorageSpace();
+        try {
+          await _prefs!.setString(_getTabOrderKey(area), encoded);
+        } catch (e2) {
+          debugPrint('Still cannot save tab order after freeing cache: $e2');
+          rethrow;
+        }
+      } else {
+        rethrow;
+      }
+    }
   }
 
   Future<void> clearTabOrder(String area) async {
@@ -408,7 +424,11 @@ class BoardService {
     for (final id in _retiredBoardIds) {
       // Mark as deleted first so later loading steps skip it even if it doesn't exist in storage yet.
       await _markBoardDeleted(id);
-      if (await loadBoard(id) != null) await deleteBoard(id);
+      final board = await loadBoard(id);
+      if (board != null) {
+        await deleteBoard(id);
+        await removeFromRuntimeHierarchy(board.name);
+      }
     }
   }
 
@@ -2618,8 +2638,11 @@ class BoardService {
             final m = json.decode(_prefs!.getString(key)!) as Map<String, dynamic>;
             final board = Board.fromMap(m, includeTiles: includeTiles);
             // Cached prebuilt boards can have stale hierarchy metadata (tier,
-            // area, parent). Trust the compiled/runtime hierarchy instead.
-            if (board.id.startsWith('prebuilt_')) {
+            // area, parent). Trust the compiled/runtime hierarchy instead, unless
+            // the board has been explicitly removed from the tab rows
+            // (parentBoardId == '__removed__' and no longer in the hierarchy).
+            if (board.id.startsWith('prebuilt_') &&
+                (board.parentBoardId != '__removed__' || isInBoardHierarchy(board.name))) {
               final areaFromHierarchy = _areaForBoardName(board.name);
               if (areaFromHierarchy != null) board.area = areaFromHierarchy;
               final tier = hierarchyTier(board.name);
@@ -2746,11 +2769,37 @@ class BoardService {
 
     final key = _getBoardKey(id);
     if (kIsWeb) {
-      // For prebuilt boards the JSON file is the source of truth; ignore any
-      // stale or empty cached copy in localStorage.
+      // For prebuilt boards the JSON file is the source of truth for tiles.
+      // However, user-edited metadata (icon, sortOrder) from localStorage is
+      // overlaid so Manage Boards changes are reflected in tabs.
       if (id.startsWith('prebuilt_')) {
         final asset = await _loadBoardFromAssets(id, _nameFromBoardId(id));
-        if (asset != null) return asset;
+        if (asset != null) {
+          final raw = _prefs!.getString(key);
+          if (raw != null && raw.isNotEmpty) {
+            try {
+              final cached = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+              // Preserve any user icon or sortOrder set via Manage Boards.
+              if (cached.iconAssetPath != null) {
+                asset.iconAssetPath = cached.iconAssetPath;
+              }
+              if (cached.sortOrder != 0) {
+                asset.sortOrder = cached.sortOrder;
+              }
+              // Preserve tab-removal state (parentBoardId == '__removed__').
+              if (cached.parentBoardId != null && cached.parentBoardId!.isNotEmpty) {
+                asset.parentBoardId = cached.parentBoardId;
+                asset.isSubBoard = cached.isSubBoard;
+                asset.isTertiaryBoard = cached.isTertiaryBoard;
+                asset.isQuaternaryBoard = cached.isQuaternaryBoard;
+                asset.isQuinaryBoard = cached.isQuinaryBoard;
+              }
+            } catch (e) {
+              debugPrint('Error merging cached metadata for $id: $e');
+            }
+          }
+          return asset;
+        }
       }
       final raw = _prefs!.getString(key);
       if (raw == null) return null;
@@ -4014,6 +4063,15 @@ class BoardService {
 
     var isSubBoard = (json['isSubBoard'] as bool?) ?? hierarchyIsSubBoard(name);
     var isTertiaryBoard = (json['isTertiaryBoard'] as bool?) ?? (hierarchyTier(name) >= 3);
+
+    // If a board was previously removed from tabs but is now back in the
+    // hierarchy, restore its proper parent and tier.
+    if (parentBoardId == '__removed__' && isInBoardHierarchy(name)) {
+      parentBoardId = hierarchyParentId(name);
+      final tier = hierarchyTier(name);
+      isSubBoard = tier > 1;
+      isTertiaryBoard = tier > 2;
+    }
 
     // Fill in missing parent IDs from the hierarchy.
     if (parentBoardId == null || parentBoardId.isEmpty) {

@@ -182,11 +182,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_buildings_tile_10",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
+      "id": "prebuilt_buildings_building",
+      "type": "vocabulary",
+      "label": "building",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Weather/Disasters/house.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",

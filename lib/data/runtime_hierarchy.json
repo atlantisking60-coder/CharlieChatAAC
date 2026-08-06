@@ -491,12 +491,12 @@
       "parentName": "World Map"
     },
     {
-      "name": "North America",
+      "name": "North American States",
       "area": "Common",
       "parentName": "World Map"
     },
     {
-      "name": "Central America",
+      "name": "Central America and the Caribbean",
       "area": "Common",
       "parentName": "World Map"
     },
@@ -536,7 +536,12 @@
       "parentName": "World Map"
     },
     {
-      "name": "Africa",
+      "name": "Africa (North)",
+      "area": "Common",
+      "parentName": "World Map"
+    },
+    {
+      "name": "Africa (South)",
       "area": "Common",
       "parentName": "World Map"
     },
@@ -1143,256 +1148,6 @@
     {
       "name": "P.E.E.P.",
       "area": "Subject Vocab"
-    },
-    {
-      "name": "Ancient Greece",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Places and People (Anglo-Saxons)",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Biomes and Climate",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Blue Planet",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Bone Finders",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Unsorted",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "WW Aftermath and Leadership",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "WW Homefront",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "WW1",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "WW2",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Continent Maps",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Africa",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Asia",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Canada and Greenland",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Central America and The Caribbean",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Europe",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "North American States",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Oceania",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Oceans and Poles",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "South America",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "States",
-      "area": "Subject Vocab",
-      "parentName": "Continent Maps"
-    },
-    {
-      "name": "Disasters",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Egypt",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Emergencies",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Houses",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Explorers",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Egyptian Gods",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Heroes and Monsters",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Aesir (29+1)",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Jotnar (14+1)",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Norse Locations",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Norse Races",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Vanir (6+1)",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Olympians",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Roman Unique Gods",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Titans",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Great Britain",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Industrial Revolution",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Journeys Through Time",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Keywords",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Heroes",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Maps and Atlas",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Crew",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Famous Real Pirates",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Fictional Pirates",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Prehistoric",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Romans",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Seasons",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "People",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
-    },
-    {
-      "name": "Victorians",
-      "area": "Subject Vocab",
-      "parentName": "P.E.E.P."
     },
     {
       "name": "E.P.I.C.",
@@ -2786,7 +2541,7 @@
       "area": "Sign"
     },
     {
-      "name": "Weather",
+      "name": "Weather (Sign)",
       "area": "Sign"
     },
     {
@@ -2825,9 +2580,12 @@
       "name": "Personal",
       "area": "Personal"
     },
-
     {
-      "name": "Seasons (2)",
+      "name": "Habitats (2)",
+      "area": "Common"
+    },
+    {
+      "name": "United Kingdom",
       "area": "Common"
     }
   ]

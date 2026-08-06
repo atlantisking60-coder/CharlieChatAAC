@@ -182,11 +182,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_rooms_and_home_classroom",
+      "id": "prebuilt_rooms_and_home_room",
       "type": "vocabulary",
-      "label": "classroom",
+      "label": "room",
       "category": "Assets",
-      "imageAsset": "assets/Common/Places/Rooms and Home/classroom.png",
+      "imageAsset": "assets/Common/Places/Rooms and Home/living room.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -560,11 +560,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_rooms_and_home_tile_31",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
+      "id": "prebuilt_rooms_and_home_classroom",
+      "type": "vocabulary",
+      "label": "classroom",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Places/Rooms and Home/classroom.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
