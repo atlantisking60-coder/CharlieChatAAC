@@ -406,5 +406,7 @@
   ],
   "parentBoardId": "prebuilt_feelings",
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Feelings/Sad.png",
+  "tileIconAssetPath": "assets/BOARDS/Feelings/Sad.png"
 }

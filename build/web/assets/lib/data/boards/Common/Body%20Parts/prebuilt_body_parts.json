@@ -707,5 +707,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Body Parts.png",
+  "tileIconAssetPath": "assets/BOARDS/Body Parts.png"
 }

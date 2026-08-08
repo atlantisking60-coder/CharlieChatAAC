@@ -17,5 +17,7 @@
   "tileWidth": 100.0,
   "backgroundColor": "#FFFFFF",
   "tiles": [],
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Cooking and Food/Spices.png",
+  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Spices.png"
 }

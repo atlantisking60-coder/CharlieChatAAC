@@ -164,5 +164,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/BOARDS/Prepositions.png",
+  "tileIconAssetPath": "assets/BOARDS/Prepositions.png"
 }

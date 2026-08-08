@@ -7,10 +7,10 @@
   "adjustableLayout": false,
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 400,
-  "tier": 3,
+  "tier": 4,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -21,7 +21,7 @@
   "tiles": [
     {
       "id": "prebuilt_2002_lilo_stitch_tile_1",
-      "type": "image",
+      "type": "vocabulary",
       "label": "cobra bubbles",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/cobra bubbles.png",
@@ -33,11 +33,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/cobra bubbles.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_2",
-      "type": "image",
+      "type": "vocabulary",
       "label": "david kawena",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/david kawena.png",
@@ -49,11 +50,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/david kawena.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_3",
-      "type": "image",
+      "type": "vocabulary",
       "label": "dr hamsterviel",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/dr hamsterviel.png",
@@ -65,11 +67,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/dr hamsterviel.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_4",
-      "type": "image",
+      "type": "vocabulary",
       "label": "dr jumba jookiba",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/dr jumba jookiba.png",
@@ -81,11 +84,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/dr jumba jookiba.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_5",
-      "type": "image",
+      "type": "vocabulary",
       "label": "gantu",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/gantu.png",
@@ -97,11 +101,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/gantu.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_6",
-      "type": "image",
+      "type": "vocabulary",
       "label": "grand councilwoman",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/grand councilwoman.png",
@@ -113,11 +118,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/grand councilwoman.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_7",
-      "type": "image",
+      "type": "vocabulary",
       "label": "lilo pelekai",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/lilo pelekai.png",
@@ -129,11 +135,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/lilo pelekai.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_8",
-      "type": "image",
+      "type": "vocabulary",
       "label": "nani pelekai",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/nani pelekai.png",
@@ -145,11 +152,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/nani pelekai.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_9",
-      "type": "image",
+      "type": "vocabulary",
       "label": "pleakley",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/pleakley.png",
@@ -161,11 +169,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/pleakley.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_10",
-      "type": "image",
+      "type": "vocabulary",
       "label": "scrump",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/scrump.png",
@@ -177,11 +186,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/scrump.png"
     },
     {
       "id": "prebuilt_2002_lilo_stitch_tile_11",
-      "type": "image",
+      "type": "vocabulary",
       "label": "stitch (experiment 626)",
       "category": "2002 Lilo and Stitch",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2002 Lilo and Stitch/stitch (experiment 626).png",
@@ -193,8 +203,75 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2002 Lilo and Stitch/stitch (experiment 626).png"
+    },
+    {
+      "id": "prebuilt_2002_lilo_stitch_tile_12",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_2002_lilo_stitch_tile_13",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_2002_lilo_stitch_tile_14",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_2002_lilo_stitch_tile_15",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_disney_stories"
+  "parentBoardId": "prebuilt_disney_stories",
+  "iconAssetPath": "assets/Dates/2.png",
+  "tileIconAssetPath": "assets/Dates/2.png"
 }

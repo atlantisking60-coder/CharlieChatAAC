@@ -451,5 +451,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Subject Vocab/thesaurus.png",
+  "tileIconAssetPath": "assets/Subject Vocab/thesaurus.png"
 }

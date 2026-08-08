@@ -17,5 +17,7 @@
   "tileWidth": 100.0,
   "backgroundColor": "#FFFFFF",
   "tiles": [],
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/Dates/7.png",
+  "tileIconAssetPath": "assets/Dates/7.png"
 }

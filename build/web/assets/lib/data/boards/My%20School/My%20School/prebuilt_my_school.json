@@ -35,5 +35,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Common/Letters/c.png",
+  "tileIconAssetPath": "assets/Common/Letters/c.png"
 }

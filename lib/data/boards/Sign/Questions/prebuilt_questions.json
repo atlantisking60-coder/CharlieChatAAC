@@ -289,5 +289,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Subject Vocab/E.P.I.C/questions.png",
+  "tileIconAssetPath": "assets/Subject Vocab/E.P.I.C/questions.png"
 }

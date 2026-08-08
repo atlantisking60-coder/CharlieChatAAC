@@ -560,5 +560,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_people"
+  "parentBoardId": "prebuilt_people",
+  "iconAssetPath": "assets/BOARDS/People.png",
+  "tileIconAssetPath": "assets/BOARDS/People.png"
 }

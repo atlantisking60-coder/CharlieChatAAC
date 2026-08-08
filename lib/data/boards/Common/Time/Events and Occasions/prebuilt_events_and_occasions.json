@@ -452,5 +452,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_time"
+  "parentBoardId": "prebuilt_time",
+  "iconAssetPath": "assets/BOARDS/Events.png",
+  "tileIconAssetPath": "assets/BOARDS/Events.png"
 }

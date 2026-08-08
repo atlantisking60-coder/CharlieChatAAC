@@ -479,5 +479,6 @@
   "parentBoardId": "prebuilt_a-z_of_sign",
   "rows": 4,
   "version": 0,
-  "iconAssetPath": "assets/Common/Letters/q.png"
+  "iconAssetPath": "assets/Common/Letters/q.png",
+  "tileIconAssetPath": "assets/Common/Letters/q.png"
 }

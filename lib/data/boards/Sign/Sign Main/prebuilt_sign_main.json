@@ -500,5 +500,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

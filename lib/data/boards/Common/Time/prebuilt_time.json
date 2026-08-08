@@ -931,5 +931,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Time.png",
+  "tileIconAssetPath": "assets/BOARDS/Time.png"
 }

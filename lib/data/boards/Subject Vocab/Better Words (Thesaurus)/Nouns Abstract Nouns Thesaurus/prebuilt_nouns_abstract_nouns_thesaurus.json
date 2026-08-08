@@ -1100,5 +1100,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_better_words_thesaurus"
+  "parentBoardId": "prebuilt_better_words_thesaurus",
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png"
 }

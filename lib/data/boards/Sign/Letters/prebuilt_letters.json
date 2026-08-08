@@ -436,5 +436,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/BOARDS/Letters.png",
+  "tileIconAssetPath": "assets/BOARDS/Letters.png"
 }

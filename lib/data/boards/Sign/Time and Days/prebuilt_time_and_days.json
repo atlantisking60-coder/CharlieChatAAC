@@ -469,5 +469,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Time and Days.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Time and Days.png"
 }

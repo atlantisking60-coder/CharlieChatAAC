@@ -469,5 +469,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Places.png",
+  "tileIconAssetPath": "assets/BOARDS/Places.png"
 }

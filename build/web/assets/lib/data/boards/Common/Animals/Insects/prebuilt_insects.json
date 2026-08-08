@@ -532,5 +532,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_animals"
+  "parentBoardId": "prebuilt_animals",
+  "iconAssetPath": "assets/BOARDS/Animals/Insects.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Insects.png"
 }

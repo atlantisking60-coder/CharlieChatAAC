@@ -974,5 +974,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign"
+  "parentBoardId": "prebuilt_a-z_of_sign",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

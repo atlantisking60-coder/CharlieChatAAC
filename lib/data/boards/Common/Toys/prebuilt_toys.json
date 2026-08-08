@@ -919,5 +919,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Toys.png",
+  "tileIconAssetPath": "assets/BOARDS/Toys.png"
 }

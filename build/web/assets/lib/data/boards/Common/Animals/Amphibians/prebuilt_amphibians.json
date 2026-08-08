@@ -164,5 +164,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_animals"
+  "parentBoardId": "prebuilt_animals",
+  "iconAssetPath": "assets/BOARDS/Animals/Amphibians.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Amphibians.png"
 }

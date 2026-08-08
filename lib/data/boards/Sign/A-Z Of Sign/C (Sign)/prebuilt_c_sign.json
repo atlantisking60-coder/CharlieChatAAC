@@ -1939,5 +1939,6 @@
   "isQuinaryBoard": false,
   "rows": 4,
   "version": 0,
-  "iconAssetPath": "assets/Common/Letters/c.png"
+  "iconAssetPath": "assets/Common/Letters/c.png",
+  "tileIconAssetPath": "assets/Common/Letters/c.png"
 }

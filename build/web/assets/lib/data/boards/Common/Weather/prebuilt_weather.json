@@ -433,5 +433,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Weather.png",
+  "tileIconAssetPath": "assets/BOARDS/Weather.png"
 }

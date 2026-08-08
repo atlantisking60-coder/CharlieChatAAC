@@ -17,5 +17,7 @@
   "tileWidth": 100.0,
   "backgroundColor": "#FFFFFF",
   "tiles": [],
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/Common/Small Words/Montessori/Abstract Noun/equipment.png",
+  "tileIconAssetPath": "assets/Common/Small Words/Montessori/Abstract Noun/equipment.png"
 }

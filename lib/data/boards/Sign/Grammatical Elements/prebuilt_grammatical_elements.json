@@ -109,5 +109,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Grammatical Elements.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Grammatical Elements.png"
 }

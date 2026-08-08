@@ -500,5 +500,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/Subject Vocab/Maths/Money/money.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Maths/Money/money.png"
 }

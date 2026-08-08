@@ -36,5 +36,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_special_days"
+  "parentBoardId": "prebuilt_special_days",
+  "iconAssetPath": "assets/Dates/4.png",
+  "tileIconAssetPath": "assets/Dates/4.png"
 }

@@ -937,5 +937,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Cooking and Food/Food Equipment.png",
+  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Food Equipment.png"
 }

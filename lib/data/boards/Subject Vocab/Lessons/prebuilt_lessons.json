@@ -614,5 +614,7 @@
   ],
   "parentBoardId": null,
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/Subject Vocab/timetable.png",
+  "tileIconAssetPath": "assets/Subject Vocab/timetable.png"
 }

@@ -1428,5 +1428,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_actions"
+  "parentBoardId": "prebuilt_actions",
+  "iconAssetPath": "assets/BOARDS/Movement.png",
+  "tileIconAssetPath": "assets/BOARDS/Movement.png"
 }

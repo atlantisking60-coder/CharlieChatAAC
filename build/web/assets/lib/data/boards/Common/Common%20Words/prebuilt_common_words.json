@@ -803,5 +803,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Common Words.png",
+  "tileIconAssetPath": "assets/BOARDS/Common Words.png"
 }

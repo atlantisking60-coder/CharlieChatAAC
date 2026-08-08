@@ -559,5 +559,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Blank Levels.png",
+  "tileIconAssetPath": "assets/BOARDS/Blank Levels.png"
 }

@@ -17,5 +17,7 @@
   "tileWidth": 100.0,
   "backgroundColor": "#FFFFFF",
   "tiles": [],
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Photography/Artists, Context, Process, Assessment.png",
+  "tileIconAssetPath": "assets/BOARDS/Photography/Artists, Context, Process, Assessment.png"
 }

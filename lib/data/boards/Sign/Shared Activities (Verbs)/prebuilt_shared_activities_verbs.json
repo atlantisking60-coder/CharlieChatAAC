@@ -52,5 +52,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Shared Activities (Verbs).png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Shared Activities (Verbs).png"
 }

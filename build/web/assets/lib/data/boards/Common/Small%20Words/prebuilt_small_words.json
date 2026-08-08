@@ -2665,5 +2665,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Small Words.png",
+  "tileIconAssetPath": "assets/BOARDS/Small Words.png"
 }

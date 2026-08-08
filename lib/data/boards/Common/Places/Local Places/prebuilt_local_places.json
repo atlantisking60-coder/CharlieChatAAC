@@ -650,5 +650,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_places"
+  "parentBoardId": "prebuilt_places",
+  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Local Places.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Local Places.png"
 }

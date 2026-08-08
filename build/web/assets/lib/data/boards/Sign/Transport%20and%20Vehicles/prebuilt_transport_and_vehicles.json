@@ -199,5 +199,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Transport and Vehicles.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Transport and Vehicles.png"
 }

@@ -77,7 +77,7 @@ class SymbolGrid extends StatelessWidget {
         final maxWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
         final targetTileExtent = (118.0 * boxScale).clamp(82.0, 180.0);
         var childWidth = (maxWidth - (layout.columns + 1) * spacing) / layout.columns;
-        if (horizontalScroll && childWidth < targetTileExtent) {
+        if (horizontalScroll && childWidth < targetTileExtent && layout.columns > 5) {
           childWidth = targetTileExtent;
         }
         final totalWidth = layout.columns * childWidth + (layout.columns + 1) * spacing;
@@ -133,15 +133,10 @@ class SymbolGrid extends StatelessWidget {
             bg = const Color(0xFF7C7B7B);
           }
 
-          final isDark = Theme.of(context).brightness == Brightness.dark;
           Color textCol;
           if (symbol.textColor.isNotEmpty && symbol.textColor != 'transparent' && symbol.textColor.startsWith('#')) {
             try {
-              final parsed = Color(int.parse(symbol.textColor.replaceFirst('#', '0xFF')));
-              final isDarkText = parsed.computeLuminance() < 0.4;
-              textCol = (isDark && isDarkText)
-                  ? Theme.of(context).colorScheme.onSurface
-                  : parsed;
+              textCol = Color(int.parse(symbol.textColor.replaceFirst('#', '0xFF')));
             } catch (_) {
               textCol = highContrast ? Colors.white : Theme.of(context).colorScheme.onSurface;
             }

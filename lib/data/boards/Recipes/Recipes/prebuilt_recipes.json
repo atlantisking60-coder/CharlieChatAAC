@@ -667,5 +667,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Cooking and Food/Recipes.png",
+  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Recipes.png"
 }

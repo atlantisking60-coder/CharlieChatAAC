@@ -230,5 +230,7 @@
   ],
   "parentBoardId": null,
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/People At School.png",
+  "tileIconAssetPath": "assets/BOARDS/People At School.png"
 }

@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_ecosystems_science",
+  "name": "Ecosystems (Science)",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_science",
+  "sortOrder": 0,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 6,
+  "columns": 6,
+  "adjustableLayout": true,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
+}

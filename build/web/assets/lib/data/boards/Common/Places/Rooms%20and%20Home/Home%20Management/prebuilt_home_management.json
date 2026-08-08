@@ -451,5 +451,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Home.png",
+  "tileIconAssetPath": "assets/BOARDS/Home.png"
 }

@@ -541,5 +541,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/School and Instructions/Sign.png",
+  "tileIconAssetPath": "assets/Sign/School and Instructions/Sign.png"
 }

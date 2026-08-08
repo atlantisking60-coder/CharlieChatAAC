@@ -559,5 +559,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Religion and Customs.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Religion and Customs.png"
 }

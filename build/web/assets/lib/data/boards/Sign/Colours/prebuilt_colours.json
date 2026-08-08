@@ -452,5 +452,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/BOARDS/Colours.png",
+  "tileIconAssetPath": "assets/BOARDS/Colours.png"
 }

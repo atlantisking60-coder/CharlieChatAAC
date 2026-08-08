@@ -1027,5 +1027,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Furniture.png",
+  "tileIconAssetPath": "assets/BOARDS/Furniture.png"
 }

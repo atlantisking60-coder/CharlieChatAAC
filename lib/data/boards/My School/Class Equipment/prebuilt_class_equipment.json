@@ -534,5 +534,7 @@
   ],
   "parentBoardId": null,
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Class Equipment.png",
+  "tileIconAssetPath": "assets/BOARDS/Class Equipment.png"
 }

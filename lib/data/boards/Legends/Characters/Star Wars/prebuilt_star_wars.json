@@ -6,11 +6,11 @@
   "backgroundColor": "transparent",
   "adjustableLayout": false,
   "isSubBoard": true,
-  "isTertiaryBoard": false,
+  "isTertiaryBoard": true,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 17,
-  "tier": 2,
+  "tier": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -33,7 +33,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/admiral ackbar.png"
     },
     {
       "id": "prebuilt_star_wars_ahsoka_tano",
@@ -49,7 +50,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/ahsoka tano.png"
     },
     {
       "id": "prebuilt_star_wars_at_at",
@@ -65,7 +67,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/at at.png"
     },
     {
       "id": "prebuilt_star_wars_at_st",
@@ -81,7 +84,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/at st.png"
     },
     {
       "id": "prebuilt_star_wars_bb8",
@@ -97,7 +101,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/bb8.png"
     },
     {
       "id": "prebuilt_star_wars_boba_fett",
@@ -113,7 +118,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/boba fett.png"
     },
     {
       "id": "prebuilt_star_wars_c_3po",
@@ -129,7 +135,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/c- 3po.png"
     },
     {
       "id": "prebuilt_star_wars_captain_phasma",
@@ -145,7 +152,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/captain phasma.png"
     },
     {
       "id": "prebuilt_star_wars_chewbacca",
@@ -161,7 +169,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/chewbacca.png"
     },
     {
       "id": "prebuilt_star_wars_clone_trooper",
@@ -177,7 +186,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/clone trooper.png"
     },
     {
       "id": "prebuilt_star_wars_darth_maul",
@@ -193,7 +203,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/darth maul.png"
     },
     {
       "id": "prebuilt_star_wars_darth_vader",
@@ -209,7 +220,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/darth vader.png"
     },
     {
       "id": "prebuilt_star_wars_death_star",
@@ -225,7 +237,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/death star.png"
     },
     {
       "id": "prebuilt_star_wars_emperor_palpatine",
@@ -241,7 +254,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/emperor palpatine.png"
     },
     {
       "id": "prebuilt_star_wars_ewok",
@@ -257,7 +271,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/ewok.png"
     },
     {
       "id": "prebuilt_star_wars_finn",
@@ -273,7 +288,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/finn.png"
     },
     {
       "id": "prebuilt_star_wars_general_hux",
@@ -289,7 +305,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/general hux.png"
     },
     {
       "id": "prebuilt_star_wars_general_leia",
@@ -305,7 +322,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/general leia.png"
     },
     {
       "id": "prebuilt_star_wars_greedo",
@@ -321,7 +339,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/greedo.png"
     },
     {
       "id": "prebuilt_star_wars_grogu",
@@ -337,7 +356,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/grogu.png"
     },
     {
       "id": "prebuilt_star_wars_han_solo",
@@ -353,7 +373,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/han solo.png"
     },
     {
       "id": "prebuilt_star_wars_jabba_the_hutt",
@@ -369,7 +390,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/jabba the hutt.png"
     },
     {
       "id": "prebuilt_star_wars_jango_fett",
@@ -385,7 +407,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/jango fett.png"
     },
     {
       "id": "prebuilt_star_wars_jawa",
@@ -401,7 +424,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/jawa.png"
     },
     {
       "id": "prebuilt_star_wars_kylo_ren",
@@ -417,7 +441,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/kylo ren.png"
     },
     {
       "id": "prebuilt_star_wars_lando_calrissian",
@@ -433,7 +458,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lando calrissian.png"
     },
     {
       "id": "prebuilt_star_wars_lightsaber_darth_vader",
@@ -449,7 +475,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lightsaber darth vader.png"
     },
     {
       "id": "prebuilt_star_wars_lightsaber_kylo_ren",
@@ -465,7 +492,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lightsaber kylo ren.png"
     },
     {
       "id": "prebuilt_star_wars_lightsaber_luke_rotj",
@@ -481,7 +509,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lightsaber luke rotj.png"
     },
     {
       "id": "prebuilt_star_wars_lightsaber_luke",
@@ -497,7 +526,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lightsaber luke.png"
     },
     {
       "id": "prebuilt_star_wars_lobot",
@@ -513,7 +543,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/lobot.png"
     },
     {
       "id": "prebuilt_star_wars_luke_skywalker_older",
@@ -529,7 +560,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/luke skywalker (older).png"
     },
     {
       "id": "prebuilt_star_wars_luke_skywalker",
@@ -545,7 +577,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/luke skywalker.png"
     },
     {
       "id": "prebuilt_star_wars_mando",
@@ -561,7 +594,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/mando.png"
     },
     {
       "id": "prebuilt_star_wars_maz_kanata",
@@ -577,7 +611,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/maz kanata.png"
     },
     {
       "id": "prebuilt_star_wars_millenium_falcon",
@@ -593,7 +628,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/millenium falcon.png"
     },
     {
       "id": "prebuilt_star_wars_obiwan_kenobi",
@@ -609,7 +645,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/obiwan kenobi.png"
     },
     {
       "id": "prebuilt_star_wars_poe_dameron",
@@ -625,7 +662,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/poe dameron.png"
     },
     {
       "id": "prebuilt_star_wars_princess_leia",
@@ -641,7 +679,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/princess leia.png"
     },
     {
       "id": "prebuilt_star_wars_qui_gon_jinn",
@@ -657,7 +696,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/qui gon jinn.png"
     },
     {
       "id": "prebuilt_star_wars_r2_d2_head",
@@ -673,7 +713,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/r2-d2 (head).png"
     },
     {
       "id": "prebuilt_star_wars_r2_d2",
@@ -689,7 +730,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/r2-d2.png"
     },
     {
       "id": "prebuilt_star_wars_red_five",
@@ -705,7 +747,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/red five.png"
     },
     {
       "id": "prebuilt_star_wars_rey",
@@ -721,7 +764,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/rey.png"
     },
     {
       "id": "prebuilt_star_wars_stormtrooper_2",
@@ -737,7 +781,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/stormtrooper (2).png"
     },
     {
       "id": "prebuilt_star_wars_stormtrooper",
@@ -753,7 +798,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/stormtrooper.png"
     },
     {
       "id": "prebuilt_star_wars_tie_fighter",
@@ -769,7 +815,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/tie fighter.png"
     },
     {
       "id": "prebuilt_star_wars_tusken_raider",
@@ -785,7 +832,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/tusken raider.png"
     },
     {
       "id": "prebuilt_star_wars_x_wing",
@@ -801,7 +849,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/x wing.png"
     },
     {
       "id": "prebuilt_star_wars_yoda",
@@ -817,8 +866,11 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Star Wars/yoda.png"
     }
   ],
-  "parentBoardId": "prebuilt_characters"
+  "parentBoardId": "prebuilt_characters",
+  "iconAssetPath": "assets/BOARDS/Legends/Characters/Star Wars.png",
+  "tileIconAssetPath": "assets/BOARDS/Legends/Characters/Star Wars.png"
 }

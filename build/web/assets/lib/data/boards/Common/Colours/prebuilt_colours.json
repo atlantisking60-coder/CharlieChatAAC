@@ -707,5 +707,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Colours.png",
+  "tileIconAssetPath": "assets/BOARDS/Colours.png"
 }

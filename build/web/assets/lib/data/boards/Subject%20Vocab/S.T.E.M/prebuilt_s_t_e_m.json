@@ -35,5 +35,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Subject Vocab/Lessons/STEM.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Lessons/STEM.png"
 }

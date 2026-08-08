@@ -758,5 +758,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_weather"
+  "parentBoardId": "prebuilt_weather",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

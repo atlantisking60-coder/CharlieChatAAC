@@ -562,7 +562,7 @@
     {
       "id": "prebuilt_passover_keywords_7_8_days",
       "type": "vocabulary",
-      "label": "7–8 days",
+      "label": "7\u20138 days",
       "category": "Custom",
       "imageAsset": "assets/Common/Time/Events and Occasions/Passover Keywords/7-8 days.png",
       "emoji": "",
@@ -812,5 +812,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions"
+  "parentBoardId": "prebuilt_events_and_occasions",
+  "iconAssetPath": "assets/BOARDS/Keywords.png",
+  "tileIconAssetPath": "assets/BOARDS/Keywords.png"
 }

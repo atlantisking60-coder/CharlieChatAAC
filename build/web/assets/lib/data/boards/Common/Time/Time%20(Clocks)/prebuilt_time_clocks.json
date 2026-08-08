@@ -1316,5 +1316,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_time"
+  "parentBoardId": "prebuilt_time",
+  "iconAssetPath": "assets/BOARDS/Maths/Time (Clocks).png",
+  "tileIconAssetPath": "assets/BOARDS/Maths/Time (Clocks).png"
 }

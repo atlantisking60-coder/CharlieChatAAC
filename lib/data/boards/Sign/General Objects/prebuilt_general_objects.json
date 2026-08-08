@@ -502,5 +502,7 @@
   ],
   "parentBoardId": null,
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png"
 }

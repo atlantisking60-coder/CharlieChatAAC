@@ -1958,5 +1958,6 @@
   "isQuinaryBoard": false,
   "rows": 4,
   "version": 0,
-  "iconAssetPath": "assets/Common/Letters/s.png"
+  "iconAssetPath": "assets/Common/Letters/s.png",
+  "tileIconAssetPath": "assets/Common/Letters/s.png"
 }

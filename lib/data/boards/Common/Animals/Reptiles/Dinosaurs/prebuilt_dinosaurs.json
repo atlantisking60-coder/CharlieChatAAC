@@ -2262,5 +2262,7 @@
   ],
   "parentBoardId": "prebuilt_reptiles",
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Animals/Dinosaurs.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Dinosaurs.png"
 }

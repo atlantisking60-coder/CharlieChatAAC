@@ -1,6 +1,3 @@
-Shades Of Colours - Word List
-=================================
-
 shades of red
 shades of orange
 shades of yellow
@@ -10,3 +7,12 @@ shades of purple
 shades of pink
 shades of brown
 shades of grey
+palette - botanical - light
+palette - botanical - medium
+palette - botanical - dark
+palette - pink hues
+palette - ocean
+palette - warm brown
+palette - mix
+satin - blues
+satin - greens

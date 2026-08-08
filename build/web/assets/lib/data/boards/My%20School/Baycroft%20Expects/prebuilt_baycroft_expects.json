@@ -326,5 +326,7 @@
   ],
   "parentBoardId": null,
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Baycroft Expects.png",
+  "tileIconAssetPath": "assets/BOARDS/Baycroft Expects.png"
 }

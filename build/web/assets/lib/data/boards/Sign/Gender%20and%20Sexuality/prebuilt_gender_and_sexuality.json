@@ -559,5 +559,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/P.D/Gender and Sexuality.png",
+  "tileIconAssetPath": "assets/BOARDS/P.D/Gender and Sexuality.png"
 }

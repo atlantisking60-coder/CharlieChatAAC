@@ -502,5 +502,7 @@
   ],
   "parentBoardId": "prebuilt_body_parts",
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Medical.png",
+  "tileIconAssetPath": "assets/BOARDS/Medical.png"
 }

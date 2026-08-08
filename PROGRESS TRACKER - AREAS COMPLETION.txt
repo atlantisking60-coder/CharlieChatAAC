@@ -1,11 +1,4 @@
 PROGRESS TRACKER - AREAS COMPLETION RATE:
-COMMON - All done except phonics boards need voice recordings.
-SUBJECT VOCAB - Some Done.
-SIGN - Done, but more images coming from Makaton books.
-MY SCHOOL - All done except for 'people at my school' sub-boards.
-LEGENDS - Started, loads of pictures ready to add.
-RECIPES - Not started.
-PERSONAL - Mostly there for users to create boards.
-
-
-...
+FINISHED: Common, Sign (more images coming later from Makaton books), My school (except for 'people at my school' baycroft classes).
+STARTED: Subject Vocab, Legends (loads of character pictures ready to add).
+NOT STARTED: Recipes.

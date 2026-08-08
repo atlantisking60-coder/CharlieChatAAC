@@ -980,5 +980,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_animals"
+  "parentBoardId": "prebuilt_animals",
+  "iconAssetPath": "assets/BOARDS/Animals/Invertebrates.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Invertebrates.png"
 }

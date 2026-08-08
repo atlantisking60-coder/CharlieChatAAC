@@ -20,6 +20,7 @@ void main() {
   }
 
   final encoder = JsonEncoder.withIndent('  ');
-  file.writeAsStringSync(encoder.convert(data) + '\n');
+  file.writeAsStringSync('${encoder.convert(data)}\n');
+  // ignore: avoid_print
   print('Updated ${tiles.length} A-Z of Sign tiles');
 }

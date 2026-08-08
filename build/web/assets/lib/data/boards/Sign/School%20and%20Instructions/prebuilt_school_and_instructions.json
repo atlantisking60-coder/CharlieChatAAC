@@ -865,5 +865,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/School and Instructions.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/School and Instructions.png"
 }

@@ -7,10 +7,10 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 3,
-  "tier": 3,
+  "tier": 4,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -164,5 +164,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_disney_stories"
+  "parentBoardId": "prebuilt_disney_stories",
+  "iconAssetPath": "assets/Dates/1.png",
+  "tileIconAssetPath": "assets/Dates/1.png"
 }

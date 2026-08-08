@@ -196,5 +196,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/BOARDS/Numbers.png",
+  "tileIconAssetPath": "assets/BOARDS/Numbers.png"
 }

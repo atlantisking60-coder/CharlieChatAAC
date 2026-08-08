@@ -50,38 +50,8 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
     }
   }
 
-  Future<void> _renumberAllBoards() async {
-    final service = await BoardService.getInstance();
-    final list = await service.listBoards();
-    
-    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Legends', 'Recipes', 'Personal'];
-    for (final area in areas) {
-      final roots = list.where((b) => b.area == area && !b.isSubBoard && !b.isTertiaryBoard).toList();
-      for (int i = 0; i < roots.length; i++) {
-        roots[i].sortOrder = (i + 1) * 10;
-        await service.saveBoard(roots[i]);
-        await _renumberChildren(roots[i], service, list);
-      }
-    }
-    _loadBoards();
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('All board positions have been synchronized.')),
-      );
-    }
-  }
-
-  Future<void> _renumberChildren(Board parent, BoardService service, List<Board> pool) async {
-    final children = pool.where((b) => b.parentBoardId == parent.id).toList();
-    for (int i = 0; i < children.length; i++) {
-      children[i].sortOrder = (i + 1) * 10;
-      await service.saveBoard(children[i]);
-      await _renumberChildren(children[i], service, pool);
-    }
-  }
-
   List<dynamic> _sortItemsHierarchically(List<Board> all) {
-    final areas = ['Common', 'Subject Vocab', 'Sign', 'My School', 'Legends', 'Recipes', 'Personal'];
+    final areas = ['Unassigned', 'Common', 'Subject Vocab', 'Sign', 'My School', 'Legends', 'Recipes', 'Personal'];
     final boardsByArea = <String, List<Board>>{};
     for (final area in areas) {
       boardsByArea[area] = [];
@@ -297,10 +267,13 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
                   initialValue: selectedArea,
                   decoration: const InputDecoration(labelText: 'Target Area'),
                   items: const [
+                    DropdownMenuItem(value: 'Unassigned', child: Text('Unassigned')),
                     DropdownMenuItem(value: 'Common', child: Text('Common')),
                     DropdownMenuItem(value: 'Subject Vocab', child: Text('Subject Vocab')),
                     DropdownMenuItem(value: 'Sign', child: Text('Sign')),
                     DropdownMenuItem(value: 'My School', child: Text('My School')),
+                    DropdownMenuItem(value: 'Legends', child: Text('Legends')),
+                    DropdownMenuItem(value: 'Recipes', child: Text('Recipes')),
                     DropdownMenuItem(value: 'Personal', child: Text('Personal')),
                   ],
                   onChanged: (v) => setDiagState(() => selectedArea = v!),
@@ -466,7 +439,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   }
 
   Future<void> _pickBoardIcon(Board board) async {
-    final result = await Navigator.of(context).push<SymbolTile>(MaterialPageRoute(builder: (_) => ExternalSymbolSearchScreen(onAdd: (s) {}, initialLabel: board.name)));
+    final result = await Navigator.of(context).push<SymbolTile>(MaterialPageRoute(builder: (_) => ExternalSymbolSearchScreen(onAdd: (s) => Navigator.of(context).pop<SymbolTile>(s), initialLabel: board.name)));
     if (result != null && mounted) {
       final service = await BoardService.getInstance();
       setState(() { board.iconAssetPath = result.imageAsset; });

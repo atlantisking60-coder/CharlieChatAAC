@@ -23,7 +23,7 @@ part 'generate_boards_json.dart';
 /// or Native (Real File System).
 
 
-const int defaultBoardColumns = 5;
+const int defaultBoardColumns = 6;
 const int defaultBoardRows = 6;
 const String defaultBoardColor = 'transparent';
 const String lightGreenBoardColor = '#90EE90';
@@ -86,12 +86,13 @@ class Board {
   int sortOrder;
   int tier; // Tier 1 (Main) to 5 (Quinary)
   String? iconAssetPath;
+  String? tileIconAssetPath;
   int version;
 
   Board({
     required this.id,
     required this.name,
-    this.area = 'Common',
+    this.area = 'Unassigned',
     this.parentBoardId,
     this.linkedBoardId,
     required this.rows,
@@ -109,6 +110,7 @@ class Board {
     this.sortOrder = 0,
     this.tier = 1,
     this.iconAssetPath,
+    this.tileIconAssetPath,
     this.version = 0,
   });
 
@@ -133,6 +135,7 @@ class Board {
         'sortOrder': sortOrder,
         'tier': tier,
         'iconAssetPath': iconAssetPath,
+        'tileIconAssetPath': tileIconAssetPath,
         'version': version,
       };
 
@@ -165,6 +168,7 @@ class Board {
         sortOrder: m['sortOrder'] ?? 0,
         tier: m['tier'] ?? ((m['isQuinaryBoard'] ?? false) ? 5 : ((m['isQuaternaryBoard'] ?? false) ? 4 : ((m['isTertiaryBoard'] ?? false) ? 3 : ((m['isSubBoard'] ?? false) ? 2 : 1)))), 
         iconAssetPath: m['iconAssetPath'] as String?,
+        tileIconAssetPath: m['tileIconAssetPath'] as String?,
         version: (m['version'] as num?)?.toInt() ?? 0,
       );
 }
@@ -180,6 +184,9 @@ class BoardService {
   String? _rawProfileId;
   String? _currentProfileId;
   bool _isAdmin = false;
+
+  // Bump this to force every prebuilt board to be reloaded from source JSON.
+  static const int _kPrebuiltBoardsSchemaVersion = 2;
 
   BoardService._();
 
@@ -207,7 +214,7 @@ class BoardService {
     } else {
       _currentProfileId = profileId;
     }
-    _isAdmin = profileId == 'admin';
+    _isAdmin = profileId == 'admin' || profileId.toLowerCase() == 'default';
     
     // Trigger dev sync for this profile if not already done
     if (kIsWeb && Uri.base.host == 'localhost' && !_hasSyncedDevBoards) {
@@ -590,6 +597,22 @@ class BoardService {
     }
   }
 
+  /// Removes all cached copies of prebuilt boards so the next load is forced
+  /// to read the latest source JSON (used when the schema version changes).
+  Future<void> _clearStoredPrebuiltBoards() async {
+    for (final name in prebuiltBoardNames) {
+      final id = prebuiltBoardId(name);
+      final key = _getBoardKey(id);
+      _boardCache.remove(id);
+      if (kIsWeb && _prefs != null) {
+        await _prefs!.remove(key);
+      } else if (_dataDir != null) {
+        final f = File('${_dataDir!.path}/$key.json');
+        if (await f.exists()) await f.delete();
+      }
+    }
+  }
+
 /// PREBUILT LOADER
 /// This runs on the very first launch. It checks if the basic 
 /// boards (Letters, Numbers, etc.) exist, and if not, creates 
@@ -603,6 +626,17 @@ class BoardService {
   }
 
   Future<void> _ensurePrebuiltBoards() async {
+    // If the prebuilt schema version changed, purge the cached copies so the
+    // latest JSON (icons, parents, etc.) is loaded back in.
+    const schemaKey = 'prebuilt_boards_schema_version';
+    final storedVersion = _prefs?.getInt(schemaKey) ?? 0;
+    if (storedVersion < _kPrebuiltBoardsSchemaVersion) {
+      await _clearStoredPrebuiltBoards();
+      if (_prefs != null) {
+        await _prefs!.setInt(schemaKey, _kPrebuiltBoardsSchemaVersion);
+      }
+    }
+
     // If a priority board has been chosen, load it first so the user sees it
     // while the rest of the prebuilt boards load in the background.
     String? priorityName;
@@ -628,7 +662,7 @@ class BoardService {
     });
     final sortedNames = [orderedNames.first, ...rest];
 
-    final Future<void> Function(String) loadOne = (name) async {
+    Future<void> loadOne(String name) async {
       final id = prebuiltBoardId(name);
       if (_deletedBoardIds.contains(id)) return;
       final key = _getBoardKey(id);
@@ -699,11 +733,33 @@ class BoardService {
         } catch (_) {}
       }
 
-      // On native dev mode, always prefer the on-disk JSON over cached storage
+      // On native dev mode, prefer the on-disk JSON over cached storage unless
+      // the user has added more tiles in the app than the JSON currently holds.
       if (diskJsonFile != null) {
         try {
           final raw = await diskJsonFile.readAsString();
           final board = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+          final stored = await loadBoard(id);
+          if (stored != null &&
+              stored.tiles.length > board.tiles.length &&
+              board.area == stored.area &&
+              board.parentBoardId == stored.parentBoardId) {
+            debugPrint('Board "$name" preserving locally added tiles over emptier disk JSON');
+            return;
+          }
+          if (stored != null && stored.tiles.length > board.tiles.length) {
+            // Disk has fewer tiles, but its location/parent has changed.
+            // Keep the user's tiles but adopt the disk area/parent.
+            board.tiles = stored.tiles;
+            board.rows = stored.rows;
+            board.columns = stored.columns;
+            board.adjustableLayout = stored.adjustableLayout;
+            board.boxScale = stored.boxScale;
+            board.tileHeight = stored.tileHeight;
+            board.tileWidth = stored.tileWidth;
+            board.backgroundColor = stored.backgroundColor;
+            debugPrint('Board "$name" merging locally added tiles with new disk parent/area');
+          }
           // We load from disk, but we DON'T mirror it back to disk (it's already there)
           await _writeBoard(board, mirrorToDisk: false);
           _boardCache[board.id] = board;
@@ -747,130 +803,70 @@ class BoardService {
 /// and generates the tile list using paths in your assets folder.
 
       List<SymbolTile> initialTiles = _generateMainBoardTiles(name);
-      if (false) { // auto-populate disabled
-      if (name == 'Letters' || name == 'Letters (Subject)') {
-        initialTiles = _generateAlphabetTiles();
-      } else if (name == 'Numbers' || name == 'Numbers (Subject)') {
-        initialTiles = _generateNumberTiles();
-      } else if (name == 'Small Words (Subject)') {
-          final assetBoard = await _loadBoardFromAssets('prebuilt_small_words', 'Small Words');
-          if (assetBoard != null) {
-              initialTiles = assetBoard.tiles;
-          }
-      } else if (name == 'Subject Vocabulary') {
-          initialTiles = _generateSubjectVocabularyTiles();
-      } else if (name == 'Colours') {
-        initialTiles = _generateColourTiles();
-      } else if (name == 'Common Words') {
-        initialTiles = _generateCommonWordsTiles();
-      } else if (name == 'Feelings') {
-        initialTiles = _generateFeelingsTiles();
-      } else if (name == 'Sad') {
-        initialTiles = _generateSadTiles();
-      } else if (name == 'Mad') {
-        initialTiles = _generateMadTiles();
-      } else if (name == 'Scared') {
-        initialTiles = _generateScaredTiles();
-      } else if (name == 'Joyful') {
-        initialTiles = _generateJoyfulTiles();
-      } else if (name == 'Strong') {
-        initialTiles = _generateStrongTiles();
-      } else if (name == 'Calm') {
-        initialTiles = _generateCalmTiles();
-      } else if (name == 'Shades Of Colours') {
-        initialTiles = _generateShadesOfColoursTiles();
-      } else if (name == 'Prepositions') {
-        initialTiles = _generatePrepositionsTiles();
-      } else if (name == 'People') {
-        initialTiles = _generatePeopleTiles();
-      } else if (name == 'School People') {
-        initialTiles = _generateSchoolPeopleTiles();
-      } else if (name == 'Animals') {
-        initialTiles = _generateAnimalsTiles();
-      } else if (name == 'Mammals') {
-        initialTiles = _generateMammalsTiles();
-      } else if (name == 'Birds') {
-        initialTiles = _generateBirdsTiles();
-      } else if (name == 'Reptiles') {
-        initialTiles = _generateReptilesTiles();
-      } else if (name == 'Amphibians') {
-        initialTiles = _generateAmphibiansTiles();
-      } else if (name == 'Insects') {
-        initialTiles = _generateInsectsTiles();
-      } else if (name == 'Arachnids') {
-        initialTiles = _generateArachnidsTiles();
-      } else if (name == 'Invertebrates') {
-        initialTiles = _generateInvertebratesTiles();
-      } else if (name == 'Fish') {
-        initialTiles = _generateFishTiles();
-      } else if (name == 'Habitats') {
-        initialTiles = _generateHabitatsTiles();
-      } else if (name == 'Sealife') {
-        initialTiles = _generateSealifeTiles();
-      } else if (name == 'Nature Vocabulary') {
-        initialTiles = _generateNatureVocabularyTiles();
-      } else if (name == 'Body Parts of Animals') {
-        initialTiles = _generateBodyPartsOfAnimalsTiles();
-      } else if (name == 'Child Animals') {
-        initialTiles = _generateChildAnimalsTiles();
-      } else if (name == 'Groups of Animals') {
-        initialTiles = _generateGroupsOfAnimalsTiles();
-      } else if (name == 'Common Actions') {
-        initialTiles = _generateCommonActionsTiles();
-      } else if (name == 'Movement') {
-        initialTiles = _generateMovementTiles();
-      } else if (name == 'Buildings') {
-        initialTiles = _generateBuildingsTiles();
-      } else if (name == 'Rooms and Home') {
-        initialTiles = _generateRoomsAndHomeTiles();
-      } else if (name == 'Furniture') {
-        initialTiles = _generateFurnitureTiles();
-      } else if (name == 'Local Places') {
-        initialTiles = _generateLocalPlacesTiles();
-      } else if (name == 'Jobs and Careers') {
-        initialTiles = _generateJobsAndCareersTiles();
-      } else if (name == 'Weather') {
-        initialTiles = _generateWeatherTiles();
-      } else if (name == 'Disasters') {
-        initialTiles = _generateDisastersTiles();
-      } else if (name == 'Seasons') {
-        initialTiles = _generateSeasonsTiles();
-      } else if (name == 'Events and Occasions') {
-        initialTiles = _generateEventsAndOccasionsTiles();
-      } else if (name == 'Body Parts') {
-        initialTiles = _generateBodyPartsTiles();
-      } else if (name == 'Medical') {
-        initialTiles = _generateMedicalTiles();
-      } else if (name == 'Internal Organs') {
-        initialTiles = _generateInternalOrgansTiles();
-      } else if (name == 'Time (Clocks)') {
-        initialTiles = _generateTimeClocksTiles();
-      } else if (name == 'Months') {
-        initialTiles = _generateMonthsTiles();
-      } else if (name == 'Class Equipment') {
-        initialTiles = _generateClassEquipmentTiles();
-      } else if (name == 'Thinking Skills') {
-        initialTiles = _generateThinkingSkillsTiles();
-      } else if (name == 'When Things Go Wrong') {
-        initialTiles = _generateWhenThingsGoWrongTiles();
-      } else if (name == 'Lessons') {
-        initialTiles = _generateLessonsTiles();
-      } else if (name == 'Tutor Timetables') {
-        initialTiles = _generateTutorTimetablesTiles();
-      } else if (name == 'People At School') {
-        initialTiles = _generatePeopleAtSchoolTiles();
-      } else if (name == 'Baycroft Expects') {
-        initialTiles = _generateBaycroftExpectsTiles();
-      } else if (name == 'Actions') {
-        initialTiles = _generateActionsTiles();
-      } else if (name == 'Disney Stories') {
-        initialTiles = _generateDisneyStoriesTiles();
-      } else if (name == 'Phonics') {
-        initialTiles = _generatePhonicsTiles();
-      } else if (name == 'Phase 2 Phonics') {
-        initialTiles = _generatePhase2PhonicsTiles();
-      }
-      } // end auto-populate disabled
+
+    if (false) { // ignore: dead_code
+      // Keep tile generators referenced while auto-populate is disabled.
+      [
+        _generateAlphabetTiles,
+        _generateNumberTiles,
+        _generateColourTiles,
+        _generateFeelingsTiles,
+        _generateSadTiles,
+        _generateMadTiles,
+        _generateScaredTiles,
+        _generateJoyfulTiles,
+        _generateStrongTiles,
+        _generateCalmTiles,
+        _generateShadesOfColoursTiles,
+        _generatePrepositionsTiles,
+        _generatePeopleTiles,
+        _generateSchoolPeopleTiles,
+        _generateAnimalsTiles,
+        _generateMammalsTiles,
+        _generateBirdsTiles,
+        _generateReptilesTiles,
+        _generateAmphibiansTiles,
+        _generateInsectsTiles,
+        _generateArachnidsTiles,
+        _generateInvertebratesTiles,
+        _generateFishTiles,
+        _generateHabitatsTiles,
+        _generateSealifeTiles,
+        _generateNatureVocabularyTiles,
+        _generateBodyPartsOfAnimalsTiles,
+        _generateChildAnimalsTiles,
+        _generateGroupsOfAnimalsTiles,
+        _generateCommonActionsTiles,
+        _generateMovementTiles,
+        _generateBuildingsTiles,
+        _generateRoomsAndHomeTiles,
+        _generateFurnitureTiles,
+        _generateLocalPlacesTiles,
+        _generateJobsAndCareersTiles,
+        _generateWeatherTiles,
+        _generateDisastersTiles,
+        _generateSeasonsTiles,
+        _generateEventsAndOccasionsTiles,
+        _generateBodyPartsTiles,
+        _generateMedicalTiles,
+        _generateInternalOrgansTiles,
+        _generateTimeClocksTiles,
+        _generateMonthsTiles,
+        _generateClassEquipmentTiles,
+        _generateThinkingSkillsTiles,
+        _generateWhenThingsGoWrongTiles,
+        _generateLessonsTiles,
+        _generateTutorTimetablesTiles,
+        _generateSubjectVocabularyTiles,
+        _generatePeopleAtSchoolTiles,
+        _generateBaycroftExpectsTiles,
+        _generateActionsTiles,
+        _generatePhonicsTiles,
+        _generatePhase2PhonicsTiles,
+        _generateDisneyStoriesTiles,
+        _generateCommonWordsTiles,
+      ];
+    }
 
       // Determine if this is a sub-board or tertiary board from the hierarchy
       final isTertiaryBoard = hierarchyTier(name) >= 3;
@@ -936,7 +932,7 @@ class BoardService {
         isTertiaryBoard: isTertiaryBoard,
       );
       await _writeBoard(board, mirrorToDisk: false);
-    };
+    }
 
     // Load the priority board first so the user can start using the app.
     // Remaining boards are loaded on demand when the user selects their tab.
@@ -2606,6 +2602,21 @@ class BoardService {
             debugPrint('listBoards: failed to load ${entity.path}: $e');
           }
         }
+        // Overlay any per-profile saved boards so non-admin users see their own
+        // edits without changing the source project files.
+        if (_dataDir != null) {
+          final key = _getBoardKey('');
+          final userFiles = _dataDir!.listSync().whereType<File>().where((f) => p.basename(f.path).startsWith(key));
+          for (final f in userFiles) {
+            try {
+              final m = json.decode(await f.readAsString()) as Map<String, dynamic>;
+              final board = Board.fromMap(m, includeTiles: includeTiles);
+              boardsById[board.id] = board;
+            } catch (e) {
+              debugPrint('listBoards: failed to load user board ${f.path}: $e');
+            }
+          }
+        }
         if (boardsById.isNotEmpty) {
           return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
         }
@@ -2644,7 +2655,7 @@ class BoardService {
             if (board.id.startsWith('prebuilt_') &&
                 (board.parentBoardId != '__removed__' || isInBoardHierarchy(board.name))) {
               final areaFromHierarchy = _areaForBoardName(board.name);
-              if (areaFromHierarchy != null) board.area = areaFromHierarchy;
+              board.area = areaFromHierarchy;
               final tier = hierarchyTier(board.name);
               board.tier = tier;
               board.isSubBoard = tier > 1;
@@ -2751,6 +2762,17 @@ class BoardService {
 
   Future<Board?> loadBoard(String id) async {
     if (kIsWeb && _deletedBoardIds.contains(id)) return null;
+    // Non-admin profiles have their own per-user copy; load that first.
+    if (!_isAdmin && !kIsWeb && _dataDir != null) {
+      final f = File('${_dataDir!.path}/${_getBoardKey(id)}.json');
+      if (await f.exists()) {
+        try {
+          return _boardFromJson(json.decode(await f.readAsString()) as Map<String, dynamic>);
+        } catch (e) {
+          debugPrint('Error loading board $id from user storage: $e');
+        }
+      }
+    }
     if (!kIsWeb && _projectRoot != null) {
       final jsonFile = await _findProjectJsonFile(id);
       if (jsonFile != null) {
@@ -2782,6 +2804,9 @@ class BoardService {
               // Preserve any user icon or sortOrder set via Manage Boards.
               if (cached.iconAssetPath != null) {
                 asset.iconAssetPath = cached.iconAssetPath;
+              }
+              if (cached.tileIconAssetPath != null) {
+                asset.tileIconAssetPath = cached.tileIconAssetPath;
               }
               if (cached.sortOrder != 0) {
                 asset.sortOrder = cached.sortOrder;
@@ -2852,7 +2877,9 @@ class BoardService {
       await _clearBoardDeletion(board.id);
       await _writeBoard(board,
           cacheInWebStorage: true,
-          mirrorToDisk: true);
+          // Only admin edits are written back to the source project files;
+          // other profiles keep their changes in their own storage.
+          mirrorToDisk: _isAdmin);
       _boardCache[board.id] = board;
       await _saveSortOrder(board);
 
@@ -3015,6 +3042,7 @@ class BoardService {
     if (!kIsWeb && _projectRoot != null && mirrorToDisk) {
       final existingFile = await _findProjectJsonFile(board.id);
       final jsonFile = await _projectJsonFileForBoard(board);
+      await jsonFile.parent.create(recursive: true);
       await jsonFile.writeAsString(JsonEncoder.withIndent('  ').convert(boardJson));
 
       if (existingFile != null &&
@@ -3343,9 +3371,7 @@ class BoardService {
     final area = board.area.isNotEmpty ? board.area : _areaForBoardName(board.name);
     if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
       Board? parentBoard = _boardCache[board.parentBoardId!];
-      if (parentBoard == null) {
-        parentBoard = await loadBoard(board.parentBoardId!);
-      }
+      parentBoard ??= await loadBoard(board.parentBoardId!);
       if (parentBoard != null) {
         final parentPath = await boardRelativePath(parentBoard);
         return '$parentPath/${_boardFolderName(board.name)}';
@@ -3800,7 +3826,7 @@ class BoardService {
       final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
       final allAssets = manifest.listAssets();
 
-      String _fullyDecode(String p) {
+      String fullyDecode(String p) {
         while (p.contains('%')) {
           try {
             final next = Uri.decodeComponent(p);
@@ -3813,16 +3839,16 @@ class BoardService {
         return p;
       }
 
-      String _normalize(String p) {
+      String normalize(String p) {
         final stripped = p.startsWith('assets/') ? p.substring(7) : p;
-        return _fullyDecode(stripped);
+        return fullyDecode(stripped);
       }
 
       final areaPrefix = 'lib/data/boards/$area/';
       final boardsPrefix = 'lib/data/boards/';
       for (var i = 0; i < allAssets.length; i++) {
         final original = allAssets[i];
-        final np = _normalize(original);
+        final np = normalize(original);
         if (np.startsWith(areaPrefix) && np.endsWith('/$id.json')) {
           originalAsset = original;
           break;
@@ -3832,7 +3858,7 @@ class BoardService {
       if (originalAsset == null) {
         for (var i = 0; i < allAssets.length; i++) {
           final original = allAssets[i];
-          final np = _normalize(original);
+          final np = normalize(original);
           if (np.startsWith(boardsPrefix) && np.endsWith('/$id.json')) {
             originalAsset = original;
             break;
@@ -3851,7 +3877,7 @@ class BoardService {
       try {
         final raw = await rootBundle.loadString(originalAsset);
         final board = _boardFromJson(json.decode(raw) as Map<String, dynamic>, includeTiles: includeTiles);
-        if (board != null && _prefs != null) {
+        if (_prefs != null) {
           final stored = _prefs!.getInt(_getSortOrderKey(board.id));
           if (stored != null) board.sortOrder = stored;
         }
@@ -3885,8 +3911,22 @@ class BoardService {
               final storedBoard = await loadBoard(assetBoard.id);
               if (storedBoard == null) {
                 await _writeBoard(assetBoard, mirrorToDisk: false);
-              } else {
-                // Always prefer on-disk JSON in dev mode — it's the source of truth
+              } else if (assetBoard.tiles.length >= storedBoard.tiles.length) {
+                // Prefer on-disk JSON when it has the same or more tiles,
+                // but preserve user-added tiles if the source is empty/stale.
+                await _writeBoard(assetBoard, mirrorToDisk: false);
+              } else if (assetBoard.area != storedBoard.area ||
+                         assetBoard.parentBoardId != storedBoard.parentBoardId) {
+                // Source location/parent has changed; keep the user's tiles but
+                // adopt the new area and parent from disk.
+                assetBoard.tiles = storedBoard.tiles;
+                assetBoard.rows = storedBoard.rows;
+                assetBoard.columns = storedBoard.columns;
+                assetBoard.adjustableLayout = storedBoard.adjustableLayout;
+                assetBoard.boxScale = storedBoard.boxScale;
+                assetBoard.tileHeight = storedBoard.tileHeight;
+                assetBoard.tileWidth = storedBoard.tileWidth;
+                assetBoard.backgroundColor = storedBoard.backgroundColor;
                 await _writeBoard(assetBoard, mirrorToDisk: false);
               }
             } catch (e) {
@@ -3913,8 +3953,23 @@ class BoardService {
           if (storedBoard == null) {
             // Board does not exist in storage yet — load it from the asset.
             await _writeBoard(assetBoard, mirrorToDisk: false);
-          } else if (storedBoard.tiles.isNotEmpty) {
-            // Check if stored board has missing images
+          } else if (assetBoard.area != storedBoard.area ||
+                     assetBoard.parentBoardId != storedBoard.parentBoardId) {
+            // Source location/parent has changed; keep the user's tiles but
+            // adopt the new area and parent from disk.
+            assetBoard.tiles = storedBoard.tiles;
+            assetBoard.rows = storedBoard.rows;
+            assetBoard.columns = storedBoard.columns;
+            assetBoard.adjustableLayout = storedBoard.adjustableLayout;
+            assetBoard.boxScale = storedBoard.boxScale;
+            assetBoard.tileHeight = storedBoard.tileHeight;
+            assetBoard.tileWidth = storedBoard.tileWidth;
+            assetBoard.backgroundColor = storedBoard.backgroundColor;
+            await _writeBoard(assetBoard, mirrorToDisk: false);
+          } else if (storedBoard.tiles.isNotEmpty &&
+                     assetBoard.tiles.length >= storedBoard.tiles.length) {
+            // Check if stored board has missing images, but do not overwrite
+            // user-added tiles with an emptier asset.
             final tilesWithImages = storedBoard.tiles.where((t) => t.imageAsset.isNotEmpty && t.imageAsset.startsWith('assets/')).length;
             if (tilesWithImages < storedBoard.tiles.length * 0.5) {
               debugPrint('Board "${assetBoard.name}" has missing images — reloading from asset');
@@ -4009,7 +4064,7 @@ class BoardService {
     final layout = json['layout'] as Map<String, dynamic>?;
     // Look for rows in 'layout' (canonical) or top-level (toMap/SharedPreferences)
     final rows = (layout?['rows'] as num?)?.toInt() ?? (json['rows'] as num?)?.toInt() ?? defaultBoardRows;
-    final tilesJson = includeTiles ? (json['tiles'] as List<dynamic>?) ?? [] : [] as List<dynamic>;
+    final tilesJson = includeTiles ? (json['tiles'] as List<dynamic>?) ?? [] : [];
     final tiles = tilesJson.map((t) {
       final tileMap = Map<String, dynamic>.from(t);
       var tile = _tileFromJson(tileMap, boardName: name);
@@ -4112,7 +4167,6 @@ class BoardService {
       isQuinaryBoard: isQuinaryBoard,
       sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
       tier: tier,
-      iconAssetPath: json['iconAssetPath'] as String?,
       version: (json['version'] as num?)?.toInt() ?? 0,
     );
   }
@@ -4145,7 +4199,10 @@ class BoardService {
     final isFullScreenImage = rawType == 'image_viewer' || (json['isFullScreenImage'] as bool?) == true;
     
     var bgColor = (json['bgColor'] as String?) ?? 'transparent';
-    var textColor = (json['textColor'] as String?) ?? '#000000';
+    final explicitTextColor = json.containsKey('textColor') &&
+        ((json['textColor'] as String?)?.trim().isNotEmpty ?? false);
+    var textColor = (json['textColor'] as String?)?.trim() ?? '';
+    if (textColor.isEmpty) textColor = '#000000';
 
     // Fix corrupted transparent values written by older normalization code.
     if (bgColor.trim().isEmpty || bgColor.toLowerCase() == '#transparent') bgColor = 'transparent';
@@ -4153,7 +4210,8 @@ class BoardService {
 
     if (isBoardLink && linkedBoardId.isNotEmpty) {
       if (bgColor == 'transparent') bgColor = '#000000';
-      if (textColor == '#000000') textColor = '#FFFFFF';
+      // Only default board-link text to white when no explicit colour was saved.
+      if (!explicitTextColor && textColor == '#000000') textColor = '#FFFFFF';
     } else if (isFullScreenImage && bgColor == 'transparent') {
       bgColor = '#FFCDD2';
     }
@@ -4213,6 +4271,9 @@ class BoardService {
       'isQuinaryBoard': board.isQuinaryBoard,
       'sortOrder': board.sortOrder,
       'tier': board.tier,
+      'iconAssetPath': board.iconAssetPath,
+      'tileIconAssetPath': board.tileIconAssetPath,
+      'version': board.version,
       'boxScale': board.boxScale,
       'tileHeight': board.tileHeight,
       'tileWidth': board.tileWidth,

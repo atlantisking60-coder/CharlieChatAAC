@@ -422,5 +422,7 @@
   ],
   "parentBoardId": "prebuilt_body_parts",
   "rows": 4,
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Science/Year 9/Internal Organs.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Year 9/Internal Organs.png"
 }

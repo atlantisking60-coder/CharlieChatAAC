@@ -559,5 +559,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Family and People.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Family and People.png"
 }

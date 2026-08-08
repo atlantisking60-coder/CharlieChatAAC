@@ -667,5 +667,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Common/Small Words/Montessori/Adjective/personal.png",
+  "tileIconAssetPath": "assets/Common/Small Words/Montessori/Adjective/personal.png"
 }

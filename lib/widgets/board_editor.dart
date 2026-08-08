@@ -31,6 +31,7 @@ import '../services/board_ocr_service.dart';
 import '../services/board_population_service.dart';
 import '../services/board_service.dart';
 import '../services/external_symbol_service.dart';
+import '../services/board_icon_resolver.dart';
 import '../services/board_archive_service.dart';
 import '../services/profile_service.dart';
 import '../services/settings_service.dart';
@@ -172,7 +173,7 @@ class _BoardEditorState extends State<BoardEditor> {
           tier: widget.initialTier,
           rows: defaultBoardRows,
           columns: defaultBoardColumns,
-          adjustableLayout: false,
+          adjustableLayout: true,
           backgroundColor: defaultBoardColor,
           boxScale: 1.0,
           tiles: []);
@@ -282,7 +283,7 @@ class _BoardEditorState extends State<BoardEditor> {
   ///
   /// [fromAssetsOnly] restricts guess mode to local assets and picks the
   /// most relevant local asset that is not the tile's current image.
-  Future<void> _autoFindTileImage(int index, {bool chooseFromOptions = false, bool fromAssetsOnly = false, bool fromSignAssets = false, bool fromBoardsAssets = false}) async {
+  Future<void> _autoFindTileImage(int index, {bool chooseFromOptions = false, String? scope}) async {
     final tile = board.tiles[index];
     if (tile.label.isEmpty) return;
 
@@ -294,7 +295,7 @@ class _BoardEditorState extends State<BoardEditor> {
       final query = searchLabel.toLowerCase();
       if (query.isEmpty) return;
 
-      if ((fromAssetsOnly || fromSignAssets || fromBoardsAssets) && !chooseFromOptions) {
+      if (scope != null && !chooseFromOptions) {
         // Restricted-assets predict mode: cycle through the top 9 local options
         // in the same order shown in the 'Pick from Choices' dialog.
         final cleanQuery = query
@@ -306,11 +307,24 @@ class _BoardEditorState extends State<BoardEditor> {
 
         bool matchesSource(String imageUrl) {
           final lower = imageUrl.toLowerCase();
-          if (fromSignAssets) return lower.startsWith('assets/sign/');
-          if (fromBoardsAssets) return lower.startsWith('assets/boards/');
-          return lower.startsWith('assets/') &&
-              !lower.startsWith('assets/sign/') &&
-              !lower.startsWith('assets/boards/');
+          switch (scope) {
+            case 'sign':
+              return lower.startsWith('assets/sign/');
+            case 'boards':
+              return lower.startsWith('assets/boards/');
+            case 'montessori':
+              return lower.startsWith('assets/common/small words/montessori/');
+            case 'subject_vocab':
+              return lower.startsWith('assets/subject vocab/');
+            case 'legends':
+              return lower.startsWith('assets/legends/');
+            case 'assets':
+            default:
+              return lower.startsWith('assets/') &&
+                  !lower.startsWith('assets/sign/') &&
+                  !lower.startsWith('assets/boards/') &&
+                  !lower.startsWith('assets/common/small words/montessori/');
+          }
         }
 
         final raw = await _externalSymbolService.searchAssets(searchText, limit: 100);
@@ -330,7 +344,6 @@ class _BoardEditorState extends State<BoardEditor> {
         setState(() {
           board.tiles[index] = tile.copyWith(imageAsset: selected.imageUrl, category: selected.source);
         });
-        await BoardService.getInstance();
         /* auto-save disabled — only the Save Board button persists */
         return;
       }
@@ -388,8 +401,8 @@ class _BoardEditorState extends State<BoardEditor> {
     });
   }
 
-  Future<Board?> _createNewBoardFromDialog() async {
-    final nameController = TextEditingController();
+  Future<Board?> _createNewBoardFromDialog({String? initialName}) async {
+    final nameController = TextEditingController(text: initialName);
     final name = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -426,11 +439,12 @@ class _BoardEditorState extends State<BoardEditor> {
     final newBoard = Board(
       id: boardId,
       name: name,
-      area: board.area, // Inherit area
+      area: 'Unassigned',
       rows: defaultBoardRows,
       columns: defaultBoardColumns,
       tiles: [],
       isSubBoard: true,
+      adjustableLayout: true,
       parentBoardId: board.id,
       tier: board.tier + 1, // Correctly set next tier level
     );
@@ -546,7 +560,6 @@ class _BoardEditorState extends State<BoardEditor> {
     }
     if (newTiles.isNotEmpty) {
       _populateBoard(newTiles);
-      final service = await BoardService.getInstance();
       /* auto-save disabled — only the Save Board button persists */
     }
   }
@@ -581,7 +594,9 @@ class _BoardEditorState extends State<BoardEditor> {
           if (tile.imageAsset.isEmpty ||
               tile.imageAsset.startsWith('assets/') ||
               tile.imageAsset.startsWith('http') ||
-              tile.imageAsset.startsWith('blob:')) continue;
+              tile.imageAsset.startsWith('blob:')) {
+            continue;
+          }
 
           List<int>? bytes;
           if (tile.imageAsset.startsWith('data:')) {
@@ -656,11 +671,79 @@ class _BoardEditorState extends State<BoardEditor> {
     return false;
   }
 
-  Future<void> _fillPictures() async {
+  Future<void> _fillPictures(String mode) async {
     setState(() {
       _isPopulating = true;
       _populateProgress = 0.0;
     });
+
+    final allowedPrefixes = <String>{};
+    final excludedPrefixes = <String>{};
+    List<String> priorityPaths = [];
+    final bool allowExternal;
+    final int limit;
+
+    switch (mode) {
+      case 'all':
+        priorityPaths = _priorityAssetPaths();
+        allowExternal = true;
+        limit = 1;
+        break;
+      case 'symbols':
+        allowedPrefixes.add('assets/');
+        excludedPrefixes.add('assets/Common/Small Words/Montessori/');
+        excludedPrefixes.add('assets/BOARDS/');
+        allowExternal = false;
+        limit = 50;
+        break;
+      case 'montessori':
+        allowedPrefixes.add('assets/Common/Small Words/Montessori/');
+        priorityPaths = allowedPrefixes.toList();
+        allowExternal = false;
+        limit = 20;
+        break;
+      case 'subject_vocab':
+        allowedPrefixes.add('assets/Subject Vocab/');
+        priorityPaths = allowedPrefixes.toList();
+        allowExternal = false;
+        limit = 20;
+        break;
+      case 'sign':
+        allowedPrefixes.add('assets/Sign/');
+        priorityPaths = allowedPrefixes.toList();
+        allowExternal = false;
+        limit = 20;
+        break;
+      case 'legends':
+        allowedPrefixes.add('assets/Legends/');
+        priorityPaths = allowedPrefixes.toList();
+        allowExternal = false;
+        limit = 20;
+        break;
+      case 'board_icons':
+        allowedPrefixes.add('assets/BOARDS/');
+        priorityPaths = allowedPrefixes.toList();
+        allowExternal = false;
+        limit = 20;
+        break;
+      default:
+        priorityPaths = _priorityAssetPaths();
+        allowExternal = true;
+        limit = 1;
+    }
+
+    bool isAllowed(String path) {
+      final lowerPath = path.toLowerCase();
+      for (final ex in excludedPrefixes) {
+        if (lowerPath.startsWith(ex.toLowerCase())) return false;
+      }
+      if (allowedPrefixes.isEmpty) return true;
+      for (final pre in allowedPrefixes) {
+        if (lowerPath.startsWith(pre.toLowerCase())) return true;
+      }
+      return false;
+    }
+
     try {
       final total = board.tiles.length;
       for (int i = 0; i < total; i++) {
@@ -669,16 +752,23 @@ class _BoardEditorState extends State<BoardEditor> {
           final isBroken = await _isImageBroken(tile.imageAsset);
           if (tile.imageAsset.isEmpty || isBroken) {
             final query = tile.label.trim().toLowerCase();
-            // Prefer local assets first for reliable, offline-friendly fills.
-            final priorityPaths = _priorityAssetPaths();
-            var results = await _externalSymbolService.searchAssets(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
-            if (results.isEmpty) {
-              results = await _externalSymbolService.searchAll(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
-            }
-            if (results.isNotEmpty) {
+            var results = await _externalSymbolService.searchAssets(query, limit: limit, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
+            final filtered = results.where((r) => isAllowed(r.imageUrl)).toList();
+            if (filtered.isNotEmpty) {
               setState(() {
-                board.tiles[i] = tile.copyWith(imageAsset: results.first.imageUrl, category: results.first.source);
+                board.tiles[i] = tile.copyWith(imageAsset: filtered.first.imageUrl, category: filtered.first.source);
               });
+            } else if (allowExternal) {
+              final allResults = await _externalSymbolService.searchAll(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
+              if (allResults.isNotEmpty) {
+                setState(() {
+                  board.tiles[i] = tile.copyWith(imageAsset: allResults.first.imageUrl, category: allResults.first.source);
+                });
+              } else {
+                setState(() {
+                  board.tiles[i] = tile.copyWith(imageAsset: _placeholderImage);
+                });
+              }
             } else {
               setState(() {
                 board.tiles[i] = tile.copyWith(imageAsset: _placeholderImage);
@@ -690,7 +780,6 @@ class _BoardEditorState extends State<BoardEditor> {
           _populateProgress = (i + 1) / total;
         });
       }
-      final service = await BoardService.getInstance();
       /* auto-save disabled — only the Save Board button persists */
     } catch (e) {
       debugPrint('Error filling pictures: $e');
@@ -742,7 +831,6 @@ class _BoardEditorState extends State<BoardEditor> {
       });
     }
     _populateBoard(tiles);
-    final service = await BoardService.getInstance();
     /* auto-save disabled — only the Save Board button persists */
     setState(() {
       _isPopulating = false;
@@ -815,7 +903,6 @@ class _BoardEditorState extends State<BoardEditor> {
       });
     }
     _populateBoard(tiles);
-    final service = await BoardService.getInstance();
     /* auto-save disabled — only the Save Board button persists */
     setState(() {
       _isPopulating = false;
@@ -1221,31 +1308,55 @@ class _BoardEditorState extends State<BoardEditor> {
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome),
-              title: const Text('Auto find picture - guess from assets'),
+              title: const Text('Auto find picture - guess from Assets'),
               onTap: () {
                 Navigator.of(ctx).pop();
-                _autoFindTileImage(index, fromAssetsOnly: true);
+                _autoFindTileImage(index, scope: 'assets');
               },
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome),
-              title: const Text('Auto find picture - guess from sign'),
+              title: const Text('Auto find picture - guess from Montessori'),
               onTap: () {
                 Navigator.of(ctx).pop();
-                _autoFindTileImage(index, fromSignAssets: true);
+                _autoFindTileImage(index, scope: 'montessori');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.auto_awesome),
+              title: const Text('Auto find picture - guess from Subject Vocab'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _autoFindTileImage(index, scope: 'subject_vocab');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.auto_awesome),
+              title: const Text('Auto find picture - guess from Sign'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _autoFindTileImage(index, scope: 'sign');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.auto_awesome),
+              title: const Text('Auto find picture - guess from Legends'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _autoFindTileImage(index, scope: 'legends');
               },
             ),
             ListTile(
               leading: const Icon(Icons.folder),
-              title: const Text('Auto find picture - guess from boards'),
+              title: const Text('Auto find picture - guess from Board Folders'),
               onTap: () {
                 Navigator.of(ctx).pop();
-                _autoFindTileImage(index, fromBoardsAssets: true);
+                _autoFindTileImage(index, scope: 'boards');
               },
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome_outlined),
-              title: const Text('Auto find picture - choose from options'),
+              title: const Text('Auto find picture - Choose from options'),
               onTap: () {
                 Navigator.of(ctx).pop();
                 _autoFindTileImage(index, chooseFromOptions: true);
@@ -1408,8 +1519,10 @@ class _BoardEditorState extends State<BoardEditor> {
             });
             _ensureTileCapacity(board.tiles.length);
           }
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Version restored.')));
         } else {
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not restore version.')));
         }
       }
@@ -1873,7 +1986,7 @@ class _BoardEditorState extends State<BoardEditor> {
                             builder: (ctx) => _BoardSelectionDialog(boards: _availableBoards, initialSelectedId: linkedBoardId, initialQuery: labelCtl.text.trim(), title: 'Select Destination Board'),
                           );
                           if (selected == 'CREATE_NEW') {
-                            final newBoard = await _createNewBoardFromDialog();
+                            final newBoard = await _createNewBoardFromDialog(initialName: labelCtl.text.trim());
                             if (newBoard != null) setDialogState(() { linkedBoardId = newBoard.id; if (labelCtl.text.trim().isEmpty) labelCtl.text = newBoard.name; });
                           } else if (selected != 'DIALOG_DISMISSED') {
                             setDialogState(() { linkedBoardId = (selected == 'NONE' ? '' : selected) ?? ''; final boardName = _boardNameForId(linkedBoardId); if (boardName != null && labelCtl.text.trim().isEmpty) labelCtl.text = boardName; });
@@ -2102,6 +2215,34 @@ class _BoardEditorState extends State<BoardEditor> {
     return null;
   }
 
+  Future<void> _pickTabIcon() async {
+    final result = await Navigator.of(context).push<SymbolTile?>(
+      MaterialPageRoute(
+        builder: (_) => ExternalSymbolSearchScreen(
+          onAdd: (s) => Navigator.of(context).pop<SymbolTile?>(s),
+          initialLabel: board.name,
+        ),
+      ),
+    );
+    if (result != null && mounted) {
+      setState(() => board.iconAssetPath = result.imageAsset);
+    }
+  }
+
+  Future<void> _pickTileIcon() async {
+    final result = await Navigator.of(context).push<SymbolTile?>(
+      MaterialPageRoute(
+        builder: (_) => ExternalSymbolSearchScreen(
+          onAdd: (s) => Navigator.of(context).pop<SymbolTile?>(s),
+          initialLabel: board.name,
+        ),
+      ),
+    );
+    if (result != null && mounted) {
+      setState(() => board.tileIconAssetPath = result.imageAsset);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final boardBg = board.backgroundColor == 'transparent' ? Colors.transparent : _colorFromHex(board.backgroundColor, Colors.transparent);
@@ -2116,8 +2257,68 @@ class _BoardEditorState extends State<BoardEditor> {
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Expanded(child: TextField(controller: _nameController, decoration: const InputDecoration(labelText: 'Board name'), onChanged: (v) => board.name = v)),
               const SizedBox(width: 8),
-              SizedBox(width: 160, child: DropdownButtonFormField<String>(key: ValueKey('area-${board.area}'), initialValue: board.area, decoration: const InputDecoration(labelText: 'Area'), isExpanded: true, items: const [DropdownMenuItem(value: 'Common', child: Text('Common')), DropdownMenuItem(value: 'Legends', child: Text('Legends')), DropdownMenuItem(value: 'Recipes', child: Text('Recipes')), DropdownMenuItem(value: 'Subject Vocab', child: Text('Subject Vocab')), DropdownMenuItem(value: 'My School', child: Text('My School')), DropdownMenuItem(value: 'Sign', child: Text('Sign')), DropdownMenuItem(value: 'Personal', child: Text('Personal'))], onChanged: (value) { if (value != null) setState(() => board.area = value); })),
+              SizedBox(width: 160, child: DropdownButtonFormField<String>(key: ValueKey('area-${board.area}'), initialValue: board.area, decoration: const InputDecoration(labelText: 'Area'), isExpanded: true, items: const [DropdownMenuItem(value: 'Unassigned', child: Text('Unassigned')), DropdownMenuItem(value: 'Common', child: Text('Common')), DropdownMenuItem(value: 'Subject Vocab', child: Text('Subject Vocab')), DropdownMenuItem(value: 'Sign', child: Text('Sign')), DropdownMenuItem(value: 'My School', child: Text('My School')), DropdownMenuItem(value: 'Legends', child: Text('Legends')), DropdownMenuItem(value: 'Recipes', child: Text('Recipes')), DropdownMenuItem(value: 'Personal', child: Text('Personal'))], onChanged: (value) { if (value != null) setState(() => board.area = value); })),
             ]),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: _pickTabIcon,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: [
+                          buildBoardIconImage(
+                            board.iconAssetPath,
+                            size: 40,
+                            color: Theme.of(context).colorScheme.primary,
+                            fallback: const Icon(Icons.image, size: 40),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text('Tab icon'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: InkWell(
+                    onTap: _pickTileIcon,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: [
+                          buildBoardIconImage(
+                            board.tileIconAssetPath,
+                            size: 40,
+                            color: Theme.of(context).colorScheme.primary,
+                            fallback: const Icon(Icons.image, size: 40),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text('Tile icon'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             Wrap(
               alignment: WrapAlignment.end,
@@ -2133,7 +2334,27 @@ class _BoardEditorState extends State<BoardEditor> {
                   else if (value == 'import_json') { _importBoardFromJson(); }
                 }, itemBuilder: (context) => const [PopupMenuItem(value: 'pictures', child: Text('Picture Folder')), PopupMenuItem(value: 'pictures_full', child: Text('Picture Folder (View full size)')), PopupMenuItem(value: 'words', child: Text('Word List')), PopupMenuItem(value: 'ai', child: Text('AI Fill')), PopupMenuItem(value: 'screenshot', child: Text('Create From Image')), PopupMenuItem(value: 'import_json', child: Text('Import JSON'))], child: IgnorePointer(child: ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.auto_awesome), label: const Text('Populate')))),
                 ElevatedButton.icon(onPressed: _alphabetiseTiles, icon: const Icon(Icons.sort_by_alpha), label: const Text('Alphabetise')),
-                ElevatedButton.icon(onPressed: _isPopulating ? null : _fillPictures, icon: _isPopulating ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_search), label: const Text('Fill Pics')),
+                PopupMenuButton<String>(
+                  tooltip: 'Fill pictures',
+                  enabled: !_isPopulating,
+                  onSelected: (value) => _fillPictures(value),
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(value: 'all', child: Text('Fill Pics - All')),
+                    PopupMenuItem(value: 'symbols', child: Text('Fill Pics - Symbols (Not Montessori)')),
+                    PopupMenuItem(value: 'montessori', child: Text('Fill Pics - Montessori Only')),
+                    PopupMenuItem(value: 'subject_vocab', child: Text('Fill Pics - Subject Vocab Only')),
+                    PopupMenuItem(value: 'sign', child: Text('Fill Pics - Sign Only')),
+                    PopupMenuItem(value: 'legends', child: Text('Fill Pics - Legends Only')),
+                    PopupMenuItem(value: 'board_icons', child: Text('Fill Pics - Board Folder Icons')),
+                  ],
+                  child: IgnorePointer(
+                    child: ElevatedButton.icon(
+                      onPressed: _isPopulating ? null : () {},
+                      icon: _isPopulating ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_search),
+                      label: const Text('Fill Pics'),
+                    ),
+                  ),
+                ),
                 ElevatedButton.icon(onPressed: () => _shareToArchive(), icon: const Icon(Icons.share), label: const Text('Share to Archive')),
                 ElevatedButton.icon(onPressed: _showVersionHistory, icon: const Icon(Icons.history), label: const Text('Restore Version')),
                 ElevatedButton.icon(onPressed: () async {
@@ -2228,16 +2449,34 @@ class _BoardEditorState extends State<BoardEditor> {
                   }
                 },
               ),
-              if (board.tier > 1) ...[
-                const SizedBox(height: 8),
-                OutlinedButton.icon(onPressed: () async {
-                  final selected = await showDialog<String?>(context: context, builder: (ctx) => _BoardSelectionDialog(boards: _availableBoards, initialSelectedId: board.parentBoardId, title: 'Select Parent Board'));
-                  if (selected != 'DIALOG_DISMISSED') setState(() => board.parentBoardId = (selected == 'NONE' ? null : selected));
-                },
-                icon: const Icon(Icons.account_tree_outlined),
-                label: Text(board.parentBoardId == null || board.parentBoardId!.isEmpty ? 'Set Parent board (tab placement)' : 'Parent: ${_boardNameForId(board.parentBoardId!) ?? '(Unknown board)'}'),
-                style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50), alignment: Alignment.centerLeft)),
-              ],
+              const SizedBox(height: 8),
+              OutlinedButton.icon(onPressed: () async {
+                final selected = await showDialog<String?>(context: context, builder: (ctx) => _BoardSelectionDialog(boards: _availableBoards, initialSelectedId: board.parentBoardId, title: 'Select Parent Board'));
+                if (selected != 'DIALOG_DISMISSED') {
+                  setState(() {
+                    if (selected == 'NONE') {
+                      board.parentBoardId = null;
+                      board.tier = 1;
+                      board.isSubBoard = false;
+                      board.isTertiaryBoard = false;
+                      board.isQuaternaryBoard = false;
+                      board.isQuinaryBoard = false;
+                    } else {
+                      board.parentBoardId = selected;
+                      final parent = _availableBoards.cast<Board?>().firstWhere((b) => b?.id == selected, orElse: () => null);
+                      final parentTier = parent?.tier ?? 1;
+                      board.tier = parentTier + 1;
+                      board.isSubBoard = board.tier > 1;
+                      board.isTertiaryBoard = board.tier > 2;
+                      board.isQuaternaryBoard = board.tier > 3;
+                      board.isQuinaryBoard = board.tier > 4;
+                    }
+                  });
+                }
+              },
+              icon: const Icon(Icons.account_tree_outlined),
+              label: Text(board.parentBoardId == null || board.parentBoardId!.isEmpty ? 'Set Parent board (tab placement)' : 'Parent: ${_boardNameForId(board.parentBoardId!) ?? '(Unknown board)'}'),
+              style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 50), alignment: Alignment.centerLeft)),
               const Divider(),
               const Text('Convert all tiles to:', style: TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
@@ -2314,7 +2553,7 @@ class _BoardEditorState extends State<BoardEditor> {
                     final bool isDesktop = (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS);
                     final tileWidget = DragTarget<int>(onWillAcceptWithDetails: (details) => details.data != index, onAcceptWithDetails: (details) async {
                       final draggedIndex = details.data;
-                      if (draggedIndex != index) { setState(() { final draggedTile = board.tiles[draggedIndex]; board.tiles[draggedIndex] = board.tiles[index]; board.tiles[index] = draggedTile; }); try { final service = await BoardService.getInstance(); /* auto-save disabled — only the Save Board button persists */ } catch (e) { debugPrint('Error saving board after swap: $e'); } }
+                      if (draggedIndex != index) { setState(() { final draggedTile = board.tiles[draggedIndex]; board.tiles[draggedIndex] = board.tiles[index]; board.tiles[index] = draggedTile; });  }
                     }, builder: (context, candidateData, rejectedData) {
                       final active = candidateData.isNotEmpty;
                       final wrapped = active ? Container(decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor, width: 2), borderRadius: BorderRadius.circular(16),), child: tileChild) : tileChild;
@@ -2349,7 +2588,7 @@ class _BoardEditorState extends State<BoardEditor> {
                               final draggedTile = board.tiles.removeAt(draggedIdx);
                               board.tiles.insert(adjusted.clamp(0, board.tiles.length), draggedTile);
                             });
-                            try { final service = await BoardService.getInstance(); /* auto-save disabled — only the Save Board button persists */ } catch (e) { debugPrint('Error saving board after reorder: $e'); }
+                            
                           },
                           builder: (context, candidateData, rejectedData) {
                             final isActive = candidateData.isNotEmpty;

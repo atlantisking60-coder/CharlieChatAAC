@@ -244,5 +244,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": null
+  "parentBoardId": null,
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Descriptions and Attributes (Adjectives).png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Descriptions and Attributes (Adjectives).png"
 }

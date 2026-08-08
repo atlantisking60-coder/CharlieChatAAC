@@ -650,5 +650,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_places"
+  "parentBoardId": "prebuilt_places",
+  "iconAssetPath": "assets/BOARDS/Home.png",
+  "tileIconAssetPath": "assets/BOARDS/Home.png"
 }

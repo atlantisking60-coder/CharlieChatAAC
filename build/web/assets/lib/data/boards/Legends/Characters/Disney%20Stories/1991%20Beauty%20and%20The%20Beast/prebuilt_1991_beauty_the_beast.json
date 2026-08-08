@@ -7,10 +7,10 @@
   "adjustableLayout": false,
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 250,
-  "tier": 3,
+  "tier": 4,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -33,7 +33,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/beast.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_belle",
@@ -49,7 +50,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/belle.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_chip",
@@ -65,7 +67,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/chip.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_cogsworth",
@@ -81,7 +84,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/cogsworth.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_gaston",
@@ -97,7 +101,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/gaston.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_lefou",
@@ -113,7 +118,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/lefou.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_lumiere",
@@ -129,7 +135,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/lumiere.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_maurice",
@@ -145,7 +152,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/maurice.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_mrs_potts",
@@ -161,7 +169,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/mrs potts.png"
     },
     {
       "id": "prebuilt_1991_beauty_the_beast_wardrobe",
@@ -177,8 +186,91 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/1991 Beauty and The Beast/wardrobe.png"
+    },
+    {
+      "id": "prebuilt_1991_beauty_the_beast_tile_11",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_1991_beauty_the_beast_tile_12",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_1991_beauty_the_beast_tile_13",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_1991_beauty_the_beast_tile_14",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_1991_beauty_the_beast_tile_15",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_disney_stories"
+  "parentBoardId": "prebuilt_disney_stories",
+  "iconAssetPath": "assets/Dates/1.png",
+  "tileIconAssetPath": "assets/Dates/1.png"
 }

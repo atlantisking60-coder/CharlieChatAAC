@@ -436,5 +436,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_animals"
+  "parentBoardId": "prebuilt_animals",
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png"
 }

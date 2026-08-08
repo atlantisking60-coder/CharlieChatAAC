@@ -1189,5 +1189,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Numbers.png",
+  "tileIconAssetPath": "assets/BOARDS/Numbers.png"
 }

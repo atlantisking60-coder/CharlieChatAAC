@@ -1262,5 +1262,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_characters"
+  "parentBoardId": "prebuilt_characters",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

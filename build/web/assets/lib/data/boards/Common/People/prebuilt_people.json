@@ -691,5 +691,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/People.png",
+  "tileIconAssetPath": "assets/BOARDS/People.png"
 }

@@ -559,5 +559,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Clothing and Personal.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Clothing and Personal.png"
 }

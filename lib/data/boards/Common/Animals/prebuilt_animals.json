@@ -403,5 +403,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Animals/Animals.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Animals.png"
 }

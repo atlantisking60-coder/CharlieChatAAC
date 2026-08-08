@@ -102,7 +102,7 @@ class _SplashScreen extends StatelessWidget {
 
 /// Beta/progress notes shown at the bottom of splash/profile screens.
 class BetaFooter extends StatelessWidget {
-  const BetaFooter();
+  const BetaFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class BetaFooter extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'PROGRESS TRACKER - AREAS COMPLETION RATE:\n'
-            'FINISHED: Common (except phonics boards need voice recordings), Sign (but more images coming from Makaton books), My school (except for \'people at my school\' sub-boards).\n'
+            'FINISHED: Common, Sign (more images coming later from Makaton books), My school (except for \'people at my school\' baycroft classes).\n'
             'STARTED: Subject Vocab, Legends (loads of character pictures ready to add).\n'
             'NOT STARTED: Recipes.',
             textAlign: TextAlign.center,

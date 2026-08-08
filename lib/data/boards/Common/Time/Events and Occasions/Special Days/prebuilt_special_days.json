@@ -254,5 +254,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions"
+  "parentBoardId": "prebuilt_events_and_occasions",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

@@ -502,5 +502,6 @@
   "isQuinaryBoard": false,
   "rows": 4,
   "version": 0,
-  "iconAssetPath": "assets/Common/Letters/g.png"
+  "iconAssetPath": "assets/Common/Letters/g.png",
+  "tileIconAssetPath": "assets/Common/Letters/g.png"
 }

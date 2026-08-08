@@ -19,5 +19,7 @@
     "blankTilesAdded": 0
   },
   "tiles": [],
-  "parentBoardId": "prebuilt_small_words"
+  "parentBoardId": "prebuilt_small_words",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

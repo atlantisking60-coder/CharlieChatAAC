@@ -721,5 +721,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png"
 }

@@ -19,8 +19,8 @@ void main(List<String> args) async {
   // On Windows a .bat file must be invoked through cmd.exe so stream capture
   // and argument quoting work reliably. Process.start(runInShell: true) with a
   // .bat executable can drop or misparse the command line.
-  final String executable;
-  final List<String> arguments;
+  final String executable; // ignore: unused_local_variable
+  final List<String> arguments; // ignore: unused_local_variable
   if (Platform.isWindows &&
       (flutterCmd.toLowerCase().endsWith('.bat') ||
           flutterCmd.toLowerCase().endsWith('.cmd'))) {
@@ -33,7 +33,7 @@ void main(List<String> args) async {
     dartExe = '$flutterRoot\\bin\\cache\\dart-sdk\\bin\\dart.exe';
     final snapshot = '$flutterRoot\\bin\\cache\\flutter_tools.snapshot';
 
-    if (File(dartExe!).existsSync() && File(snapshot).existsSync()) {
+    if (File(dartExe).existsSync() && File(snapshot).existsSync()) {
       executable = dartExe;
       arguments = [
         snapshot,

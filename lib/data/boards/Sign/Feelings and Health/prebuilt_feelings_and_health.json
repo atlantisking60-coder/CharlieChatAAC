@@ -379,5 +379,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Z Sign Folders/Feelings and Health.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Feelings and Health.png"
 }

@@ -7,10 +7,10 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 4,
-  "tier": 3,
+  "tier": 4,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -36,5 +36,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_gods_titans_heroes_and_monsters"
+  "parentBoardId": "prebuilt_gods_titans_heroes_and_monsters",
+  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Greek Gods.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Greek Gods.png"
 }

@@ -7,10 +7,10 @@
   "adjustableLayout": false,
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 680,
-  "tier": 3,
+  "tier": 4,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -21,7 +21,7 @@
   "tiles": [
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_1",
-      "type": "image",
+      "type": "vocabulary",
       "label": "boun",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/boun.png",
@@ -33,11 +33,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/boun.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_2",
-      "type": "image",
+      "type": "vocabulary",
       "label": "chief benja",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/chief benja.png",
@@ -49,11 +50,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/chief benja.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_3",
-      "type": "image",
+      "type": "vocabulary",
       "label": "dang hu",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/dang hu.png",
@@ -65,11 +67,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/dang hu.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_4",
-      "type": "image",
+      "type": "vocabulary",
       "label": "namaari",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/namaari.png",
@@ -81,11 +84,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/namaari.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_5",
-      "type": "image",
+      "type": "vocabulary",
       "label": "raya",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/raya.png",
@@ -97,11 +101,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/raya.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_6",
-      "type": "image",
+      "type": "vocabulary",
       "label": "sisu",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/sisu.png",
@@ -113,11 +118,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/sisu.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_7",
-      "type": "image",
+      "type": "vocabulary",
       "label": "the ongis",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/the ongis.png",
@@ -129,11 +135,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/the ongis.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_8",
-      "type": "image",
+      "type": "vocabulary",
       "label": "tong",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/tong.png",
@@ -145,11 +152,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/tong.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_9",
-      "type": "image",
+      "type": "vocabulary",
       "label": "tuk tuk",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/tuk tuk.png",
@@ -161,11 +169,12 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/tuk tuk.png"
     },
     {
       "id": "prebuilt_2021_raya_the_last_dragon_tile_10",
-      "type": "image",
+      "type": "vocabulary",
       "label": "virana",
       "category": "2021 Raya and The Last Dragon",
       "image": "assets/Subject Vocab/English/Characters and Fantasy/Disney/2021 Raya and The Last Dragon/virana.png",
@@ -177,8 +186,11 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/Disney Stories/2021 Raya and The Last Dragon/virana.png"
     }
   ],
-  "parentBoardId": "prebuilt_disney_stories"
+  "parentBoardId": "prebuilt_disney_stories",
+  "iconAssetPath": "assets/Dates/1.png",
+  "tileIconAssetPath": "assets/Dates/1.png"
 }

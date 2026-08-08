@@ -31,7 +31,6 @@ class BoardPopulationService {
         .split(RegExp(r'\r?\n'))
         .map(_cleanLabel)
         .where((word) => word.isNotEmpty)
-        .toSet()
         .toList();
   }
 
@@ -43,30 +42,6 @@ class BoardPopulationService {
       }
     }
     return words;
-  }
-
-  List<String> _keywordsFromText(String text) {
-    final ignored = {
-      'a',
-      'an',
-      'and',
-      'at',
-      'board',
-      'for',
-      'in',
-      'of',
-      'on',
-      'or',
-      'the',
-      'to',
-      'with',
-    };
-    return text
-        .split(RegExp(r'[^A-Za-z0-9]+'))
-        .map(_cleanLabel)
-        .where(
-            (word) => word.length > 2 && !ignored.contains(word.toLowerCase()))
-        .toList();
   }
 
   String _cleanLabel(String value) {

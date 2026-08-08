@@ -794,5 +794,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_places"
+  "parentBoardId": "prebuilt_places",
+  "iconAssetPath": "assets/BOARDS/Animals/Habitats.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Habitats.png"
 }

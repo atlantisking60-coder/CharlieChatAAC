@@ -6,11 +6,11 @@
   "backgroundColor": "transparent",
   "adjustableLayout": false,
   "isSubBoard": true,
-  "isTertiaryBoard": false,
+  "isTertiaryBoard": true,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 14,
-  "tier": 2,
+  "tier": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -33,7 +33,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_cyclops",
@@ -49,7 +50,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_deadpool",
@@ -65,7 +67,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_gambit",
@@ -81,7 +84,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_hawkgirl",
@@ -97,7 +101,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_hawkman",
@@ -113,7 +118,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_jean_grey",
@@ -129,7 +135,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_magneto",
@@ -145,7 +152,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_mystique",
@@ -161,7 +169,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_professor_x",
@@ -177,7 +186,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_rogue",
@@ -193,7 +203,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_storm",
@@ -209,7 +220,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_wolverine",
@@ -225,7 +237,8 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": ""
+      "customVoice": "",
+      "imageAsset": null
     },
     {
       "id": "prebuilt_x_men_x_men",
@@ -241,8 +254,27 @@
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
+      "customVoice": "",
+      "imageAsset": "assets/Legends/Characters/X-Men/x-men.png"
+    },
+    {
+      "id": "prebuilt_x_men_tile_15",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_characters"
+  "parentBoardId": "prebuilt_characters",
+  "iconAssetPath": "assets/BOARDS/Legends/Characters/X-Men/X-Men.png",
+  "tileIconAssetPath": "assets/BOARDS/Legends/Characters/X-Men/X-Men.png"
 }

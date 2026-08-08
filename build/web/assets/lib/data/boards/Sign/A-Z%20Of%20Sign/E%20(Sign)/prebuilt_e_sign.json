@@ -690,5 +690,6 @@
   "isQuinaryBoard": false,
   "rows": 4,
   "version": 0,
-  "iconAssetPath": "assets/Common/Letters/e.png"
+  "iconAssetPath": "assets/Common/Letters/e.png",
+  "tileIconAssetPath": "assets/Common/Letters/e.png"
 }

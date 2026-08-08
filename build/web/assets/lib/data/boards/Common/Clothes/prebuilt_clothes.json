@@ -883,5 +883,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Clothes.png",
+  "tileIconAssetPath": "assets/BOARDS/Clothes.png"
 }

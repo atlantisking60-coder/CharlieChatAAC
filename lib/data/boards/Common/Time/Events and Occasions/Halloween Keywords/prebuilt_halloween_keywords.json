@@ -654,7 +654,7 @@
       "type": "vocabulary",
       "label": "mask",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/Actions Verbs Thesaurus/Hide/hide.png",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/Actions Verbs Thesaurus/Hide/mask.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -1082,5 +1082,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions"
+  "parentBoardId": "prebuilt_events_and_occasions",
+  "iconAssetPath": "assets/BOARDS/Keywords.png",
+  "tileIconAssetPath": "assets/BOARDS/Keywords.png"
 }

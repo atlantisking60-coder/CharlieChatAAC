@@ -1027,5 +1027,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Prepositions.png",
+  "tileIconAssetPath": "assets/BOARDS/Prepositions.png"
 }

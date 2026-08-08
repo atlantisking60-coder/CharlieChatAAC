@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:io' show Directory, File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -43,7 +44,7 @@ import 'widgets/pin_lock_guard.dart';
 import 'utils/responsive_layout.dart';
 
 const int defaultBoardRows = 6;
-const int defaultBoardColumns = 5;
+const int defaultBoardColumns = 6;
 
 enum AppMode {
   home,
@@ -440,6 +441,7 @@ class _HomePageState extends State<HomePage> {
   UserProfile? _activeProfile;
   AppSettings? _settings;
   List<Board> _boards = [];
+  final Map<String, String> _subjectVocabLessonIcons = {};
   List<TopTab> _tabs = [];
   TopTab? _activeTab;
   Board? _parentBoard;
@@ -490,6 +492,8 @@ class _HomePageState extends State<HomePage> {
       );
       if (!mounted) return;
       boardService.setCurrentProfileId(_activeProfile?.id ?? 'default');
+
+      await _loadSubjectVocabLessonIcons();
 
       // Default sub-tab order for Common > Time > Events and Occasions.
       if (boardService.getTabOrder('prebuilt_events_and_occasions') == null) {
@@ -604,74 +608,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> _loadInitialBoard() async {
-    final service = await BoardService.getInstance();
-    final commonWordsId = prebuiltBoardId('Common Words');
-    service.setPriorityBoardId(commonWordsId);
-    final board = await service.getBoard(commonWordsId);
-    _boards = board != null ? [board] : [];
-  }
-
-  Future<void> _loadRemainingCommonBoards() async {
-    final service = await BoardService.getInstance();
-    final commonWordsId = prebuiltBoardId('Common Words');
-    final common = await service.listBoards(area: 'Common', includeTiles: false);
-    final fullCommonWords = _boards.cast<Board?>().firstWhere(
-          (b) => b?.id == commonWordsId,
-          orElse: () => null,
-        );
-    _boards = common;
-    if (fullCommonWords != null) {
-      final idx = _boards.indexWhere((b) => b.id == commonWordsId);
-      if (idx >= 0) _boards[idx] = fullCommonWords;
-    }
-    if (mounted) _buildTabs();
-    await _loadFullActiveBoard();
-  }
-
-  Future<void> _loadRemainingAreaBoards() async {
-    final service = await BoardService.getInstance();
-    final commonWordsId = prebuiltBoardId('Common Words');
-    final all = await service.listBoards(includeTiles: false);
-    final fullCommonWords = _boards.cast<Board?>().firstWhere(
-          (b) => b?.id == commonWordsId,
-          orElse: () => null,
-        );
-    _boards = all;
-    if (fullCommonWords != null) {
-      final idx = _boards.indexWhere((b) => b.id == commonWordsId);
-      if (idx >= 0) _boards[idx] = fullCommonWords;
-    }
-    if (mounted) _buildTabs();
-    await _loadFullActiveBoard();
-  }
-
-  /// Fire-and-forget migration: for every tile on every board whose label
-  /// differs from the image filename, adds the label as a search tag.
-  /// Runs once at startup so existing boards get tagged automatically.
-  void _migrateTileLabelsToImageTags() async {
-    try {
-      final meta = await SymbolMetadataService.init();
-      final boardService = await BoardService.getInstance();
-      final boards = await boardService.listBoards();
-      final updates = <String, List<String>>{};
-      for (final board in boards) {
-        for (final tile in board.tiles) {
-          if (tile.isBoardLink || tile.imageAsset.isEmpty || tile.label.isEmpty) continue;
-          final imageFilename = p.basenameWithoutExtension(tile.imageAsset).toLowerCase();
-          final tileLabel = tile.label.toLowerCase();
-          if (imageFilename == tileLabel) continue;
-          final assetId = tile.imageAsset.hashCode.toString();
-          updates.putIfAbsent(assetId, () => []).add(tileLabel);
-        }
-      }
-      await meta.batchAddTags(updates);
-      debugPrint('Migration: synced tile labels to image tags for ${boards.length} boards');
-    } catch (e) {
-      debugPrint('Error during tile-label-to-image-tag migration: $e');
-    }
-  }
-
   String _sanitizeIconAssetPath(String path) {
     try {
       // Decode twice to undo accidental double-encoding (e.g. %2520 -> space).
@@ -693,120 +629,66 @@ class _HomePageState extends State<HomePage> {
     return _sanitizeIconAssetPath(sorted.first);
   }
 
+  Future<void> _loadSubjectVocabLessonIcons() async {
+    try {
+      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      _subjectVocabLessonIcons.clear();
+      for (final path in manifest.listAssets()) {
+        if (!path.toLowerCase().startsWith('assets/subject vocab/lessons/')) continue;
+        if (!path.toLowerCase().endsWith('.png')) continue;
+        _subjectVocabLessonIcons[p.basenameWithoutExtension(path).toLowerCase()] = path;
+      }
+    } catch (e) {
+      debugPrint('Error loading Subject Vocab/Lessons icon manifest: $e');
+    }
+  }
+
   String _getBoardIconPath(Board board) {
     if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
       return board.iconAssetPath!;
     }
-    
+
     final boardName = board.name;
     final searchName = boardName.toLowerCase().trim();
 
-    final clean = searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim();
-
-    String? findKey(Map<String, List<String>> map, String query) {
-      for (final key in map.keys) {
-        if (key.toLowerCase() == query) return key;
-      }
-      return null;
-    }
-
-    // Try the symbol library first (non-BOARDS assets)
-    final symbolKey = findKey(symbolIconAssetMap, searchName);
-    if (symbolKey != null) {
-      return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
-    }
-    if (clean.isNotEmpty) {
-      final cleanSymbolKey = findKey(symbolIconAssetMap, clean);
-      if (cleanSymbolKey != null) {
-        return _bestBoardIconPath(cleanSymbolKey, symbolIconAssetMap[cleanSymbolKey]!);
-      }
-    }
-
-    String? bestSymbolKey;
-    int bestSymbolScore = 0;
-    for (final key in symbolIconAssetMap.keys) {
-      final keyLower = key.toLowerCase();
-      if (keyLower.contains(searchName) ||
-          searchName.contains(keyLower) ||
-          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
-        if (key.length > bestSymbolScore) {
-          bestSymbolScore = key.length;
-          bestSymbolKey = key;
-        }
-      }
-    }
-    if (bestSymbolKey != null) {
-      return _bestBoardIconPath(bestSymbolKey, symbolIconAssetMap[bestSymbolKey]!);
-    }
-
-    // Generated from assets/BOARDS - try exact, then closest filename match
-    final boardKey = findKey(boardIconAssetMap, searchName);
-    if (boardKey != null) {
-      return _bestBoardIconPath(boardKey, boardIconAssetMap[boardKey]!);
-    }
-    if (clean.isNotEmpty) {
-      final cleanBoardKey = findKey(boardIconAssetMap, clean);
-      if (cleanBoardKey != null) {
-        return _bestBoardIconPath(cleanBoardKey, boardIconAssetMap[cleanBoardKey]!);
-      }
-    }
-
-    String? bestKey;
-    int bestScore = 0;
-    for (final key in boardIconAssetMap.keys) {
-      final keyLower = key.toLowerCase();
-      if (keyLower.contains(searchName) ||
-          searchName.contains(keyLower) ||
-          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
-        if (key.length > bestScore) {
-          bestScore = key.length;
-          bestKey = key;
-        }
-      }
-    }
-    if (bestKey != null) {
-      return _bestBoardIconPath(bestKey, boardIconAssetMap[bestKey]!);
-    }
-
-    // Specific icon path mappings for boards
     final iconMappings = {
       // HOME mode icons
-      'ANIMALS': 'assets/BOARDS/Animals/Animals.png',
-      'JOBS and CAREERS': 'assets/BOARDS/Jobs.png',
-      'TIME': 'assets/BOARDS/Time, Months, Events/Time.png',
+      'ANIMALS': 'assets/Default Tab Icons/animals.png',
+      'JOBS and CAREERS': 'assets/Default Tab Icons/jobs and careers.png',
+      'TIME': 'assets/Default Tab Icons/time.png',
       'MORE BOARDS': 'assets/BOARDS/More ++.png',
       'MORE WORDS': 'assets/BOARDS/More ++.png',
       
       // SCHOOL mode icons (subject vocab boards) - assets/symbols/Subjects
-      'SENTENCE CREATOR': 'assets/symbols/Subjects/English.png',
-      'BETTER WORDS': 'assets/symbols/Subjects/English.png',
-      'Lessons': 'assets/symbols/Subjects/Tutor Time.png',
-      'English': 'assets/symbols/Subjects/English.png',
-      'Maths': 'assets/symbols/Subjects/Maths.png',
-      'Science': 'assets/symbols/Subjects/Science.png',
-      'TFL': 'assets/symbols/Subjects/TFL.png',
-      'Personal Development': 'assets/symbols/Subjects/P.D.png',
-      'PEEP': 'assets/symbols/Subjects/PEEP.png',
-      'EPIC': 'assets/symbols/Subjects/EPIC.png',
-      'P.E.': 'assets/symbols/Subjects/P.E.png',
-      'Art': 'assets/symbols/Subjects/Art.png',
-      'Performing Arts': 'assets/symbols/Subjects/Performing Arts.png',
-      'Sustainability': 'assets/symbols/Subjects/Sustainability.png',
-      'Cooking': 'assets/symbols/Subjects/Cooking.png',
-      'Resistant Materials': 'assets/symbols/Subjects/Resistant Materials and Construction.png',
-      'Textiles': 'assets/symbols/Subjects/Textiles.png',
-      'Religion and Worldviews': 'assets/symbols/Subjects/Religion and Worldviews.png',
-      'Music': 'assets/symbols/Subjects/Music.png',
-      'Horticulture': 'assets/symbols/Subjects/Horticulture.png',
-      'Retail': 'assets/symbols/Subjects/Retail.png',
-      'Photography': 'assets/symbols/Subjects/Photography.png',
-      'Information Technology': 'assets/symbols/Subjects/I.T.png',
-      'Construction': 'assets/symbols/Subjects/Resistant Materials and Construction.png',
-      'Engineering': 'assets/symbols/Subjects/Engineering.png',
-      'Living Life Skills': 'assets/symbols/Subjects/Living Life Skills.png',
-      'Prepare For Adulthood': 'assets/symbols/Subjects/Prepare For Adulthood.png',
-      'Break and Lunch': 'assets/symbols/Subjects/Breaktime.png',
-      'Tutor Time': 'assets/symbols/Subjects/Tutor Time.png',
+      'SENTENCE CREATOR': 'assets/Subject Vocab/sentence.png',
+      'BETTER WORDS': 'assets/Subject Vocab/thesaurus.png',
+      'Lessons': 'assets/Subject Vocab/timetable.png',
+      'English': 'assets/Subject Vocab/Lessons/English.png',
+      'Maths': 'assets/Subject Vocab/Lessons/Maths.png',
+      'Science': 'assets/Subject Vocab/Lessons/Science.png',
+      'TFL': 'assets/Subject Vocab/Lessons/TFL.png',
+      'Personal Development': 'assets/Subject Vocab/Lessons/P.D.png',
+      'PEEP': 'assets/Subject Vocab/Lessons/PEEP.png',
+      'EPIC': 'assets/Subject Vocab/Lessons/EPIC.png',
+      'P.E.': 'assets/Subject Vocab/Lessons/P.E.png',
+      'Art': 'assets/Subject Vocab/Lessons/Art.png',
+      'Performing Arts': 'assets/Subject Vocab/Lessons/Performing Arts.png',
+      'Sustainability': 'assets/Subject Vocab/Lessons/Sustainability.png',
+      'Cooking': 'assets/Subject Vocab/Lessons/Cooking.png',
+      'Resistant Materials': 'assets/Subject Vocab/Lessons/Resistant Materials and Construction.png',
+      'Textiles': 'assets/Subject Vocab/Lessons/Textiles.png',
+      'Religion and Worldviews': 'assets/Subject Vocab/Lessons/Religion and Worldviews.png',
+      'Music': 'assets/Subject Vocab/Lessons/Music.png',
+      'Horticulture': 'assets/Subject Vocab/Lessons/Horticulture.png',
+      'Retail': 'assets/Subject Vocab/Lessons/Retail.png',
+      'Photography': 'assets/Subject Vocab/Lessons/Photography.png',
+      'Information Technology': 'assets/Subject Vocab/Lessons/I.T.png',
+      'Construction': 'assets/Subject Vocab/Lessons/Resistant Materials and Construction.png',
+      'Engineering': 'assets/Subject Vocab/Lessons/Engineering.png',
+      'Living Life Skills': 'assets/Subject Vocab/Lessons/Living Life Skills.png',
+      'Prepare For Adulthood': 'assets/Subject Vocab/Lessons/Prepare For Adulthood.png',
+      'Break and Lunch': 'assets/Subject Vocab/Lessons/Breaktime.png',
+      'Tutor Time': 'assets/Subject Vocab/Lessons/Tutor Time.png',
       
       // SIGN mode icons
       'Sign': 'assets/BOARDS/Signs.png',
@@ -823,26 +705,26 @@ class _HomePageState extends State<HomePage> {
       'Feelings and Health': 'assets/BOARDS/Feelings.png',
       'School and Instructions': 'assets/BOARDS/People At School.png',
       'Descriptions and Attributes': 'assets/BOARDS/English/Adjectives.png',
-      'Prepositions': 'assets/BOARDS/Prepositions.png',
+      'Prepositions': 'assets/Default Tab Icons/prepositions.png',
       'Outside': 'assets/BOARDS/Town.png',
       'Time and Days': 'assets/BOARDS/Time, Months, Events/Time.png',
       'Questions': 'assets/BOARDS/English/How.png',
-      'Letters': 'assets/BOARDS/Letters.png',
-      'Numbers': 'assets/BOARDS/Numbers.png',
+      'Letters': 'assets/Default Tab Icons/letters.png',
+      'Numbers': 'assets/Default Tab Icons/numbers.png',
       'Personal Actions': 'assets/BOARDS/Actions.png',
       'Shared Activities': 'assets/BOARDS/People and Places.png',
       'Leisure Activities and Interests': 'assets/BOARDS/Sports, Activities and P.E/Sports.png',
       'General Objects': 'assets/BOARDS/Furniture.png',
-      'Clothing and Personal': 'assets/BOARDS/Clothes.png',
+      'Clothing and Personal': 'assets/Default Tab Icons/clothes.png',
       'Personal Possessions': 'assets/BOARDS/Toys.png',
       'Personal Hygiene': 'assets/BOARDS/Medical.png',
       'Gender and Sexuality': 'assets/BOARDS/People.png',
-      'Places': 'assets/BOARDS/Places.png',
-      'Sport': 'assets/BOARDS/Sports, Activities and P.E/Sports.png',
+      'Places': 'assets/Default Tab Icons/places.png',
+      'Sport': 'assets/Default Tab Icons/sports.png',
       'Religion and Customs': 'assets/BOARDS/Religion and Worldviews/Community.png',
       'Other Countries': 'assets/BOARDS/Countryside.png',
       'Public Notices': 'assets/BOARDS/Signs.png',
-      'Money': 'assets/BOARDS/Money UK.png',
+      'Money': 'assets/Default Tab Icons/money.png',
       'Computer Items': 'assets/BOARDS/Class Equipment.png',
       'Grammatical Elements': 'assets/BOARDS/Small Words.png',
       'Quantity and Measurement': 'assets/BOARDS/Numbers.png',
@@ -915,9 +797,27 @@ class _HomePageState extends State<HomePage> {
 
       // PERSONAL mode icons
       'PEOPLE AT HOME': 'assets/BOARDS/Home.png',
-      'World Map': 'assets/BOARDS/Places.png',
+      'World Map': 'assets/Default Tab Icons/world map.png',
       'Internal Organs': 'assets/BOARDS/Body Parts.png',
+      'Common Words': 'assets/Default Tab Icons/common words.png',
+      'Small Words': 'assets/Default Tab Icons/small words.png',
+      'Feelings': 'assets/Default Tab Icons/feelings.png',
+      'Actions': 'assets/Default Tab Icons/actions.png',
+      'People': 'assets/Default Tab Icons/people.png',
+      'Colours': 'assets/Default Tab Icons/colours.png',
+      'Body Parts': 'assets/Default Tab Icons/body parts.png',
+      'Weather': 'assets/Default Tab Icons/weather.png',
+      'Clothes': 'assets/Default Tab Icons/clothes.png',
+      'Toys': 'assets/Default Tab Icons/toys.png',
+      'Transport': 'assets/Default Tab Icons/transport.png',
     };
+
+    // Subject Vocab "Lessons" folder icons get priority when the board area matches.
+    if (board.area == 'Subject Vocab') {
+      final lessonIcon = _subjectVocabLessonIcons[searchName] ??
+          _subjectVocabLessonIcons[searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim()];
+      if (lessonIcon != null) return lessonIcon;
+    }
 
     // Check if we have a specific mapping for this board name
     final upperBoardName = boardName.toUpperCase();
@@ -926,6 +826,76 @@ class _HomePageState extends State<HomePage> {
         return _sanitizeIconAssetPath(entry.value);
       }
     }
+
+    final clean = searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim();
+
+    String? findKey(Map<String, List<String>> map, String query) {
+      for (final key in map.keys) {
+        if (key.toLowerCase() == query) return key;
+      }
+      return null;
+    }
+
+    // Try the symbol library first (non-BOARDS assets)
+    final symbolKey = findKey(symbolIconAssetMap, searchName);
+    if (symbolKey != null) {
+      return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
+    }
+    if (clean.isNotEmpty) {
+      final cleanSymbolKey = findKey(symbolIconAssetMap, clean);
+      if (cleanSymbolKey != null) {
+        return _bestBoardIconPath(cleanSymbolKey, symbolIconAssetMap[cleanSymbolKey]!);
+      }
+    }
+
+    String? bestSymbolKey;
+    int bestSymbolScore = 0;
+    for (final key in symbolIconAssetMap.keys) {
+      final keyLower = key.toLowerCase();
+      if (keyLower.contains(searchName) ||
+          searchName.contains(keyLower) ||
+          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
+        if (key.length > bestSymbolScore) {
+          bestSymbolScore = key.length;
+          bestSymbolKey = key;
+        }
+      }
+    }
+    if (bestSymbolKey != null) {
+      return _bestBoardIconPath(bestSymbolKey, symbolIconAssetMap[bestSymbolKey]!);
+    }
+
+    // Generated from assets/BOARDS - try exact, then closest filename match
+    final boardKey = findKey(boardIconAssetMap, searchName);
+    if (boardKey != null) {
+      return _bestBoardIconPath(boardKey, boardIconAssetMap[boardKey]!);
+    }
+    if (clean.isNotEmpty) {
+      final cleanBoardKey = findKey(boardIconAssetMap, clean);
+      if (cleanBoardKey != null) {
+        return _bestBoardIconPath(cleanBoardKey, boardIconAssetMap[cleanBoardKey]!);
+      }
+    }
+
+    String? bestKey;
+    int bestScore = 0;
+    for (final key in boardIconAssetMap.keys) {
+      final keyLower = key.toLowerCase();
+      if (keyLower.contains(searchName) ||
+          searchName.contains(keyLower) ||
+          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
+        if (key.length > bestScore) {
+          bestScore = key.length;
+          bestKey = key;
+        }
+      }
+    }
+    if (bestKey != null) {
+      return _bestBoardIconPath(bestKey, boardIconAssetMap[bestKey]!);
+    }
+
+    // Specific icon path mappings for boards
+
     
     // Fallback to dynamic path construction
     final fileName = boardName.replaceAll(' ', ' ');
@@ -945,128 +915,178 @@ class _HomePageState extends State<HomePage> {
         name.contains('insect') ||
         name.contains('amphibian') ||
         name.contains('spider') ||
-        name.contains('nature')) return Icons.pets;
+        name.contains('nature')) {
+      return Icons.pets;
+    }
 
     if (name.contains('people') ||
         name.contains('person') ||
         name.contains('family') ||
         name.contains('jobs') ||
-        name.contains('careers')) return Icons.people;
+        name.contains('careers')) {
+      return Icons.people;
+    }
 
     if (name.contains('time') ||
         name.contains('month') ||
         name.contains('event') ||
         name.contains('season') ||
-        name.contains('calendar')) return Icons.access_time;
+        name.contains('calendar')) {
+      return Icons.access_time;
+    }
 
     if (name.contains('sign') ||
         name.contains('bsl') ||
         name.contains('makaton') ||
         name.contains('alphabet') ||
         name.contains('phonics') ||
-        name.contains('letters')) return Icons.abc;
+        name.contains('letters')) {
+      return Icons.abc;
+    }
 
     if (name.contains('food') ||
         name.contains('cooking') ||
         name.contains('drink') ||
         name.contains('meal') ||
-        name.contains('eat')) return Icons.restaurant;
+        name.contains('eat')) {
+      return Icons.restaurant;
+    }
 
     if (name.contains('transport') ||
         name.contains('vehicle') ||
         name.contains('bus') ||
         name.contains('car') ||
-        name.contains('travel')) return Icons.directions_bus;
+        name.contains('travel')) {
+      return Icons.directions_bus;
+    }
 
     if (name.contains('place') ||
         name.contains('town') ||
         name.contains('country') ||
         name.contains('world') ||
-        name.contains('map')) return Icons.place;
+        name.contains('map')) {
+      return Icons.place;
+    }
 
     if (name.contains('home') ||
         name.contains('house') ||
         name.contains('furniture') ||
-        name.contains('appliance')) return Icons.home;
+        name.contains('appliance')) {
+      return Icons.home;
+    }
 
     if (name.contains('school') ||
         name.contains('lesson') ||
         name.contains('tutor') ||
         name.contains('subject') ||
-        name.contains('class')) return Icons.school;
+        name.contains('class')) {
+      return Icons.school;
+    }
 
     if (name.contains('feel') ||
         name.contains('emotion') ||
         name.contains('health') ||
         name.contains('medical') ||
-        name.contains('body')) return Icons.favorite;
+        name.contains('body')) {
+      return Icons.favorite;
+    }
 
     if (name.contains('colour') ||
         name.contains('color') ||
-        name.contains('shade')) return Icons.palette;
+        name.contains('shade')) {
+      return Icons.palette;
+    }
 
     if (name.contains('number') ||
         name.contains('math') ||
         name.contains('quantity') ||
-        name.contains('measure')) return Icons.format_list_numbered;
+        name.contains('measure')) {
+      return Icons.format_list_numbered;
+    }
 
     if (name.contains('sport') ||
         name.contains('pe') ||
         name.contains('exercise') ||
-        name.contains('game')) return Icons.sports;
+        name.contains('game')) {
+      return Icons.sports;
+    }
 
     if (name.contains('clothes') ||
         name.contains('wear') ||
-        name.contains('dress')) return Icons.checkroom;
+        name.contains('dress')) {
+      return Icons.checkroom;
+    }
 
     if (name.contains('money') ||
         name.contains('shop') ||
         name.contains('retail') ||
-        name.contains('buy')) return Icons.paid;
+        name.contains('buy')) {
+      return Icons.paid;
+    }
 
     if (name.contains('weather') ||
         name.contains('sun') ||
         name.contains('rain') ||
-        name.contains('snow')) return Icons.wb_sunny;
+        name.contains('snow')) {
+      return Icons.wb_sunny;
+    }
 
     if (name.contains('music') ||
         name.contains('song') ||
-        name.contains('instrument')) return Icons.music_note;
+        name.contains('instrument')) {
+      return Icons.music_note;
+    }
 
     if (name.contains('art') ||
         name.contains('paint') ||
-        name.contains('draw')) return Icons.brush;
+        name.contains('draw')) {
+      return Icons.brush;
+    }
 
     if (name.contains('religion') ||
         name.contains('worldviews') ||
-        name.contains('community')) return Icons.church;
+        name.contains('community')) {
+      return Icons.church;
+    }
 
     if (name.contains('computer') ||
         name.contains('it') ||
         name.contains('technology') ||
-        name.contains('equipment')) return Icons.computer;
+        name.contains('equipment')) {
+      return Icons.computer;
+    }
 
     if (name.contains('garden') ||
         name.contains('plant') ||
-        name.contains('tree')) return Icons.park;
+        name.contains('tree')) {
+      return Icons.park;
+    }
 
     if (name.contains('toy') ||
-        name.contains('play')) return Icons.toys;
+        name.contains('play')) {
+      return Icons.toys;
+    }
 
     if (name.contains('question') ||
         name.contains('how') ||
         name.contains('why') ||
-        name.contains('what')) return Icons.help;
+        name.contains('what')) {
+      return Icons.help;
+    }
 
     if (name.contains('action') ||
         name.contains('verb') ||
-        name.contains('movement')) return Icons.directions_run;
+        name.contains('movement')) {
+      return Icons.directions_run;
+    }
 
     if (name.contains('disney') ||
         name.contains('marvel') ||
         name.contains('star wars') ||
         name.contains('story') ||
-        name.contains('character')) return Icons.movie;
+        name.contains('character')) {
+      return Icons.movie;
+    }
 
     if (area == 'sign') return Icons.sign_language;
     if (area == 'legends') return Icons.auto_stories;
@@ -1615,8 +1635,6 @@ class _HomePageState extends State<HomePage> {
     _syncParentBoardForActiveTab();
   }
 
-  static const Set<String> _animalSubBoards = {};
-
   /// Returns sub-board tabs for any parent board that links to sub-boards.
   List<TopTab> _subTabsForBoard(Board? board) {
     if (board == null) return [];
@@ -1629,35 +1647,9 @@ class _HomePageState extends State<HomePage> {
     // automatically shows those boards underneath it in the tabs at the top"
     // And mentions Phase 2 phonics (Tier 3) showing when Phonics (Tier 2) is open.
     
-    // Find children of THIS board
+    // Find children of THIS board by stored parent relationship.
+    // Board-link tiles no longer automatically generate sub-tabs.
     final children = _boards.where((b) => b.parentBoardId == board.id).toList();
-    
-    // Also include linked boards that are either unparented top-level boards or
-    // are already children of this board. This prevents a board_link tile from a
-    // tertiary board (e.g. Furniture) from showing up under its grandparent.
-    final linkedSubBoardIds = <String>[];
-    for (final tile in board.tiles) {
-      if (tile.isBoardLink && tile.linkedBoardId.isNotEmpty) {
-        final linked = _boards.cast<Board?>().firstWhere((b) => b?.id == tile.linkedBoardId, orElse: () => null);
-        if (linked != null) {
-          final parentId = linked.parentBoardId;
-          if (parentId == null || parentId.isEmpty || parentId == board.id) {
-            if (!linkedSubBoardIds.contains(linked.id)) {
-              linkedSubBoardIds.add(linked.id);
-            }
-          }
-        }
-      }
-    }
-    
-    // Animal special case — only for the Animals parent board itself
-    if (board.name.toUpperCase() == 'ANIMALS') {
-      // Animal sub-boards are referenced by name, not by stored board IDs.
-      for (final animalName in _animalSubBoards) {
-        final matched = _boards.cast<Board?>().firstWhere((b) => b?.name.toUpperCase() == animalName.toUpperCase() && b?.area == board.area, orElse: () => null);
-        if (matched != null) linkedSubBoardIds.add(matched.id);
-      }
-    }
 
     // Small Words: keep Montessori-branded grammar boards plus plain Adjectives/Prepositions only.
     if (board.name.toLowerCase() == 'small words') {
@@ -1665,17 +1657,35 @@ class _HomePageState extends State<HomePage> {
         final n = b.name.toLowerCase();
         return n.contains('(montessori)') || n == 'adjectives' || n == 'prepositions';
       });
-      linkedSubBoardIds.removeWhere((id) {
-        final b = _boards.cast<Board?>().firstWhere((x) => x?.id == id, orElse: () => null);
-        if (b == null) return true;
-        final n = b.name.toLowerCase();
-        return !n.contains('(montessori)') && n != 'adjectives' && n != 'prepositions';
-      });
     }
 
+    final savedOrder = BoardService.current?.getTabOrder(board.id);
+    if (savedOrder != null) {
+      // When the user has explicitly configured this board's tabs, use that
+      // exact list in that exact order. No automatic children or link boards
+      // are added, and no reordering is applied.
+      final childrenTabs = <TopTab>[];
+      final seenIds = <String>{};
+      for (final name in savedOrder) {
+        final b = _boards.cast<Board?>().firstWhere((b) => b?.name.toLowerCase() == name.toLowerCase(), orElse: () => null);
+        if (b != null && seenIds.add(b.id)) {
+          childrenTabs.add(TopTab(
+            id: b.id,
+            label: _tabLabelForBoard(b),
+            iconAssetPath: _getBoardIconPath(b),
+            type: TopTabType.board,
+            board: b,
+            parentBoard: board,
+          ));
+        }
+      }
+      return childrenTabs;
+    }
+
+    // No explicit tab order saved yet — fall back to the board's children.
+    // Board-link tiles no longer auto-generate sub-tabs.
     final childrenTabs = <TopTab>[];
     final seenIds = <String>{};
-    
     for (final child in children) {
       if (seenIds.add(child.id)) {
         childrenTabs.add(TopTab(
@@ -1688,51 +1698,15 @@ class _HomePageState extends State<HomePage> {
         ));
       }
     }
-    
-    for (final linkedId in linkedSubBoardIds) {
-      final b = _boards.cast<Board?>().firstWhere((b) => b?.id == linkedId, orElse: () => null);
-      if (b != null && seenIds.add(b.id)) {
-        childrenTabs.add(TopTab(
-          id: b.id,
-          label: _tabLabelForBoard(b),
-          iconAssetPath: _getBoardIconPath(b),
-          type: TopTabType.board,
-          board: b,
-          parentBoard: board,
-        ));
-      }
-    }
 
-    // Sort by saved parent tab order, then board sortOrder, then by label
-    final savedOrder = BoardService.current?.getTabOrder(board.id) ?? [];
-    final orderMap = <String, int>{
-      for (var i = 0; i < savedOrder.length; i++) savedOrder[i].toLowerCase(): i,
-    };
-    final childrenNames = childrenTabs
-        .map((t) => (t.board?.name.toLowerCase() ?? t.label.toLowerCase()))
-        .toSet();
-    final useSavedOrder = savedOrder.isNotEmpty &&
-        savedOrder.length == childrenTabs.length &&
-        savedOrder.every((s) => childrenNames.contains(s.toLowerCase()));
+    // Sort by compiled hierarchy order, then board sortOrder, then by label
     childrenTabs.sort((a, b) {
       // SPECIAL CASE: A-Z Of Sign sub-tabs should ALWAYS be alphabetical
       if (board.name.toLowerCase() == 'a-z of sign' || board.id == 'prebuilt_a-z_of_sign') {
         return a.label.toLowerCase().compareTo(b.label.toLowerCase());
       }
 
-      // 0. Check explicit tab order saved via Edit Tab Order (only if complete)
-      if (useSavedOrder) {
-        final aName = a.board?.name.toLowerCase() ?? a.label.toLowerCase();
-        final bName = b.board?.name.toLowerCase() ?? b.label.toLowerCase();
-        final aIdx = orderMap[aName];
-        final bIdx = orderMap[bName];
-        if (aIdx != null && bIdx != null) return aIdx.compareTo(bIdx);
-      }
-
       // 1. Use the compiled hierarchy order for prebuilt boards.
-      //    Boards that are prebuilt but not in the current hierarchy (e.g. removed
-      //    from tabs but still linked from tiles) sort alphabetically so stale
-      //    or loaded sortOrder values cannot shift them around when tapped.
       final aPrebuilt = a.board?.id.startsWith('prebuilt_') == true;
       final bPrebuilt = b.board?.id.startsWith('prebuilt_') == true;
       final aIndex = prebuiltBoardNames.indexOf(a.label);
@@ -2040,12 +2014,27 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        Row(children: [
-                          Text(board.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
-                        ]),
+                        Row(
+                          children: [
+                            if (_activeTab!.iconAssetPath != null)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Image.asset(_activeTab!.iconAssetPath!, width: 32, height: 32, errorBuilder: (_, __, ___) => Icon(_activeTab!.icon ?? Icons.dashboard, size: 32)),
+                              )
+                            else if (_activeTab!.icon != null)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Icon(_activeTab!.icon!, size: 32),
+                              ),
+                            Text(
+                              _activeTab!.label,
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 20),
                         SymbolGrid(
-                          symbols: board.tiles,
+                          symbols: _displaySymbols,
                           favoriteIds: _favoritesService?.favorites ?? {},
                           onTap: (_) {}, onLongPress: (_) {},
                           fixedRows: board.rows, fixedColumns: board.columns,
@@ -2555,24 +2544,15 @@ class _HomePageState extends State<HomePage> {
 
   Board _createAutoMissingBoard(String id, String name,
       {String? area, bool isSubBoard = false}) {
-    final tile = SymbolTile(
-      id: '${id}_empty',
-      label: name,
-      category: 'Custom',
-      imageAsset: 'assets/Empty Board.png',
-      isBoardLink: false,
-      bgColor: '#000000',
-      textColor: '#FFFFFF',
-    );
     return Board(
       id: id,
       name: name,
       area: area ?? hierarchyArea(name),
-      rows: 1,
-      columns: 1,
-      adjustableLayout: false,
+      rows: defaultBoardRows,
+      columns: defaultBoardColumns,
+      adjustableLayout: true,
       backgroundColor: defaultBoardColor,
-      tiles: [tile],
+      tiles: const [],
       isSubBoard: isSubBoard,
       tier: isSubBoard ? 2 : 1,
     );
@@ -2681,16 +2661,34 @@ class _HomePageState extends State<HomePage> {
 /// This is called whenever a symbol is tapped. It adds the symbol 
 /// to the top horizontal list and updates the text field below it.
 
+  bool _isPunctuation(String label) {
+    final trimmed = label.trim();
+    if (trimmed.isEmpty || trimmed.length > 1) return false;
+    return !RegExp(r'[a-zA-Z0-9]').hasMatch(trimmed);
+  }
+
+  String _buildPhraseText() {
+    if (_phrase.isEmpty) return '';
+    final buffer = StringBuffer(_phrase.first.label);
+    for (int i = 1; i < _phrase.length; i++) {
+      final symbol = _phrase[i];
+      if (_isPunctuation(symbol.label)) {
+        buffer.write(symbol.label.trim());
+      } else {
+        buffer.write(' ${symbol.label.trim()}');
+      }
+    }
+    return buffer.toString();
+  }
+
   void _addToPhrase(SymbolTile symbol) {
     setState(() {
       _phrase.add(symbol);
       _isUpdatingText = true;
-      final current = _sentenceController.text.trim();
-      _sentenceController.text =
-          current.isEmpty ? symbol.label : '$current ${symbol.label}';
+      _sentenceController.text = _buildPhraseText();
       _isUpdatingText = false;
     });
-    if (symbol.speaks && !(_settings?.readSentenceOnly ?? false)) {
+    if (symbol.speaks && !(_settings?.readSentenceOnly ?? false) && !_isPunctuation(symbol.label)) {
       _speakSymbol(symbol);
     }
   }
@@ -2708,7 +2706,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _phrase.removeAt(index);
       _isUpdatingText = true;
-      _sentenceController.text = _phrase.map((s) => s.label).join(' ');
+      _sentenceController.text = _buildPhraseText();
       _isUpdatingText = false;
     });
   }
@@ -3113,7 +3111,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _openBoardEditorWithMerge(Board board, int mergeIndex) async {
-    final savedBoardId = await Navigator.of(context).push<String>(MaterialPageRoute(
+    await Navigator.of(context).push<String>(MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(title: Text('Merge Tile')),
         body: BoardEditor(
@@ -3457,8 +3455,6 @@ class _HomePageState extends State<HomePage> {
 
     // Find a unique internal id and name for the new secondary tab.
     final existingIds = <String>{for (final b in allBoards) b.id};
-    final existingNames = <String>{for (final b in allBoards) b.name.toLowerCase()};
-
     String linkId;
     String linkName;
     int n = 1;
@@ -4538,11 +4534,10 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
                     ),
                   );
                 },
-                onReorder: (oldIndex, newIndex) {
+                onReorderItem: (oldIndex, newIndex) {
                   setState(() {
                     final item = _localList.removeAt(oldIndex);
-                    final insertIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                    _localList.insert(insertIndex, item);
+                    _localList.insert(newIndex, item);
                   });
                 },
               ),

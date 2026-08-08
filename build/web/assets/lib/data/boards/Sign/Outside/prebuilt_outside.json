@@ -199,5 +199,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Sign/Outside/Outside.png",
+  "tileIconAssetPath": "assets/Sign/Outside/Outside.png"
 }

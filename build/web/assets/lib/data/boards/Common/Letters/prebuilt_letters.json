@@ -579,5 +579,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/BOARDS/Letters.png",
+  "tileIconAssetPath": "assets/BOARDS/Letters.png"
 }

@@ -2665,5 +2665,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Subject Vocab/Lessons/English.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Lessons/English.png"
 }

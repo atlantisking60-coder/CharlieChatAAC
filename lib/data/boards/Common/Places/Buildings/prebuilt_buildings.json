@@ -866,5 +866,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_places"
+  "parentBoardId": "prebuilt_places",
+  "iconAssetPath": "assets/BOARDS/Buildings.png",
+  "tileIconAssetPath": "assets/BOARDS/Buildings.png"
 }

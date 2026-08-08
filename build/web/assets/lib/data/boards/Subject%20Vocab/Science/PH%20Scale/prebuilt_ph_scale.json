@@ -17,5 +17,7 @@
   "tileWidth": 100.0,
   "backgroundColor": "#FFFFFF",
   "tiles": [],
-  "version": 0
+  "version": 0,
+  "iconAssetPath": "assets/Subject Vocab/Science/Acids, Alkelis and Energy/ph scale.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Science/Acids, Alkelis and Energy/ph scale.png"
 }

@@ -184,7 +184,7 @@
       "type": "vocabulary",
       "label": "1 pound",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£1.png",
+      "imageAsset": "assets/Common/Money/\u00a31.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -200,7 +200,7 @@
       "type": "vocabulary",
       "label": "2 pounds",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£2.png",
+      "imageAsset": "assets/Common/Money/\u00a32.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -216,7 +216,7 @@
       "type": "vocabulary",
       "label": "5 pounds",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£5.png",
+      "imageAsset": "assets/Common/Money/\u00a35.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -232,7 +232,7 @@
       "type": "vocabulary",
       "label": "10 pounds",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£10.png",
+      "imageAsset": "assets/Common/Money/\u00a310.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -248,7 +248,7 @@
       "type": "vocabulary",
       "label": "20 pounds",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£20.png",
+      "imageAsset": "assets/Common/Money/\u00a320.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -264,7 +264,7 @@
       "type": "vocabulary",
       "label": "50 pounds",
       "category": "Assets",
-      "imageAsset": "assets/Common/Money/£50.png",
+      "imageAsset": "assets/Common/Money/\u00a350.png",
       "emoji": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
@@ -403,5 +403,7 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "iconAssetPath": "assets/Subject Vocab/Maths/Money/money.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Maths/Money/money.png"
 }

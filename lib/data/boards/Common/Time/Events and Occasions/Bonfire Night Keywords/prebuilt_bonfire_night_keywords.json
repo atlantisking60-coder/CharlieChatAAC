@@ -560,5 +560,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions"
+  "parentBoardId": "prebuilt_events_and_occasions",
+  "iconAssetPath": "assets/BOARDS/Keywords.png",
+  "tileIconAssetPath": "assets/BOARDS/Keywords.png"
 }

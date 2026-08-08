@@ -1028,5 +1028,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_weather"
+  "parentBoardId": "prebuilt_weather",
+  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Seasons.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Seasons.png"
 }
