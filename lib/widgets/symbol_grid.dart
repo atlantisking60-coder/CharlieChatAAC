@@ -19,7 +19,7 @@ typedef SymbolAddCallback = void Function(int index);
 /// absolute URL that the dev server (or production host) can serve directly.
 String _webAssetUrl(String assetPath) {
   if (!assetPath.startsWith('assets/')) return assetPath;
-  return Uri.base.resolve('assets/${Uri.encodeFull(assetPath)}').toString();
+  return Uri.base.resolve(Uri.encodeFull(assetPath)).toString();
 }
 
 class SymbolGrid extends StatelessWidget {

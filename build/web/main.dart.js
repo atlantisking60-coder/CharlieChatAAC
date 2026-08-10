@@ -9919,7 +9919,7 @@ s=a.toLowerCase()
 if(B.c.Z(s,"http://")||B.c.Z(s,"https://"))return A.k6(a,new A.bhs(c,d,b),B.iB,d,d)
 if(B.c.Z(s,"data:")){r=A.bml(a)
 if(r!=null&&r.gho()==="data"&&r.gkI()!=null)return new A.xN(A.blQ(p,p,new A.lY(r.gkI().ae5(),1)),new A.bht(c,d,b),d,d,B.iB,p)}q=B.c.Z(s,"assets/")
-if(q)return A.k6(A.rn().a9("assets/"+A.nP(4,a,B.a2,!1)).j(0),new A.bhu(c,d,b),B.iB,d,d)
+if(q)return A.k6(A.rn().a9(A.nP(4,a,B.a2,!1)).j(0),new A.bhu(c,d,b),B.iB,d,d)
 return A.kY(a,p,new A.bhv(c,d,b),B.iB,d,d)},
 bg5:function bg5(){},
 bhs:function bhs(a,b,c){this.a=a
@@ -12009,7 +12009,7 @@ _.b=b
 _.c=c
 _.d=d},
 bQo(a){if(!B.c.Z(a,"assets/"))return a
-return A.rn().a9("assets/"+A.nP(4,a,B.a2,!1)).j(0)},
+return A.rn().a9(A.nP(4,a,B.a2,!1)).j(0)},
 aMj(a,b,c,d,e,f,g,h,i,j,k,l,m,n){return new A.a6p(m,d,k,j,i,e,a,b,g,n,l,h,c,null)},
 bK5(a,b){var s,r,q,p,o,n,m,l,k=A.ax(t.S)
 for(s=0;s<a.length;++s){r=a[s]
