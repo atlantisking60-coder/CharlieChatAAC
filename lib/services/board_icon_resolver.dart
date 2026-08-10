@@ -171,12 +171,10 @@ Widget buildBoardIconImage(
     );
   }
 
-  // On the web, serve assets directly from the dev server / production host
-  // to avoid Flutter Web's AssetManifest percent-encoding issues.
+  // On the web, use Image.asset (via AssetManifest) for bundled assets.
   if (kIsWeb && lower.startsWith('assets/')) {
-    final url = Uri.base.resolve(Uri.encodeFull(path)).toString();
-    return Image.network(
-      url,
+    return Image.asset(
+      path,
       width: size,
       height: size,
       fit: BoxFit.cover,

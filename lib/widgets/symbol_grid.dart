@@ -187,25 +187,13 @@ class SymbolGrid extends StatelessWidget {
                 symbolImage = Image.network(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain);
               }
             } else if (imageAsset.startsWith('assets/')) {
-              if (kIsWeb) {
-                final url = _webAssetUrl(imageAsset);
-                if (imageAsset.toLowerCase().endsWith('.svg')) {
-                  symbolImage = SvgPicture.network(url, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) => Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol));
-                } else {
-                  symbolImage = Image.network(url, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
-                    if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
-                    return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
-                  });
-                }
+              if (imageAsset.toLowerCase().endsWith('.svg')) {
+                symbolImage = SvgPicture.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, placeholderBuilder: (ctx) => Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol));
               } else {
-                if (imageAsset.toLowerCase().endsWith('.svg')) {
-                  symbolImage = SvgPicture.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain);
-                } else {
-                  symbolImage = Image.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
-                    if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
-                    return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
-                  });
-                }
+                symbolImage = Image.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
+                  if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
+                  return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
+                });
               }
             } else if (imageAsset.isNotEmpty) {
               if (kIsWeb || imageAsset.startsWith('blob:') || imageAsset.startsWith('data:')) {
