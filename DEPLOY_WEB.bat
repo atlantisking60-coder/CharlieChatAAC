@@ -31,7 +31,8 @@ if errorlevel 1 (
 )
 
 echo.
-echo [3/4] Building for web...
+echo [3/4] Cleaning and building for web...
+if exist "build\web" rd /s /q "build\web"
 call flutter build web
 if errorlevel 1 (
     echo ERROR: flutter build web failed.
