@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 41,
   "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Keywords/place.png",
+  "tileIconAssetPath": "assets/BOARDS/Places.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -186,7 +189,7 @@
       "type": "vocabulary",
       "label": "places",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Keywords/place.png",
+      "imageAsset": "assets/Subject Vocab/PEEP/Keywords/place.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -469,7 +472,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Places.png",
-  "tileIconAssetPath": "assets/BOARDS/Places.png"
+  ]
 }

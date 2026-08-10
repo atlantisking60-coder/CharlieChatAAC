@@ -4,13 +4,16 @@
   "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 8,
   "tier": 2,
+  "iconAssetPath": "assets/Common/Small Words/transitive verb [montessori].png",
+  "tileIconAssetPath": "assets/BOARDS/English/Montessori/Transitive Verb.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -18,8 +21,25 @@
     "rows": 6,
     "blankTilesAdded": 0
   },
-  "tiles": [],
-  "parentBoardId": "prebuilt_small_words",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "tiles": [
+    {
+      "id": "prebuilt_verbs_montessori_tile_1",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_small_words"
 }

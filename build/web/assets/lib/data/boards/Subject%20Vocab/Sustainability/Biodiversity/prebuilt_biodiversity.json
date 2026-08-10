@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -131,8 +134,8 @@
       "id": "prebuilt_biodiversity_humans",
       "type": "vocabulary",
       "label": "humans",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Blue Planet/humans.png",
+      "category": "Assets",
+      "imageAsset": "assets/Subject Vocab/PEEP/Blue Planet/humans.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -218,7 +221,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_sustainability",
-  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Biodiversity.png",
-  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Biodiversity.png"
+  "parentBoardId": "prebuilt_sustainability"
 }

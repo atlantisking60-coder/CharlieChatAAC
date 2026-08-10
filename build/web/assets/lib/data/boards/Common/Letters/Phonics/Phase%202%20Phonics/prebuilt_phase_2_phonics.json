@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 24,
   "tier": 3,
+  "iconAssetPath": "https://d18vdu4p71yql0.cloudfront.net/libraries/arasaac/letters_2.png",
+  "tileIconAssetPath": "assets/BOARDS/English/Phonics - Phase 2.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -560,7 +563,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_phonics",
-  "iconAssetPath": "assets/Dates/2.png",
-  "tileIconAssetPath": "assets/Dates/2.png"
+  "parentBoardId": "prebuilt_phonics"
 }

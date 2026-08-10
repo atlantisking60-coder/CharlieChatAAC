@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -41,8 +44,8 @@
       "id": "prebuilt_water_scarcity_drought",
       "type": "vocabulary",
       "label": "drought",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Disasters/drought.png",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Weather/Disasters/drought.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -167,8 +170,8 @@
       "id": "prebuilt_water_scarcity_clean_water",
       "type": "vocabulary",
       "label": "clean water",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Disasters/clean water.png",
+      "category": "Assets",
+      "imageAsset": "assets/Common/Weather/Disasters/clean water.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -218,7 +221,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_sustainability",
-  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Water Scarcity.png",
-  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Water Scarcity.png"
+  "parentBoardId": "prebuilt_sustainability"
 }

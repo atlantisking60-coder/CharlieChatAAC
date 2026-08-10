@@ -273,7 +273,9 @@ class ProfileService {
     try {
       final profiles = this.profiles;
       final profile = profiles.firstWhere(
-        (p) => p.username == username && p.password == password,
+        (p) =>
+            (p.username == username || p.name == username) &&
+            p.password == password,
         orElse: () => UserProfile(
           id: '',
           name: '',

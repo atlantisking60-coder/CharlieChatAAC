@@ -1187,7 +1187,6 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": "assets/BOARDS/English/Adjectives.png",
-  "version": 0,
-  "tileIconAssetPath": "assets/BOARDS/English/Adjectives.png"
+  "iconAssetPath": null,
+  "version": 0
 }

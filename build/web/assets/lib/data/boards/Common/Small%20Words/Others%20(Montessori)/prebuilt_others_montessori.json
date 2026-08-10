@@ -4,13 +4,16 @@
   "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
+  "iconAssetPath": "assets/Common/Small Words/other.png",
+  "tileIconAssetPath": "assets/BOARDS/English/Montessori/Other.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -20,7 +23,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_others_montessori_accordingly_png",
+      "id": "prebuilt_others_montessori_accordingly",
       "type": "vocabulary",
       "label": "Accordingly",
       "category": "Others",
@@ -38,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_albeit_png",
+      "id": "prebuilt_others_montessori_albeit",
       "type": "vocabulary",
       "label": "Albeit",
       "category": "Others",
@@ -56,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_although_png",
+      "id": "prebuilt_others_montessori_although",
       "type": "vocabulary",
       "label": "Although",
       "category": "Others",
@@ -74,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_besides_png",
+      "id": "prebuilt_others_montessori_besides",
       "type": "vocabulary",
       "label": "Besides",
       "category": "Others",
@@ -92,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_consequently_png",
+      "id": "prebuilt_others_montessori_consequently",
       "type": "vocabulary",
       "label": "Consequently",
       "category": "Others",
@@ -110,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_conversely_png",
+      "id": "prebuilt_others_montessori_conversely",
       "type": "vocabulary",
       "label": "Conversely",
       "category": "Others",
@@ -128,7 +131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_definitely_png",
+      "id": "prebuilt_others_montessori_definitely",
       "type": "vocabulary",
       "label": "Definitely",
       "category": "Others",
@@ -146,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_forthwith_png",
+      "id": "prebuilt_others_montessori_forthwith",
       "type": "vocabulary",
       "label": "Forthwith",
       "category": "Others",
@@ -164,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_furthermore_png",
+      "id": "prebuilt_others_montessori_furthermore",
       "type": "vocabulary",
       "label": "Furthermore",
       "category": "Others",
@@ -182,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_hence_png",
+      "id": "prebuilt_others_montessori_hence",
       "type": "vocabulary",
       "label": "Hence",
       "category": "Others",
@@ -200,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_henceforth_png",
+      "id": "prebuilt_others_montessori_henceforth",
       "type": "vocabulary",
       "label": "Henceforth",
       "category": "Others",
@@ -218,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_hereafter_png",
+      "id": "prebuilt_others_montessori_hereafter",
       "type": "vocabulary",
       "label": "Hereafter",
       "category": "Others",
@@ -236,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_hitherto_png",
+      "id": "prebuilt_others_montessori_hitherto",
       "type": "vocabulary",
       "label": "Hitherto",
       "category": "Others",
@@ -254,7 +257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_however_png",
+      "id": "prebuilt_others_montessori_however",
       "type": "vocabulary",
       "label": "However",
       "category": "Others",
@@ -272,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_instead_png",
+      "id": "prebuilt_others_montessori_instead",
       "type": "vocabulary",
       "label": "Instead",
       "category": "Others",
@@ -290,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_lest_png",
+      "id": "prebuilt_others_montessori_lest",
       "type": "vocabulary",
       "label": "Lest",
       "category": "Others",
@@ -308,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_likewise_png",
+      "id": "prebuilt_others_montessori_likewise",
       "type": "vocabulary",
       "label": "Likewise",
       "category": "Others",
@@ -326,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_maybe_png",
+      "id": "prebuilt_others_montessori_maybe",
       "type": "vocabulary",
       "label": "Maybe",
       "category": "Others",
@@ -344,7 +347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_meanwhile_png",
+      "id": "prebuilt_others_montessori_meanwhile",
       "type": "vocabulary",
       "label": "Meanwhile",
       "category": "Others",
@@ -362,7 +365,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_moreover_png",
+      "id": "prebuilt_others_montessori_moreover",
       "type": "vocabulary",
       "label": "Moreover",
       "category": "Others",
@@ -380,7 +383,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_nevertheless_png",
+      "id": "prebuilt_others_montessori_nevertheless",
       "type": "vocabulary",
       "label": "Nevertheless",
       "category": "Others",
@@ -398,7 +401,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_nonetheless_png",
+      "id": "prebuilt_others_montessori_nonetheless",
       "type": "vocabulary",
       "label": "Nonetheless",
       "category": "Others",
@@ -416,7 +419,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_notwithstanding_png",
+      "id": "prebuilt_others_montessori_notwithstanding",
       "type": "vocabulary",
       "label": "Notwithstanding",
       "category": "Others",
@@ -434,7 +437,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_otherwise_png",
+      "id": "prebuilt_others_montessori_otherwise",
       "type": "vocabulary",
       "label": "Otherwise",
       "category": "Others",
@@ -452,7 +455,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_perhaps_png",
+      "id": "prebuilt_others_montessori_perhaps",
       "type": "vocabulary",
       "label": "Perhaps",
       "category": "Others",
@@ -470,7 +473,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_similarly_png",
+      "id": "prebuilt_others_montessori_similarly",
       "type": "vocabulary",
       "label": "Similarly",
       "category": "Others",
@@ -488,7 +491,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_thereafter_png",
+      "id": "prebuilt_others_montessori_thereafter",
       "type": "vocabulary",
       "label": "Thereafter",
       "category": "Others",
@@ -506,7 +509,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_therefore_png",
+      "id": "prebuilt_others_montessori_therefore",
       "type": "vocabulary",
       "label": "Therefore",
       "category": "Others",
@@ -524,7 +527,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_thus_png",
+      "id": "prebuilt_others_montessori_thus",
       "type": "vocabulary",
       "label": "Thus",
       "category": "Others",
@@ -542,7 +545,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_others_montessori_whilst_png",
+      "id": "prebuilt_others_montessori_whilst",
       "type": "vocabulary",
       "label": "Whilst",
       "category": "Others",
@@ -558,9 +561,25 @@
       "colSpan": 1,
       "rowSpan": 1,
       "customVoice": ""
+    },
+    {
+      "id": "prebuilt_others_montessori_tile_31",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_small_words",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_small_words"
 }

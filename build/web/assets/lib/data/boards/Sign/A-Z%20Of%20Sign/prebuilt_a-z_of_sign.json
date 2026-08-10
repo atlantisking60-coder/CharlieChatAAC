@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 1,
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -26,15 +29,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/a.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_a_sign",
+      "linkedBoardName": "prebuilt_a_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_a_sign",
-      "linkedBoardName": "A (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_b_sign",
@@ -43,15 +47,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/b.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_b_sign",
+      "linkedBoardName": "prebuilt_b_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_b_sign",
-      "linkedBoardName": "B (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_c_sign",
@@ -60,15 +65,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/c.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_c_sign",
+      "linkedBoardName": "prebuilt_c_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_c_sign",
-      "linkedBoardName": "C (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_d_sign",
@@ -77,15 +83,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/d.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_d_sign",
+      "linkedBoardName": "prebuilt_d_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_d_sign",
-      "linkedBoardName": "D (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_e_sign",
@@ -94,15 +101,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/e.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_e_sign",
+      "linkedBoardName": "prebuilt_e_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_e_sign",
-      "linkedBoardName": "E (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_f_sign",
@@ -111,15 +119,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/f.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_f_sign",
+      "linkedBoardName": "prebuilt_f_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_f_sign",
-      "linkedBoardName": "F (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_g_sign",
@@ -128,15 +137,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/g.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_g_sign",
+      "linkedBoardName": "prebuilt_g_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_g_sign",
-      "linkedBoardName": "G (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_h_sign",
@@ -145,15 +155,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/h.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_h_sign",
+      "linkedBoardName": "prebuilt_h_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_h_sign",
-      "linkedBoardName": "H (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_i_sign",
@@ -162,15 +173,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/i.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_i_sign",
+      "linkedBoardName": "prebuilt_i_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_i_sign",
-      "linkedBoardName": "I (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_j_sign",
@@ -179,15 +191,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/j.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_j_sign",
+      "linkedBoardName": "prebuilt_j_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_j_sign",
-      "linkedBoardName": "J (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_k_sign",
@@ -196,15 +209,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/k.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_k_sign",
+      "linkedBoardName": "prebuilt_k_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_k_sign",
-      "linkedBoardName": "K (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_l_sign",
@@ -213,15 +227,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/l.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_l_sign",
+      "linkedBoardName": "prebuilt_l_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_l_sign",
-      "linkedBoardName": "L (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_m_sign",
@@ -230,15 +245,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/m.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_m_sign",
+      "linkedBoardName": "prebuilt_m_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_m_sign",
-      "linkedBoardName": "M (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_n_sign",
@@ -247,15 +263,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/n.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_n_sign",
+      "linkedBoardName": "prebuilt_n_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_n_sign",
-      "linkedBoardName": "N (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_o_sign",
@@ -264,15 +281,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/o.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_o_sign",
+      "linkedBoardName": "prebuilt_o_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_o_sign",
-      "linkedBoardName": "O (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_p_sign",
@@ -281,15 +299,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/p.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_p_sign",
+      "linkedBoardName": "prebuilt_p_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_p_sign",
-      "linkedBoardName": "P (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_q_sign",
@@ -298,15 +317,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/q.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_q_sign",
+      "linkedBoardName": "prebuilt_q_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_q_sign",
-      "linkedBoardName": "Q (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_r_sign",
@@ -315,15 +335,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/r.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_r_sign",
+      "linkedBoardName": "prebuilt_r_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_r_sign",
-      "linkedBoardName": "R (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_s_sign",
@@ -332,15 +353,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/s.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_s_sign",
+      "linkedBoardName": "prebuilt_s_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_s_sign",
-      "linkedBoardName": "S (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_t_sign",
@@ -349,15 +371,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/t.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_t_sign",
+      "linkedBoardName": "prebuilt_t_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_t_sign",
-      "linkedBoardName": "T (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_u_sign",
@@ -366,15 +389,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/u.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_u_sign",
+      "linkedBoardName": "prebuilt_u_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_u_sign",
-      "linkedBoardName": "U (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_v_sign",
@@ -383,15 +407,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/v.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_v_sign",
+      "linkedBoardName": "prebuilt_v_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_v_sign",
-      "linkedBoardName": "V (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_w_sign",
@@ -400,15 +425,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/w.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_w_sign",
+      "linkedBoardName": "prebuilt_w_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_w_sign",
-      "linkedBoardName": "W (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_x_sign",
@@ -417,15 +443,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/x.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_x_sign",
+      "linkedBoardName": "prebuilt_x_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_x_sign",
-      "linkedBoardName": "X (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_y_sign",
@@ -434,15 +461,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/y.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_y_sign",
+      "linkedBoardName": "prebuilt_y_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_y_sign",
-      "linkedBoardName": "Y (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_z_sign",
@@ -451,15 +479,16 @@
       "category": "Assets",
       "imageAsset": "assets/Common/Letters/z.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_z_sign",
+      "linkedBoardName": "prebuilt_z_sign",
       "isFullScreenImage": false,
       "bgColor": "#000000",
       "textColor": "#FFFFFF",
       "tileSize": 1,
       "colSpan": 1,
       "rowSpan": 1,
-      "customVoice": "",
-      "linkedBoardId": "prebuilt_z_sign",
-      "linkedBoardName": "Z (Sign)"
+      "customVoice": ""
     },
     {
       "id": "prebuilt_a-z_of_sign_tile_27",
@@ -468,6 +497,8 @@
       "category": "Custom",
       "imageAsset": null,
       "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
       "bgColor": "transparent",
@@ -477,7 +508,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  ]
 }

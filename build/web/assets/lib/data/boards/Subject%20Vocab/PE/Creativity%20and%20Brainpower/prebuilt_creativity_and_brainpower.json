@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_creativity_and_brainpower",
+  "name": "Creativity and Brainpower",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_pe",
+  "sortOrder": 290,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Sports, Activities and PE/Creativity and Brainpower.png",
+  "tileIconAssetPath": "assets/BOARDS/Sports, Activities and PE/Creativity and Brainpower.png"
+}

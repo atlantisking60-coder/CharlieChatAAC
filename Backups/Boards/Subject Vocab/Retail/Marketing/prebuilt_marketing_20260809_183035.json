@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_marketing",
+  "name": "Marketing",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_retail",
+  "sortOrder": 358,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/Subject Vocab/Retail/Marketing/marketing.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Retail/Marketing/marketing.png"
+}

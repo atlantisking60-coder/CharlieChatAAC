@@ -179,7 +179,6 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/Ecosystems.png",
-  "version": 0,
-  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Ecosystems.png"
+  "iconAssetPath": null,
+  "version": 0
 }

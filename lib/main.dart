@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:io' show Directory, File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,6 +38,7 @@ import 'widgets/symbol_grid.dart';
 import 'widgets/sync_status_screen.dart';
 import 'widgets/board_editor.dart';
 import 'widgets/welcome_screen.dart';
+import 'widgets/new_profile_dialog.dart';
 import 'widgets/auth_guard.dart';
 import 'utils/board_export_utils.dart';
 import 'utils/board_export_download.dart';
@@ -210,14 +212,30 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
     );
   }
 
-  Future<void> _selectProfile(String profileId) async {
+  Future<bool> _selectProfile(String profileId) async {
+    final profile = _profileService.profiles.firstWhere(
+      (p) => p.id == profileId,
+      orElse: () => _profileService.activeProfile,
+    );
+    if (profile.id != 'default') {
+      final dialogContext = _navigatorKey.currentContext;
+      if (dialogContext == null) return false;
+      final authenticated = await showDialog<bool>(
+        context: dialogContext,
+        barrierDismissible: false,
+        builder: (ctx) => _LoginDialog(
+            profile: profile, profileService: _profileService),
+      );
+      if (authenticated != true) return false;
+    }
+
     await _profileService.setActiveProfile(profileId);
-    final profile = _profileService.activeProfile;
     setState(() {
       _activeProfileId = profile.id;
       _selectedProfileId = profile.id;
       _settings = profile.settings;
     });
+    return true;
   }
 
   Future<void> _showProfileHome() async {
@@ -246,40 +264,10 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
   Future<void> _createNewProfile() async {
     final dialogContext = _navigatorKey.currentContext;
     if (dialogContext == null) return;
-    final nameController = TextEditingController();
-    final newName = await showDialog<String>(
-      context: dialogContext,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Profile'),
-        content: TextField(
-          controller: nameController,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Profile name'),
-          textCapitalization: TextCapitalization.words,
-        ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel')),
-          FilledButton(
-            onPressed: () => Navigator.of(ctx).pop(nameController.text.trim()),
-            child: const Text('Create'),
-          ),
-        ],
-      ),
-    );
-    nameController.dispose();
-    if (newName == null || newName.isEmpty) return;
+    final profile = await NewProfileDialog.show(
+        dialogContext, _profileService.activeProfile);
+    if (profile == null) return;
 
-    final activeProfile = _profileService.activeProfile;
-    final profile = UserProfile(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
-      name: newName,
-      settings: activeProfile.settings,
-      tabOrder: activeProfile.tabOrder,
-      preferredSymbolSets: activeProfile.preferredSymbolSets,
-      startingBoardId: activeProfile.startingBoardId,
-    );
     await _profileService.createProfile(profile);
     setState(() {
       _profiles = _profileService.profiles;
@@ -359,10 +347,11 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
                   },
                   profiles: _profiles,
                   activeProfileId: _activeProfileId,
-                  onProfileSelected: (id) {
-                    _selectProfile(id);
-                    setState(() => _showWelcome = false);
-                  },
+                  onProfileSelected: (id) => _selectProfile(id).then(
+                    (ok) {
+                      if (ok) setState(() => _showWelcome = false);
+                    },
+                  ),
                   onCreateProfile: _createNewProfile,
                   onDeleteProfile: _deleteProfile,
                 )
@@ -441,7 +430,7 @@ class _HomePageState extends State<HomePage> {
   UserProfile? _activeProfile;
   AppSettings? _settings;
   List<Board> _boards = [];
-  final Map<String, String> _subjectVocabLessonIcons = {};
+  static final Map<String, String> _subjectVocabLessonIcons = {};
   List<TopTab> _tabs = [];
   TopTab? _activeTab;
   Board? _parentBoard;
@@ -457,6 +446,7 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _boardScrollController = ScrollController();
   final ScrollController _boardHorizontalScrollController = ScrollController();
   final Map<String, ScrollController> _tabScrollControllers = {};
+  final Map<String, String> _iconPathCache = {};
   bool _showScrollToTop = false;
 
   // Sub-boards that are hidden from the top-level tab bar but shown as a second row when their parent is active.
@@ -493,7 +483,7 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
       boardService.setCurrentProfileId(_activeProfile?.id ?? 'default');
 
-      await _loadSubjectVocabLessonIcons();
+      if (_subjectVocabLessonIcons.isEmpty) await _loadSubjectVocabLessonIcons();
 
       // Default sub-tab order for Common > Time > Events and Occasions.
       if (boardService.getTabOrder('prebuilt_events_and_occasions') == null) {
@@ -535,17 +525,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  AppMode _appModeForArea(String? area) {
+    switch (area) {
+      case 'Legends':
+        return AppMode.legends;
+      case 'Recipes':
+        return AppMode.recipes;
+      case 'My School':
+        return AppMode.mySchool;
+      case 'Sign':
+        return AppMode.sign;
+      case 'Subject Vocab':
+        return AppMode.school;
+      case 'Personal':
+        return AppMode.personal;
+      case 'Common':
+      default:
+        return AppMode.home;
+    }
+  }
+
   AppMode _getModeForBoard(String boardId) {
     final board = _boards.cast<Board?>().firstWhere((b) => b?.id == boardId, orElse: () => null);
     if (board == null) return AppMode.home;
-    final area = board.area;
-    if (area == 'Legends') return AppMode.legends;
-    if (area == 'Recipes') return AppMode.recipes;
-    if (area == 'My School') return AppMode.mySchool;
-    if (area == 'Sign') return AppMode.sign;
-    if (area == 'Subject Vocab') return AppMode.school;
-    if (area == 'Personal') return AppMode.personal;
-    return AppMode.home;
+    return _appModeForArea(board.area);
   }
 
   Future<void> _persistSessionState() async {
@@ -630,9 +633,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadSubjectVocabLessonIcons() async {
+    if (_subjectVocabLessonIcons.isNotEmpty) return;
     try {
       final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-      _subjectVocabLessonIcons.clear();
       for (final path in manifest.listAssets()) {
         if (!path.toLowerCase().startsWith('assets/subject vocab/lessons/')) continue;
         if (!path.toLowerCase().endsWith('.png')) continue;
@@ -643,11 +646,30 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _preResolveChildIcons(Board parent) {
+    final children = _boards.where((b) => b.parentBoardId == parent.id).toList();
+    for (final child in children) {
+      final path = _getBoardIconPath(child);
+      if (path.startsWith('assets/')) {
+        precacheImage(
+          AssetImage(path),
+          context,
+          size: const Size(36, 36),
+        ).catchError((_) {});
+      }
+    }
+  }
+
   String _getBoardIconPath(Board board) {
     if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
       return board.iconAssetPath!;
     }
+    final cached = _iconPathCache[board.id];
+    if (cached != null) return cached;
+    return _iconPathCache[board.id] = _resolveBoardIconPath(board);
+  }
 
+  String _resolveBoardIconPath(Board board) {
     final boardName = board.name;
     final searchName = boardName.toLowerCase().trim();
 
@@ -667,10 +689,17 @@ class _HomePageState extends State<HomePage> {
       'Maths': 'assets/Subject Vocab/Lessons/Maths.png',
       'Science': 'assets/Subject Vocab/Lessons/Science.png',
       'TFL': 'assets/Subject Vocab/Lessons/TFL.png',
-      'Personal Development': 'assets/Subject Vocab/Lessons/P.D.png',
+      'Personal Development': 'assets/Subject Vocab/Lessons/PD.png',
       'PEEP': 'assets/Subject Vocab/Lessons/PEEP.png',
       'EPIC': 'assets/Subject Vocab/Lessons/EPIC.png',
-      'P.E.': 'assets/Subject Vocab/Lessons/P.E.png',
+      'PE': 'assets/Subject Vocab/Lessons/PE.png',
+      'Physical Education': 'assets/Subject Vocab/Lessons/PE.png',
+      'PD': 'assets/Subject Vocab/Lessons/PD.png',
+      'Communication': 'assets/Subject Vocab/Lessons/EPIC.png',
+      'Geography': 'assets/Subject Vocab/Lessons/PEEP.png',
+      'History': 'assets/Subject Vocab/Lessons/PEEP.png',
+      'IT': 'assets/Subject Vocab/Lessons/IT.png',
+      'TFL / IT': 'assets/Subject Vocab/Lessons/TFL.png',
       'Art': 'assets/Subject Vocab/Lessons/Art.png',
       'Performing Arts': 'assets/Subject Vocab/Lessons/Performing Arts.png',
       'Sustainability': 'assets/Subject Vocab/Lessons/Sustainability.png',
@@ -682,7 +711,7 @@ class _HomePageState extends State<HomePage> {
       'Horticulture': 'assets/Subject Vocab/Lessons/Horticulture.png',
       'Retail': 'assets/Subject Vocab/Lessons/Retail.png',
       'Photography': 'assets/Subject Vocab/Lessons/Photography.png',
-      'Information Technology': 'assets/Subject Vocab/Lessons/I.T.png',
+      'Information Technology': 'assets/Subject Vocab/Lessons/IT.png',
       'Construction': 'assets/Subject Vocab/Lessons/Resistant Materials and Construction.png',
       'Engineering': 'assets/Subject Vocab/Lessons/Engineering.png',
       'Living Life Skills': 'assets/Subject Vocab/Lessons/Living Life Skills.png',
@@ -691,43 +720,43 @@ class _HomePageState extends State<HomePage> {
       'Tutor Time': 'assets/Subject Vocab/Lessons/Tutor Time.png',
       
       // SIGN mode icons
-      'Sign': 'assets/BOARDS/Signs.png',
-      'BSL': 'assets/BOARDS/Signs.png',
-      'Makaton': 'assets/BOARDS/Signs.png',
-      'A-Z Of Sign': 'assets/BOARDS/Letters.png',
-      'Sign A-Z': 'assets/BOARDS/Letters.png',
-      'Manners and Greetings': 'assets/BOARDS/People.png',
-      'Family and People': 'assets/BOARDS/Family Tree.png',
-      'Animals and Nature': 'assets/BOARDS/Animals/Animals.png',
-      'Transport and Vehicles': 'assets/BOARDS/Transport.png',
-      'Food and Drink': 'assets/BOARDS/Cooking and Food/Food.png',
-      'Home and Household': 'assets/BOARDS/Home.png',
-      'Feelings and Health': 'assets/BOARDS/Feelings.png',
-      'School and Instructions': 'assets/BOARDS/People At School.png',
-      'Descriptions and Attributes': 'assets/BOARDS/English/Adjectives.png',
+      'Sign': 'assets/Default Tab Icons/sign.png',
+      'BSL': 'assets/Default Tab Icons/bsl.png',
+      'Makaton': 'assets/Default Tab Icons/makaton.png',
+      'A-Z Of Sign': 'assets/Default Tab Icons/a-z of sign.png',
+      'Sign A-Z': 'assets/Default Tab Icons/sign a-z.png',
+      'Manners and Greetings': 'assets/Default Tab Icons/manners and greetings.png',
+      'Family and People': 'assets/Default Tab Icons/family and people.png',
+      'Animals and Nature': 'assets/Default Tab Icons/animals and nature.png',
+      'Transport and Vehicles': 'assets/Default Tab Icons/transport and vehicles.png',
+      'Food and Drink': 'assets/Default Tab Icons/food and drink.png',
+      'Home and Household': 'assets/Default Tab Icons/home and household.png',
+      'Feelings and Health': 'assets/Default Tab Icons/feelings and health.png',
+      'School and Instructions': 'assets/Default Tab Icons/school and instructions.png',
+      'Descriptions and Attributes': 'assets/Default Tab Icons/descriptions and attributes.png',
       'Prepositions': 'assets/Default Tab Icons/prepositions.png',
-      'Outside': 'assets/BOARDS/Town.png',
-      'Time and Days': 'assets/BOARDS/Time, Months, Events/Time.png',
-      'Questions': 'assets/BOARDS/English/How.png',
+      'Outside': 'assets/Default Tab Icons/outside.png',
+      'Time and Days': 'assets/Default Tab Icons/time and days.png',
+      'Questions': 'assets/Default Tab Icons/questions.png',
       'Letters': 'assets/Default Tab Icons/letters.png',
       'Numbers': 'assets/Default Tab Icons/numbers.png',
-      'Personal Actions': 'assets/BOARDS/Actions.png',
-      'Shared Activities': 'assets/BOARDS/People and Places.png',
-      'Leisure Activities and Interests': 'assets/BOARDS/Sports, Activities and P.E/Sports.png',
-      'General Objects': 'assets/BOARDS/Furniture.png',
+      'Personal Actions': 'assets/Default Tab Icons/personal actions.png',
+      'Shared Activities': 'assets/Default Tab Icons/shared activities.png',
+      'Leisure Activities and Interests': 'assets/Default Tab Icons/leisure activities and interests.png',
+      'General Objects': 'assets/Default Tab Icons/general objects.png',
       'Clothing and Personal': 'assets/Default Tab Icons/clothes.png',
-      'Personal Possessions': 'assets/BOARDS/Toys.png',
-      'Personal Hygiene': 'assets/BOARDS/Medical.png',
-      'Gender and Sexuality': 'assets/BOARDS/People.png',
+      'Personal Possessions': 'assets/Default Tab Icons/personal possessions.png',
+      'Personal Hygiene': 'assets/Default Tab Icons/personal hygiene.png',
+      'Gender and Sexuality': 'assets/Default Tab Icons/gender and sexuality.png',
       'Places': 'assets/Default Tab Icons/places.png',
       'Sport': 'assets/Default Tab Icons/sports.png',
-      'Religion and Customs': 'assets/BOARDS/Religion and Worldviews/Community.png',
-      'Other Countries': 'assets/BOARDS/Countryside.png',
-      'Public Notices': 'assets/BOARDS/Signs.png',
+      'Religion and Customs': 'assets/Default Tab Icons/religion and customs.png',
+      'Other Countries': 'assets/Default Tab Icons/other countries.png',
+      'Public Notices': 'assets/Default Tab Icons/public notices.png',
       'Money': 'assets/Default Tab Icons/money.png',
-      'Computer Items': 'assets/BOARDS/Class Equipment.png',
-      'Grammatical Elements': 'assets/BOARDS/Small Words.png',
-      'Quantity and Measurement': 'assets/BOARDS/Numbers.png',
+      'Computer Items': 'assets/Default Tab Icons/computer items.png',
+      'Grammatical Elements': 'assets/Default Tab Icons/grammatical elements.png',
+      'Quantity and Measurement': 'assets/Default Tab Icons/quantity and measurement.png',
       
       // SUB-BOARD icons (second tab row)
       'Sad': 'assets/BOARDS/Feelings/Sad.png',
@@ -759,32 +788,32 @@ class _HomePageState extends State<HomePage> {
       'Body Parts Of Animals': 'assets/BOARDS/Animals/Animal Body Parts.png',
       'Child Animals': 'assets/BOARDS/Animals/Child Animals.png',
       'Groups Of Animals': 'assets/BOARDS/Animals/Groups of Animals.png',
-      'A (Sign)': 'assets/symbols/1. Main Boards/Alphabet/a.png',
-      'B (Sign)': 'assets/symbols/1. Main Boards/Alphabet/b.png',
-      'C (Sign)': 'assets/symbols/1. Main Boards/Alphabet/c.png',
-      'D (Sign)': 'assets/symbols/1. Main Boards/Alphabet/d.png',
-      'E (Sign)': 'assets/symbols/1. Main Boards/Alphabet/e.png',
-      'F (Sign)': 'assets/symbols/1. Main Boards/Alphabet/f.png',
-      'G (Sign)': 'assets/symbols/1. Main Boards/Alphabet/g.png',
-      'H (Sign)': 'assets/symbols/1. Main Boards/Alphabet/h.png',
-      'I (Sign)': 'assets/symbols/1. Main Boards/Alphabet/i.png',
-      'J (Sign)': 'assets/symbols/1. Main Boards/Alphabet/j.png',
-      'K (Sign)': 'assets/symbols/1. Main Boards/Alphabet/k.png',
-      'L (Sign)': 'assets/symbols/1. Main Boards/Alphabet/l.png',
-      'M (Sign)': 'assets/symbols/1. Main Boards/Alphabet/m.png',
-      'N (Sign)': 'assets/symbols/1. Main Boards/Alphabet/n.png',
-      'O (Sign)': 'assets/symbols/1. Main Boards/Alphabet/o.png',
-      'P (Sign)': 'assets/symbols/1. Main Boards/Alphabet/p.png',
-      'Q (Sign)': 'assets/symbols/1. Main Boards/Alphabet/q.png',
-      'R (Sign)': 'assets/symbols/1. Main Boards/Alphabet/r.png',
-      'S (Sign)': 'assets/symbols/1. Main Boards/Alphabet/s.png',
-      'T (Sign)': 'assets/symbols/1. Main Boards/Alphabet/t.png',
-      'U (Sign)': 'assets/symbols/1. Main Boards/Alphabet/u.png',
-      'V (Sign)': 'assets/symbols/1. Main Boards/Alphabet/v.png',
-      'W (Sign)': 'assets/symbols/1. Main Boards/Alphabet/w.png',
-      'X (Sign)': 'assets/symbols/1. Main Boards/Alphabet/x.png',
-      'Y (Sign)': 'assets/symbols/1. Main Boards/Alphabet/y.png',
-      'Z (Sign)': 'assets/symbols/1. Main Boards/Alphabet/z.png',
+      'A (Sign)': 'assets/Common/Letters/a.png',
+      'B (Sign)': 'assets/Common/Letters/b.png',
+      'C (Sign)': 'assets/Common/Letters/c.png',
+      'D (Sign)': 'assets/Common/Letters/d.png',
+      'E (Sign)': 'assets/Common/Letters/e.png',
+      'F (Sign)': 'assets/Common/Letters/f.png',
+      'G (Sign)': 'assets/Common/Letters/g.png',
+      'H (Sign)': 'assets/Common/Letters/h.png',
+      'I (Sign)': 'assets/Common/Letters/i.png',
+      'J (Sign)': 'assets/Common/Letters/j.png',
+      'K (Sign)': 'assets/Common/Letters/k.png',
+      'L (Sign)': 'assets/Common/Letters/l.png',
+      'M (Sign)': 'assets/Common/Letters/m.png',
+      'N (Sign)': 'assets/Common/Letters/n.png',
+      'O (Sign)': 'assets/Common/Letters/o.png',
+      'P (Sign)': 'assets/Common/Letters/p.png',
+      'Q (Sign)': 'assets/Common/Letters/q.png',
+      'R (Sign)': 'assets/Common/Letters/r.png',
+      'S (Sign)': 'assets/Common/Letters/s.png',
+      'T (Sign)': 'assets/Common/Letters/t.png',
+      'U (Sign)': 'assets/Common/Letters/u.png',
+      'V (Sign)': 'assets/Common/Letters/v.png',
+      'W (Sign)': 'assets/Common/Letters/w.png',
+      'X (Sign)': 'assets/Common/Letters/x.png',
+      'Y (Sign)': 'assets/Common/Letters/y.png',
+      'Z (Sign)': 'assets/Common/Letters/z.png',
       
       // MY SCHOOL mode icons
       'MY SCHOOL': 'assets/BOARDS/People At School.png',
@@ -1205,7 +1234,7 @@ class _HomePageState extends State<HomePage> {
       return aIdx.compareTo(bIdx);
     });
     // Boards that belong to Legends mode (in exact order)
-    final legendsBoardNames = ['Legends'];
+    final legendsBoardNames = ['Legends', 'Characters', 'Real People'];
     // Boards that belong to School mode (in order: main first)
     final schoolBoardNames = ['Subject Vocab'];
     // Boards that belong to My School mode (in order: main first)
@@ -1300,20 +1329,6 @@ class _HomePageState extends State<HomePage> {
             orElse: () => null,
           );
           if (board != null && !board.isSubBoard) {
-            allTabs.add(TopTab(
-                id: board.id,
-                label: _tabLabelForBoard(board),
-                iconAssetPath: _getBoardIconPath(board),
-                type: TopTabType.board,
-                board: board));
-            addedLegendsBoardIds.add(board.id);
-          }
-        }
-        // Add any remaining boards explicitly in the Legends area
-        for (final board in _boards) {
-          if (board.area == 'Legends' &&
-              !board.isSubBoard &&
-              !addedLegendsBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1649,7 +1664,7 @@ class _HomePageState extends State<HomePage> {
     
     // Find children of THIS board by stored parent relationship.
     // Board-link tiles no longer automatically generate sub-tabs.
-    final children = _boards.where((b) => b.parentBoardId == board.id).toList();
+    final children = _boards.where((b) => b.parentBoardId == board.id && b.isSubBoard).toList();
 
     // Small Words: keep Montessori-branded grammar boards plus plain Adjectives/Prepositions only.
     if (board.name.toLowerCase() == 'small words') {
@@ -1756,8 +1771,8 @@ class _HomePageState extends State<HomePage> {
       orElse: () => _profiles.isNotEmpty ? _profiles.first : UserProfile.defaultProfile(),
     );
     
-    // Check if profile requires authentication
-    if (profile.username != null && profile.password != null) {
+    // Only the default profile can be entered without a password
+    if (profile.id != 'default') {
       final authenticated = await _showLoginDialog(profile);
       if (!authenticated) return;
     }
@@ -1808,40 +1823,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _createNewProfile() async {
-    final nameController = TextEditingController();
-    final newName = await showDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Profile'),
-        content: TextField(
-          controller: nameController,
-          decoration: const InputDecoration(labelText: 'Profile name'),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel')),
-          TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop(nameController.text.trim());
-              },
-              child: const Text('Create')),
-        ],
-      ),
-    );
-    if (newName == null || newName.isEmpty) return;
+    final profile = await NewProfileDialog.show(
+        context, _activeProfile ?? UserProfile.defaultProfile());
+    if (profile == null) return;
 
-    final profile = UserProfile(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
-      name: newName,
-      settings: _activeProfile?.settings ?? const AppSettings(),
-      tabOrder: _activeProfile?.tabOrder ?? [],
-      preferredSymbolSets: _activeProfile?.preferredSymbolSets ?? [],
-      startingBoardId: _activeProfile?.startingBoardId ?? '',
-    );
     await _profileService.createProfile(profile);
     _profiles = _profileService.profiles;
-    await _activateProfile(profile.id);
+    await _profileService.setActiveProfile(profile.id);
+
+    if (!mounted) return;
+    widget.onActiveProfileChanged(profile.id);
+    widget.onSettingsChanged(profile.settings);
+
+    setState(() {
+      _activeProfile = profile;
+      _settings = profile.settings;
+    });
   }
 
   Future<void> _saveHistory(String phrase) async {
@@ -2016,16 +2013,14 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 20),
                         Row(
                           children: [
-                            if (_activeTab!.iconAssetPath != null)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Image.asset(_activeTab!.iconAssetPath!, width: 32, height: 32, errorBuilder: (_, __, ___) => Icon(_activeTab!.icon ?? Icons.dashboard, size: 32)),
-                              )
-                            else if (_activeTab!.icon != null)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Icon(_activeTab!.icon!, size: 32),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: buildBoardIconImage(
+                                _activeTab!.iconAssetPath,
+                                size: 32,
+                                fallback: Icon(_activeTab!.icon ?? Icons.dashboard, size: 32),
                               ),
+                            ),
                             Text(
                               _activeTab!.label,
                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
@@ -2052,12 +2047,24 @@ class _HomePageState extends State<HomePage> {
           );
         });
         overlay.insert(entry);
-        await Future.delayed(const Duration(milliseconds: 200));
-        final boundary = captureKey.currentContext?.findRenderObject();
+        // Wait for the overlay to be laid out and painted before capturing.
+        await WidgetsBinding.instance.endOfFrame;
+        await Future.delayed(const Duration(milliseconds: 500));
+        final boundary = captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
         if (boundary != null) {
-          final image = await (boundary as dynamic).toImage(pixelRatio: 2.0);
-          final byteData = await image.toByteData(format: ImageByteFormat.png);
-          if (byteData != null) pngBytes = byteData.buffer.asUint8List();
+          final image = await boundary.toImage(pixelRatio: 2.0);
+          if (image.width == 0 || image.height == 0) {
+            debugPrint('PNG capture produced zero-size image');
+          } else {
+            final byteData = await image.toByteData(format: ImageByteFormat.png);
+            if (byteData != null) {
+              pngBytes = byteData.buffer.asUint8List();
+            } else {
+              debugPrint('PNG capture: toByteData returned null');
+            }
+          }
+        } else {
+          debugPrint('PNG capture: no RenderRepaintBoundary found');
         }
         entry.remove();
       } catch (e) {
@@ -2238,7 +2245,7 @@ class _HomePageState extends State<HomePage> {
     // 1. Exact or dot-forgiven match
     if (l == q) return true;
     
-    // 2. Abbreviation match (e.g., PD vs P.D. vs Personal Development)
+    // 2. Abbreviation match (e.g., PD vs PD vs Personal Development)
     if (q == 'pd' && l.contains('personal development')) return true;
     if (l == 'pd' && q.contains('personal development')) return true;
 
@@ -2486,6 +2493,7 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
     }
 
+    _preResolveChildIcons(board);
     setState(() {
       final boardIndex = _boards.indexWhere((b) => b.id == board.id);
       if (boardIndex >= 0) {
@@ -2647,14 +2655,29 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _goBackInHistory() {
+  Future<void> _goBackInHistory() async {
     if (_navigationHistory.isEmpty) return;
+    final prev = _navigationHistory.removeLast();
+    final targetArea = prev.board?.area ?? _activeArea();
+    final targetMode = _appModeForArea(targetArea);
+
     setState(() {
-      final prev = _navigationHistory.removeLast();
-      _activeTab = prev;
-      _parentBoard = prev.parentBoard;
+      _currentMode = targetMode;
+      _activeTab = null;
+      _parentBoard = null;
       _selectedCategory = prev.type == TopTabType.category ? prev.label : 'All';
     });
+
+    await _loadBoards(area: targetArea);
+    if (!mounted) return;
+
+    setState(() {
+      _activeTab = _tabs.firstWhere(
+        (t) => t.id == prev.id,
+        orElse: () => prev,
+      );
+    });
+    _syncParentBoardForActiveTab();
   }
 
 /// PHRASE BUILDER
@@ -3289,6 +3312,7 @@ class _HomePageState extends State<HomePage> {
       }
 
       if (!mounted) return;
+      _preResolveChildIcons(full);
       setState(() {
         _boardLoadError = null;
         _missingBoardId = null;
@@ -4231,7 +4255,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               if (_navigationHistory.isNotEmpty)
                                 OutlinedButton.icon(
-                                  onPressed: _goBackInHistory,
+                                  onPressed: () { _goBackInHistory(); },
                                   icon: const Icon(Icons.arrow_back),
                                   label: const Text('Back'),
                                 ),
@@ -4612,13 +4636,11 @@ class _LoginDialog extends StatefulWidget {
 }
 
 class _LoginDialogState extends State<_LoginDialog> {
-  late final TextEditingController _usernameController;
   late final TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
-    _usernameController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
@@ -4633,23 +4655,13 @@ class _LoginDialogState extends State<_LoginDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Login to ${widget.profile.name}'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _usernameController,
-            decoration: const InputDecoration(labelText: 'Username'),
-            autofocus: true,
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(labelText: 'Password'),
-            obscureText: true,
-            onSubmitted: (_) => _handleLogin(),
-          ),
-        ],
+      title: Text('Enter password for ${widget.profile.name}'),
+      content: TextField(
+        controller: _passwordController,
+        autofocus: true,
+        decoration: const InputDecoration(labelText: 'Password'),
+        obscureText: true,
+        onSubmitted: (_) => _handleLogin(),
       ),
       actions: [
         TextButton(
@@ -4666,7 +4678,7 @@ class _LoginDialogState extends State<_LoginDialog> {
 
   Future<void> _handleLogin() async {
     final authenticated = await widget.profileService.authenticate(
-      _usernameController.text.trim(),
+      widget.profile.username ?? widget.profile.name,
       _passwordController.text.trim(),
     );
     if (authenticated) {

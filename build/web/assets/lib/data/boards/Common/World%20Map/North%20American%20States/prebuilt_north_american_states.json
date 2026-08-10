@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 253,
   "tier": 2,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -150,7 +153,7 @@
       "type": "vocabulary",
       "label": "america",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Countries and Continents/World Map/north america.png",
+      "imageAsset": "assets/Common/World Map/north america (2).png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -168,7 +171,7 @@
       "type": "vocabulary",
       "label": "north america",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Countries and Continents/north america.png",
+      "imageAsset": "assets/Common/World Map/north america.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -4628,7 +4631,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_world_map",
-  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/North American States.png",
-  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/North American States.png"
+  "parentBoardId": "prebuilt_world_map"
 }

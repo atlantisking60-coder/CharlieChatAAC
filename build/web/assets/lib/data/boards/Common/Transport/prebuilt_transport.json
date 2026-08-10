@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 19,
   "tier": 1,
+  "iconAssetPath": "assets/Common/Transport/bus.png",
+  "tileIconAssetPath": "assets/BOARDS/Transport.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -667,7 +670,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Transport.png",
-  "tileIconAssetPath": "assets/BOARDS/Transport.png"
+  ]
 }

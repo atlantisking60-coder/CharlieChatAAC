@@ -1,0 +1,66 @@
+2d
+triangle equilateral
+triangle isosceles
+triangle scalene
+triangle acute
+triangle obtuse
+triangle right-angled
+square
+rectangle
+diamond
+rhombus
+trapezium
+parallelogram
+quadrilateral
+pentagon
+hexagon
+octagon
+nonagon
+decagon
+circle
+oval
+star
+crescent
+heart
+teardrop
+surface
+side
+corner
+straight
+curved
+diameter
+radius
+reflect
+rotate
+translate
+3d
+cube
+cuboid
+pyramid square base
+pyramid triangular base
+prism triangular
+prism hexagonal
+net
+cylinder
+sphere
+ellipsoid
+torus
+cone
+prism
+base
+face
+edge
+indices
+parallel
+pependicular
+intersecting
+regular
+irregular
+angle
+acute angle
+right angle
+obtuse angle
+reflex angle
+straight angle
+hollow
+solid

@@ -1,0 +1,63 @@
+addition
+subtraction
+multiplication
+division
+equals
+operation
+odd numbers
+add
+take away
+multiply
+divide
+left
+inverse
+even numbers
+plus
+minus
+times
+divided by
+remains
+array
+value
+and
+less
+product
+share
+solve
+order
+ones
+increase
+reduce
+groups of
+group
+more than
+partition
+tens
+more
+remain
+lots of
+divisible by
+less than
+regroup
+hundreds
+sum
+fewer
+doubled
+divide into
+digit
+figure
+thousands
+together
+difference
+times table
+each
+calculate
+estimate
+positive
+total
+take
+multiplied by
+share equally
+angle
+decimal
+negative

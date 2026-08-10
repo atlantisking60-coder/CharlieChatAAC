@@ -1,11 +1,8 @@
-Blank Levels - Word List
-============================
-
 blank levels
-bl1
-bl2
-bl3
-bl4
+blank1
+blank2
+blank3
+blank4
 question
 blank level 1
 blank level 2

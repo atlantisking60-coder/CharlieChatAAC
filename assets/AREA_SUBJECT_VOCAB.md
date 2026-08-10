@@ -21,11 +21,11 @@
 | 11 | English                       |
 | 12 | Maths                         |
 | 13 | Science                       |
-| 14 | T.F.L. / I.T.                 |
+| 14 | TFL / IT                 |
 | 15 | Personal Development          |
-| 16 | P.E.E.P.                      |
-| 17 | E.P.I.C.                      |
-| 18 | P.E.                          |
+| 16 | PEEP                      |
+| 17 | EPIC                      |
+| 18 | PE                          |
 | 19 | Art                           |
 | 20 | Performing Arts               |
 | 21 | Sustainability                |
@@ -116,7 +116,7 @@
 - Musical Genres
 - Musical Instruments
 
-### P.E.E.P. > Sub-boards
+### PEEP > Sub-boards
 
 - Ancient Greece
 - Places and People (Anglo-Saxons)
@@ -169,7 +169,7 @@
 - People
 - Victorians
 
-### P.E. > Sub-boards
+### PE > Sub-boards
 
 - Adventure and Extreme Sports
 - Creativity and Brainpower
@@ -177,8 +177,8 @@
 - Individual Sports
 - Leisure Sports
 - Outdoors
-- P.E. Games
-- P.E. Keywords
+- PE Games
+- PE Keywords
 - Relaxation
 - Sports Day Events
 - Team Sports
@@ -304,7 +304,7 @@
 - Nutrition
 - Universe
 
-### T.F.L. / I.T. > Sub-boards
+### TFL / IT > Sub-boards
 
 - Company Logos
 - Programs
@@ -355,10 +355,10 @@ Placement within a main folder needs to be confirmed.
 ## Notes
 
 - `Subject Vocabulary` is the general/root board for the area.
-- `P.E.E.P.` covers History, Geography, and cross-curricular topics.
+- `PEEP` covers History, Geography, and cross-curricular topics.
 - `Science` covers Entry Level, KS3, and GCSE content areas.
 - `Option A / B / C` are placeholder boards for timetable options.
 - `S.T.E.M.` is a new main folder (previously not in hierarchy).
 - `Living Life Skills` and `Prepare For Adulthood` are separate main folders.
-- `P.E.E.P. > Continent Maps` contains all continent and location boards.
+- `PEEP > Continent Maps` contains all continent and location boards.
 - `Horticulture > Flowers` combines the boards previously called 1, 2, 3 and 4.

@@ -5,12 +5,15 @@
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": true,
-  "isSubBoard": false,
-  "isTertiaryBoard": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 3,
   "tier": 3,
+  "iconAssetPath": "assets/Common/Places/Rooms and Home/Food Equipment/oven.png",
+  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Food Equipment.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -938,6 +941,5 @@
       "customVoice": ""
     }
   ],
-  "iconAssetPath": "assets/BOARDS/Cooking and Food/Food Equipment.png",
-  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Food Equipment.png"
+  "parentBoardId": "prebuilt_rooms_and_home"
 }

@@ -5,12 +5,15 @@
   "columns": 5,
   "backgroundColor": "transparent",
   "adjustableLayout": true,
-  "isSubBoard": false,
-  "isTertiaryBoard": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 2,
   "tier": 3,
+  "iconAssetPath": "assets/Common/Places/Rooms and Home/Home Management/appliance.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Year 8/Electricity.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -740,6 +743,5 @@
       "customVoice": ""
     }
   ],
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_rooms_and_home"
 }

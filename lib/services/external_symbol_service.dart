@@ -568,7 +568,7 @@ class ExternalSymbolService {
     'sport': ['play', 'ball', 'game', 'exercise'],
     'game': ['play', 'fun', 'sport'],
     'exercise': ['workout', 'play', 'sport'],
-    'p.e.': ['sport', 'exercise', 'gym'],
+    'PE': ['sport', 'exercise', 'gym'],
     'assembly': ['school', 'gathering'],
     'playground': ['play', 'outside', 'recess'],
     'recess': ['playground', 'break', 'play'],
@@ -666,13 +666,20 @@ class ExternalSymbolService {
     'too': ['also', 'very', 'also'],
   };
 
-  /// Returns a list of alternate queries to also search, derived from synonyms.
+  /// Returns a list of alternate queries to also search, derived from synonyms
+  /// and from searching each non-trivial word individually.
   List<String> expandedQueries(String query) {
     final lower = query.toLowerCase().trim();
     if (lower.isEmpty) return const [];
     final words = lower.split(RegExp(r'\s+'))
         .where((s) => s.isNotEmpty && s != 'the').toList();
     final alts = <String>{};
+
+    // Also search each word on its own, e.g. "world braille" -> "braille"
+    for (final w in words) {
+      if (w.length > 2) alts.add(w);
+    }
+
     for (var i = 0; i < words.length; i++) {
       final synonyms = _querySynonyms[words[i]];
       if (synonyms != null) {
@@ -925,12 +932,25 @@ class ExternalSymbolService {
   }
 
   Future<List<ExternalSymbol>> searchAll(String query, {int limit = 30, List<String>? preferredSets, List<String>? priorityPaths}) async {
-    final cleanQuery = query.toLowerCase()
-        .split(RegExp(r'\s+'))
-        .where((w) => w != 'the' && w.isNotEmpty)
-        .join(' ');
+    const stopWords = {'the', 'a', 'an', 'of', 'and', '&', 'to', 'in', 'on', 'for', 'with', 'is', 'it', 'at', 'by'};
+    final rawWords = query.toLowerCase().trim().split(RegExp(r'\s+')).where((s) => s.isNotEmpty).toList();
+
+    // Strip a trailing 'day' from holiday names like "Popcorn Day" or "World Braille Day"
+    final endsWithDay = rawWords.isNotEmpty && rawWords.last == 'day';
+    final meaningfulWords = rawWords
+        .take(endsWithDay ? rawWords.length - 1 : rawWords.length)
+        .map((s) => s.replaceAll(RegExp(r"[^a-z0-9']"), ''))
+        .where((s) => s.isNotEmpty && !stopWords.contains(s))
+        .toList();
+
+    final cleanQuery = meaningfulWords.join(' ');
+    // For "X Day" tiles the important word is the one before "day"
+    // (e.g. "Popcorn Day" -> "Popcorn", "World Braille Day" -> "Braille").
+    final lastMeaningful = meaningfulWords.isNotEmpty ? meaningfulWords.last : '';
+    final searchTerms = endsWithDay && lastMeaningful.isNotEmpty ? lastMeaningful : cleanQuery;
+
     if (cleanQuery.isEmpty && query.trim().isNotEmpty) {
-      // If query was ONLY "the", don't return everything, but maybe return nothing
+      // If query was ONLY stop words/day, don't return everything
       return [];
     }
     if (query.trim().isEmpty) return [];
@@ -938,13 +958,12 @@ class ExternalSymbolService {
     final results = <ExternalSymbol>[];
 
     // Search local assets first so they appear at the top of combined results
-    final assetResults = await searchAssets(cleanQuery.isEmpty ? query : cleanQuery, limit: limit, preferredSets: preferredSets, priorityPaths: priorityPaths);
+    final assetResults = await searchAssets(searchTerms.isEmpty ? cleanQuery : searchTerms, limit: limit, preferredSets: preferredSets, priorityPaths: priorityPaths);
     results.addAll(assetResults);
 
     // Search all available external APIs in parallel, including synonym-expanded queries
-    final searchTerms = cleanQuery.isEmpty ? query : cleanQuery;
-    final alts = expandedQueries(searchTerms);
-    final queries = [searchTerms, ...alts];
+    final alts = expandedQueries(cleanQuery);
+    final queries = <String>{searchTerms, if (cleanQuery != searchTerms) cleanQuery, ...alts}.where((q) => q.isNotEmpty).toList();
     try {
       final futures = <Future<List<ExternalSymbol>>>[];
       for (final q in queries) {

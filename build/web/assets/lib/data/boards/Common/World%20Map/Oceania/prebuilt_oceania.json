@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
+  "iconAssetPath": null,
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Oceania.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -30,7 +33,7 @@
       "linkedBoardId": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
-      "bgColor": "transparent",
+      "bgColor": "#BBDEFB",
       "textColor": "#000000",
       "tileSize": 1,
       "colSpan": 1,
@@ -59,8 +62,8 @@
       "id": "prebuilt_oceania_northern_mariana_island",
       "type": "vocabulary",
       "label": "northern mariana island",
-      "category": "Custom",
-      "imageAsset": "https://d18vdu4p71yql0.cloudfront.net/libraries/twemoji/1f1f2-1f1f5.svg",
+      "category": "Assets",
+      "imageAsset": "assets/symbols/Custom/scaled_northern mariana island.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -1074,7 +1077,7 @@
       "linkedBoardId": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
-      "bgColor": "transparent",
+      "bgColor": "#BBDEFB",
       "textColor": "#000000",
       "tileSize": 1,
       "colSpan": 1,
@@ -1218,7 +1221,7 @@
       "linkedBoardId": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
-      "bgColor": "transparent",
+      "bgColor": "#BBDEFB",
       "textColor": "#000000",
       "tileSize": 1,
       "colSpan": 1,
@@ -1460,7 +1463,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_world_map",
-  "iconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Oceania.png",
-  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Oceania.png"
+  "parentBoardId": "prebuilt_world_map"
 }

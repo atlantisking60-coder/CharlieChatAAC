@@ -185,8 +185,16 @@ class BoardService {
   String? _currentProfileId;
   bool _isAdmin = false;
 
+  /// Cached mapping of prebuilt board id to canonical asset bundle JSON path.
+  /// Avoids repeatedly loading and scanning the full asset manifest.
+  Map<String, String>? _boardAssetPathCache;
+
+  /// Tracks whether the local web dev server (localhost:8787) is reachable.
+  /// null = untested, true = reachable, false = unreachable.
+  bool? _devServerAvailable;
+
   // Bump this to force every prebuilt board to be reloaded from source JSON.
-  static const int _kPrebuiltBoardsSchemaVersion = 2;
+  static const int _kPrebuiltBoardsSchemaVersion = 4;
 
   BoardService._();
 
@@ -382,7 +390,15 @@ class BoardService {
     // Ensure prebuilt boards are loaded from JSON assets into storage.
     // Runs on ALL platforms so web and native present identically.
     await _ensurePrebuiltBoards();
-    await _ensureProjectBoardsFromAssets();
+
+    // Load only the Common area top-level tabs + Common Words for immediate login.
+    // The remaining boards are hydrated in the background after the user is in.
+    final startupIds = _startupBoardIds;
+    final allIds = prebuiltBoardNames.map((n) => prebuiltBoardId(n)).toSet();
+    final remainingIds = allIds.difference(startupIds);
+    await _ensureProjectBoardsFromAssets(onlyIds: startupIds);
+    unawaited(_ensureProjectBoardsFromAssets(onlyIds: remainingIds));
+
     await fixSignBoards();
     await fixStaleBoardLinks();
     await _removeDuplicateNameBoards();
@@ -706,9 +722,29 @@ class BoardService {
       }
       final hasDiskJson = diskJsonFile != null;
       
-      // If board exists AND has images AND no disk JSON override, skip reload
+      // If board exists AND has images AND no disk JSON override, check whether
+      // the source JSON icons or version have changed before skipping reload.
       // EXCEPTION: Always ensure 'Disney Stories' board is checked (to allow population)
-      if (exists && hasImages && !hasDiskJson && name != 'Disney Stories') return;
+      if (exists && hasImages && !hasDiskJson && name != 'Disney Stories') {
+        final raw = _prefs!.getString(key);
+        Board? cached;
+        if (raw != null && raw.isNotEmpty) {
+          try {
+            cached = _boardFromJson(json.decode(raw) as Map<String, dynamic>, includeTiles: false);
+          } catch (_) {}
+        }
+        final assetMeta = await _loadBoardFromAssets(id, name, includeTiles: false);
+        if (cached != null && assetMeta != null) {
+          final iconMissing = (cached.iconAssetPath == null || cached.iconAssetPath!.isEmpty) &&
+              (assetMeta.iconAssetPath != null && assetMeta.iconAssetPath!.isNotEmpty);
+          final tileIconMissing = (cached.tileIconAssetPath == null || cached.tileIconAssetPath!.isEmpty) &&
+              (assetMeta.tileIconAssetPath != null && assetMeta.tileIconAssetPath!.isNotEmpty);
+          final versionChanged = assetMeta.version > cached.version;
+          if (!iconMissing && !tileIconMissing && !versionChanged) return;
+        } else if (cached == null) {
+          return;
+        }
+      }
 
       // Board is missing, has no images, or disk JSON is newer — reload from source
       if (exists && !hasImages) {
@@ -719,18 +755,21 @@ class BoardService {
 
       // 1. Try to load from canonical lib/data/boards/[Area] JSON source (Dev Mode)
       // On Web, we fetch from the local dev server.
-      if (kIsWeb && Uri.base.host == 'localhost') {
+      if (kIsWeb && _devServerAvailable != false && Uri.base.host == 'localhost') {
         try {
           final area = _areaForBoardName(name);
           final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
           final response = await http.get(uri).timeout(const Duration(seconds: 2));
+          _devServerAvailable = true;
           if (response.statusCode == 200) {
              final board = _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
-             await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: false);
+             await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: true);
              _boardCache[board.id] = board;
              return;
           }
-        } catch (_) {}
+        } catch (_) {
+          _devServerAvailable = false;
+        }
       }
 
       // On native dev mode, prefer the on-disk JSON over cached storage unless
@@ -2522,7 +2561,7 @@ class BoardService {
 
     final lessons = [
       'breaktime', 'lunchtime', 'tutor time', 'english', 'maths', 'science',
-      'T.F.L', 'personal development', 'peep', 'epic', 'p.e.', 'art',
+      'TFL', 'personal development', 'peep', 'epic', 'PE', 'art',
       'performing arts', 'sustainability', 'cooking', 'resistant materials',
       'textiles', 'religion and worldviews', 'music', 'horticulture', 'retail',
       'photography', 'information technology', 'construction', 'engineering',
@@ -2580,63 +2619,9 @@ class BoardService {
   }
 
   Future<List<Board>> listBoards({String? area, bool includeTiles = true}) async {
-    if (!kIsWeb && _projectRoot != null) {
-      final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
-      if (await root.exists()) {
-        final boardsById = <String, Board>{};
-        final modifiedById = <String, DateTime>{};
-        await for (final entity in root.list(recursive: true)) {
-          if (entity is! File || p.extension(entity.path).toLowerCase() != '.json') continue;
-          try {
-            final modified = await entity.lastModified();
-            final board = _boardFromJson(
-              json.decode(await entity.readAsString()) as Map<String, dynamic>,
-              includeTiles: includeTiles,
-            );
-            final previousModified = modifiedById[board.id];
-            if (previousModified == null || modified.isAfter(previousModified)) {
-              boardsById[board.id] = board;
-              modifiedById[board.id] = modified;
-            }
-          } catch (e) {
-            debugPrint('listBoards: failed to load ${entity.path}: $e');
-          }
-        }
-        // Overlay any per-profile saved boards so non-admin users see their own
-        // edits without changing the source project files.
-        if (_dataDir != null) {
-          final key = _getBoardKey('');
-          final userFiles = _dataDir!.listSync().whereType<File>().where((f) => p.basename(f.path).startsWith(key));
-          for (final f in userFiles) {
-            try {
-              final m = json.decode(await f.readAsString()) as Map<String, dynamic>;
-              final board = Board.fromMap(m, includeTiles: includeTiles);
-              boardsById[board.id] = board;
-            } catch (e) {
-              debugPrint('listBoards: failed to load user board ${f.path}: $e');
-            }
-          }
-        }
-        if (boardsById.isNotEmpty) {
-          return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
-        }
-      }
-      // Fallback to old assets/boards path for backward compatibility
-      final projectBoardsDir = Directory('$_projectRoot/assets/boards');
-      if (await projectBoardsDir.exists()) {
-        final files = projectBoardsDir.listSync().whereType<File>().toList();
-        final boards = <Board>[];
-        for (var f in files) {
-          try {
-            final m = json.decode(await f.readAsString()) as Map<String, dynamic>;
-            boards.add(Board.fromMap(m, includeTiles: includeTiles));
-          } catch (e) {
-            debugPrint('listBoards: failed to load fallback ${f.path}: $e');
-          }
-        }
-        if (boards.isNotEmpty) return _areaFilter(_sortBoards(boards), area);
-      }
-    }
+    // Project-source scanning has been removed from the list path. Boards are
+    // hydrated into app storage during init, so listBoards now reads from
+    // storage only and is O(stored boards) instead of O(all project files).
 
     final currentPrefix = _getBoardKey('');
     const defaultPrefix = 'board_default_';
@@ -2703,7 +2688,38 @@ class BoardService {
           );
         }
       }
-      
+
+    // Pre-fetch tab/tile icon metadata for prebuilt placeholders so tab
+    // icons appear as soon as an area loads, including child sub-boards.
+    if (kIsWeb) {
+      final iconFutures = <Future<void>>[];
+      for (final board in boardsById.values) {
+        if (board.id.startsWith('prebuilt_')) {
+          if (area != null && _areaForBoardName(board.name) != area) continue;
+          iconFutures.add(
+            _loadBoardFromAssets(board.id, board.name, includeTiles: false)
+                .then((asset) {
+                  if (asset == null) return;
+                  if (board.iconAssetPath == null || board.iconAssetPath!.isEmpty) {
+                    board.iconAssetPath = asset.iconAssetPath;
+                  }
+                  if (board.tileIconAssetPath == null || board.tileIconAssetPath!.isEmpty) {
+                    board.tileIconAssetPath = asset.tileIconAssetPath;
+                  }
+                })
+                .catchError((_) {}),
+          );
+        }
+      }
+      await Future.wait(iconFutures);
+    }
+
+      // Drop prebuilt boards that are no longer in the hierarchy so stale
+      // localStorage entries (e.g. renamed or removed boards) don't show.
+      if (runtimeBoardHierarchy.isNotEmpty) {
+        boardsById.removeWhere((id, b) => b.id.startsWith('prebuilt_') && !isInBoardHierarchy(b.name));
+      }
+
       return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
     } else {
       final boardsById = <String, Board>{};
@@ -2850,10 +2866,33 @@ class BoardService {
   /// This is the preferred call for lazy board loading.
   Future<Board?> getBoard(String id) async {
     final cached = _boardCache[id];
-    if (cached != null) return cached;
-    final board = await loadBoard(id);
-    if (board != null) _boardCache[id] = board;
+    Board? board;
+    if (cached != null) {
+      board = cached;
+    } else {
+      board = await loadBoard(id);
+      if (board != null) _boardCache[id] = board;
+    }
+    if (board != null) await _ensureBoardIcons(board);
     return board;
+  }
+
+  /// If a prebuilt board is missing its tab or tile icon, fill it from the
+  /// canonical asset JSON so the editor and tabs show the correct icon.
+  Future<void> _ensureBoardIcons(Board board) async {
+    if (!board.id.startsWith('prebuilt_')) return;
+    if ((board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) &&
+        (board.tileIconAssetPath != null && board.tileIconAssetPath!.isNotEmpty)) {
+      return;
+    }
+    final asset = await _loadBoardFromAssets(board.id, board.name, includeTiles: false);
+    if (asset == null) return;
+    if (board.iconAssetPath == null || board.iconAssetPath!.isEmpty) {
+      board.iconAssetPath = asset.iconAssetPath;
+    }
+    if (board.tileIconAssetPath == null || board.tileIconAssetPath!.isEmpty) {
+      board.tileIconAssetPath = asset.tileIconAssetPath;
+    }
   }
 
   /// Persist just the board's sortOrder without re-writing the full board JSON.
@@ -3037,6 +3076,7 @@ class BoardService {
 
   Future<void> _writeBoard(Board board, {bool mirrorToDisk = true, bool cacheInWebStorage = true}) async {
     _normalizePersistentIds(board);
+    await _ensureBoardIcons(board);
     final boardJson = _boardToJson(board);
 
     if (!kIsWeb && _projectRoot != null && mirrorToDisk) {
@@ -3386,13 +3426,6 @@ class BoardService {
     return '$area/${_boardFolderName(board.name)}';
   }
 
-  String? _hierarchyNameForId(String id) {
-    for (final e in runtimeBoardHierarchy) {
-      if (prebuiltBoardId(e.name) == id) return e.name;
-    }
-    return null;
-  }
-
   String _hierarchyRelativePath(String name) {
     final parent = hierarchyParent(name);
     if (parent == null) {
@@ -3555,11 +3588,11 @@ class BoardService {
       'English',
       'Maths',
       'Science',
-      'T.F.L. / I.T.',
-      'P.D.',
-      'P.E.E.P.',
-      'E.P.I.C.',
-      'P.E.',
+      'TFL / IT',
+      'PD',
+      'PEEP',
+      'EPIC',
+      'PE',
       'Art',
       'Performing Arts',
       'Sustainability',
@@ -3591,7 +3624,7 @@ class BoardService {
       
       // Try to find a matching icon in Subjects folder
       String imagePath = '';
-      if (label == 'T.F.L. / I.T.') {
+      if (label == 'TFL / IT') {
           imagePath = 'assets/symbols/Subjects/Information Technology.png';
       } else {
           imagePath = 'assets/symbols/Subjects/${_toTitleCase(label)}.png';
@@ -3802,70 +3835,49 @@ class BoardService {
     return 'Common';
   }
 
+  /// Cached mapping of prebuilt board id to its canonical asset bundle JSON path.
+  /// This avoids repeatedly loading and scanning the full asset manifest.
+  Future<void> _ensureBoardAssetPathCache() async {
+    if (_boardAssetPathCache != null) return;
+    _boardAssetPathCache = {};
+    try {
+      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      final allAssets = manifest.listAssets();
+      final cache = <String, String>{};
+      for (final original in allAssets) {
+        final path = original.startsWith('assets/') ? original.substring(7) : original;
+        if (!path.endsWith('.json') || !path.startsWith('lib/data/boards/')) continue;
+        final fileName = p.basename(path);
+        if (fileName.length <= 5) continue;
+        final boardId = fileName.substring(0, fileName.length - 5);
+        if (cache.containsKey(boardId)) continue;
+        cache[boardId] = original;
+      }
+      _boardAssetPathCache = cache;
+    } catch (_) {}
+  }
+
   Future<Board?> _loadBoardFromAssets(String id, String name, {bool includeTiles = true}) async {
     final area = _areaForBoardName(name);
 
     // In live web preview, prefer the dev server copy so edits made in the
     // preview persist over the compiled asset bundle.
-    if (kIsWeb && Uri.base.host == 'localhost') {
+    if (kIsWeb && _devServerAvailable != false && Uri.base.host == 'localhost') {
       try {
         final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
         final response = await http.get(uri).timeout(const Duration(seconds: 2));
+        _devServerAvailable = true;
         if (response.statusCode == 200) {
           return _boardFromJson(json.decode(response.body) as Map<String, dynamic>, includeTiles: includeTiles);
         }
-      } catch (_) {}
+      } catch (_) {
+        _devServerAvailable = false;
+      }
     }
 
-    // Find the canonical asset key for this board in the manifest.
-    // On the web the manifest keys are prefixed with 'assets/' and may be
-    // URL-encoded, so we decode and compare but keep the original key for the
-    // actual load.
-    String? originalAsset;
-    try {
-      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-      final allAssets = manifest.listAssets();
-
-      String fullyDecode(String p) {
-        while (p.contains('%')) {
-          try {
-            final next = Uri.decodeComponent(p);
-            if (next == p) break;
-            p = next;
-          } catch (_) {
-            break;
-          }
-        }
-        return p;
-      }
-
-      String normalize(String p) {
-        final stripped = p.startsWith('assets/') ? p.substring(7) : p;
-        return fullyDecode(stripped);
-      }
-
-      final areaPrefix = 'lib/data/boards/$area/';
-      final boardsPrefix = 'lib/data/boards/';
-      for (var i = 0; i < allAssets.length; i++) {
-        final original = allAssets[i];
-        final np = normalize(original);
-        if (np.startsWith(areaPrefix) && np.endsWith('/$id.json')) {
-          originalAsset = original;
-          break;
-        }
-      }
-
-      if (originalAsset == null) {
-        for (var i = 0; i < allAssets.length; i++) {
-          final original = allAssets[i];
-          final np = normalize(original);
-          if (np.startsWith(boardsPrefix) && np.endsWith('/$id.json')) {
-            originalAsset = original;
-            break;
-          }
-        }
-      }
-    } catch (_) {}
+    // Find the canonical asset key for this board in the cache.
+    await _ensureBoardAssetPathCache();
+    final originalAsset = _boardAssetPathCache![id];
 
     // Built-in prebuilt boards that are not in the asset bundle have no
     // backing JSON; skip them instead of generating 404s.
@@ -3888,59 +3900,70 @@ class BoardService {
     return null;
   }
 
+  /// IDs of the boards that must be ready immediately after login:
+  /// the top-level tabs of the Common area (which includes Common Words).
+  Set<String> get _startupBoardIds =>
+      hierarchyTopLevel('Common').map(prebuiltBoardId).toSet();
+
   /// In the web preview, the dev save server persists board JSONs to the
   /// project source tree. On startup, if the browser's local storage has been
   /// cleared (or is empty for a fresh preview), this loads any board JSONs
   /// from the asset bundle back into local storage so the user's previous
   /// edits remain visible.
-  Future<void> _ensureProjectBoardsFromAssets() async {
+  ///
+  /// If [onlyIds] is provided, only those board ids are hydrated. This keeps
+  /// login fast by loading the Common area tabs first and deferring the rest.
+  Future<void> _ensureProjectBoardsFromAssets({Set<String>? onlyIds}) async {
     // On web, do not bulk-cache prebuilt boards in localStorage; load on demand.
     if (kIsWeb) return;
     try {
-      // In native dev mode, read directly from disk JSON files so edits
-      // take effect immediately on next launch without a full rebuild.
+      // In native dev mode, load specific boards by their canonical on-disk
+      // path instead of recursively scanning the whole lib/data/boards tree
+      // (which is very slow on Windows with hundreds of JSON files).
       if (!kIsWeb && _projectRoot != null) {
-        final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
-        if (await root.exists()) {
-          await for (final entity in root.list(recursive: true)) {
-            if (entity is! File || !entity.path.endsWith('.json')) continue;
-            try {
-              final raw = await entity.readAsString();
-              final assetBoard = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
-              if (_deletedBoardIds.contains(assetBoard.id)) continue;
-              final storedBoard = await loadBoard(assetBoard.id);
-              if (storedBoard == null) {
-                await _writeBoard(assetBoard, mirrorToDisk: false);
-              } else if (assetBoard.tiles.length >= storedBoard.tiles.length) {
-                // Prefer on-disk JSON when it has the same or more tiles,
-                // but preserve user-added tiles if the source is empty/stale.
-                await _writeBoard(assetBoard, mirrorToDisk: false);
-              } else if (assetBoard.area != storedBoard.area ||
-                         assetBoard.parentBoardId != storedBoard.parentBoardId) {
-                // Source location/parent has changed; keep the user's tiles but
-                // adopt the new area and parent from disk.
-                assetBoard.tiles = storedBoard.tiles;
-                assetBoard.rows = storedBoard.rows;
-                assetBoard.columns = storedBoard.columns;
-                assetBoard.adjustableLayout = storedBoard.adjustableLayout;
-                assetBoard.boxScale = storedBoard.boxScale;
-                assetBoard.tileHeight = storedBoard.tileHeight;
-                assetBoard.tileWidth = storedBoard.tileWidth;
-                assetBoard.backgroundColor = storedBoard.backgroundColor;
-                await _writeBoard(assetBoard, mirrorToDisk: false);
-              }
-            } catch (e) {
-              debugPrint('Error loading project board from disk ${entity.path}: $e');
+        final ids = onlyIds ?? prebuiltBoardNames.map((n) => prebuiltBoardId(n)).toSet();
+        for (final id in ids) {
+          final file = await _findProjectJsonFile(id);
+          if (file == null) continue;
+          try {
+            final raw = await file.readAsString();
+            final assetBoard = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+            if (_deletedBoardIds.contains(assetBoard.id)) continue;
+            final storedBoard = await loadBoard(assetBoard.id);
+            if (storedBoard == null) {
+              await _writeBoard(assetBoard, mirrorToDisk: false);
+            } else if (assetBoard.tiles.length >= storedBoard.tiles.length) {
+              // Prefer on-disk JSON when it has the same or more tiles,
+              // but preserve user-added tiles if the source is empty/stale.
+              await _writeBoard(assetBoard, mirrorToDisk: false);
+            } else if (assetBoard.area != storedBoard.area ||
+                       assetBoard.parentBoardId != storedBoard.parentBoardId) {
+              // Source location/parent has changed; keep the user's tiles but
+              // adopt the new area and parent from disk.
+              assetBoard.tiles = storedBoard.tiles;
+              assetBoard.rows = storedBoard.rows;
+              assetBoard.columns = storedBoard.columns;
+              assetBoard.adjustableLayout = storedBoard.adjustableLayout;
+              assetBoard.boxScale = storedBoard.boxScale;
+              assetBoard.tileHeight = storedBoard.tileHeight;
+              assetBoard.tileWidth = storedBoard.tileWidth;
+              assetBoard.backgroundColor = storedBoard.backgroundColor;
+              await _writeBoard(assetBoard, mirrorToDisk: false);
             }
+          } catch (e) {
+            debugPrint('Error loading project board from disk ${file.path}: $e');
           }
         }
         return;
       }
 
-      // Fallback: use Flutter asset manifest (production mode / web)
-      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-      final assetList = manifest.listAssets();
-      for (final assetPath in assetList) {
+      // Fallback: use Flutter asset manifest (production mode)
+      await _ensureBoardAssetPathCache();
+      final assetList = _boardAssetPathCache!.entries;
+      for (final entry in assetList) {
+        final assetId = entry.key;
+        if (onlyIds != null && !onlyIds.contains(assetId)) continue;
+        final assetPath = entry.value;
         // Fix double-assets prefixing on some web platforms
         final path = assetPath.startsWith('assets/') ? assetPath.substring(7) : assetPath;
         if (!path.startsWith('lib/data/boards/') || !path.endsWith('.json')) continue;
@@ -3984,9 +4007,6 @@ class BoardService {
       debugPrint('Error loading project boards from assets: $e');
     }
   }
-
-  /// Check if a board's tiles have valid image files on disk.
-  /// Returns the fraction (0.0–1.0) of tiles with existing asset files.
   double _imageFileExistenceRatio(List<dynamic> tiles) {
     if (tiles.isEmpty) return 1.0;
     var valid = 0;
@@ -4003,26 +4023,45 @@ class BoardService {
     return valid / tiles.length;
   }
 
+  String? _hierarchyNameForId(String id) {
+    if (!id.startsWith('prebuilt_')) return null;
+    for (final e in runtimeBoardHierarchy) {
+      if (prebuiltBoardId(e.name) == id) return e.name;
+    }
+    return null;
+  }
+
+  List<String> _ancestorFolders(String name) {
+    final parents = <String>[];
+    var current = hierarchyParent(name);
+    while (current != null) {
+      parents.add(current);
+      current = hierarchyParent(current);
+    }
+    return parents.reversed.map(_boardFolderName).toList();
+  }
+
+  String? _directProjectJsonPath(String id) {
+    if (_projectRoot == null) return null;
+    final name = _hierarchyNameForId(id);
+    if (name == null) return null;
+    final entry = findHierarchyEntry(name);
+    if (entry == null) return null;
+    final parts = <String>[
+      _boardFolderName(entry.area),
+      ..._ancestorFolders(name),
+      _boardFolderName(name),
+    ];
+    return p.joinAll([_projectRoot!, 'lib', 'data', 'boards', ...parts, '$id.json']);
+  }
+
   Future<File?> _findProjectJsonFile(String id) async {
     if (kIsWeb || _projectRoot == null) return null;
-    final root = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
-    if (!await root.exists()) return null;
-    final matches = <File>[];
-    await for (final entity in root.list(recursive: true)) {
-      if (entity is File && p.basename(entity.path) == '$id.json') {
-        matches.add(entity);
-      }
-    }
-    if (matches.isEmpty) return null;
-    matches.sort((a, b) {
-      final aHas = a.path.contains(' (Montessori)');
-      final bHas = b.path.contains(' (Montessori)');
-      if (aHas && !bHas) return -1;
-      if (!aHas && bHas) return 1;
-      // Prefer deeper canonical paths.
-      return b.path.split(p.separator).length.compareTo(a.path.split(p.separator).length);
-    });
-    return matches.first;
+    final directPath = _directProjectJsonPath(id);
+    if (directPath == null) return null;
+    final f = File(directPath);
+    if (await f.exists()) return f;
+    return null;
   }
 
   String _boardFolderName(String name) {
@@ -4168,6 +4207,8 @@ class BoardService {
       sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
       tier: tier,
       version: (json['version'] as num?)?.toInt() ?? 0,
+      iconAssetPath: json['iconAssetPath'] as String?,
+      tileIconAssetPath: json['tileIconAssetPath'] as String?,
     );
   }
 

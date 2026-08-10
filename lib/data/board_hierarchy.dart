@@ -315,10 +315,10 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Mental and Social Health', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Nutrition', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Universe', 'Subject Vocab', 'Science'),
-  BoardHierarchyEntry('T.F.L. / I.T.', 'Subject Vocab'),
-  BoardHierarchyEntry('Company Logos', 'Subject Vocab', 'T.F.L. / I.T.'),
-  BoardHierarchyEntry('Programs', 'Subject Vocab', 'T.F.L. / I.T.'),
-  BoardHierarchyEntry('TFL Equipment', 'Subject Vocab', 'T.F.L. / I.T.'),
+  BoardHierarchyEntry('TFL / IT', 'Subject Vocab'),
+  BoardHierarchyEntry('Company Logos', 'Subject Vocab', 'TFL / IT'),
+  BoardHierarchyEntry('Programs', 'Subject Vocab', 'TFL / IT'),
+  BoardHierarchyEntry('TFL Equipment', 'Subject Vocab', 'TFL / IT'),
   BoardHierarchyEntry('Personal Development', 'Subject Vocab'),
   BoardHierarchyEntry('Being Responsible', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Diversity', 'Subject Vocab', 'Personal Development'),
@@ -334,22 +334,22 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Sun Safety', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Digital Literacy', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Media and Social Media', 'Subject Vocab', 'Personal Development'),
-  BoardHierarchyEntry('P.E.E.P.', 'Subject Vocab'),
-  BoardHierarchyEntry('E.P.I.C.', 'Subject Vocab'),
-  BoardHierarchyEntry('P.E.', 'Subject Vocab'),
-  BoardHierarchyEntry('Adventure and Extreme Sports', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Creativity and Brainpower', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Gym Equipment', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Individual Sports', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Leisure Sports', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Outdoors', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('P.E. Games', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('P.E. Keywords', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Relaxation', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Sports Day Events', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Team Sports', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Technology', 'Subject Vocab', 'P.E.'),
-  BoardHierarchyEntry('Water and Winter Sports', 'Subject Vocab', 'P.E.'),
+  BoardHierarchyEntry('PEEP', 'Subject Vocab'),
+  BoardHierarchyEntry('EPIC', 'Subject Vocab'),
+  BoardHierarchyEntry('PE', 'Subject Vocab'),
+  BoardHierarchyEntry('Adventure and Extreme Sports', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Creativity and Brainpower', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Gym Equipment', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Individual Sports', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Leisure Sports', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Outdoors', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('PE Games', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('PE Keywords', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Relaxation', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Sports Day Events', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Team Sports', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Technology', 'Subject Vocab', 'PE'),
+  BoardHierarchyEntry('Water and Winter Sports', 'Subject Vocab', 'PE'),
   BoardHierarchyEntry('Art', 'Subject Vocab'),
   BoardHierarchyEntry('7', 'Subject Vocab', 'Art'),
   BoardHierarchyEntry('8', 'Subject Vocab', 'Art'),
@@ -652,7 +652,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry("Xavier's Students", 'Legends', 'X-Men'),
   BoardHierarchyEntry('X-Men', 'Legends', 'Characters'),
   BoardHierarchyEntry('Characters', 'Legends', 'Legends'),
-  BoardHierarchyEntry('Real Life Heroes', 'Legends', 'Legends'),
+  BoardHierarchyEntry('Real People', 'Legends'),
   BoardHierarchyEntry('Legends', 'Legends'),
 
   // --- RECIPES AREA ---
@@ -1101,7 +1101,7 @@ String _hierarchyBoardId(String name) {
 
   if (name.toLowerCase() == 'a-z of sign') {
 
-    return 'prebuilt_a_to_z_of_sign';
+    return 'prebuilt_a-z_of_sign';
 
   }
 

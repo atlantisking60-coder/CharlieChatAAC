@@ -1093,23 +1093,23 @@
       "parentName": "Science"
     },
     {
-      "name": "T.F.L. / I.T.",
+      "name": "TFL / IT",
       "area": "Subject Vocab"
     },
     {
       "name": "Company Logos",
       "area": "Subject Vocab",
-      "parentName": "T.F.L. / I.T."
+      "parentName": "TFL / IT"
     },
     {
       "name": "Programs",
       "area": "Subject Vocab",
-      "parentName": "T.F.L. / I.T."
+      "parentName": "TFL / IT"
     },
     {
       "name": "TFL Equipment",
       "area": "Subject Vocab",
-      "parentName": "T.F.L. / I.T."
+      "parentName": "TFL / IT"
     },
     {
       "name": "Personal Development",
@@ -1186,81 +1186,81 @@
       "parentName": "Personal Development"
     },
     {
-      "name": "P.E.E.P.",
+      "name": "PEEP",
       "area": "Subject Vocab"
     },
     {
-      "name": "E.P.I.C.",
+      "name": "EPIC",
       "area": "Subject Vocab"
     },
     {
-      "name": "P.E.",
+      "name": "PE",
       "area": "Subject Vocab"
     },
     {
       "name": "Adventure and Extreme Sports",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Creativity and Brainpower",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Gym Equipment",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Individual Sports",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Leisure Sports",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Outdoors",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
-      "name": "P.E. Games",
+      "name": "PE Games",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
-      "name": "P.E. Keywords",
+      "name": "PE Keywords",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Relaxation",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Sports Day Events",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Team Sports",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Technology",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Water and Winter Sports",
       "area": "Subject Vocab",
-      "parentName": "P.E."
+      "parentName": "PE"
     },
     {
       "name": "Art",
@@ -2711,9 +2711,8 @@
       "parentName": "Legends"
     },
     {
-      "name": "Real Life Heroes",
-      "area": "Legends",
-      "parentName": "Legends"
+      "name": "Real People",
+      "area": "Legends"
     },
     {
       "name": "Legends",
@@ -3004,6 +3003,76 @@
     {
       "name": "Habitats (2)",
       "area": "Common"
+    },
+    {
+      "name": "Information Technology",
+      "area": "Unassigned",
+      "parentName": "TFL / IT"
+    },
+    {
+      "name": "TFL - Year 9",
+      "area": "Unassigned",
+      "parentName": "TFL / IT"
+    },
+    {
+      "name": "TFL - Year 8",
+      "area": "Unassigned",
+      "parentName": "TFL / IT"
+    },
+    {
+      "name": "TFL - Year 7",
+      "area": "Unassigned",
+      "parentName": "TFL / IT"
+    },
+    {
+      "name": "TFL Careers",
+      "area": "Unassigned",
+      "parentName": "TFL / IT"
+    },
+    {
+      "name": "Keeping Safe",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Jobs, Careers, Aspirations",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Tutor Transition",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Drugs",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Alcohol Awareness",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Passport",
+      "area": "Unassigned",
+      "parentName": "Personal Development"
+    },
+    {
+      "name": "Environment (Retail)",
+      "area": "Subject Vocab",
+      "parentName": "Retail"
+    },
+    {
+      "name": "Staff (Retail)",
+      "area": "Unassigned",
+      "parentName": "Retail"
+    },
+    {
+      "name": "Legislation (Retail)",
+      "area": "Subject Vocab",
+      "parentName": "Retail"
     }
   ]
 }

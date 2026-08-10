@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_peep",
+  "name": "PEEP",
+  "area": "Subject Vocab",
+  "parentBoardId": null,
+  "sortOrder": 236,
+  "tier": 1,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/Subject Vocab/Lessons/PEEP.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Lessons/PEEP.png"
+}

@@ -14,6 +14,14 @@ typedef SymbolTapCallback = void Function(SymbolTile symbol);
 typedef SymbolFavoriteToggle = void Function(SymbolTile symbol);
 typedef SymbolAddCallback = void Function(int index);
 
+/// Flutter Web's Image.asset has trouble with assets whose paths contain
+/// spaces/parentheses. On the web we turn an `assets/...` path into an
+/// absolute URL that the dev server (or production host) can serve directly.
+String _webAssetUrl(String assetPath) {
+  if (!assetPath.startsWith('assets/')) return assetPath;
+  return Uri.base.resolve('assets/${Uri.encodeFull(assetPath)}').toString();
+}
+
 class SymbolGrid extends StatelessWidget {
   final List<SymbolTile> symbols;
   final Set<String> favoriteIds;
@@ -59,7 +67,7 @@ class SymbolGrid extends StatelessWidget {
       if (!asset.startsWith('assets/')) continue;
       if (asset.toLowerCase().endsWith('.svg')) continue;
       if (!_precachedImages.add(asset)) continue;
-      unawaited(precacheImage(AssetImage(asset), context));
+      unawaited(precacheImage(AssetImage(asset), context).catchError((_) {}));
     }
   }
 
@@ -179,13 +187,25 @@ class SymbolGrid extends StatelessWidget {
                 symbolImage = Image.network(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain);
               }
             } else if (imageAsset.startsWith('assets/')) {
-              if (imageAsset.toLowerCase().endsWith('.svg')) {
-                symbolImage = SvgPicture.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain);
+              if (kIsWeb) {
+                final url = _webAssetUrl(imageAsset);
+                if (imageAsset.toLowerCase().endsWith('.svg')) {
+                  symbolImage = SvgPicture.network(url, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) => Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol));
+                } else {
+                  symbolImage = Image.network(url, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
+                    if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
+                    return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
+                  });
+                }
               } else {
-                symbolImage = Image.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
-                  if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
-                  return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
-                });
+                if (imageAsset.toLowerCase().endsWith('.svg')) {
+                  symbolImage = SvgPicture.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain);
+                } else {
+                  symbolImage = Image.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
+                    if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
+                    return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
+                  });
+                }
               }
             } else if (imageAsset.isNotEmpty) {
               if (kIsWeb || imageAsset.startsWith('blob:') || imageAsset.startsWith('data:')) {
@@ -304,20 +324,14 @@ class SymbolGrid extends StatelessWidget {
   _GridLayout _gridLayoutFor(BuildContext context, BoxConstraints constraints, int tileCount) {
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
 
-    if (fixedColumns != null && fixedColumns! > 0) {
+    // When not adjustable, honour the board's fixed column count.
+    if (!adjustableLayout && fixedColumns != null && fixedColumns! > 0) {
       return _GridLayout(columns: fixedColumns!);
     }
 
-    // Use responsive layout if available, otherwise fall back to width calc
-    final responsive = AacLayoutProvider.maybeOf(context);
-    int columns;
-    if (responsive != null) {
-      // Scale by boxScale but respect fixed board columns if set
-      columns = (responsive.gridColumns * boxScale).round().clamp(1, 1000);
-    } else {
-      final targetTileExtent = (118.0 * boxScale).clamp(82.0, 180.0);
-      columns = (width / targetTileExtent).floor().clamp(1, 1000);
-    }
+    final targetTileExtent = (118.0 * boxScale).clamp(82.0, 180.0);
+    final maxColumns = (width / targetTileExtent).floor().clamp(1, 1000);
+    final columns = tileCount > 0 ? maxColumns.clamp(1, tileCount) : maxColumns;
 
     return _GridLayout(columns: columns);
   }

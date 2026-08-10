@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_office_and_other_helpful_people",
+  "name": "Office and Other Helpful People",
+  "area": "My School",
+  "parentBoardId": "prebuilt_people_at_school",
+  "sortOrder": 402,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/People.png",
+  "tileIconAssetPath": "assets/BOARDS/People.png"
+}

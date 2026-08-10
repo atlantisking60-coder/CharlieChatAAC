@@ -27,7 +27,8 @@ CORS_ORIGINS = [
 
 
 def _load_board_hierarchy():
-    """Parse the compiled Dart board hierarchy into a name -> (area, parent) map."""
+    """Build a name -> (area, parent) map from the compiled Dart list plus the
+    live runtime_hierarchy.json so new or moved boards get canonical paths."""
     hierarchy_path = ROOT / "lib" / "data" / "board_hierarchy.dart"
     pattern = re.compile(r"BoardHierarchyEntry\('([^']+)', '([^']+)'(?:, '([^']+)')?\)")
     result = {}
@@ -40,6 +41,18 @@ def _load_board_hierarchy():
                     result[name] = (area, parent)
     except Exception as e:
         print(f"Could not load board hierarchy: {e}")
+    # Merge live runtime hierarchy so the server can save newly-created boards.
+    try:
+        if HIERARCHY_FILE.exists():
+            data = json.loads(HIERARCHY_FILE.read_text(encoding="utf-8"))
+            for entry in data.get("entries", []):
+                name = entry.get("name")
+                area = entry.get("area")
+                parent = entry.get("parentName")
+                if name and area:
+                    result[name] = (area, parent)
+    except Exception as e:
+        print(f"Could not load runtime hierarchy for canonical paths: {e}")
     return result
 
 
@@ -219,13 +232,24 @@ class DevBoardHandler(BaseHTTPRequestHandler):
         if path == "/listBoards":
             try:
                 candidates = []
+                keep_fields = {
+                    "id", "name", "area", "parentBoardId", "linkedBoardId",
+                    "rows", "columns", "adjustableLayout", "boxScale",
+                    "tileHeight", "tileWidth", "backgroundColor",
+                    "isSubBoard", "isTertiaryBoard", "isQuaternaryBoard", "isQuinaryBoard",
+                    "sortOrder", "tier", "iconAssetPath", "tileIconAssetPath", "version",
+                }
                 if BOARDS_DIR.exists():
                     for root_dir, _, files in os.walk(BOARDS_DIR):
                         for f in files:
                             if f.lower().endswith(".json"):
                                 fp = Path(root_dir) / f
                                 try:
-                                    candidates.append((len(fp.parts), json.loads(fp.read_text(encoding="utf-8"))))
+                                    b = json.loads(fp.read_text(encoding="utf-8"))
+                                    # Keep only lightweight metadata; tiles are loaded on demand.
+                                    stripped = {k: v for k, v in b.items() if k in keep_fields}
+                                    stripped["tiles"] = []
+                                    candidates.append((len(fp.parts), stripped))
                                 except Exception:
                                     pass
                 # Deduplicate by id, keeping the deepest (canonical) path for each board.
@@ -282,14 +306,13 @@ class DevBoardHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 return self._send_json(500, {"error": str(e)})
 
-        # Fallback to static build files
+        # Fallback to static build files.
+        # Flutter's web build writes asset paths with percent-encoding, so only
+        # one URL decode is needed; repeated decoding would turn %20 into spaces.
         target = (path if path != "/" else "/index.html").lstrip("/")
         file_path = BUILD_WEB / target
-        while not (file_path.exists() and file_path.is_file()) and "%" in target:
-            unquoted = urllib.parse.unquote(target)
-            if unquoted == target:
-                break
-            target = unquoted
+        if not (file_path.exists() and file_path.is_file()) and "%" in target:
+            target = urllib.parse.unquote(target)
             file_path = BUILD_WEB / target
         if file_path.exists() and file_path.is_file():
             content_type = "text/html"

@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 2,
   "tier": 1,
+  "iconAssetPath": "https://d18vdu4p71yql0.cloudfront.net/libraries/arasaac/letters_2.png",
+  "tileIconAssetPath": "assets/BOARDS/Small Words.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -20,7 +23,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_small_words_nouns",
+      "id": "prebuilt_small_words_nouns_montessori",
       "type": "board_link",
       "label": "Nouns (Montessori)",
       "category": "Assets",
@@ -38,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_proper_nouns",
+      "id": "prebuilt_small_words_proper_nouns_montessori",
       "type": "board_link",
       "label": "Proper Nouns (Montessori)",
       "category": "Assets",
@@ -56,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_abstract_nouns",
+      "id": "prebuilt_small_words_abstract_nouns_montessori",
       "type": "board_link",
       "label": "Abstract Nouns (Montessori)",
       "category": "Assets",
@@ -74,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_collective_nouns",
+      "id": "prebuilt_small_words_collective_nouns_montessori",
       "type": "board_link",
       "label": "Collective Nouns (Montessori)",
       "category": "Assets",
@@ -92,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_articles",
+      "id": "prebuilt_small_words_articles_montessori",
       "type": "board_link",
       "label": "Articles (Montessori)",
       "category": "Assets",
@@ -110,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_pronouns",
+      "id": "prebuilt_small_words_pronouns_montessori",
       "type": "board_link",
       "label": "Pronouns (Montessori)",
       "category": "Assets",
@@ -146,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_verbs",
+      "id": "prebuilt_small_words_verbs_montessori",
       "type": "board_link",
       "label": "Verbs (Montessori)",
       "category": "Assets",
@@ -164,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_transitive_verbs",
+      "id": "prebuilt_small_words_transitive_verbs_montessori",
       "type": "board_link",
       "label": "Transitive Verbs (Montessori)",
       "category": "Assets",
@@ -182,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_intransitive_verbs",
+      "id": "prebuilt_small_words_intransitive_verbs_montessori",
       "type": "board_link",
       "label": "Intransitive Verbs (Montessori)",
       "category": "Assets",
@@ -200,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_linking_verbs",
+      "id": "prebuilt_small_words_linking_verbs_montessori",
       "type": "board_link",
       "label": "Linking Verbs (Montessori)",
       "category": "Assets",
@@ -218,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_auxiliary_verbs",
+      "id": "prebuilt_small_words_auxiliary_verbs_montessori",
       "type": "board_link",
       "label": "Auxiliary Verbs (Montessori)",
       "category": "Assets",
@@ -236,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_adverbs",
+      "id": "prebuilt_small_words_adverbs_montessori",
       "type": "board_link",
       "label": "Adverbs (Montessori)",
       "category": "Assets",
@@ -272,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_conjunctions",
+      "id": "prebuilt_small_words_conjunctions_montessori",
       "type": "board_link",
       "label": "Conjunctions (Montessori)",
       "category": "Assets",
@@ -290,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_interjections",
+      "id": "prebuilt_small_words_interjections_montessori",
       "type": "board_link",
       "label": "Interjections (Montessori)",
       "category": "Assets",
@@ -308,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_gerunds",
+      "id": "prebuilt_small_words_gerunds_montessori",
       "type": "board_link",
       "label": "Gerunds (Montessori)",
       "category": "Assets",
@@ -326,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_participles",
+      "id": "prebuilt_small_words_participles_montessori",
       "type": "board_link",
       "label": "Participles (Montessori)",
       "category": "Assets",
@@ -344,7 +347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_others",
+      "id": "prebuilt_small_words_others_montessori",
       "type": "board_link",
       "label": "Others (Montessori)",
       "category": "Assets",
@@ -398,7 +401,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_articles_2",
+      "id": "prebuilt_small_words_articles",
       "type": "vocabulary",
       "label": "articles",
       "category": "Custom",
@@ -470,7 +473,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_small_words_conjunctions_2",
+      "id": "prebuilt_small_words_conjunctions",
       "type": "vocabulary",
       "label": "conjunctions",
       "category": "Custom",
@@ -2665,7 +2668,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Small Words.png",
-  "tileIconAssetPath": "assets/BOARDS/Small Words.png"
+  ]
 }

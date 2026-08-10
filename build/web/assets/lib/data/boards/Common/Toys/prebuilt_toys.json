@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 99,
   "tier": 1,
+  "iconAssetPath": "assets/Common/Time/Events and Occasions/Christmas Keywords/toy.png",
+  "tileIconAssetPath": "assets/BOARDS/Toys.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -919,7 +922,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Toys.png",
-  "tileIconAssetPath": "assets/BOARDS/Toys.png"
+  ]
 }

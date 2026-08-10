@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_statistics",
+  "name": "Statistics",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_maths",
+  "sortOrder": 144,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Maths/Statistics.png",
+  "tileIconAssetPath": "assets/BOARDS/Maths/Statistics.png"
+}

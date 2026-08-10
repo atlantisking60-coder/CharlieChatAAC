@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Keywords/people.png",
+  "tileIconAssetPath": "assets/BOARDS/People.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -26,6 +29,8 @@
       "category": "Assets",
       "imageAsset": "assets/BOARDS/Legends/Characters/Characters.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_characters",
       "linkedBoardName": "prebuilt_characters",
       "isFullScreenImage": false,
       "bgColor": "#000000",
@@ -42,6 +47,8 @@
       "category": "Assets",
       "imageAsset": "assets/BOARDS/People.png",
       "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_real_people",
       "linkedBoardName": "prebuilt_real_people",
       "isFullScreenImage": false,
       "bgColor": "#000000",
@@ -58,6 +65,8 @@
       "category": "Custom",
       "imageAsset": null,
       "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
       "linkedBoardName": null,
       "isFullScreenImage": false,
       "bgColor": "transparent",
@@ -67,7 +76,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/Common/Letters/d.png",
-  "tileIconAssetPath": "assets/Common/Letters/d.png"
+  ]
 }

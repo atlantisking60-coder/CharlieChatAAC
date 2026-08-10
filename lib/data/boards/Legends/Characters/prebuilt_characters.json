@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 1,
   "tier": 2,
+  "iconAssetPath": "assets/Legends/Characters/Creatures and Races/wizard.png",
+  "tileIconAssetPath": "assets/BOARDS/Legends/Characters/Characters.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -1208,7 +1211,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_people",
-  "iconAssetPath": "assets/BOARDS/Legends/Characters/Characters.png",
-  "tileIconAssetPath": "assets/BOARDS/Legends/Characters/Characters.png"
+  "parentBoardId": "prebuilt_legends"
 }

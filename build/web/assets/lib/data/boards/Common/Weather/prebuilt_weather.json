@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 140,
   "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/Science/Universe/sun.png",
+  "tileIconAssetPath": "assets/BOARDS/Weather.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -433,7 +436,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Weather.png",
-  "tileIconAssetPath": "assets/BOARDS/Weather.png"
+  ]
 }

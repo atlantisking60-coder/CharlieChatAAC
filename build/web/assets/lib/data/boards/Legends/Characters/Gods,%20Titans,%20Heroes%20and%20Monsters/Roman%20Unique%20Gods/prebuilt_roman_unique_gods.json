@@ -104,7 +104,7 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_p_e_e_p",
+  "parentBoardId": "prebuilt_peep",
   "iconAssetPath": "assets/Common/People/i.png",
   "tileIconAssetPath": "assets/Common/People/i.png"
 }

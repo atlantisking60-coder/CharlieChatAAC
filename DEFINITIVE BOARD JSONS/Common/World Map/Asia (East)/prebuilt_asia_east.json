@@ -127,8 +127,8 @@
     {
       "id": "prebuilt_asia_east_china",
       "label": "china",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Countries and Continents/World Map/Asia/china.png",
+      "category": "Assets",
+      "imageAsset": "assets/Common/World Map/Asia/china.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -336,7 +336,7 @@
       "id": "prebuilt_asia_east_hong_kong",
       "label": "hong kong",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Flags/Flags 2 (Approx D-H)/hong kong.png",
+      "imageAsset": "assets/Common/World Map/Asia/hong kong.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -595,6 +595,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Common/World Map/asia (2).png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Asia.png",
   "version": 0
 }

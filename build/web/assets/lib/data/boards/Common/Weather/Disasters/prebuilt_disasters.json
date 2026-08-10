@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 258,
   "tier": 2,
+  "iconAssetPath": "assets/Common/Weather/Disasters/tornado.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Natural Disasters.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -114,7 +117,7 @@
       "type": "vocabulary",
       "label": "storm",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Disasters/storm.png",
+      "imageAsset": "assets/Subject Vocab/PEEP/Disasters/storm.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -758,7 +761,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_weather",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_weather"
 }

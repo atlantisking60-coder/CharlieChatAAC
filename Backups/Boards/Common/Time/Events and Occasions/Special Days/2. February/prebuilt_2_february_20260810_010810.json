@@ -1,0 +1,42 @@
+{
+  "id": "prebuilt_2_february",
+  "name": "2. February",
+  "area": "Common",
+  "columns": 5,
+  "backgroundColor": "transparent",
+  "adjustableLayout": true,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 1,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_2_february_2_february",
+      "type": "vocabulary",
+      "label": "2. February",
+      "category": "2. February",
+      "imageAsset": null,
+      "emoji": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_special_days",
+  "iconAssetPath": "assets/Dates/2.png",
+  "tileIconAssetPath": "assets/Dates/2.png"
+}

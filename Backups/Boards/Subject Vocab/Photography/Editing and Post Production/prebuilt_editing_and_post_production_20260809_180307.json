@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_editing_and_post_production",
+  "name": "Editing and Post Production",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_photography",
+  "sortOrder": 365,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Photography/Editing and Post Production.png",
+  "tileIconAssetPath": "assets/BOARDS/Photography/Editing and Post Production.png"
+}

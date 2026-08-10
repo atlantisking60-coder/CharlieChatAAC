@@ -1,0 +1,10 @@
+plants
+animals
+birds
+biodiversity
+variety
+nature
+humans
+global
+population
+extinction

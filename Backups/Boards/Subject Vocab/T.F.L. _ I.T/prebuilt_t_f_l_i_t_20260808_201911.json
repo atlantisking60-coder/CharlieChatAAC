@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_t_f_l_i_t",
+  "name": "T.F.L. / I.T.",
+  "area": "Subject Vocab",
+  "parentBoardId": null,
+  "sortOrder": 217,
+  "tier": 1,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/Subject Vocab/Lessons/TFL.png",
+  "tileIconAssetPath": "assets/Subject Vocab/Lessons/TFL.png"
+}

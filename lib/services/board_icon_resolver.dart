@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import '../data/board_icon_assets.dart';
@@ -33,12 +35,12 @@ String _bestBoardIconPath(String boardName, List<String> paths) {
   return _sanitizeIconAssetPath(sorted.first);
 }
 
-String resolveBoardIconAssetPath(Board board) {
-  if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
-    return board.iconAssetPath!;
+String _resolveIconAssetPath(String name, String? existing) {
+  if (existing != null && existing.isNotEmpty) {
+    return existing;
   }
 
-  final boardName = board.name;
+  final boardName = name;
   final searchName = boardName.toLowerCase().trim();
 
   // Try the symbol library first (non-BOARDS assets)
@@ -47,7 +49,7 @@ String resolveBoardIconAssetPath(Board board) {
     return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
   }
 
-  final clean = searchName.replaceAll(RegExp(r'[(){\}\[\].,!?;:"/#@$%^&*]'), '').trim();
+  final clean = searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim();
   if (clean.isNotEmpty) {
     final cleanSymbolKey = _findKeyIgnoreCase(symbolIconAssetMap, clean);
     if (cleanSymbolKey != null) {
@@ -115,6 +117,12 @@ String resolveBoardIconAssetPath(Board board) {
   return _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
 }
 
+String resolveBoardIconAssetPath(Board board) =>
+    _resolveIconAssetPath(board.name, board.iconAssetPath);
+
+String resolveTileIconAssetPath(Board board) =>
+    _resolveIconAssetPath(board.name, board.tileIconAssetPath);
+
 /// Renders a board tab icon from an asset path, a remote URL, or a base64
 /// data URI. If the path cannot be loaded, [fallback] is shown.
 Widget buildBoardIconImage(
@@ -151,6 +159,29 @@ Widget buildBoardIconImage(
         errorBuilder: (_, __, ___) => fallback ?? Icon(Icons.image, size: size, color: color),
       );
     }
+  }
+
+  if (!kIsWeb && !lower.startsWith('assets/')) {
+    return Image.file(
+      File(path),
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => fallback ?? Icon(Icons.image, size: size, color: color),
+    );
+  }
+
+  // On the web, serve assets directly from the dev server / production host
+  // to avoid Flutter Web's AssetManifest percent-encoding issues.
+  if (kIsWeb && lower.startsWith('assets/')) {
+    final url = Uri.base.resolve('assets/${Uri.encodeFull(path)}').toString();
+    return Image.network(
+      url,
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => fallback ?? Icon(Icons.image, size: size, color: color),
+    );
   }
 
   return Image.asset(

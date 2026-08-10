@@ -974,8 +974,9 @@ class _BoardEditorState extends State<BoardEditor> {
         builder: (ctx) => AlertDialog(
           title: const Text('Import from JSON'),
           content: Text(
-            'This will replace the current board "${board.name}" with the '
-            'board from the JSON file ("${imported.name}"). Are you sure?',
+            'This will add the tiles from "${imported.name}" to the current '
+            'board "${board.name}". Board settings like rows, columns, tier and '
+            'parent will not change. Are you sure?',
           ),
           actions: [
             TextButton(
@@ -991,25 +992,8 @@ class _BoardEditorState extends State<BoardEditor> {
       );
       if (confirmed != true) return;
       setState(() {
-        // Requirement: Do NOT change the area or board name already selected in the app
-        board
-          ..rows = imported.rows
-          ..columns = imported.columns
-          ..adjustableLayout = imported.adjustableLayout
-          ..backgroundColor = imported.backgroundColor
-          ..isSubBoard = imported.isSubBoard
-          ..isTertiaryBoard = imported.isTertiaryBoard
-          ..isQuaternaryBoard = imported.isQuaternaryBoard
-          ..isQuinaryBoard = imported.isQuinaryBoard
-          ..sortOrder = imported.sortOrder
-          ..tier = imported.tier
-          ..parentBoardId = imported.parentBoardId
-          ..boxScale = imported.boxScale
-          ..tileHeight = imported.tileHeight
-          ..tileWidth = imported.tileWidth
-          ..tiles = List<SymbolTile>.from(imported.tiles);
-        _rowsController.text = board.rows.toString();
-        _columnsController.text = board.columns.toString();
+        // Only the tile list is imported; all board metadata is preserved.
+        board.tiles = List<SymbolTile>.from(imported.tiles);
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -1293,6 +1277,7 @@ class _BoardEditorState extends State<BoardEditor> {
   void _showTileMenu(int index) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (ctx) => SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -2119,8 +2104,6 @@ class _BoardEditorState extends State<BoardEditor> {
                 var newLabel = labelCtl.text.trim();
                 if (tileType == 'normal_word') {
                   newLabel = newLabel.toLowerCase();
-                } else if (tileType == 'link_to_board') {
-                  newLabel = _toTitleCase(newLabel);
                 }
                 var newImageAsset = tile.imageAsset;
                 if (wasBlank && newLabel.isNotEmpty && newImageAsset.isEmpty && !imageExplicitlyRemoved && !imageUpdated) {
@@ -2265,6 +2248,7 @@ class _BoardEditorState extends State<BoardEditor> {
                 Expanded(
                   child: InkWell(
                     onTap: _pickTabIcon,
+                    onLongPress: () => setState(() => board.iconAssetPath = null),
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
                       height: 56,
@@ -2277,7 +2261,7 @@ class _BoardEditorState extends State<BoardEditor> {
                       child: Row(
                         children: [
                           buildBoardIconImage(
-                            board.iconAssetPath,
+                            resolveBoardIconAssetPath(board),
                             size: 40,
                             color: Theme.of(context).colorScheme.primary,
                             fallback: const Icon(Icons.image, size: 40),
@@ -2293,6 +2277,7 @@ class _BoardEditorState extends State<BoardEditor> {
                 Expanded(
                   child: InkWell(
                     onTap: _pickTileIcon,
+                    onLongPress: () => setState(() => board.tileIconAssetPath = null),
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
                       height: 56,
@@ -2305,7 +2290,7 @@ class _BoardEditorState extends State<BoardEditor> {
                       child: Row(
                         children: [
                           buildBoardIconImage(
-                            board.tileIconAssetPath,
+                            resolveTileIconAssetPath(board),
                             size: 40,
                             color: Theme.of(context).colorScheme.primary,
                             fallback: const Icon(Icons.image, size: 40),
@@ -2719,15 +2704,35 @@ class _BoardEditorState extends State<BoardEditor> {
 
   String _toTitleCase(String text) {
     if (text.isEmpty) return text;
-    return text.split(' ').map((word) {
-      if (word.isEmpty) return word;
-      final match = RegExp(r'[a-zA-Z]').firstMatch(word);
-      if (match == null) return word;
-      final idx = match.start;
-      return word.substring(0, idx) +
-          word[idx].toUpperCase() +
-          word.substring(idx + 1).toLowerCase();
-    }).join(' ');
+    final buffer = StringBuffer();
+    bool nextShouldUpper = true;
+    for (int i = 0; i < text.length; i++) {
+      final ch = text[i];
+      final isAlpha = RegExp(r'[a-zA-Z]').hasMatch(ch);
+      if (ch == '(' || ch == '[') {
+        nextShouldUpper = true;
+        buffer.write(ch);
+        continue;
+      }
+      if (ch == ')' || ch == ']') {
+        buffer.write(ch);
+        continue;
+      }
+      if (isAlpha) {
+        if (nextShouldUpper) {
+          buffer.write(ch.toUpperCase());
+          nextShouldUpper = false;
+        } else {
+          buffer.write(ch);
+        }
+      } else {
+        buffer.write(ch);
+        if (ch == '.') {
+          nextShouldUpper = true;
+        }
+      }
+    }
+    return buffer.toString();
   }
 
   void _alphabetiseTiles() {
@@ -2820,10 +2825,14 @@ class _BoardEditorState extends State<BoardEditor> {
   }
 
   _EditorGridLayout _editorGridLayoutFor(BoxConstraints constraints) {
-    if (board.columns > 0) return _EditorGridLayout(columns: board.columns, childAspectRatio: 1.0);
+    if (!board.adjustableLayout && board.columns > 0) {
+      return _EditorGridLayout(columns: board.columns, childAspectRatio: 1.0);
+    }
     final width = constraints.maxWidth.isFinite ? constraints.maxWidth : 360.0;
     final targetTileExtent = (118.0 * board.boxScale).clamp(82.0, 180.0);
-    final columns = (width / targetTileExtent).floor().clamp(1, 1000);
+    final maxColumns = (width / targetTileExtent).floor().clamp(1, 1000);
+    final tileCount = _targetTileCount;
+    final columns = tileCount > 0 ? maxColumns.clamp(1, tileCount) : maxColumns;
     return _EditorGridLayout(columns: columns, childAspectRatio: 1.0);
   }
 }

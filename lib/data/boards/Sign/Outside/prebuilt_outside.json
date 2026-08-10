@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 583,
   "tier": 1,
+  "iconAssetPath": "assets/Common/Prepositions/outside.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Outside.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -199,7 +202,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/Sign/Outside/Outside.png",
-  "tileIconAssetPath": "assets/Sign/Outside/Outside.png"
+  ]
 }

@@ -4,13 +4,16 @@
   "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": true,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 3,
+  "iconAssetPath": "assets/Common/Time/Events and Occasions/halloween.png",
+  "tileIconAssetPath": "assets/BOARDS/Time, Months, Events/Halloween.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -1082,7 +1085,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions",
-  "iconAssetPath": "assets/BOARDS/Keywords.png",
-  "tileIconAssetPath": "assets/BOARDS/Keywords.png"
+  "parentBoardId": "prebuilt_events_and_occasions"
 }

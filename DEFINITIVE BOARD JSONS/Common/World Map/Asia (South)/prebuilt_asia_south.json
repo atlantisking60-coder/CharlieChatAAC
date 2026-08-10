@@ -191,8 +191,8 @@
     {
       "id": "prebuilt_asia_south_pacific_ocean",
       "label": "pacific ocean",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Countries and Continents/World Map/pacific ocean.png",
+      "category": "Assets",
+      "imageAsset": "assets/Common/World Map/pacific ocean.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -787,6 +787,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Common/World Map/asia (2).png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Asia.png",
   "version": 0
 }

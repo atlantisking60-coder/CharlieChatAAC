@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 4,
   "tier": 2,
+  "iconAssetPath": "assets/Common/Animals/habitat.png",
+  "tileIconAssetPath": "assets/BOARDS/Animals/Habitats.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -794,7 +797,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_places",
-  "iconAssetPath": "assets/BOARDS/Animals/Habitats.png",
-  "tileIconAssetPath": "assets/BOARDS/Animals/Habitats.png"
+  "parentBoardId": "prebuilt_places"
 }

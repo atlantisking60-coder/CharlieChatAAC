@@ -4,13 +4,16 @@
   "area": "Common",
   "columns": 5,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
+  "iconAssetPath": "assets/Common/Small Words/transitive verb [montessori].png",
+  "tileIconAssetPath": "assets/BOARDS/English/Montessori/Transitive Verb.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -20,7 +23,7 @@
   },
   "tiles": [
     {
-      "id": "prebuilt_transitive_verbs_montessori_accept_png",
+      "id": "prebuilt_transitive_verbs_montessori_accept",
       "type": "vocabulary",
       "label": "Accept",
       "category": "Transitive Verbs",
@@ -38,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_access_png",
+      "id": "prebuilt_transitive_verbs_montessori_access",
       "type": "vocabulary",
       "label": "Access",
       "category": "Transitive Verbs",
@@ -56,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_achieve_png",
+      "id": "prebuilt_transitive_verbs_montessori_achieve",
       "type": "vocabulary",
       "label": "Achieve",
       "category": "Transitive Verbs",
@@ -74,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_acknowledge_png",
+      "id": "prebuilt_transitive_verbs_montessori_acknowledge",
       "type": "vocabulary",
       "label": "Acknowledge",
       "category": "Transitive Verbs",
@@ -92,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_acquire_png",
+      "id": "prebuilt_transitive_verbs_montessori_acquire",
       "type": "vocabulary",
       "label": "Acquire",
       "category": "Transitive Verbs",
@@ -110,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_adapt_png",
+      "id": "prebuilt_transitive_verbs_montessori_adapt",
       "type": "vocabulary",
       "label": "Adapt",
       "category": "Transitive Verbs",
@@ -128,7 +131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_admit_png",
+      "id": "prebuilt_transitive_verbs_montessori_admit",
       "type": "vocabulary",
       "label": "Admit",
       "category": "Transitive Verbs",
@@ -146,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_adopt_png",
+      "id": "prebuilt_transitive_verbs_montessori_adopt",
       "type": "vocabulary",
       "label": "Adopt",
       "category": "Transitive Verbs",
@@ -164,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_advance_png",
+      "id": "prebuilt_transitive_verbs_montessori_advance",
       "type": "vocabulary",
       "label": "Advance",
       "category": "Transitive Verbs",
@@ -182,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_advise_png",
+      "id": "prebuilt_transitive_verbs_montessori_advise",
       "type": "vocabulary",
       "label": "Advise",
       "category": "Transitive Verbs",
@@ -200,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_affect_png",
+      "id": "prebuilt_transitive_verbs_montessori_affect",
       "type": "vocabulary",
       "label": "Affect",
       "category": "Transitive Verbs",
@@ -218,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_afford_png",
+      "id": "prebuilt_transitive_verbs_montessori_afford",
       "type": "vocabulary",
       "label": "Afford",
       "category": "Transitive Verbs",
@@ -236,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_agree_png",
+      "id": "prebuilt_transitive_verbs_montessori_agree",
       "type": "vocabulary",
       "label": "Agree",
       "category": "Transitive Verbs",
@@ -254,7 +257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_alert_png",
+      "id": "prebuilt_transitive_verbs_montessori_alert",
       "type": "vocabulary",
       "label": "Alert",
       "category": "Transitive Verbs",
@@ -272,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_allow_png",
+      "id": "prebuilt_transitive_verbs_montessori_allow",
       "type": "vocabulary",
       "label": "Allow",
       "category": "Transitive Verbs",
@@ -290,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_announce_png",
+      "id": "prebuilt_transitive_verbs_montessori_announce",
       "type": "vocabulary",
       "label": "Announce",
       "category": "Transitive Verbs",
@@ -308,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_answer_png",
+      "id": "prebuilt_transitive_verbs_montessori_answer",
       "type": "vocabulary",
       "label": "Answer",
       "category": "Transitive Verbs",
@@ -326,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_apologise_png",
+      "id": "prebuilt_transitive_verbs_montessori_apologise",
       "type": "vocabulary",
       "label": "Apologise",
       "category": "Transitive Verbs",
@@ -344,7 +347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_appeal_png",
+      "id": "prebuilt_transitive_verbs_montessori_appeal",
       "type": "vocabulary",
       "label": "Appeal",
       "category": "Transitive Verbs",
@@ -362,7 +365,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_appear_png",
+      "id": "prebuilt_transitive_verbs_montessori_appear",
       "type": "vocabulary",
       "label": "Appear",
       "category": "Transitive Verbs",
@@ -380,7 +383,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_apply_png",
+      "id": "prebuilt_transitive_verbs_montessori_apply",
       "type": "vocabulary",
       "label": "Apply",
       "category": "Transitive Verbs",
@@ -398,7 +401,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_appoint_png",
+      "id": "prebuilt_transitive_verbs_montessori_appoint",
       "type": "vocabulary",
       "label": "Appoint",
       "category": "Transitive Verbs",
@@ -416,7 +419,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_approach_png",
+      "id": "prebuilt_transitive_verbs_montessori_approach",
       "type": "vocabulary",
       "label": "Approach",
       "category": "Transitive Verbs",
@@ -434,7 +437,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_approve_png",
+      "id": "prebuilt_transitive_verbs_montessori_approve",
       "type": "vocabulary",
       "label": "Approve",
       "category": "Transitive Verbs",
@@ -452,7 +455,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_argue_png",
+      "id": "prebuilt_transitive_verbs_montessori_argue",
       "type": "vocabulary",
       "label": "Argue",
       "category": "Transitive Verbs",
@@ -470,7 +473,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_arrange_png",
+      "id": "prebuilt_transitive_verbs_montessori_arrange",
       "type": "vocabulary",
       "label": "Arrange",
       "category": "Transitive Verbs",
@@ -488,7 +491,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_arrest_png",
+      "id": "prebuilt_transitive_verbs_montessori_arrest",
       "type": "vocabulary",
       "label": "Arrest",
       "category": "Transitive Verbs",
@@ -506,7 +509,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_arrive_png",
+      "id": "prebuilt_transitive_verbs_montessori_arrive",
       "type": "vocabulary",
       "label": "Arrive",
       "category": "Transitive Verbs",
@@ -524,7 +527,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_assess_png",
+      "id": "prebuilt_transitive_verbs_montessori_assess",
       "type": "vocabulary",
       "label": "Assess",
       "category": "Transitive Verbs",
@@ -542,7 +545,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_assign_png",
+      "id": "prebuilt_transitive_verbs_montessori_assign",
       "type": "vocabulary",
       "label": "Assign",
       "category": "Transitive Verbs",
@@ -560,7 +563,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_assist_png",
+      "id": "prebuilt_transitive_verbs_montessori_assist",
       "type": "vocabulary",
       "label": "Assist",
       "category": "Transitive Verbs",
@@ -578,7 +581,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_assume_png",
+      "id": "prebuilt_transitive_verbs_montessori_assume",
       "type": "vocabulary",
       "label": "Assume",
       "category": "Transitive Verbs",
@@ -596,7 +599,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_attach_png",
+      "id": "prebuilt_transitive_verbs_montessori_attach",
       "type": "vocabulary",
       "label": "Attach",
       "category": "Transitive Verbs",
@@ -614,7 +617,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_attack_png",
+      "id": "prebuilt_transitive_verbs_montessori_attack",
       "type": "vocabulary",
       "label": "Attack",
       "category": "Transitive Verbs",
@@ -632,7 +635,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_attend_png",
+      "id": "prebuilt_transitive_verbs_montessori_attend",
       "type": "vocabulary",
       "label": "Attend",
       "category": "Transitive Verbs",
@@ -650,7 +653,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_attract_png",
+      "id": "prebuilt_transitive_verbs_montessori_attract",
       "type": "vocabulary",
       "label": "Attract",
       "category": "Transitive Verbs",
@@ -668,7 +671,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_authorise_png",
+      "id": "prebuilt_transitive_verbs_montessori_authorise",
       "type": "vocabulary",
       "label": "Authorise",
       "category": "Transitive Verbs",
@@ -686,7 +689,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_avoid_png",
+      "id": "prebuilt_transitive_verbs_montessori_avoid",
       "type": "vocabulary",
       "label": "Avoid",
       "category": "Transitive Verbs",
@@ -704,7 +707,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_award_png",
+      "id": "prebuilt_transitive_verbs_montessori_award",
       "type": "vocabulary",
       "label": "Award",
       "category": "Transitive Verbs",
@@ -722,7 +725,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_balance_png",
+      "id": "prebuilt_transitive_verbs_montessori_balance",
       "type": "vocabulary",
       "label": "Balance",
       "category": "Transitive Verbs",
@@ -740,7 +743,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_ban_png",
+      "id": "prebuilt_transitive_verbs_montessori_ban",
       "type": "vocabulary",
       "label": "Ban",
       "category": "Transitive Verbs",
@@ -758,7 +761,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bank_png",
+      "id": "prebuilt_transitive_verbs_montessori_bank",
       "type": "vocabulary",
       "label": "Bank",
       "category": "Transitive Verbs",
@@ -776,7 +779,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_base_png",
+      "id": "prebuilt_transitive_verbs_montessori_base",
       "type": "vocabulary",
       "label": "Base",
       "category": "Transitive Verbs",
@@ -794,7 +797,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_beat_png",
+      "id": "prebuilt_transitive_verbs_montessori_beat",
       "type": "vocabulary",
       "label": "Beat",
       "category": "Transitive Verbs",
@@ -812,7 +815,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_believe_png",
+      "id": "prebuilt_transitive_verbs_montessori_believe",
       "type": "vocabulary",
       "label": "Believe",
       "category": "Transitive Verbs",
@@ -830,7 +833,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_belong_png",
+      "id": "prebuilt_transitive_verbs_montessori_belong",
       "type": "vocabulary",
       "label": "Belong",
       "category": "Transitive Verbs",
@@ -848,7 +851,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bet_png",
+      "id": "prebuilt_transitive_verbs_montessori_bet",
       "type": "vocabulary",
       "label": "Bet",
       "category": "Transitive Verbs",
@@ -866,7 +869,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bite_png",
+      "id": "prebuilt_transitive_verbs_montessori_bite",
       "type": "vocabulary",
       "label": "Bite",
       "category": "Transitive Verbs",
@@ -884,7 +887,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_blame_png",
+      "id": "prebuilt_transitive_verbs_montessori_blame",
       "type": "vocabulary",
       "label": "Blame",
       "category": "Transitive Verbs",
@@ -902,7 +905,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_blend_png",
+      "id": "prebuilt_transitive_verbs_montessori_blend",
       "type": "vocabulary",
       "label": "Blend",
       "category": "Transitive Verbs",
@@ -920,7 +923,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_block_png",
+      "id": "prebuilt_transitive_verbs_montessori_block",
       "type": "vocabulary",
       "label": "Block",
       "category": "Transitive Verbs",
@@ -938,7 +941,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_blow_png",
+      "id": "prebuilt_transitive_verbs_montessori_blow",
       "type": "vocabulary",
       "label": "Blow",
       "category": "Transitive Verbs",
@@ -956,7 +959,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_boil_png",
+      "id": "prebuilt_transitive_verbs_montessori_boil",
       "type": "vocabulary",
       "label": "Boil",
       "category": "Transitive Verbs",
@@ -974,7 +977,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bomb_png",
+      "id": "prebuilt_transitive_verbs_montessori_bomb",
       "type": "vocabulary",
       "label": "Bomb",
       "category": "Transitive Verbs",
@@ -992,7 +995,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_book_png",
+      "id": "prebuilt_transitive_verbs_montessori_book",
       "type": "vocabulary",
       "label": "Book",
       "category": "Transitive Verbs",
@@ -1010,7 +1013,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_borrow_png",
+      "id": "prebuilt_transitive_verbs_montessori_borrow",
       "type": "vocabulary",
       "label": "Borrow",
       "category": "Transitive Verbs",
@@ -1028,7 +1031,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bottle_png",
+      "id": "prebuilt_transitive_verbs_montessori_bottle",
       "type": "vocabulary",
       "label": "Bottle",
       "category": "Transitive Verbs",
@@ -1046,7 +1049,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bounce_png",
+      "id": "prebuilt_transitive_verbs_montessori_bounce",
       "type": "vocabulary",
       "label": "Bounce",
       "category": "Transitive Verbs",
@@ -1064,7 +1067,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bowl_png",
+      "id": "prebuilt_transitive_verbs_montessori_bowl",
       "type": "vocabulary",
       "label": "Bowl",
       "category": "Transitive Verbs",
@@ -1082,7 +1085,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_breathe_png",
+      "id": "prebuilt_transitive_verbs_montessori_breathe",
       "type": "vocabulary",
       "label": "Breathe",
       "category": "Transitive Verbs",
@@ -1100,7 +1103,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_broadcast_png",
+      "id": "prebuilt_transitive_verbs_montessori_broadcast",
       "type": "vocabulary",
       "label": "Broadcast",
       "category": "Transitive Verbs",
@@ -1118,7 +1121,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_brush_png",
+      "id": "prebuilt_transitive_verbs_montessori_brush",
       "type": "vocabulary",
       "label": "Brush",
       "category": "Transitive Verbs",
@@ -1136,7 +1139,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_build_png",
+      "id": "prebuilt_transitive_verbs_montessori_build",
       "type": "vocabulary",
       "label": "Build",
       "category": "Transitive Verbs",
@@ -1154,7 +1157,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_burn_png",
+      "id": "prebuilt_transitive_verbs_montessori_burn",
       "type": "vocabulary",
       "label": "Burn",
       "category": "Transitive Verbs",
@@ -1172,7 +1175,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_bury_png",
+      "id": "prebuilt_transitive_verbs_montessori_bury",
       "type": "vocabulary",
       "label": "Bury",
       "category": "Transitive Verbs",
@@ -1190,7 +1193,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_buy_png",
+      "id": "prebuilt_transitive_verbs_montessori_buy",
       "type": "vocabulary",
       "label": "Buy",
       "category": "Transitive Verbs",
@@ -1208,7 +1211,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_calculate_png",
+      "id": "prebuilt_transitive_verbs_montessori_calculate",
       "type": "vocabulary",
       "label": "Calculate",
       "category": "Transitive Verbs",
@@ -1226,7 +1229,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cancel_png",
+      "id": "prebuilt_transitive_verbs_montessori_cancel",
       "type": "vocabulary",
       "label": "Cancel",
       "category": "Transitive Verbs",
@@ -1244,7 +1247,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_capture_png",
+      "id": "prebuilt_transitive_verbs_montessori_capture",
       "type": "vocabulary",
       "label": "Capture",
       "category": "Transitive Verbs",
@@ -1262,7 +1265,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_care_png",
+      "id": "prebuilt_transitive_verbs_montessori_care",
       "type": "vocabulary",
       "label": "Care",
       "category": "Transitive Verbs",
@@ -1280,7 +1283,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_carry_png",
+      "id": "prebuilt_transitive_verbs_montessori_carry",
       "type": "vocabulary",
       "label": "Carry",
       "category": "Transitive Verbs",
@@ -1298,7 +1301,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_catch_png",
+      "id": "prebuilt_transitive_verbs_montessori_catch",
       "type": "vocabulary",
       "label": "Catch",
       "category": "Transitive Verbs",
@@ -1316,7 +1319,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cause_png",
+      "id": "prebuilt_transitive_verbs_montessori_cause",
       "type": "vocabulary",
       "label": "Cause",
       "category": "Transitive Verbs",
@@ -1334,7 +1337,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_celebrate_png",
+      "id": "prebuilt_transitive_verbs_montessori_celebrate",
       "type": "vocabulary",
       "label": "Celebrate",
       "category": "Transitive Verbs",
@@ -1352,7 +1355,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_challenge_png",
+      "id": "prebuilt_transitive_verbs_montessori_challenge",
       "type": "vocabulary",
       "label": "Challenge",
       "category": "Transitive Verbs",
@@ -1370,7 +1373,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_change_png",
+      "id": "prebuilt_transitive_verbs_montessori_change",
       "type": "vocabulary",
       "label": "Change",
       "category": "Transitive Verbs",
@@ -1388,7 +1391,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_charge_png",
+      "id": "prebuilt_transitive_verbs_montessori_charge",
       "type": "vocabulary",
       "label": "Charge",
       "category": "Transitive Verbs",
@@ -1406,7 +1409,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_chase_png",
+      "id": "prebuilt_transitive_verbs_montessori_chase",
       "type": "vocabulary",
       "label": "Chase",
       "category": "Transitive Verbs",
@@ -1424,7 +1427,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_check_png",
+      "id": "prebuilt_transitive_verbs_montessori_check",
       "type": "vocabulary",
       "label": "Check",
       "category": "Transitive Verbs",
@@ -1442,7 +1445,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cheer_png",
+      "id": "prebuilt_transitive_verbs_montessori_cheer",
       "type": "vocabulary",
       "label": "Cheer",
       "category": "Transitive Verbs",
@@ -1460,7 +1463,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_chew_png",
+      "id": "prebuilt_transitive_verbs_montessori_chew",
       "type": "vocabulary",
       "label": "Chew",
       "category": "Transitive Verbs",
@@ -1478,7 +1481,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_choose_png",
+      "id": "prebuilt_transitive_verbs_montessori_choose",
       "type": "vocabulary",
       "label": "Choose",
       "category": "Transitive Verbs",
@@ -1496,7 +1499,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_claim_png",
+      "id": "prebuilt_transitive_verbs_montessori_claim",
       "type": "vocabulary",
       "label": "Claim",
       "category": "Transitive Verbs",
@@ -1514,7 +1517,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_clap_png",
+      "id": "prebuilt_transitive_verbs_montessori_clap",
       "type": "vocabulary",
       "label": "Clap",
       "category": "Transitive Verbs",
@@ -1532,7 +1535,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_classify_png",
+      "id": "prebuilt_transitive_verbs_montessori_classify",
       "type": "vocabulary",
       "label": "Classify",
       "category": "Transitive Verbs",
@@ -1550,7 +1553,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_clean_png",
+      "id": "prebuilt_transitive_verbs_montessori_clean",
       "type": "vocabulary",
       "label": "Clean",
       "category": "Transitive Verbs",
@@ -1568,7 +1571,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_clear_png",
+      "id": "prebuilt_transitive_verbs_montessori_clear",
       "type": "vocabulary",
       "label": "Clear",
       "category": "Transitive Verbs",
@@ -1586,7 +1589,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_climb_png",
+      "id": "prebuilt_transitive_verbs_montessori_climb",
       "type": "vocabulary",
       "label": "Climb",
       "category": "Transitive Verbs",
@@ -1604,7 +1607,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_clone_png",
+      "id": "prebuilt_transitive_verbs_montessori_clone",
       "type": "vocabulary",
       "label": "Clone",
       "category": "Transitive Verbs",
@@ -1622,7 +1625,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_close_png",
+      "id": "prebuilt_transitive_verbs_montessori_close",
       "type": "vocabulary",
       "label": "Close",
       "category": "Transitive Verbs",
@@ -1640,7 +1643,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_coach_png",
+      "id": "prebuilt_transitive_verbs_montessori_coach",
       "type": "vocabulary",
       "label": "Coach",
       "category": "Transitive Verbs",
@@ -1658,7 +1661,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_collect_png",
+      "id": "prebuilt_transitive_verbs_montessori_collect",
       "type": "vocabulary",
       "label": "Collect",
       "category": "Transitive Verbs",
@@ -1676,7 +1679,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_combine_png",
+      "id": "prebuilt_transitive_verbs_montessori_combine",
       "type": "vocabulary",
       "label": "Combine",
       "category": "Transitive Verbs",
@@ -1694,7 +1697,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_command_png",
+      "id": "prebuilt_transitive_verbs_montessori_command",
       "type": "vocabulary",
       "label": "Command",
       "category": "Transitive Verbs",
@@ -1712,7 +1715,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_commit_png",
+      "id": "prebuilt_transitive_verbs_montessori_commit",
       "type": "vocabulary",
       "label": "Commit",
       "category": "Transitive Verbs",
@@ -1730,7 +1733,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_communicate_png",
+      "id": "prebuilt_transitive_verbs_montessori_communicate",
       "type": "vocabulary",
       "label": "Communicate",
       "category": "Transitive Verbs",
@@ -1748,7 +1751,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_compare_png",
+      "id": "prebuilt_transitive_verbs_montessori_compare",
       "type": "vocabulary",
       "label": "Compare",
       "category": "Transitive Verbs",
@@ -1766,7 +1769,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_compete_png",
+      "id": "prebuilt_transitive_verbs_montessori_compete",
       "type": "vocabulary",
       "label": "Compete",
       "category": "Transitive Verbs",
@@ -1784,7 +1787,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_complain_png",
+      "id": "prebuilt_transitive_verbs_montessori_complain",
       "type": "vocabulary",
       "label": "Complain",
       "category": "Transitive Verbs",
@@ -1802,7 +1805,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_complete_png",
+      "id": "prebuilt_transitive_verbs_montessori_complete",
       "type": "vocabulary",
       "label": "Complete",
       "category": "Transitive Verbs",
@@ -1820,7 +1823,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_compose_png",
+      "id": "prebuilt_transitive_verbs_montessori_compose",
       "type": "vocabulary",
       "label": "Compose",
       "category": "Transitive Verbs",
@@ -1838,7 +1841,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_concentrate_png",
+      "id": "prebuilt_transitive_verbs_montessori_concentrate",
       "type": "vocabulary",
       "label": "Concentrate",
       "category": "Transitive Verbs",
@@ -1856,7 +1859,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_concern_png",
+      "id": "prebuilt_transitive_verbs_montessori_concern",
       "type": "vocabulary",
       "label": "Concern",
       "category": "Transitive Verbs",
@@ -1874,7 +1877,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_conclude_png",
+      "id": "prebuilt_transitive_verbs_montessori_conclude",
       "type": "vocabulary",
       "label": "Conclude",
       "category": "Transitive Verbs",
@@ -1892,7 +1895,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_conduct_png",
+      "id": "prebuilt_transitive_verbs_montessori_conduct",
       "type": "vocabulary",
       "label": "Conduct",
       "category": "Transitive Verbs",
@@ -1910,7 +1913,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_confirm_png",
+      "id": "prebuilt_transitive_verbs_montessori_confirm",
       "type": "vocabulary",
       "label": "Confirm",
       "category": "Transitive Verbs",
@@ -1928,7 +1931,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_confuse_png",
+      "id": "prebuilt_transitive_verbs_montessori_confuse",
       "type": "vocabulary",
       "label": "Confuse",
       "category": "Transitive Verbs",
@@ -1946,7 +1949,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_connect_png",
+      "id": "prebuilt_transitive_verbs_montessori_connect",
       "type": "vocabulary",
       "label": "Connect",
       "category": "Transitive Verbs",
@@ -1964,7 +1967,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_consider_png",
+      "id": "prebuilt_transitive_verbs_montessori_consider",
       "type": "vocabulary",
       "label": "Consider",
       "category": "Transitive Verbs",
@@ -1982,7 +1985,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_consist_png",
+      "id": "prebuilt_transitive_verbs_montessori_consist",
       "type": "vocabulary",
       "label": "Consist",
       "category": "Transitive Verbs",
@@ -2000,7 +2003,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_construct_png",
+      "id": "prebuilt_transitive_verbs_montessori_construct",
       "type": "vocabulary",
       "label": "Construct",
       "category": "Transitive Verbs",
@@ -2018,7 +2021,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_consult_png",
+      "id": "prebuilt_transitive_verbs_montessori_consult",
       "type": "vocabulary",
       "label": "Consult",
       "category": "Transitive Verbs",
@@ -2036,7 +2039,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_contain_png",
+      "id": "prebuilt_transitive_verbs_montessori_contain",
       "type": "vocabulary",
       "label": "Contain",
       "category": "Transitive Verbs",
@@ -2054,7 +2057,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_continue_png",
+      "id": "prebuilt_transitive_verbs_montessori_continue",
       "type": "vocabulary",
       "label": "Continue",
       "category": "Transitive Verbs",
@@ -2072,7 +2075,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_contribute_png",
+      "id": "prebuilt_transitive_verbs_montessori_contribute",
       "type": "vocabulary",
       "label": "Contribute",
       "category": "Transitive Verbs",
@@ -2090,7 +2093,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_control_png",
+      "id": "prebuilt_transitive_verbs_montessori_control",
       "type": "vocabulary",
       "label": "Control",
       "category": "Transitive Verbs",
@@ -2108,7 +2111,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_convert_png",
+      "id": "prebuilt_transitive_verbs_montessori_convert",
       "type": "vocabulary",
       "label": "Convert",
       "category": "Transitive Verbs",
@@ -2126,7 +2129,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_convince_png",
+      "id": "prebuilt_transitive_verbs_montessori_convince",
       "type": "vocabulary",
       "label": "Convince",
       "category": "Transitive Verbs",
@@ -2144,7 +2147,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cook_png",
+      "id": "prebuilt_transitive_verbs_montessori_cook",
       "type": "vocabulary",
       "label": "Cook",
       "category": "Transitive Verbs",
@@ -2162,7 +2165,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_copy_png",
+      "id": "prebuilt_transitive_verbs_montessori_copy",
       "type": "vocabulary",
       "label": "Copy",
       "category": "Transitive Verbs",
@@ -2180,7 +2183,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_correct_png",
+      "id": "prebuilt_transitive_verbs_montessori_correct",
       "type": "vocabulary",
       "label": "Correct",
       "category": "Transitive Verbs",
@@ -2198,7 +2201,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_count_png",
+      "id": "prebuilt_transitive_verbs_montessori_count",
       "type": "vocabulary",
       "label": "Count",
       "category": "Transitive Verbs",
@@ -2216,7 +2219,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cover_png",
+      "id": "prebuilt_transitive_verbs_montessori_cover",
       "type": "vocabulary",
       "label": "Cover",
       "category": "Transitive Verbs",
@@ -2234,7 +2237,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_create_png",
+      "id": "prebuilt_transitive_verbs_montessori_create",
       "type": "vocabulary",
       "label": "Create",
       "category": "Transitive Verbs",
@@ -2252,7 +2255,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cross_png",
+      "id": "prebuilt_transitive_verbs_montessori_cross",
       "type": "vocabulary",
       "label": "Cross",
       "category": "Transitive Verbs",
@@ -2270,7 +2273,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_crowd_png",
+      "id": "prebuilt_transitive_verbs_montessori_crowd",
       "type": "vocabulary",
       "label": "Crowd",
       "category": "Transitive Verbs",
@@ -2288,7 +2291,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_cure_png",
+      "id": "prebuilt_transitive_verbs_montessori_cure",
       "type": "vocabulary",
       "label": "Cure",
       "category": "Transitive Verbs",
@@ -2306,7 +2309,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_damage_png",
+      "id": "prebuilt_transitive_verbs_montessori_damage",
       "type": "vocabulary",
       "label": "Damage",
       "category": "Transitive Verbs",
@@ -2324,7 +2327,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dare_png",
+      "id": "prebuilt_transitive_verbs_montessori_dare",
       "type": "vocabulary",
       "label": "Dare",
       "category": "Transitive Verbs",
@@ -2342,7 +2345,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_deal_png",
+      "id": "prebuilt_transitive_verbs_montessori_deal",
       "type": "vocabulary",
       "label": "Deal",
       "category": "Transitive Verbs",
@@ -2360,7 +2363,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_debate_png",
+      "id": "prebuilt_transitive_verbs_montessori_debate",
       "type": "vocabulary",
       "label": "Debate",
       "category": "Transitive Verbs",
@@ -2378,7 +2381,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_decay_png",
+      "id": "prebuilt_transitive_verbs_montessori_decay",
       "type": "vocabulary",
       "label": "Decay",
       "category": "Transitive Verbs",
@@ -2396,7 +2399,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_decide_png",
+      "id": "prebuilt_transitive_verbs_montessori_decide",
       "type": "vocabulary",
       "label": "Decide",
       "category": "Transitive Verbs",
@@ -2414,7 +2417,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_declare_png",
+      "id": "prebuilt_transitive_verbs_montessori_declare",
       "type": "vocabulary",
       "label": "Declare",
       "category": "Transitive Verbs",
@@ -2432,7 +2435,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_decorate_png",
+      "id": "prebuilt_transitive_verbs_montessori_decorate",
       "type": "vocabulary",
       "label": "Decorate",
       "category": "Transitive Verbs",
@@ -2450,7 +2453,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_decrease_png",
+      "id": "prebuilt_transitive_verbs_montessori_decrease",
       "type": "vocabulary",
       "label": "Decrease",
       "category": "Transitive Verbs",
@@ -2468,7 +2471,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_defeat_png",
+      "id": "prebuilt_transitive_verbs_montessori_defeat",
       "type": "vocabulary",
       "label": "Defeat",
       "category": "Transitive Verbs",
@@ -2486,7 +2489,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_defend_png",
+      "id": "prebuilt_transitive_verbs_montessori_defend",
       "type": "vocabulary",
       "label": "Defend",
       "category": "Transitive Verbs",
@@ -2504,7 +2507,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_define_png",
+      "id": "prebuilt_transitive_verbs_montessori_define",
       "type": "vocabulary",
       "label": "Define",
       "category": "Transitive Verbs",
@@ -2522,7 +2525,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_delay_png",
+      "id": "prebuilt_transitive_verbs_montessori_delay",
       "type": "vocabulary",
       "label": "Delay",
       "category": "Transitive Verbs",
@@ -2540,7 +2543,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_deliver_png",
+      "id": "prebuilt_transitive_verbs_montessori_deliver",
       "type": "vocabulary",
       "label": "Deliver",
       "category": "Transitive Verbs",
@@ -2558,7 +2561,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_demand_png",
+      "id": "prebuilt_transitive_verbs_montessori_demand",
       "type": "vocabulary",
       "label": "Demand",
       "category": "Transitive Verbs",
@@ -2576,7 +2579,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_demonstrate_png",
+      "id": "prebuilt_transitive_verbs_montessori_demonstrate",
       "type": "vocabulary",
       "label": "Demonstrate",
       "category": "Transitive Verbs",
@@ -2594,7 +2597,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_deny_png",
+      "id": "prebuilt_transitive_verbs_montessori_deny",
       "type": "vocabulary",
       "label": "Deny",
       "category": "Transitive Verbs",
@@ -2612,7 +2615,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_depend_png",
+      "id": "prebuilt_transitive_verbs_montessori_depend",
       "type": "vocabulary",
       "label": "Depend",
       "category": "Transitive Verbs",
@@ -2630,7 +2633,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_describe_png",
+      "id": "prebuilt_transitive_verbs_montessori_describe",
       "type": "vocabulary",
       "label": "Describe",
       "category": "Transitive Verbs",
@@ -2648,7 +2651,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_deserve_png",
+      "id": "prebuilt_transitive_verbs_montessori_deserve",
       "type": "vocabulary",
       "label": "Deserve",
       "category": "Transitive Verbs",
@@ -2666,7 +2669,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_design_png",
+      "id": "prebuilt_transitive_verbs_montessori_design",
       "type": "vocabulary",
       "label": "Design",
       "category": "Transitive Verbs",
@@ -2684,7 +2687,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_destroy_png",
+      "id": "prebuilt_transitive_verbs_montessori_destroy",
       "type": "vocabulary",
       "label": "Destroy",
       "category": "Transitive Verbs",
@@ -2702,7 +2705,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_detail_png",
+      "id": "prebuilt_transitive_verbs_montessori_detail",
       "type": "vocabulary",
       "label": "Detail",
       "category": "Transitive Verbs",
@@ -2720,7 +2723,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_detect_png",
+      "id": "prebuilt_transitive_verbs_montessori_detect",
       "type": "vocabulary",
       "label": "Detect",
       "category": "Transitive Verbs",
@@ -2738,7 +2741,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_develop_png",
+      "id": "prebuilt_transitive_verbs_montessori_develop",
       "type": "vocabulary",
       "label": "Develop",
       "category": "Transitive Verbs",
@@ -2756,7 +2759,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_devote_png",
+      "id": "prebuilt_transitive_verbs_montessori_devote",
       "type": "vocabulary",
       "label": "Devote",
       "category": "Transitive Verbs",
@@ -2774,7 +2777,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dig_png",
+      "id": "prebuilt_transitive_verbs_montessori_dig",
       "type": "vocabulary",
       "label": "Dig",
       "category": "Transitive Verbs",
@@ -2792,7 +2795,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_direct_png",
+      "id": "prebuilt_transitive_verbs_montessori_direct",
       "type": "vocabulary",
       "label": "Direct",
       "category": "Transitive Verbs",
@@ -2810,7 +2813,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_disappear_png",
+      "id": "prebuilt_transitive_verbs_montessori_disappear",
       "type": "vocabulary",
       "label": "Disappear",
       "category": "Transitive Verbs",
@@ -2828,7 +2831,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_discover_png",
+      "id": "prebuilt_transitive_verbs_montessori_discover",
       "type": "vocabulary",
       "label": "Discover",
       "category": "Transitive Verbs",
@@ -2846,7 +2849,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_discuss_png",
+      "id": "prebuilt_transitive_verbs_montessori_discuss",
       "type": "vocabulary",
       "label": "Discuss",
       "category": "Transitive Verbs",
@@ -2864,7 +2867,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dismiss_png",
+      "id": "prebuilt_transitive_verbs_montessori_dismiss",
       "type": "vocabulary",
       "label": "Dismiss",
       "category": "Transitive Verbs",
@@ -2882,7 +2885,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_display_png",
+      "id": "prebuilt_transitive_verbs_montessori_display",
       "type": "vocabulary",
       "label": "Display",
       "category": "Transitive Verbs",
@@ -2900,7 +2903,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_distribute_png",
+      "id": "prebuilt_transitive_verbs_montessori_distribute",
       "type": "vocabulary",
       "label": "Distribute",
       "category": "Transitive Verbs",
@@ -2918,7 +2921,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_divide_png",
+      "id": "prebuilt_transitive_verbs_montessori_divide",
       "type": "vocabulary",
       "label": "Divide",
       "category": "Transitive Verbs",
@@ -2936,7 +2939,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dominate_png",
+      "id": "prebuilt_transitive_verbs_montessori_dominate",
       "type": "vocabulary",
       "label": "Dominate",
       "category": "Transitive Verbs",
@@ -2954,7 +2957,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_donate_png",
+      "id": "prebuilt_transitive_verbs_montessori_donate",
       "type": "vocabulary",
       "label": "Donate",
       "category": "Transitive Verbs",
@@ -2972,7 +2975,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_double_png",
+      "id": "prebuilt_transitive_verbs_montessori_double",
       "type": "vocabulary",
       "label": "Double",
       "category": "Transitive Verbs",
@@ -2990,7 +2993,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_doubt_png",
+      "id": "prebuilt_transitive_verbs_montessori_doubt",
       "type": "vocabulary",
       "label": "Doubt",
       "category": "Transitive Verbs",
@@ -3008,7 +3011,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_download_png",
+      "id": "prebuilt_transitive_verbs_montessori_download",
       "type": "vocabulary",
       "label": "Download",
       "category": "Transitive Verbs",
@@ -3026,7 +3029,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drag_png",
+      "id": "prebuilt_transitive_verbs_montessori_drag",
       "type": "vocabulary",
       "label": "Drag",
       "category": "Transitive Verbs",
@@ -3044,7 +3047,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drain_png",
+      "id": "prebuilt_transitive_verbs_montessori_drain",
       "type": "vocabulary",
       "label": "Drain",
       "category": "Transitive Verbs",
@@ -3062,7 +3065,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_draw_png",
+      "id": "prebuilt_transitive_verbs_montessori_draw",
       "type": "vocabulary",
       "label": "Draw",
       "category": "Transitive Verbs",
@@ -3080,7 +3083,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dream_png",
+      "id": "prebuilt_transitive_verbs_montessori_dream",
       "type": "vocabulary",
       "label": "Dream",
       "category": "Transitive Verbs",
@@ -3098,7 +3101,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dress_png",
+      "id": "prebuilt_transitive_verbs_montessori_dress",
       "type": "vocabulary",
       "label": "Dress",
       "category": "Transitive Verbs",
@@ -3116,7 +3119,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drink_png",
+      "id": "prebuilt_transitive_verbs_montessori_drink",
       "type": "vocabulary",
       "label": "Drink",
       "category": "Transitive Verbs",
@@ -3134,7 +3137,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drive_png",
+      "id": "prebuilt_transitive_verbs_montessori_drive",
       "type": "vocabulary",
       "label": "Drive",
       "category": "Transitive Verbs",
@@ -3152,7 +3155,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drop_png",
+      "id": "prebuilt_transitive_verbs_montessori_drop",
       "type": "vocabulary",
       "label": "Drop",
       "category": "Transitive Verbs",
@@ -3170,7 +3173,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_drown_png",
+      "id": "prebuilt_transitive_verbs_montessori_drown",
       "type": "vocabulary",
       "label": "Drown",
       "category": "Transitive Verbs",
@@ -3188,7 +3191,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_dump_png",
+      "id": "prebuilt_transitive_verbs_montessori_dump",
       "type": "vocabulary",
       "label": "Dump",
       "category": "Transitive Verbs",
@@ -3206,7 +3209,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_earn_png",
+      "id": "prebuilt_transitive_verbs_montessori_earn",
       "type": "vocabulary",
       "label": "Earn",
       "category": "Transitive Verbs",
@@ -3224,7 +3227,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_eat_png",
+      "id": "prebuilt_transitive_verbs_montessori_eat",
       "type": "vocabulary",
       "label": "Eat",
       "category": "Transitive Verbs",
@@ -3242,7 +3245,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_edit_png",
+      "id": "prebuilt_transitive_verbs_montessori_edit",
       "type": "vocabulary",
       "label": "Edit",
       "category": "Transitive Verbs",
@@ -3260,7 +3263,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_educate_png",
+      "id": "prebuilt_transitive_verbs_montessori_educate",
       "type": "vocabulary",
       "label": "Educate",
       "category": "Transitive Verbs",
@@ -3278,7 +3281,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_elect_png",
+      "id": "prebuilt_transitive_verbs_montessori_elect",
       "type": "vocabulary",
       "label": "Elect",
       "category": "Transitive Verbs",
@@ -3296,7 +3299,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_eliminate_png",
+      "id": "prebuilt_transitive_verbs_montessori_eliminate",
       "type": "vocabulary",
       "label": "Eliminate",
       "category": "Transitive Verbs",
@@ -3314,7 +3317,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_embrace_png",
+      "id": "prebuilt_transitive_verbs_montessori_embrace",
       "type": "vocabulary",
       "label": "Embrace",
       "category": "Transitive Verbs",
@@ -3332,7 +3335,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_employ_png",
+      "id": "prebuilt_transitive_verbs_montessori_employ",
       "type": "vocabulary",
       "label": "Employ",
       "category": "Transitive Verbs",
@@ -3350,7 +3353,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_encourage_png",
+      "id": "prebuilt_transitive_verbs_montessori_encourage",
       "type": "vocabulary",
       "label": "Encourage",
       "category": "Transitive Verbs",
@@ -3368,7 +3371,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_enjoy_png",
+      "id": "prebuilt_transitive_verbs_montessori_enjoy",
       "type": "vocabulary",
       "label": "Enjoy",
       "category": "Transitive Verbs",
@@ -3386,7 +3389,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_enter_png",
+      "id": "prebuilt_transitive_verbs_montessori_enter",
       "type": "vocabulary",
       "label": "Enter",
       "category": "Transitive Verbs",
@@ -3404,7 +3407,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_entertain_png",
+      "id": "prebuilt_transitive_verbs_montessori_entertain",
       "type": "vocabulary",
       "label": "Entertain",
       "category": "Transitive Verbs",
@@ -3422,7 +3425,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_equip_png",
+      "id": "prebuilt_transitive_verbs_montessori_equip",
       "type": "vocabulary",
       "label": "Equip",
       "category": "Transitive Verbs",
@@ -3440,7 +3443,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_escape_png",
+      "id": "prebuilt_transitive_verbs_montessori_escape",
       "type": "vocabulary",
       "label": "Escape",
       "category": "Transitive Verbs",
@@ -3458,7 +3461,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_establish_png",
+      "id": "prebuilt_transitive_verbs_montessori_establish",
       "type": "vocabulary",
       "label": "Establish",
       "category": "Transitive Verbs",
@@ -3476,7 +3479,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_estimate_png",
+      "id": "prebuilt_transitive_verbs_montessori_estimate",
       "type": "vocabulary",
       "label": "Estimate",
       "category": "Transitive Verbs",
@@ -3494,7 +3497,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_examine_png",
+      "id": "prebuilt_transitive_verbs_montessori_examine",
       "type": "vocabulary",
       "label": "Examine",
       "category": "Transitive Verbs",
@@ -3512,7 +3515,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_exchange_png",
+      "id": "prebuilt_transitive_verbs_montessori_exchange",
       "type": "vocabulary",
       "label": "Exchange",
       "category": "Transitive Verbs",
@@ -3530,7 +3533,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_exclude_png",
+      "id": "prebuilt_transitive_verbs_montessori_exclude",
       "type": "vocabulary",
       "label": "Exclude",
       "category": "Transitive Verbs",
@@ -3548,7 +3551,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_excuse_png",
+      "id": "prebuilt_transitive_verbs_montessori_excuse",
       "type": "vocabulary",
       "label": "Excuse",
       "category": "Transitive Verbs",
@@ -3566,7 +3569,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_exercise_png",
+      "id": "prebuilt_transitive_verbs_montessori_exercise",
       "type": "vocabulary",
       "label": "Exercise",
       "category": "Transitive Verbs",
@@ -3584,7 +3587,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_exhibit_png",
+      "id": "prebuilt_transitive_verbs_montessori_exhibit",
       "type": "vocabulary",
       "label": "Exhibit",
       "category": "Transitive Verbs",
@@ -3602,7 +3605,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_exist_png",
+      "id": "prebuilt_transitive_verbs_montessori_exist",
       "type": "vocabulary",
       "label": "Exist",
       "category": "Transitive Verbs",
@@ -3620,7 +3623,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_expand_png",
+      "id": "prebuilt_transitive_verbs_montessori_expand",
       "type": "vocabulary",
       "label": "Expand",
       "category": "Transitive Verbs",
@@ -3638,7 +3641,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_expect_png",
+      "id": "prebuilt_transitive_verbs_montessori_expect",
       "type": "vocabulary",
       "label": "Expect",
       "category": "Transitive Verbs",
@@ -3656,7 +3659,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_experience_png",
+      "id": "prebuilt_transitive_verbs_montessori_experience",
       "type": "vocabulary",
       "label": "Experience",
       "category": "Transitive Verbs",
@@ -3674,7 +3677,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_experiment_png",
+      "id": "prebuilt_transitive_verbs_montessori_experiment",
       "type": "vocabulary",
       "label": "Experiment",
       "category": "Transitive Verbs",
@@ -3692,7 +3695,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_explain_png",
+      "id": "prebuilt_transitive_verbs_montessori_explain",
       "type": "vocabulary",
       "label": "Explain",
       "category": "Transitive Verbs",
@@ -3710,7 +3713,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_explode_png",
+      "id": "prebuilt_transitive_verbs_montessori_explode",
       "type": "vocabulary",
       "label": "Explode",
       "category": "Transitive Verbs",
@@ -3728,7 +3731,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_export_png",
+      "id": "prebuilt_transitive_verbs_montessori_export",
       "type": "vocabulary",
       "label": "Export",
       "category": "Transitive Verbs",
@@ -3746,7 +3749,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_expose_png",
+      "id": "prebuilt_transitive_verbs_montessori_expose",
       "type": "vocabulary",
       "label": "Expose",
       "category": "Transitive Verbs",
@@ -3764,7 +3767,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_extend_png",
+      "id": "prebuilt_transitive_verbs_montessori_extend",
       "type": "vocabulary",
       "label": "Extend",
       "category": "Transitive Verbs",
@@ -3782,7 +3785,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_face_png",
+      "id": "prebuilt_transitive_verbs_montessori_face",
       "type": "vocabulary",
       "label": "Face",
       "category": "Transitive Verbs",
@@ -3800,7 +3803,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fail_png",
+      "id": "prebuilt_transitive_verbs_montessori_fail",
       "type": "vocabulary",
       "label": "Fail",
       "category": "Transitive Verbs",
@@ -3818,7 +3821,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fancy_png",
+      "id": "prebuilt_transitive_verbs_montessori_fancy",
       "type": "vocabulary",
       "label": "Fancy",
       "category": "Transitive Verbs",
@@ -3836,7 +3839,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_feature_png",
+      "id": "prebuilt_transitive_verbs_montessori_feature",
       "type": "vocabulary",
       "label": "Feature",
       "category": "Transitive Verbs",
@@ -3854,7 +3857,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_feed_png",
+      "id": "prebuilt_transitive_verbs_montessori_feed",
       "type": "vocabulary",
       "label": "Feed",
       "category": "Transitive Verbs",
@@ -3872,7 +3875,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fetch_png",
+      "id": "prebuilt_transitive_verbs_montessori_fetch",
       "type": "vocabulary",
       "label": "Fetch",
       "category": "Transitive Verbs",
@@ -3890,7 +3893,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fight_png",
+      "id": "prebuilt_transitive_verbs_montessori_fight",
       "type": "vocabulary",
       "label": "Fight",
       "category": "Transitive Verbs",
@@ -3908,7 +3911,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_file_png",
+      "id": "prebuilt_transitive_verbs_montessori_file",
       "type": "vocabulary",
       "label": "File",
       "category": "Transitive Verbs",
@@ -3926,7 +3929,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fill_png",
+      "id": "prebuilt_transitive_verbs_montessori_fill",
       "type": "vocabulary",
       "label": "Fill",
       "category": "Transitive Verbs",
@@ -3944,7 +3947,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_film_png",
+      "id": "prebuilt_transitive_verbs_montessori_film",
       "type": "vocabulary",
       "label": "Film",
       "category": "Transitive Verbs",
@@ -3962,7 +3965,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_find_png",
+      "id": "prebuilt_transitive_verbs_montessori_find",
       "type": "vocabulary",
       "label": "Find",
       "category": "Transitive Verbs",
@@ -3980,7 +3983,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_finish_png",
+      "id": "prebuilt_transitive_verbs_montessori_finish",
       "type": "vocabulary",
       "label": "Finish",
       "category": "Transitive Verbs",
@@ -3998,7 +4001,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fit_png",
+      "id": "prebuilt_transitive_verbs_montessori_fit",
       "type": "vocabulary",
       "label": "Fit",
       "category": "Transitive Verbs",
@@ -4016,7 +4019,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fix_png",
+      "id": "prebuilt_transitive_verbs_montessori_fix",
       "type": "vocabulary",
       "label": "Fix",
       "category": "Transitive Verbs",
@@ -4034,7 +4037,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_float_png",
+      "id": "prebuilt_transitive_verbs_montessori_float",
       "type": "vocabulary",
       "label": "Float",
       "category": "Transitive Verbs",
@@ -4052,7 +4055,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_fold_png",
+      "id": "prebuilt_transitive_verbs_montessori_fold",
       "type": "vocabulary",
       "label": "Fold",
       "category": "Transitive Verbs",
@@ -4070,7 +4073,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_follow_png",
+      "id": "prebuilt_transitive_verbs_montessori_follow",
       "type": "vocabulary",
       "label": "Follow",
       "category": "Transitive Verbs",
@@ -4088,7 +4091,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_forbid_png",
+      "id": "prebuilt_transitive_verbs_montessori_forbid",
       "type": "vocabulary",
       "label": "Forbid",
       "category": "Transitive Verbs",
@@ -4106,7 +4109,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_force_png",
+      "id": "prebuilt_transitive_verbs_montessori_force",
       "type": "vocabulary",
       "label": "Force",
       "category": "Transitive Verbs",
@@ -4124,7 +4127,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_forecast_png",
+      "id": "prebuilt_transitive_verbs_montessori_forecast",
       "type": "vocabulary",
       "label": "Forecast",
       "category": "Transitive Verbs",
@@ -4142,7 +4145,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_forget_png",
+      "id": "prebuilt_transitive_verbs_montessori_forget",
       "type": "vocabulary",
       "label": "Forget",
       "category": "Transitive Verbs",
@@ -4160,7 +4163,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_forgive_png",
+      "id": "prebuilt_transitive_verbs_montessori_forgive",
       "type": "vocabulary",
       "label": "Forgive",
       "category": "Transitive Verbs",
@@ -4178,7 +4181,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_found_png",
+      "id": "prebuilt_transitive_verbs_montessori_found",
       "type": "vocabulary",
       "label": "Found",
       "category": "Transitive Verbs",
@@ -4196,7 +4199,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_freeze_png",
+      "id": "prebuilt_transitive_verbs_montessori_freeze",
       "type": "vocabulary",
       "label": "Freeze",
       "category": "Transitive Verbs",
@@ -4214,7 +4217,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_frighten_png",
+      "id": "prebuilt_transitive_verbs_montessori_frighten",
       "type": "vocabulary",
       "label": "Frighten",
       "category": "Transitive Verbs",
@@ -4232,7 +4235,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_gain_png",
+      "id": "prebuilt_transitive_verbs_montessori_gain",
       "type": "vocabulary",
       "label": "Gain",
       "category": "Transitive Verbs",
@@ -4250,7 +4253,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_gather_png",
+      "id": "prebuilt_transitive_verbs_montessori_gather",
       "type": "vocabulary",
       "label": "Gather",
       "category": "Transitive Verbs",
@@ -4268,7 +4271,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_give_png",
+      "id": "prebuilt_transitive_verbs_montessori_give",
       "type": "vocabulary",
       "label": "Give",
       "category": "Transitive Verbs",
@@ -4286,7 +4289,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_glue_png",
+      "id": "prebuilt_transitive_verbs_montessori_glue",
       "type": "vocabulary",
       "label": "Glue",
       "category": "Transitive Verbs",
@@ -4304,7 +4307,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_grab_png",
+      "id": "prebuilt_transitive_verbs_montessori_grab",
       "type": "vocabulary",
       "label": "Grab",
       "category": "Transitive Verbs",
@@ -4322,7 +4325,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_graduate_png",
+      "id": "prebuilt_transitive_verbs_montessori_graduate",
       "type": "vocabulary",
       "label": "Graduate",
       "category": "Transitive Verbs",
@@ -4340,7 +4343,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_grant_png",
+      "id": "prebuilt_transitive_verbs_montessori_grant",
       "type": "vocabulary",
       "label": "Grant",
       "category": "Transitive Verbs",
@@ -4358,7 +4361,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_grill_png",
+      "id": "prebuilt_transitive_verbs_montessori_grill",
       "type": "vocabulary",
       "label": "Grill",
       "category": "Transitive Verbs",
@@ -4376,7 +4379,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_grind_png",
+      "id": "prebuilt_transitive_verbs_montessori_grind",
       "type": "vocabulary",
       "label": "Grind",
       "category": "Transitive Verbs",
@@ -4394,7 +4397,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_guard_png",
+      "id": "prebuilt_transitive_verbs_montessori_guard",
       "type": "vocabulary",
       "label": "Guard",
       "category": "Transitive Verbs",
@@ -4412,7 +4415,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_guess_png",
+      "id": "prebuilt_transitive_verbs_montessori_guess",
       "type": "vocabulary",
       "label": "Guess",
       "category": "Transitive Verbs",
@@ -4430,7 +4433,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hand_png",
+      "id": "prebuilt_transitive_verbs_montessori_hand",
       "type": "vocabulary",
       "label": "Hand",
       "category": "Transitive Verbs",
@@ -4448,7 +4451,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_handle_png",
+      "id": "prebuilt_transitive_verbs_montessori_handle",
       "type": "vocabulary",
       "label": "Handle",
       "category": "Transitive Verbs",
@@ -4466,7 +4469,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hang_png",
+      "id": "prebuilt_transitive_verbs_montessori_hang",
       "type": "vocabulary",
       "label": "Hang",
       "category": "Transitive Verbs",
@@ -4484,7 +4487,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_harm_png",
+      "id": "prebuilt_transitive_verbs_montessori_harm",
       "type": "vocabulary",
       "label": "Harm",
       "category": "Transitive Verbs",
@@ -4502,7 +4505,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hate_png",
+      "id": "prebuilt_transitive_verbs_montessori_hate",
       "type": "vocabulary",
       "label": "Hate",
       "category": "Transitive Verbs",
@@ -4520,7 +4523,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_have_png",
+      "id": "prebuilt_transitive_verbs_montessori_have",
       "type": "vocabulary",
       "label": "Have",
       "category": "Transitive Verbs",
@@ -4538,7 +4541,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_heal_png",
+      "id": "prebuilt_transitive_verbs_montessori_heal",
       "type": "vocabulary",
       "label": "Heal",
       "category": "Transitive Verbs",
@@ -4556,7 +4559,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hear_png",
+      "id": "prebuilt_transitive_verbs_montessori_hear",
       "type": "vocabulary",
       "label": "Hear",
       "category": "Transitive Verbs",
@@ -4574,7 +4577,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_heat_png",
+      "id": "prebuilt_transitive_verbs_montessori_heat",
       "type": "vocabulary",
       "label": "Heat",
       "category": "Transitive Verbs",
@@ -4592,7 +4595,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_help_png",
+      "id": "prebuilt_transitive_verbs_montessori_help",
       "type": "vocabulary",
       "label": "Help",
       "category": "Transitive Verbs",
@@ -4610,7 +4613,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hide_png",
+      "id": "prebuilt_transitive_verbs_montessori_hide",
       "type": "vocabulary",
       "label": "Hide",
       "category": "Transitive Verbs",
@@ -4628,7 +4631,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hit_png",
+      "id": "prebuilt_transitive_verbs_montessori_hit",
       "type": "vocabulary",
       "label": "Hit",
       "category": "Transitive Verbs",
@@ -4646,7 +4649,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hold_png",
+      "id": "prebuilt_transitive_verbs_montessori_hold",
       "type": "vocabulary",
       "label": "Hold",
       "category": "Transitive Verbs",
@@ -4664,7 +4667,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hook_png",
+      "id": "prebuilt_transitive_verbs_montessori_hook",
       "type": "vocabulary",
       "label": "Hook",
       "category": "Transitive Verbs",
@@ -4682,7 +4685,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hope_png",
+      "id": "prebuilt_transitive_verbs_montessori_hope",
       "type": "vocabulary",
       "label": "Hope",
       "category": "Transitive Verbs",
@@ -4700,7 +4703,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hunt_png",
+      "id": "prebuilt_transitive_verbs_montessori_hunt",
       "type": "vocabulary",
       "label": "Hunt",
       "category": "Transitive Verbs",
@@ -4718,7 +4721,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_hurt_png",
+      "id": "prebuilt_transitive_verbs_montessori_hurt",
       "type": "vocabulary",
       "label": "Hurt",
       "category": "Transitive Verbs",
@@ -4736,7 +4739,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_ignore_png",
+      "id": "prebuilt_transitive_verbs_montessori_ignore",
       "type": "vocabulary",
       "label": "Ignore",
       "category": "Transitive Verbs",
@@ -4754,7 +4757,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_imagine_png",
+      "id": "prebuilt_transitive_verbs_montessori_imagine",
       "type": "vocabulary",
       "label": "Imagine",
       "category": "Transitive Verbs",
@@ -4772,7 +4775,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_import_png",
+      "id": "prebuilt_transitive_verbs_montessori_import",
       "type": "vocabulary",
       "label": "Import",
       "category": "Transitive Verbs",
@@ -4790,7 +4793,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_impress_png",
+      "id": "prebuilt_transitive_verbs_montessori_impress",
       "type": "vocabulary",
       "label": "Impress",
       "category": "Transitive Verbs",
@@ -4808,7 +4811,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_improve_png",
+      "id": "prebuilt_transitive_verbs_montessori_improve",
       "type": "vocabulary",
       "label": "Improve",
       "category": "Transitive Verbs",
@@ -4826,7 +4829,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_include_png",
+      "id": "prebuilt_transitive_verbs_montessori_include",
       "type": "vocabulary",
       "label": "Include",
       "category": "Transitive Verbs",
@@ -4844,7 +4847,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_increase_png",
+      "id": "prebuilt_transitive_verbs_montessori_increase",
       "type": "vocabulary",
       "label": "Increase",
       "category": "Transitive Verbs",
@@ -4862,7 +4865,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_indicate_png",
+      "id": "prebuilt_transitive_verbs_montessori_indicate",
       "type": "vocabulary",
       "label": "Indicate",
       "category": "Transitive Verbs",
@@ -4880,7 +4883,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_inform_png",
+      "id": "prebuilt_transitive_verbs_montessori_inform",
       "type": "vocabulary",
       "label": "Inform",
       "category": "Transitive Verbs",
@@ -4898,7 +4901,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_injure_png",
+      "id": "prebuilt_transitive_verbs_montessori_injure",
       "type": "vocabulary",
       "label": "Injure",
       "category": "Transitive Verbs",
@@ -4916,7 +4919,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_insert_png",
+      "id": "prebuilt_transitive_verbs_montessori_insert",
       "type": "vocabulary",
       "label": "Insert",
       "category": "Transitive Verbs",
@@ -4934,7 +4937,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_inspect_png",
+      "id": "prebuilt_transitive_verbs_montessori_inspect",
       "type": "vocabulary",
       "label": "Inspect",
       "category": "Transitive Verbs",
@@ -4952,7 +4955,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_install_png",
+      "id": "prebuilt_transitive_verbs_montessori_install",
       "type": "vocabulary",
       "label": "Install",
       "category": "Transitive Verbs",
@@ -4970,7 +4973,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_instruct_png",
+      "id": "prebuilt_transitive_verbs_montessori_instruct",
       "type": "vocabulary",
       "label": "Instruct",
       "category": "Transitive Verbs",
@@ -4988,7 +4991,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_insure_png",
+      "id": "prebuilt_transitive_verbs_montessori_insure",
       "type": "vocabulary",
       "label": "Insure",
       "category": "Transitive Verbs",
@@ -5006,7 +5009,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_intend_png",
+      "id": "prebuilt_transitive_verbs_montessori_intend",
       "type": "vocabulary",
       "label": "Intend",
       "category": "Transitive Verbs",
@@ -5024,7 +5027,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_introduce_png",
+      "id": "prebuilt_transitive_verbs_montessori_introduce",
       "type": "vocabulary",
       "label": "Introduce",
       "category": "Transitive Verbs",
@@ -5042,7 +5045,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_invade_png",
+      "id": "prebuilt_transitive_verbs_montessori_invade",
       "type": "vocabulary",
       "label": "Invade",
       "category": "Transitive Verbs",
@@ -5060,7 +5063,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_invent_png",
+      "id": "prebuilt_transitive_verbs_montessori_invent",
       "type": "vocabulary",
       "label": "Invent",
       "category": "Transitive Verbs",
@@ -5078,7 +5081,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_invest_png",
+      "id": "prebuilt_transitive_verbs_montessori_invest",
       "type": "vocabulary",
       "label": "Invest",
       "category": "Transitive Verbs",
@@ -5096,7 +5099,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_invite_png",
+      "id": "prebuilt_transitive_verbs_montessori_invite",
       "type": "vocabulary",
       "label": "Invite",
       "category": "Transitive Verbs",
@@ -5114,7 +5117,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_iron_png",
+      "id": "prebuilt_transitive_verbs_montessori_iron",
       "type": "vocabulary",
       "label": "Iron",
       "category": "Transitive Verbs",
@@ -5132,7 +5135,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_isolate_png",
+      "id": "prebuilt_transitive_verbs_montessori_isolate",
       "type": "vocabulary",
       "label": "Isolate",
       "category": "Transitive Verbs",
@@ -5150,7 +5153,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_judge_png",
+      "id": "prebuilt_transitive_verbs_montessori_judge",
       "type": "vocabulary",
       "label": "Judge",
       "category": "Transitive Verbs",
@@ -5168,7 +5171,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_kick_png",
+      "id": "prebuilt_transitive_verbs_montessori_kick",
       "type": "vocabulary",
       "label": "Kick",
       "category": "Transitive Verbs",
@@ -5186,7 +5189,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_kill_png",
+      "id": "prebuilt_transitive_verbs_montessori_kill",
       "type": "vocabulary",
       "label": "Kill",
       "category": "Transitive Verbs",
@@ -5204,7 +5207,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_kiss_png",
+      "id": "prebuilt_transitive_verbs_montessori_kiss",
       "type": "vocabulary",
       "label": "Kiss",
       "category": "Transitive Verbs",
@@ -5222,7 +5225,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_knead_png",
+      "id": "prebuilt_transitive_verbs_montessori_knead",
       "type": "vocabulary",
       "label": "Knead",
       "category": "Transitive Verbs",
@@ -5240,7 +5243,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_kneel_png",
+      "id": "prebuilt_transitive_verbs_montessori_kneel",
       "type": "vocabulary",
       "label": "Kneel",
       "category": "Transitive Verbs",
@@ -5258,7 +5261,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_knit_png",
+      "id": "prebuilt_transitive_verbs_montessori_knit",
       "type": "vocabulary",
       "label": "Knit",
       "category": "Transitive Verbs",
@@ -5276,7 +5279,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_knock_png",
+      "id": "prebuilt_transitive_verbs_montessori_knock",
       "type": "vocabulary",
       "label": "Knock",
       "category": "Transitive Verbs",
@@ -5294,7 +5297,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_label_png",
+      "id": "prebuilt_transitive_verbs_montessori_label",
       "type": "vocabulary",
       "label": "Label",
       "category": "Transitive Verbs",
@@ -5312,7 +5315,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_land_png",
+      "id": "prebuilt_transitive_verbs_montessori_land",
       "type": "vocabulary",
       "label": "Land",
       "category": "Transitive Verbs",
@@ -5330,7 +5333,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_last_png",
+      "id": "prebuilt_transitive_verbs_montessori_last",
       "type": "vocabulary",
       "label": "Last",
       "category": "Transitive Verbs",
@@ -5348,7 +5351,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_launch_png",
+      "id": "prebuilt_transitive_verbs_montessori_launch",
       "type": "vocabulary",
       "label": "Launch",
       "category": "Transitive Verbs",
@@ -5366,7 +5369,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lay_png",
+      "id": "prebuilt_transitive_verbs_montessori_lay",
       "type": "vocabulary",
       "label": "Lay",
       "category": "Transitive Verbs",
@@ -5384,7 +5387,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lead_png",
+      "id": "prebuilt_transitive_verbs_montessori_lead",
       "type": "vocabulary",
       "label": "Lead",
       "category": "Transitive Verbs",
@@ -5402,7 +5405,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lean_png",
+      "id": "prebuilt_transitive_verbs_montessori_lean",
       "type": "vocabulary",
       "label": "Lean",
       "category": "Transitive Verbs",
@@ -5420,7 +5423,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_leap_png",
+      "id": "prebuilt_transitive_verbs_montessori_leap",
       "type": "vocabulary",
       "label": "Leap",
       "category": "Transitive Verbs",
@@ -5438,7 +5441,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_learn_png",
+      "id": "prebuilt_transitive_verbs_montessori_learn",
       "type": "vocabulary",
       "label": "Learn",
       "category": "Transitive Verbs",
@@ -5456,7 +5459,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_leave_png",
+      "id": "prebuilt_transitive_verbs_montessori_leave",
       "type": "vocabulary",
       "label": "Leave",
       "category": "Transitive Verbs",
@@ -5474,7 +5477,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lend_png",
+      "id": "prebuilt_transitive_verbs_montessori_lend",
       "type": "vocabulary",
       "label": "Lend",
       "category": "Transitive Verbs",
@@ -5492,7 +5495,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_let_png",
+      "id": "prebuilt_transitive_verbs_montessori_let",
       "type": "vocabulary",
       "label": "Let",
       "category": "Transitive Verbs",
@@ -5510,7 +5513,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lift_png",
+      "id": "prebuilt_transitive_verbs_montessori_lift",
       "type": "vocabulary",
       "label": "Lift",
       "category": "Transitive Verbs",
@@ -5528,7 +5531,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_like_png",
+      "id": "prebuilt_transitive_verbs_montessori_like",
       "type": "vocabulary",
       "label": "Like",
       "category": "Transitive Verbs",
@@ -5546,7 +5549,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_limit_png",
+      "id": "prebuilt_transitive_verbs_montessori_limit",
       "type": "vocabulary",
       "label": "Limit",
       "category": "Transitive Verbs",
@@ -5564,7 +5567,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_link_png",
+      "id": "prebuilt_transitive_verbs_montessori_link",
       "type": "vocabulary",
       "label": "Link",
       "category": "Transitive Verbs",
@@ -5582,7 +5585,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_listen_png",
+      "id": "prebuilt_transitive_verbs_montessori_listen",
       "type": "vocabulary",
       "label": "Listen",
       "category": "Transitive Verbs",
@@ -5600,7 +5603,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_load_png",
+      "id": "prebuilt_transitive_verbs_montessori_load",
       "type": "vocabulary",
       "label": "Load",
       "category": "Transitive Verbs",
@@ -5618,7 +5621,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_locate_png",
+      "id": "prebuilt_transitive_verbs_montessori_locate",
       "type": "vocabulary",
       "label": "Locate",
       "category": "Transitive Verbs",
@@ -5636,7 +5639,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_lock_png",
+      "id": "prebuilt_transitive_verbs_montessori_lock",
       "type": "vocabulary",
       "label": "Lock",
       "category": "Transitive Verbs",
@@ -5654,7 +5657,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_love_png",
+      "id": "prebuilt_transitive_verbs_montessori_love",
       "type": "vocabulary",
       "label": "Love",
       "category": "Transitive Verbs",
@@ -5672,7 +5675,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_make_png",
+      "id": "prebuilt_transitive_verbs_montessori_make",
       "type": "vocabulary",
       "label": "Make",
       "category": "Transitive Verbs",
@@ -5690,7 +5693,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_manage_png",
+      "id": "prebuilt_transitive_verbs_montessori_manage",
       "type": "vocabulary",
       "label": "Manage",
       "category": "Transitive Verbs",
@@ -5708,7 +5711,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_mark_png",
+      "id": "prebuilt_transitive_verbs_montessori_mark",
       "type": "vocabulary",
       "label": "Mark",
       "category": "Transitive Verbs",
@@ -5726,7 +5729,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_marry_png",
+      "id": "prebuilt_transitive_verbs_montessori_marry",
       "type": "vocabulary",
       "label": "Marry",
       "category": "Transitive Verbs",
@@ -5744,7 +5747,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_match_png",
+      "id": "prebuilt_transitive_verbs_montessori_match",
       "type": "vocabulary",
       "label": "Match",
       "category": "Transitive Verbs",
@@ -5762,7 +5765,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_measure_png",
+      "id": "prebuilt_transitive_verbs_montessori_measure",
       "type": "vocabulary",
       "label": "Measure",
       "category": "Transitive Verbs",
@@ -5780,7 +5783,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_mention_png",
+      "id": "prebuilt_transitive_verbs_montessori_mention",
       "type": "vocabulary",
       "label": "Mention",
       "category": "Transitive Verbs",
@@ -5798,7 +5801,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_merge_png",
+      "id": "prebuilt_transitive_verbs_montessori_merge",
       "type": "vocabulary",
       "label": "Merge",
       "category": "Transitive Verbs",
@@ -5816,7 +5819,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_mind_png",
+      "id": "prebuilt_transitive_verbs_montessori_mind",
       "type": "vocabulary",
       "label": "Mind",
       "category": "Transitive Verbs",
@@ -5834,7 +5837,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_miss_png",
+      "id": "prebuilt_transitive_verbs_montessori_miss",
       "type": "vocabulary",
       "label": "Miss",
       "category": "Transitive Verbs",
@@ -5852,7 +5855,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_mix_png",
+      "id": "prebuilt_transitive_verbs_montessori_mix",
       "type": "vocabulary",
       "label": "Mix",
       "category": "Transitive Verbs",
@@ -5870,7 +5873,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_monitor_png",
+      "id": "prebuilt_transitive_verbs_montessori_monitor",
       "type": "vocabulary",
       "label": "Monitor",
       "category": "Transitive Verbs",
@@ -5888,7 +5891,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_name_png",
+      "id": "prebuilt_transitive_verbs_montessori_name",
       "type": "vocabulary",
       "label": "Name",
       "category": "Transitive Verbs",
@@ -5906,7 +5909,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_need_png",
+      "id": "prebuilt_transitive_verbs_montessori_need",
       "type": "vocabulary",
       "label": "Need",
       "category": "Transitive Verbs",
@@ -5924,7 +5927,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_notice_png",
+      "id": "prebuilt_transitive_verbs_montessori_notice",
       "type": "vocabulary",
       "label": "Notice",
       "category": "Transitive Verbs",
@@ -5942,7 +5945,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_obey_png",
+      "id": "prebuilt_transitive_verbs_montessori_obey",
       "type": "vocabulary",
       "label": "Obey",
       "category": "Transitive Verbs",
@@ -5960,7 +5963,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_observe_png",
+      "id": "prebuilt_transitive_verbs_montessori_observe",
       "type": "vocabulary",
       "label": "Observe",
       "category": "Transitive Verbs",
@@ -5978,7 +5981,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_obtain_png",
+      "id": "prebuilt_transitive_verbs_montessori_obtain",
       "type": "vocabulary",
       "label": "Obtain",
       "category": "Transitive Verbs",
@@ -5996,7 +5999,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_occupy_png",
+      "id": "prebuilt_transitive_verbs_montessori_occupy",
       "type": "vocabulary",
       "label": "Occupy",
       "category": "Transitive Verbs",
@@ -6014,7 +6017,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_offend_png",
+      "id": "prebuilt_transitive_verbs_montessori_offend",
       "type": "vocabulary",
       "label": "Offend",
       "category": "Transitive Verbs",
@@ -6032,7 +6035,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_offer_png",
+      "id": "prebuilt_transitive_verbs_montessori_offer",
       "type": "vocabulary",
       "label": "Offer",
       "category": "Transitive Verbs",
@@ -6050,7 +6053,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_operate_png",
+      "id": "prebuilt_transitive_verbs_montessori_operate",
       "type": "vocabulary",
       "label": "Operate",
       "category": "Transitive Verbs",
@@ -6068,7 +6071,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_order_png",
+      "id": "prebuilt_transitive_verbs_montessori_order",
       "type": "vocabulary",
       "label": "Order",
       "category": "Transitive Verbs",
@@ -6086,7 +6089,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_organise_png",
+      "id": "prebuilt_transitive_verbs_montessori_organise",
       "type": "vocabulary",
       "label": "Organise",
       "category": "Transitive Verbs",
@@ -6104,7 +6107,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_overcome_png",
+      "id": "prebuilt_transitive_verbs_montessori_overcome",
       "type": "vocabulary",
       "label": "Overcome",
       "category": "Transitive Verbs",
@@ -6122,7 +6125,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_owe_png",
+      "id": "prebuilt_transitive_verbs_montessori_owe",
       "type": "vocabulary",
       "label": "Owe",
       "category": "Transitive Verbs",
@@ -6140,7 +6143,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_own_png",
+      "id": "prebuilt_transitive_verbs_montessori_own",
       "type": "vocabulary",
       "label": "Own",
       "category": "Transitive Verbs",
@@ -6158,7 +6161,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_paint_png",
+      "id": "prebuilt_transitive_verbs_montessori_paint",
       "type": "vocabulary",
       "label": "Paint",
       "category": "Transitive Verbs",
@@ -6176,7 +6179,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_park_png",
+      "id": "prebuilt_transitive_verbs_montessori_park",
       "type": "vocabulary",
       "label": "Park",
       "category": "Transitive Verbs",
@@ -6194,7 +6197,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pass_png",
+      "id": "prebuilt_transitive_verbs_montessori_pass",
       "type": "vocabulary",
       "label": "Pass",
       "category": "Transitive Verbs",
@@ -6212,7 +6215,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_patch_png",
+      "id": "prebuilt_transitive_verbs_montessori_patch",
       "type": "vocabulary",
       "label": "Patch",
       "category": "Transitive Verbs",
@@ -6230,7 +6233,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pause_png",
+      "id": "prebuilt_transitive_verbs_montessori_pause",
       "type": "vocabulary",
       "label": "Pause",
       "category": "Transitive Verbs",
@@ -6248,7 +6251,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pay_png",
+      "id": "prebuilt_transitive_verbs_montessori_pay",
       "type": "vocabulary",
       "label": "Pay",
       "category": "Transitive Verbs",
@@ -6266,7 +6269,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_permit_png",
+      "id": "prebuilt_transitive_verbs_montessori_permit",
       "type": "vocabulary",
       "label": "Permit",
       "category": "Transitive Verbs",
@@ -6284,7 +6287,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_persuade_png",
+      "id": "prebuilt_transitive_verbs_montessori_persuade",
       "type": "vocabulary",
       "label": "Persuade",
       "category": "Transitive Verbs",
@@ -6302,7 +6305,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pick_png",
+      "id": "prebuilt_transitive_verbs_montessori_pick",
       "type": "vocabulary",
       "label": "Pick",
       "category": "Transitive Verbs",
@@ -6320,7 +6323,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_plant_png",
+      "id": "prebuilt_transitive_verbs_montessori_plant",
       "type": "vocabulary",
       "label": "Plant",
       "category": "Transitive Verbs",
@@ -6338,7 +6341,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_play_png",
+      "id": "prebuilt_transitive_verbs_montessori_play",
       "type": "vocabulary",
       "label": "Play",
       "category": "Transitive Verbs",
@@ -6356,7 +6359,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_please_png",
+      "id": "prebuilt_transitive_verbs_montessori_please",
       "type": "vocabulary",
       "label": "Please",
       "category": "Transitive Verbs",
@@ -6374,7 +6377,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_point_png",
+      "id": "prebuilt_transitive_verbs_montessori_point",
       "type": "vocabulary",
       "label": "Point",
       "category": "Transitive Verbs",
@@ -6392,7 +6395,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_polish_png",
+      "id": "prebuilt_transitive_verbs_montessori_polish",
       "type": "vocabulary",
       "label": "Polish",
       "category": "Transitive Verbs",
@@ -6410,7 +6413,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pour_png",
+      "id": "prebuilt_transitive_verbs_montessori_pour",
       "type": "vocabulary",
       "label": "Pour",
       "category": "Transitive Verbs",
@@ -6428,7 +6431,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_praise_png",
+      "id": "prebuilt_transitive_verbs_montessori_praise",
       "type": "vocabulary",
       "label": "Praise",
       "category": "Transitive Verbs",
@@ -6446,7 +6449,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_predict_png",
+      "id": "prebuilt_transitive_verbs_montessori_predict",
       "type": "vocabulary",
       "label": "Predict",
       "category": "Transitive Verbs",
@@ -6464,7 +6467,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_prefer_png",
+      "id": "prebuilt_transitive_verbs_montessori_prefer",
       "type": "vocabulary",
       "label": "Prefer",
       "category": "Transitive Verbs",
@@ -6482,7 +6485,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_prepare_png",
+      "id": "prebuilt_transitive_verbs_montessori_prepare",
       "type": "vocabulary",
       "label": "Prepare",
       "category": "Transitive Verbs",
@@ -6500,7 +6503,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_present_png",
+      "id": "prebuilt_transitive_verbs_montessori_present",
       "type": "vocabulary",
       "label": "Present",
       "category": "Transitive Verbs",
@@ -6518,7 +6521,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_preserve_png",
+      "id": "prebuilt_transitive_verbs_montessori_preserve",
       "type": "vocabulary",
       "label": "Preserve",
       "category": "Transitive Verbs",
@@ -6536,7 +6539,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_press_png",
+      "id": "prebuilt_transitive_verbs_montessori_press",
       "type": "vocabulary",
       "label": "Press",
       "category": "Transitive Verbs",
@@ -6554,7 +6557,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pretend_png",
+      "id": "prebuilt_transitive_verbs_montessori_pretend",
       "type": "vocabulary",
       "label": "Pretend",
       "category": "Transitive Verbs",
@@ -6572,7 +6575,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_prevent_png",
+      "id": "prebuilt_transitive_verbs_montessori_prevent",
       "type": "vocabulary",
       "label": "Prevent",
       "category": "Transitive Verbs",
@@ -6590,7 +6593,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_print_png",
+      "id": "prebuilt_transitive_verbs_montessori_print",
       "type": "vocabulary",
       "label": "Print",
       "category": "Transitive Verbs",
@@ -6608,7 +6611,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_produce_png",
+      "id": "prebuilt_transitive_verbs_montessori_produce",
       "type": "vocabulary",
       "label": "Produce",
       "category": "Transitive Verbs",
@@ -6626,7 +6629,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_promise_png",
+      "id": "prebuilt_transitive_verbs_montessori_promise",
       "type": "vocabulary",
       "label": "Promise",
       "category": "Transitive Verbs",
@@ -6644,7 +6647,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_promote_png",
+      "id": "prebuilt_transitive_verbs_montessori_promote",
       "type": "vocabulary",
       "label": "Promote",
       "category": "Transitive Verbs",
@@ -6662,7 +6665,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_protect_png",
+      "id": "prebuilt_transitive_verbs_montessori_protect",
       "type": "vocabulary",
       "label": "Protect",
       "category": "Transitive Verbs",
@@ -6680,7 +6683,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_prove_png",
+      "id": "prebuilt_transitive_verbs_montessori_prove",
       "type": "vocabulary",
       "label": "Prove",
       "category": "Transitive Verbs",
@@ -6698,7 +6701,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_provide_png",
+      "id": "prebuilt_transitive_verbs_montessori_provide",
       "type": "vocabulary",
       "label": "Provide",
       "category": "Transitive Verbs",
@@ -6716,7 +6719,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_publish_png",
+      "id": "prebuilt_transitive_verbs_montessori_publish",
       "type": "vocabulary",
       "label": "Publish",
       "category": "Transitive Verbs",
@@ -6734,7 +6737,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pull_png",
+      "id": "prebuilt_transitive_verbs_montessori_pull",
       "type": "vocabulary",
       "label": "Pull",
       "category": "Transitive Verbs",
@@ -6752,7 +6755,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pump_png",
+      "id": "prebuilt_transitive_verbs_montessori_pump",
       "type": "vocabulary",
       "label": "Pump",
       "category": "Transitive Verbs",
@@ -6770,7 +6773,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_punish_png",
+      "id": "prebuilt_transitive_verbs_montessori_punish",
       "type": "vocabulary",
       "label": "Punish",
       "category": "Transitive Verbs",
@@ -6788,7 +6791,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_purchase_png",
+      "id": "prebuilt_transitive_verbs_montessori_purchase",
       "type": "vocabulary",
       "label": "Purchase",
       "category": "Transitive Verbs",
@@ -6806,7 +6809,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_pursue_png",
+      "id": "prebuilt_transitive_verbs_montessori_pursue",
       "type": "vocabulary",
       "label": "Pursue",
       "category": "Transitive Verbs",
@@ -6824,7 +6827,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_push_png",
+      "id": "prebuilt_transitive_verbs_montessori_push",
       "type": "vocabulary",
       "label": "Push",
       "category": "Transitive Verbs",
@@ -6842,7 +6845,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_qualify_png",
+      "id": "prebuilt_transitive_verbs_montessori_qualify",
       "type": "vocabulary",
       "label": "Qualify",
       "category": "Transitive Verbs",
@@ -6860,7 +6863,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_quit_png",
+      "id": "prebuilt_transitive_verbs_montessori_quit",
       "type": "vocabulary",
       "label": "Quit",
       "category": "Transitive Verbs",
@@ -6878,7 +6881,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_quote_png",
+      "id": "prebuilt_transitive_verbs_montessori_quote",
       "type": "vocabulary",
       "label": "Quote",
       "category": "Transitive Verbs",
@@ -6896,7 +6899,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_raise_png",
+      "id": "prebuilt_transitive_verbs_montessori_raise",
       "type": "vocabulary",
       "label": "Raise",
       "category": "Transitive Verbs",
@@ -6914,7 +6917,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_reach_png",
+      "id": "prebuilt_transitive_verbs_montessori_reach",
       "type": "vocabulary",
       "label": "Reach",
       "category": "Transitive Verbs",
@@ -6932,7 +6935,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_read_png",
+      "id": "prebuilt_transitive_verbs_montessori_read",
       "type": "vocabulary",
       "label": "Read",
       "category": "Transitive Verbs",
@@ -6950,7 +6953,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_realise_png",
+      "id": "prebuilt_transitive_verbs_montessori_realise",
       "type": "vocabulary",
       "label": "Realise",
       "category": "Transitive Verbs",
@@ -6968,7 +6971,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_receive_png",
+      "id": "prebuilt_transitive_verbs_montessori_receive",
       "type": "vocabulary",
       "label": "Receive",
       "category": "Transitive Verbs",
@@ -6986,7 +6989,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_recognise_png",
+      "id": "prebuilt_transitive_verbs_montessori_recognise",
       "type": "vocabulary",
       "label": "Recognise",
       "category": "Transitive Verbs",
@@ -7004,7 +7007,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_recommend_png",
+      "id": "prebuilt_transitive_verbs_montessori_recommend",
       "type": "vocabulary",
       "label": "Recommend",
       "category": "Transitive Verbs",
@@ -7022,7 +7025,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_record_png",
+      "id": "prebuilt_transitive_verbs_montessori_record",
       "type": "vocabulary",
       "label": "Record",
       "category": "Transitive Verbs",
@@ -7040,7 +7043,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_reduce_png",
+      "id": "prebuilt_transitive_verbs_montessori_reduce",
       "type": "vocabulary",
       "label": "Reduce",
       "category": "Transitive Verbs",
@@ -7058,7 +7061,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_reflect_png",
+      "id": "prebuilt_transitive_verbs_montessori_reflect",
       "type": "vocabulary",
       "label": "Reflect",
       "category": "Transitive Verbs",
@@ -7076,7 +7079,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_refuse_png",
+      "id": "prebuilt_transitive_verbs_montessori_refuse",
       "type": "vocabulary",
       "label": "Refuse",
       "category": "Transitive Verbs",
@@ -7094,7 +7097,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_regard_png",
+      "id": "prebuilt_transitive_verbs_montessori_regard",
       "type": "vocabulary",
       "label": "Regard",
       "category": "Transitive Verbs",
@@ -7112,7 +7115,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_regret_png",
+      "id": "prebuilt_transitive_verbs_montessori_regret",
       "type": "vocabulary",
       "label": "Regret",
       "category": "Transitive Verbs",
@@ -7130,7 +7133,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_reject_png",
+      "id": "prebuilt_transitive_verbs_montessori_reject",
       "type": "vocabulary",
       "label": "Reject",
       "category": "Transitive Verbs",
@@ -7148,7 +7151,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_relate_png",
+      "id": "prebuilt_transitive_verbs_montessori_relate",
       "type": "vocabulary",
       "label": "Relate",
       "category": "Transitive Verbs",
@@ -7166,7 +7169,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_release_png",
+      "id": "prebuilt_transitive_verbs_montessori_release",
       "type": "vocabulary",
       "label": "Release",
       "category": "Transitive Verbs",
@@ -7184,7 +7187,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_remember_png",
+      "id": "prebuilt_transitive_verbs_montessori_remember",
       "type": "vocabulary",
       "label": "Remember",
       "category": "Transitive Verbs",
@@ -7202,7 +7205,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_remind_png",
+      "id": "prebuilt_transitive_verbs_montessori_remind",
       "type": "vocabulary",
       "label": "Remind",
       "category": "Transitive Verbs",
@@ -7220,7 +7223,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_remove_png",
+      "id": "prebuilt_transitive_verbs_montessori_remove",
       "type": "vocabulary",
       "label": "Remove",
       "category": "Transitive Verbs",
@@ -7238,7 +7241,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rent_png",
+      "id": "prebuilt_transitive_verbs_montessori_rent",
       "type": "vocabulary",
       "label": "Rent",
       "category": "Transitive Verbs",
@@ -7256,7 +7259,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_repair_png",
+      "id": "prebuilt_transitive_verbs_montessori_repair",
       "type": "vocabulary",
       "label": "Repair",
       "category": "Transitive Verbs",
@@ -7274,7 +7277,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_repeat_png",
+      "id": "prebuilt_transitive_verbs_montessori_repeat",
       "type": "vocabulary",
       "label": "Repeat",
       "category": "Transitive Verbs",
@@ -7292,7 +7295,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_replace_png",
+      "id": "prebuilt_transitive_verbs_montessori_replace",
       "type": "vocabulary",
       "label": "Replace",
       "category": "Transitive Verbs",
@@ -7310,7 +7313,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_reply_png",
+      "id": "prebuilt_transitive_verbs_montessori_reply",
       "type": "vocabulary",
       "label": "Reply",
       "category": "Transitive Verbs",
@@ -7328,7 +7331,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_report_png",
+      "id": "prebuilt_transitive_verbs_montessori_report",
       "type": "vocabulary",
       "label": "Report",
       "category": "Transitive Verbs",
@@ -7346,7 +7349,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_represent_png",
+      "id": "prebuilt_transitive_verbs_montessori_represent",
       "type": "vocabulary",
       "label": "Represent",
       "category": "Transitive Verbs",
@@ -7364,7 +7367,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_request_png",
+      "id": "prebuilt_transitive_verbs_montessori_request",
       "type": "vocabulary",
       "label": "Request",
       "category": "Transitive Verbs",
@@ -7382,7 +7385,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_require_png",
+      "id": "prebuilt_transitive_verbs_montessori_require",
       "type": "vocabulary",
       "label": "Require",
       "category": "Transitive Verbs",
@@ -7400,7 +7403,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rescue_png",
+      "id": "prebuilt_transitive_verbs_montessori_rescue",
       "type": "vocabulary",
       "label": "Rescue",
       "category": "Transitive Verbs",
@@ -7418,7 +7421,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_research_png",
+      "id": "prebuilt_transitive_verbs_montessori_research",
       "type": "vocabulary",
       "label": "Research",
       "category": "Transitive Verbs",
@@ -7436,7 +7439,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_resist_png",
+      "id": "prebuilt_transitive_verbs_montessori_resist",
       "type": "vocabulary",
       "label": "Resist",
       "category": "Transitive Verbs",
@@ -7454,7 +7457,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_respect_png",
+      "id": "prebuilt_transitive_verbs_montessori_respect",
       "type": "vocabulary",
       "label": "Respect",
       "category": "Transitive Verbs",
@@ -7472,7 +7475,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_respond_png",
+      "id": "prebuilt_transitive_verbs_montessori_respond",
       "type": "vocabulary",
       "label": "Respond",
       "category": "Transitive Verbs",
@@ -7490,7 +7493,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_restore_png",
+      "id": "prebuilt_transitive_verbs_montessori_restore",
       "type": "vocabulary",
       "label": "Restore",
       "category": "Transitive Verbs",
@@ -7508,7 +7511,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_restrict_png",
+      "id": "prebuilt_transitive_verbs_montessori_restrict",
       "type": "vocabulary",
       "label": "Restrict",
       "category": "Transitive Verbs",
@@ -7526,7 +7529,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_retain_png",
+      "id": "prebuilt_transitive_verbs_montessori_retain",
       "type": "vocabulary",
       "label": "Retain",
       "category": "Transitive Verbs",
@@ -7544,7 +7547,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_retire_png",
+      "id": "prebuilt_transitive_verbs_montessori_retire",
       "type": "vocabulary",
       "label": "Retire",
       "category": "Transitive Verbs",
@@ -7562,7 +7565,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_return_png",
+      "id": "prebuilt_transitive_verbs_montessori_return",
       "type": "vocabulary",
       "label": "Return",
       "category": "Transitive Verbs",
@@ -7580,7 +7583,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_review_png",
+      "id": "prebuilt_transitive_verbs_montessori_review",
       "type": "vocabulary",
       "label": "Review",
       "category": "Transitive Verbs",
@@ -7598,7 +7601,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_ride_png",
+      "id": "prebuilt_transitive_verbs_montessori_ride",
       "type": "vocabulary",
       "label": "Ride",
       "category": "Transitive Verbs",
@@ -7616,7 +7619,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_ring_png",
+      "id": "prebuilt_transitive_verbs_montessori_ring",
       "type": "vocabulary",
       "label": "Ring",
       "category": "Transitive Verbs",
@@ -7634,7 +7637,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rise_png",
+      "id": "prebuilt_transitive_verbs_montessori_rise",
       "type": "vocabulary",
       "label": "Rise",
       "category": "Transitive Verbs",
@@ -7652,7 +7655,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_risk_png",
+      "id": "prebuilt_transitive_verbs_montessori_risk",
       "type": "vocabulary",
       "label": "Risk",
       "category": "Transitive Verbs",
@@ -7670,7 +7673,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rob_png",
+      "id": "prebuilt_transitive_verbs_montessori_rob",
       "type": "vocabulary",
       "label": "Rob",
       "category": "Transitive Verbs",
@@ -7688,7 +7691,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rock_png",
+      "id": "prebuilt_transitive_verbs_montessori_rock",
       "type": "vocabulary",
       "label": "Rock",
       "category": "Transitive Verbs",
@@ -7706,7 +7709,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rule_png",
+      "id": "prebuilt_transitive_verbs_montessori_rule",
       "type": "vocabulary",
       "label": "Rule",
       "category": "Transitive Verbs",
@@ -7724,7 +7727,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_run_png",
+      "id": "prebuilt_transitive_verbs_montessori_run",
       "type": "vocabulary",
       "label": "Run",
       "category": "Transitive Verbs",
@@ -7742,7 +7745,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_rush_png",
+      "id": "prebuilt_transitive_verbs_montessori_rush",
       "type": "vocabulary",
       "label": "Rush",
       "category": "Transitive Verbs",
@@ -7760,7 +7763,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_satisfy_png",
+      "id": "prebuilt_transitive_verbs_montessori_satisfy",
       "type": "vocabulary",
       "label": "Satisfy",
       "category": "Transitive Verbs",
@@ -7778,7 +7781,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_save_png",
+      "id": "prebuilt_transitive_verbs_montessori_save",
       "type": "vocabulary",
       "label": "Save",
       "category": "Transitive Verbs",
@@ -7796,7 +7799,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_scratch_png",
+      "id": "prebuilt_transitive_verbs_montessori_scratch",
       "type": "vocabulary",
       "label": "Scratch",
       "category": "Transitive Verbs",
@@ -7814,7 +7817,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_search_png",
+      "id": "prebuilt_transitive_verbs_montessori_search",
       "type": "vocabulary",
       "label": "Search",
       "category": "Transitive Verbs",
@@ -7832,7 +7835,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_seat_png",
+      "id": "prebuilt_transitive_verbs_montessori_seat",
       "type": "vocabulary",
       "label": "Seat",
       "category": "Transitive Verbs",
@@ -7850,7 +7853,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_seek_png",
+      "id": "prebuilt_transitive_verbs_montessori_seek",
       "type": "vocabulary",
       "label": "Seek",
       "category": "Transitive Verbs",
@@ -7868,7 +7871,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_seize_png",
+      "id": "prebuilt_transitive_verbs_montessori_seize",
       "type": "vocabulary",
       "label": "Seize",
       "category": "Transitive Verbs",
@@ -7886,7 +7889,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_select_png",
+      "id": "prebuilt_transitive_verbs_montessori_select",
       "type": "vocabulary",
       "label": "Select",
       "category": "Transitive Verbs",
@@ -7904,7 +7907,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sell_png",
+      "id": "prebuilt_transitive_verbs_montessori_sell",
       "type": "vocabulary",
       "label": "Sell",
       "category": "Transitive Verbs",
@@ -7922,7 +7925,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_send_png",
+      "id": "prebuilt_transitive_verbs_montessori_send",
       "type": "vocabulary",
       "label": "Send",
       "category": "Transitive Verbs",
@@ -7940,7 +7943,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_separate_png",
+      "id": "prebuilt_transitive_verbs_montessori_separate",
       "type": "vocabulary",
       "label": "Separate",
       "category": "Transitive Verbs",
@@ -7958,7 +7961,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_serve_png",
+      "id": "prebuilt_transitive_verbs_montessori_serve",
       "type": "vocabulary",
       "label": "Serve",
       "category": "Transitive Verbs",
@@ -7976,7 +7979,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_set_png",
+      "id": "prebuilt_transitive_verbs_montessori_set",
       "type": "vocabulary",
       "label": "Set",
       "category": "Transitive Verbs",
@@ -7994,7 +7997,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_settle_png",
+      "id": "prebuilt_transitive_verbs_montessori_settle",
       "type": "vocabulary",
       "label": "Settle",
       "category": "Transitive Verbs",
@@ -8012,7 +8015,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shake_png",
+      "id": "prebuilt_transitive_verbs_montessori_shake",
       "type": "vocabulary",
       "label": "Shake",
       "category": "Transitive Verbs",
@@ -8030,7 +8033,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shape_png",
+      "id": "prebuilt_transitive_verbs_montessori_shape",
       "type": "vocabulary",
       "label": "Shape",
       "category": "Transitive Verbs",
@@ -8048,7 +8051,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_share_png",
+      "id": "prebuilt_transitive_verbs_montessori_share",
       "type": "vocabulary",
       "label": "Share",
       "category": "Transitive Verbs",
@@ -8066,7 +8069,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shave_png",
+      "id": "prebuilt_transitive_verbs_montessori_shave",
       "type": "vocabulary",
       "label": "Shave",
       "category": "Transitive Verbs",
@@ -8084,7 +8087,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shift_png",
+      "id": "prebuilt_transitive_verbs_montessori_shift",
       "type": "vocabulary",
       "label": "Shift",
       "category": "Transitive Verbs",
@@ -8102,7 +8105,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shine_png",
+      "id": "prebuilt_transitive_verbs_montessori_shine",
       "type": "vocabulary",
       "label": "Shine",
       "category": "Transitive Verbs",
@@ -8120,7 +8123,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shock_png",
+      "id": "prebuilt_transitive_verbs_montessori_shock",
       "type": "vocabulary",
       "label": "Shock",
       "category": "Transitive Verbs",
@@ -8138,7 +8141,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shoot_png",
+      "id": "prebuilt_transitive_verbs_montessori_shoot",
       "type": "vocabulary",
       "label": "Shoot",
       "category": "Transitive Verbs",
@@ -8156,7 +8159,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shout_png",
+      "id": "prebuilt_transitive_verbs_montessori_shout",
       "type": "vocabulary",
       "label": "Shout",
       "category": "Transitive Verbs",
@@ -8174,7 +8177,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_show_png",
+      "id": "prebuilt_transitive_verbs_montessori_show",
       "type": "vocabulary",
       "label": "Show",
       "category": "Transitive Verbs",
@@ -8192,7 +8195,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_shut_png",
+      "id": "prebuilt_transitive_verbs_montessori_shut",
       "type": "vocabulary",
       "label": "Shut",
       "category": "Transitive Verbs",
@@ -8210,7 +8213,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sign_png",
+      "id": "prebuilt_transitive_verbs_montessori_sign",
       "type": "vocabulary",
       "label": "Sign",
       "category": "Transitive Verbs",
@@ -8228,7 +8231,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_signal_png",
+      "id": "prebuilt_transitive_verbs_montessori_signal",
       "type": "vocabulary",
       "label": "Signal",
       "category": "Transitive Verbs",
@@ -8246,7 +8249,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sing_png",
+      "id": "prebuilt_transitive_verbs_montessori_sing",
       "type": "vocabulary",
       "label": "Sing",
       "category": "Transitive Verbs",
@@ -8264,7 +8267,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sink_png",
+      "id": "prebuilt_transitive_verbs_montessori_sink",
       "type": "vocabulary",
       "label": "Sink",
       "category": "Transitive Verbs",
@@ -8282,7 +8285,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sit_png",
+      "id": "prebuilt_transitive_verbs_montessori_sit",
       "type": "vocabulary",
       "label": "Sit",
       "category": "Transitive Verbs",
@@ -8300,7 +8303,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_slap_png",
+      "id": "prebuilt_transitive_verbs_montessori_slap",
       "type": "vocabulary",
       "label": "Slap",
       "category": "Transitive Verbs",
@@ -8318,7 +8321,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sleep_png",
+      "id": "prebuilt_transitive_verbs_montessori_sleep",
       "type": "vocabulary",
       "label": "Sleep",
       "category": "Transitive Verbs",
@@ -8336,7 +8339,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_slice_png",
+      "id": "prebuilt_transitive_verbs_montessori_slice",
       "type": "vocabulary",
       "label": "Slice",
       "category": "Transitive Verbs",
@@ -8354,7 +8357,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_slide_png",
+      "id": "prebuilt_transitive_verbs_montessori_slide",
       "type": "vocabulary",
       "label": "Slide",
       "category": "Transitive Verbs",
@@ -8372,7 +8375,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_slip_png",
+      "id": "prebuilt_transitive_verbs_montessori_slip",
       "type": "vocabulary",
       "label": "Slip",
       "category": "Transitive Verbs",
@@ -8390,7 +8393,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_slow_png",
+      "id": "prebuilt_transitive_verbs_montessori_slow",
       "type": "vocabulary",
       "label": "Slow",
       "category": "Transitive Verbs",
@@ -8408,7 +8411,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_smell_png",
+      "id": "prebuilt_transitive_verbs_montessori_smell",
       "type": "vocabulary",
       "label": "Smell",
       "category": "Transitive Verbs",
@@ -8426,7 +8429,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_smile_png",
+      "id": "prebuilt_transitive_verbs_montessori_smile",
       "type": "vocabulary",
       "label": "Smile",
       "category": "Transitive Verbs",
@@ -8444,7 +8447,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_smoke_png",
+      "id": "prebuilt_transitive_verbs_montessori_smoke",
       "type": "vocabulary",
       "label": "Smoke",
       "category": "Transitive Verbs",
@@ -8462,7 +8465,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_snap_png",
+      "id": "prebuilt_transitive_verbs_montessori_snap",
       "type": "vocabulary",
       "label": "Snap",
       "category": "Transitive Verbs",
@@ -8480,7 +8483,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_solve_png",
+      "id": "prebuilt_transitive_verbs_montessori_solve",
       "type": "vocabulary",
       "label": "Solve",
       "category": "Transitive Verbs",
@@ -8498,7 +8501,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sort_png",
+      "id": "prebuilt_transitive_verbs_montessori_sort",
       "type": "vocabulary",
       "label": "Sort",
       "category": "Transitive Verbs",
@@ -8516,7 +8519,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sound_png",
+      "id": "prebuilt_transitive_verbs_montessori_sound",
       "type": "vocabulary",
       "label": "Sound",
       "category": "Transitive Verbs",
@@ -8534,7 +8537,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_spell_png",
+      "id": "prebuilt_transitive_verbs_montessori_spell",
       "type": "vocabulary",
       "label": "Spell",
       "category": "Transitive Verbs",
@@ -8552,7 +8555,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_spend_png",
+      "id": "prebuilt_transitive_verbs_montessori_spend",
       "type": "vocabulary",
       "label": "Spend",
       "category": "Transitive Verbs",
@@ -8570,7 +8573,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_split_png",
+      "id": "prebuilt_transitive_verbs_montessori_split",
       "type": "vocabulary",
       "label": "Split",
       "category": "Transitive Verbs",
@@ -8588,7 +8591,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_spot_png",
+      "id": "prebuilt_transitive_verbs_montessori_spot",
       "type": "vocabulary",
       "label": "Spot",
       "category": "Transitive Verbs",
@@ -8606,7 +8609,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_spread_png",
+      "id": "prebuilt_transitive_verbs_montessori_spread",
       "type": "vocabulary",
       "label": "Spread",
       "category": "Transitive Verbs",
@@ -8624,7 +8627,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_spy_png",
+      "id": "prebuilt_transitive_verbs_montessori_spy",
       "type": "vocabulary",
       "label": "Spy",
       "category": "Transitive Verbs",
@@ -8642,7 +8645,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_squeeze_png",
+      "id": "prebuilt_transitive_verbs_montessori_squeeze",
       "type": "vocabulary",
       "label": "Squeeze",
       "category": "Transitive Verbs",
@@ -8660,7 +8663,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stain_png",
+      "id": "prebuilt_transitive_verbs_montessori_stain",
       "type": "vocabulary",
       "label": "Stain",
       "category": "Transitive Verbs",
@@ -8678,7 +8681,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stamp_png",
+      "id": "prebuilt_transitive_verbs_montessori_stamp",
       "type": "vocabulary",
       "label": "Stamp",
       "category": "Transitive Verbs",
@@ -8696,7 +8699,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stand_png",
+      "id": "prebuilt_transitive_verbs_montessori_stand",
       "type": "vocabulary",
       "label": "Stand",
       "category": "Transitive Verbs",
@@ -8714,7 +8717,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_start_png",
+      "id": "prebuilt_transitive_verbs_montessori_start",
       "type": "vocabulary",
       "label": "Start",
       "category": "Transitive Verbs",
@@ -8732,7 +8735,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_state_png",
+      "id": "prebuilt_transitive_verbs_montessori_state",
       "type": "vocabulary",
       "label": "State",
       "category": "Transitive Verbs",
@@ -8750,7 +8753,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stay_png",
+      "id": "prebuilt_transitive_verbs_montessori_stay",
       "type": "vocabulary",
       "label": "Stay",
       "category": "Transitive Verbs",
@@ -8768,7 +8771,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_steal_png",
+      "id": "prebuilt_transitive_verbs_montessori_steal",
       "type": "vocabulary",
       "label": "Steal",
       "category": "Transitive Verbs",
@@ -8786,7 +8789,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stick_png",
+      "id": "prebuilt_transitive_verbs_montessori_stick",
       "type": "vocabulary",
       "label": "Stick",
       "category": "Transitive Verbs",
@@ -8804,7 +8807,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stir_png",
+      "id": "prebuilt_transitive_verbs_montessori_stir",
       "type": "vocabulary",
       "label": "Stir",
       "category": "Transitive Verbs",
@@ -8822,7 +8825,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stop_png",
+      "id": "prebuilt_transitive_verbs_montessori_stop",
       "type": "vocabulary",
       "label": "Stop",
       "category": "Transitive Verbs",
@@ -8840,7 +8843,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_store_png",
+      "id": "prebuilt_transitive_verbs_montessori_store",
       "type": "vocabulary",
       "label": "Store",
       "category": "Transitive Verbs",
@@ -8858,7 +8861,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_stretch_png",
+      "id": "prebuilt_transitive_verbs_montessori_stretch",
       "type": "vocabulary",
       "label": "Stretch",
       "category": "Transitive Verbs",
@@ -8876,7 +8879,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_strike_png",
+      "id": "prebuilt_transitive_verbs_montessori_strike",
       "type": "vocabulary",
       "label": "Strike",
       "category": "Transitive Verbs",
@@ -8894,7 +8897,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_strip_png",
+      "id": "prebuilt_transitive_verbs_montessori_strip",
       "type": "vocabulary",
       "label": "Strip",
       "category": "Transitive Verbs",
@@ -8912,7 +8915,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_struggle_png",
+      "id": "prebuilt_transitive_verbs_montessori_struggle",
       "type": "vocabulary",
       "label": "Struggle",
       "category": "Transitive Verbs",
@@ -8930,7 +8933,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_study_png",
+      "id": "prebuilt_transitive_verbs_montessori_study",
       "type": "vocabulary",
       "label": "Study",
       "category": "Transitive Verbs",
@@ -8948,7 +8951,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_submit_png",
+      "id": "prebuilt_transitive_verbs_montessori_submit",
       "type": "vocabulary",
       "label": "Submit",
       "category": "Transitive Verbs",
@@ -8966,7 +8969,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_succeed_png",
+      "id": "prebuilt_transitive_verbs_montessori_succeed",
       "type": "vocabulary",
       "label": "Succeed",
       "category": "Transitive Verbs",
@@ -8984,7 +8987,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_suffer_png",
+      "id": "prebuilt_transitive_verbs_montessori_suffer",
       "type": "vocabulary",
       "label": "Suffer",
       "category": "Transitive Verbs",
@@ -9002,7 +9005,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_suggest_png",
+      "id": "prebuilt_transitive_verbs_montessori_suggest",
       "type": "vocabulary",
       "label": "Suggest",
       "category": "Transitive Verbs",
@@ -9020,7 +9023,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_supply_png",
+      "id": "prebuilt_transitive_verbs_montessori_supply",
       "type": "vocabulary",
       "label": "Supply",
       "category": "Transitive Verbs",
@@ -9038,7 +9041,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_support_png",
+      "id": "prebuilt_transitive_verbs_montessori_support",
       "type": "vocabulary",
       "label": "Support",
       "category": "Transitive Verbs",
@@ -9056,7 +9059,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_suppose_png",
+      "id": "prebuilt_transitive_verbs_montessori_suppose",
       "type": "vocabulary",
       "label": "Suppose",
       "category": "Transitive Verbs",
@@ -9074,7 +9077,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_surprise_png",
+      "id": "prebuilt_transitive_verbs_montessori_surprise",
       "type": "vocabulary",
       "label": "Surprise",
       "category": "Transitive Verbs",
@@ -9092,7 +9095,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_surround_png",
+      "id": "prebuilt_transitive_verbs_montessori_surround",
       "type": "vocabulary",
       "label": "Surround",
       "category": "Transitive Verbs",
@@ -9110,7 +9113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_survive_png",
+      "id": "prebuilt_transitive_verbs_montessori_survive",
       "type": "vocabulary",
       "label": "Survive",
       "category": "Transitive Verbs",
@@ -9128,7 +9131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_suspect_png",
+      "id": "prebuilt_transitive_verbs_montessori_suspect",
       "type": "vocabulary",
       "label": "Suspect",
       "category": "Transitive Verbs",
@@ -9146,7 +9149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_swallow_png",
+      "id": "prebuilt_transitive_verbs_montessori_swallow",
       "type": "vocabulary",
       "label": "Swallow",
       "category": "Transitive Verbs",
@@ -9164,7 +9167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_swear_png",
+      "id": "prebuilt_transitive_verbs_montessori_swear",
       "type": "vocabulary",
       "label": "Swear",
       "category": "Transitive Verbs",
@@ -9182,7 +9185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_sweep_png",
+      "id": "prebuilt_transitive_verbs_montessori_sweep",
       "type": "vocabulary",
       "label": "Sweep",
       "category": "Transitive Verbs",
@@ -9200,7 +9203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_swim_png",
+      "id": "prebuilt_transitive_verbs_montessori_swim",
       "type": "vocabulary",
       "label": "Swim",
       "category": "Transitive Verbs",
@@ -9218,7 +9221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_switch_png",
+      "id": "prebuilt_transitive_verbs_montessori_switch",
       "type": "vocabulary",
       "label": "Switch",
       "category": "Transitive Verbs",
@@ -9236,7 +9239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_take_png",
+      "id": "prebuilt_transitive_verbs_montessori_take",
       "type": "vocabulary",
       "label": "Take",
       "category": "Transitive Verbs",
@@ -9254,7 +9257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_talk_png",
+      "id": "prebuilt_transitive_verbs_montessori_talk",
       "type": "vocabulary",
       "label": "Talk",
       "category": "Transitive Verbs",
@@ -9272,7 +9275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tap_png",
+      "id": "prebuilt_transitive_verbs_montessori_tap",
       "type": "vocabulary",
       "label": "Tap",
       "category": "Transitive Verbs",
@@ -9290,7 +9293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_taste_png",
+      "id": "prebuilt_transitive_verbs_montessori_taste",
       "type": "vocabulary",
       "label": "Taste",
       "category": "Transitive Verbs",
@@ -9308,7 +9311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_teach_png",
+      "id": "prebuilt_transitive_verbs_montessori_teach",
       "type": "vocabulary",
       "label": "Teach",
       "category": "Transitive Verbs",
@@ -9326,7 +9329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tear_png",
+      "id": "prebuilt_transitive_verbs_montessori_tear",
       "type": "vocabulary",
       "label": "Tear",
       "category": "Transitive Verbs",
@@ -9344,7 +9347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tell_png",
+      "id": "prebuilt_transitive_verbs_montessori_tell",
       "type": "vocabulary",
       "label": "Tell",
       "category": "Transitive Verbs",
@@ -9362,7 +9365,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tend_png",
+      "id": "prebuilt_transitive_verbs_montessori_tend",
       "type": "vocabulary",
       "label": "Tend",
       "category": "Transitive Verbs",
@@ -9380,7 +9383,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_test_png",
+      "id": "prebuilt_transitive_verbs_montessori_test",
       "type": "vocabulary",
       "label": "Test",
       "category": "Transitive Verbs",
@@ -9398,7 +9401,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_thank_png",
+      "id": "prebuilt_transitive_verbs_montessori_thank",
       "type": "vocabulary",
       "label": "Thank",
       "category": "Transitive Verbs",
@@ -9416,7 +9419,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_think_png",
+      "id": "prebuilt_transitive_verbs_montessori_think",
       "type": "vocabulary",
       "label": "Think",
       "category": "Transitive Verbs",
@@ -9434,7 +9437,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_throw_png",
+      "id": "prebuilt_transitive_verbs_montessori_throw",
       "type": "vocabulary",
       "label": "Throw",
       "category": "Transitive Verbs",
@@ -9452,7 +9455,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tie_png",
+      "id": "prebuilt_transitive_verbs_montessori_tie",
       "type": "vocabulary",
       "label": "Tie",
       "category": "Transitive Verbs",
@@ -9470,7 +9473,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tolerate_png",
+      "id": "prebuilt_transitive_verbs_montessori_tolerate",
       "type": "vocabulary",
       "label": "Tolerate",
       "category": "Transitive Verbs",
@@ -9488,7 +9491,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_touch_png",
+      "id": "prebuilt_transitive_verbs_montessori_touch",
       "type": "vocabulary",
       "label": "Touch",
       "category": "Transitive Verbs",
@@ -9506,7 +9509,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_tough_png",
+      "id": "prebuilt_transitive_verbs_montessori_tough",
       "type": "vocabulary",
       "label": "Tough",
       "category": "Transitive Verbs",
@@ -9524,7 +9527,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_train_png",
+      "id": "prebuilt_transitive_verbs_montessori_train",
       "type": "vocabulary",
       "label": "Train",
       "category": "Transitive Verbs",
@@ -9542,7 +9545,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_transfer_png",
+      "id": "prebuilt_transitive_verbs_montessori_transfer",
       "type": "vocabulary",
       "label": "Transfer",
       "category": "Transitive Verbs",
@@ -9560,7 +9563,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_translate_png",
+      "id": "prebuilt_transitive_verbs_montessori_translate",
       "type": "vocabulary",
       "label": "Translate",
       "category": "Transitive Verbs",
@@ -9578,7 +9581,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_treat_png",
+      "id": "prebuilt_transitive_verbs_montessori_treat",
       "type": "vocabulary",
       "label": "Treat",
       "category": "Transitive Verbs",
@@ -9596,7 +9599,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_trick_png",
+      "id": "prebuilt_transitive_verbs_montessori_trick",
       "type": "vocabulary",
       "label": "Trick",
       "category": "Transitive Verbs",
@@ -9614,7 +9617,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_trust_png",
+      "id": "prebuilt_transitive_verbs_montessori_trust",
       "type": "vocabulary",
       "label": "Trust",
       "category": "Transitive Verbs",
@@ -9632,7 +9635,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_try_png",
+      "id": "prebuilt_transitive_verbs_montessori_try",
       "type": "vocabulary",
       "label": "Try",
       "category": "Transitive Verbs",
@@ -9650,7 +9653,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_turn_png",
+      "id": "prebuilt_transitive_verbs_montessori_turn",
       "type": "vocabulary",
       "label": "Turn",
       "category": "Transitive Verbs",
@@ -9668,7 +9671,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_type_png",
+      "id": "prebuilt_transitive_verbs_montessori_type",
       "type": "vocabulary",
       "label": "Type",
       "category": "Transitive Verbs",
@@ -9686,7 +9689,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_understand_png",
+      "id": "prebuilt_transitive_verbs_montessori_understand",
       "type": "vocabulary",
       "label": "Understand",
       "category": "Transitive Verbs",
@@ -9704,7 +9707,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_unite_png",
+      "id": "prebuilt_transitive_verbs_montessori_unite",
       "type": "vocabulary",
       "label": "Unite",
       "category": "Transitive Verbs",
@@ -9722,7 +9725,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_urge_png",
+      "id": "prebuilt_transitive_verbs_montessori_urge",
       "type": "vocabulary",
       "label": "Urge",
       "category": "Transitive Verbs",
@@ -9740,7 +9743,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_use_png",
+      "id": "prebuilt_transitive_verbs_montessori_use",
       "type": "vocabulary",
       "label": "Use",
       "category": "Transitive Verbs",
@@ -9758,7 +9761,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_value_png",
+      "id": "prebuilt_transitive_verbs_montessori_value",
       "type": "vocabulary",
       "label": "Value",
       "category": "Transitive Verbs",
@@ -9776,7 +9779,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_view_png",
+      "id": "prebuilt_transitive_verbs_montessori_view",
       "type": "vocabulary",
       "label": "View",
       "category": "Transitive Verbs",
@@ -9794,7 +9797,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_visit_png",
+      "id": "prebuilt_transitive_verbs_montessori_visit",
       "type": "vocabulary",
       "label": "Visit",
       "category": "Transitive Verbs",
@@ -9812,7 +9815,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_vote_png",
+      "id": "prebuilt_transitive_verbs_montessori_vote",
       "type": "vocabulary",
       "label": "Vote",
       "category": "Transitive Verbs",
@@ -9830,7 +9833,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wage_png",
+      "id": "prebuilt_transitive_verbs_montessori_wage",
       "type": "vocabulary",
       "label": "Wage",
       "category": "Transitive Verbs",
@@ -9848,7 +9851,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wait_png",
+      "id": "prebuilt_transitive_verbs_montessori_wait",
       "type": "vocabulary",
       "label": "Wait",
       "category": "Transitive Verbs",
@@ -9866,7 +9869,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wake_png",
+      "id": "prebuilt_transitive_verbs_montessori_wake",
       "type": "vocabulary",
       "label": "Wake",
       "category": "Transitive Verbs",
@@ -9884,7 +9887,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_walk_png",
+      "id": "prebuilt_transitive_verbs_montessori_walk",
       "type": "vocabulary",
       "label": "Walk",
       "category": "Transitive Verbs",
@@ -9902,7 +9905,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_want_png",
+      "id": "prebuilt_transitive_verbs_montessori_want",
       "type": "vocabulary",
       "label": "Want",
       "category": "Transitive Verbs",
@@ -9920,7 +9923,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_warn_png",
+      "id": "prebuilt_transitive_verbs_montessori_warn",
       "type": "vocabulary",
       "label": "Warn",
       "category": "Transitive Verbs",
@@ -9938,7 +9941,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wash_png",
+      "id": "prebuilt_transitive_verbs_montessori_wash",
       "type": "vocabulary",
       "label": "Wash",
       "category": "Transitive Verbs",
@@ -9956,7 +9959,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_waste_png",
+      "id": "prebuilt_transitive_verbs_montessori_waste",
       "type": "vocabulary",
       "label": "Waste",
       "category": "Transitive Verbs",
@@ -9974,7 +9977,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_watch_png",
+      "id": "prebuilt_transitive_verbs_montessori_watch",
       "type": "vocabulary",
       "label": "Watch",
       "category": "Transitive Verbs",
@@ -9992,7 +9995,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wave_png",
+      "id": "prebuilt_transitive_verbs_montessori_wave",
       "type": "vocabulary",
       "label": "Wave",
       "category": "Transitive Verbs",
@@ -10010,7 +10013,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wear_png",
+      "id": "prebuilt_transitive_verbs_montessori_wear",
       "type": "vocabulary",
       "label": "Wear",
       "category": "Transitive Verbs",
@@ -10028,7 +10031,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_weigh_png",
+      "id": "prebuilt_transitive_verbs_montessori_weigh",
       "type": "vocabulary",
       "label": "Weigh",
       "category": "Transitive Verbs",
@@ -10046,7 +10049,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_welcome_png",
+      "id": "prebuilt_transitive_verbs_montessori_welcome",
       "type": "vocabulary",
       "label": "Welcome",
       "category": "Transitive Verbs",
@@ -10064,7 +10067,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_whip_png",
+      "id": "prebuilt_transitive_verbs_montessori_whip",
       "type": "vocabulary",
       "label": "Whip",
       "category": "Transitive Verbs",
@@ -10082,7 +10085,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_whisper_png",
+      "id": "prebuilt_transitive_verbs_montessori_whisper",
       "type": "vocabulary",
       "label": "Whisper",
       "category": "Transitive Verbs",
@@ -10100,7 +10103,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wish_png",
+      "id": "prebuilt_transitive_verbs_montessori_wish",
       "type": "vocabulary",
       "label": "Wish",
       "category": "Transitive Verbs",
@@ -10118,7 +10121,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wonder_png",
+      "id": "prebuilt_transitive_verbs_montessori_wonder",
       "type": "vocabulary",
       "label": "Wonder",
       "category": "Transitive Verbs",
@@ -10136,7 +10139,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_wrap_png",
+      "id": "prebuilt_transitive_verbs_montessori_wrap",
       "type": "vocabulary",
       "label": "Wrap",
       "category": "Transitive Verbs",
@@ -10154,7 +10157,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_write_png",
+      "id": "prebuilt_transitive_verbs_montessori_write",
       "type": "vocabulary",
       "label": "Write",
       "category": "Transitive Verbs",
@@ -10172,7 +10175,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_transitive_verbs_montessori_yield_png",
+      "id": "prebuilt_transitive_verbs_montessori_yield",
       "type": "vocabulary",
       "label": "Yield",
       "category": "Transitive Verbs",
@@ -10188,9 +10191,25 @@
       "colSpan": 1,
       "rowSpan": 1,
       "customVoice": ""
+    },
+    {
+      "id": "prebuilt_transitive_verbs_montessori_tile_566",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_small_words",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_small_words"
 }

@@ -383,8 +383,8 @@
     {
       "id": "prebuilt_south_america_falkland_islands",
       "label": "falkland islands",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Flags/Flags 2 (Approx D-H)/falkland islands.png",
+      "category": "Assets",
+      "imageAsset": "assets/Common/World Map/South America/falkland islands.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -531,6 +531,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Common/World Map/south america (2).png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/South America.png",
   "version": 0
 }

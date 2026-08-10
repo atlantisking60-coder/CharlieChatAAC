@@ -1,8 +1,15 @@
-Algebra - Word List
-=======================
-
-brackets
-calculate
-equation
+algebra
 formula
+equation
+count
+calculate
+steps
+first simplify
+brackets
 indices
+next simplify
+division
+multiplication
+then simplify
+addition
+subtraction

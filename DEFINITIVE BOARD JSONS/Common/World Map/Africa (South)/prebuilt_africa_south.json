@@ -191,7 +191,7 @@
     {
       "id": "prebuilt_africa_south_democratic_republic_of_the_congo",
       "label": "democratic republic of the congo",
-      "category": "Custom",
+      "category": "Assets",
       "imageAsset": "assets/Common/World Map/Africa/democratic republic of the congo.png",
       "emoji": "",
       "linkedBoardId": "",
@@ -640,7 +640,7 @@
       "id": "prebuilt_africa_south_mayotte",
       "label": "mayotte",
       "category": "GlobalSymbols",
-      "imageAsset": "https://globalsymbols.com/uploads/production/image/imagefile/79357/129_79358_362acadc-ae03-4f46-9fc4-a0c869f17645.png",
+      "imageAsset": "assets/Common/World Map/Africa/mayotte.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -2307,6 +2307,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Victorians/africa.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/World Map/Africa.png",
   "version": 0
 }

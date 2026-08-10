@@ -1,0 +1,23 @@
+{
+  "id": "prebuilt_outdoors",
+  "name": "Outdoors",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_pe",
+  "sortOrder": 294,
+  "tier": 2,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "backgroundColor": "#FFFFFF",
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": "assets/Common/Places/Rooms and Home/Furniture/outdoors.png",
+  "tileIconAssetPath": "assets/Common/Places/Rooms and Home/Furniture/outdoors.png"
+}

@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 5,
   "tier": 3,
+  "iconAssetPath": "assets/Common/Time/calendar.png",
+  "tileIconAssetPath": "assets/BOARDS/Months.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -254,7 +257,5 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_events_and_occasions",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_events_and_occasions"
 }

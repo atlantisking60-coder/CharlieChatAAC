@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Local Places, Heroes and Tourism/leisure.png",
+  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Leisure Activities and Interests.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -109,7 +112,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/Sign/Z Sign Folders/Leisure Activities and Interests.png",
-  "tileIconAssetPath": "assets/Sign/Z Sign Folders/Leisure Activities and Interests.png"
+  ]
 }

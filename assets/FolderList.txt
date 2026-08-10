@@ -7,13 +7,13 @@ assets\symbols\BOARDS\English
 assets\symbols\BOARDS\Feelings
 assets\symbols\BOARDS\Living Life Skills and Prepare For Adulthood and Employment
 assets\symbols\BOARDS\Maths
-assets\symbols\BOARDS\P.D
+assets\symbols\BOARDS\PD
 assets\symbols\BOARDS\PEEP and Sustainability
 assets\symbols\BOARDS\Photography
 assets\symbols\BOARDS\Religion and Worldviews
 assets\symbols\BOARDS\Retail
 assets\symbols\BOARDS\Science
-assets\symbols\BOARDS\Sports, Activities and P.E
+assets\symbols\BOARDS\Sports, Activities and PE
 assets\symbols\BOARDS\Stories
 assets\symbols\BOARDS\Subjects
 assets\symbols\BOARDS\Synonyms
@@ -133,7 +133,7 @@ assets\symbols\3. Lesson Vocab\Religion and Worldviews
 assets\symbols\3. Lesson Vocab\Resistant Materials, Construction and Engineering
 assets\symbols\3. Lesson Vocab\Retail
 assets\symbols\3. Lesson Vocab\Science
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE
 assets\symbols\3. Lesson Vocab\Sustainability
 assets\symbols\3. Lesson Vocab\Textiles
 assets\symbols\3. Lesson Vocab\TFL and IT
@@ -405,19 +405,19 @@ assets\symbols\3. Lesson Vocab\Science\Year 9\Organs\Levels Of Organisation
 assets\symbols\3. Lesson Vocab\Science\Year 9\Organs\Muscles
 assets\symbols\3. Lesson Vocab\Science\Year 9\Organs\The Skeleton
 assets\symbols\3. Lesson Vocab\Science\Year 9\Organs\Muscles\Specific Muscles
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\#P.E. Keywords
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Adventure and Extreme Sports
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Creativity and Brainpower
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Gym Equipment
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Individual Sports
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Leisure Sports
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Outdoors
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\P.E. Games
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Relaxation
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Sports Day Events
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Team Sports
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Technology
-assets\symbols\3. Lesson Vocab\Sports, Activities and P.E\Water and Winter Sports
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\#PE Keywords
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Adventure and Extreme Sports
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Creativity and Brainpower
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Gym Equipment
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Individual Sports
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Leisure Sports
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Outdoors
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\PE Games
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Relaxation
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Sports Day Events
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Team Sports
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Technology
+assets\symbols\3. Lesson Vocab\Sports, Activities and PE\Water and Winter Sports
 assets\symbols\3. Lesson Vocab\TFL and IT\Company Logos
 assets\symbols\3. Lesson Vocab\TFL and IT\Programs
 assets\symbols\3. Lesson Vocab\TFL and IT\TFL Equipment
