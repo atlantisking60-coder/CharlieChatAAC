@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 391,
   "tier": 1,
+  "iconAssetPath": "assets/My School/My School Lessons/Tech Rotation.png",
+  "tileIconAssetPath": "assets/BOARDS/Subjects/Tech Rotation.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -451,7 +454,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Subjects/Tech Rotation.png",
-  "tileIconAssetPath": "assets/BOARDS/Subjects/Tech Rotation.png"
+  ]
 }

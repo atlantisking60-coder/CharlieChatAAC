@@ -11,6 +11,9 @@
   "isQuinaryBoard": false,
   "sortOrder": 388,
   "tier": 1,
+  "iconAssetPath": "assets/My School/My School Lessons/Option A.png",
+  "tileIconAssetPath": "assets/BOARDS/Subjects/Option A.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
@@ -451,7 +454,5 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ],
-  "iconAssetPath": "assets/BOARDS/Subjects/Option A.png",
-  "tileIconAssetPath": "assets/BOARDS/Subjects/Option A.png"
+  ]
 }

@@ -1,9 +1,9 @@
 {
-  "id": "prebuilt_equipment_photography",
-  "name": "Equipment (Photography)",
+  "id": "prebuilt_wider_world",
+  "name": "Wider World",
   "area": "Subject Vocab",
-  "parentBoardId": "prebuilt_photography",
-  "sortOrder": 366,
+  "parentBoardId": "prebuilt_prepare_for_adulthood",
+  "sortOrder": 383,
   "tier": 2,
   "isSubBoard": true,
   "isTertiaryBoard": false,
@@ -18,6 +18,6 @@
   "backgroundColor": "#FFFFFF",
   "tiles": [],
   "version": 0,
-  "iconAssetPath": "assets/BOARDS/Photography/Equipment (Photography).png",
-  "tileIconAssetPath": "assets/BOARDS/Photography/Equipment (Photography).png"
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
 }

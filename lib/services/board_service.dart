@@ -2691,7 +2691,10 @@ class BoardService {
 
     // Pre-fetch tab/tile icon metadata for prebuilt placeholders so tab
     // icons appear as soon as an area loads, including child sub-boards.
+    // Only use an icon path if the asset was actually bundled for web.
     if (kIsWeb) {
+      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      final validAssets = manifest.listAssets().toSet();
       final iconFutures = <Future<void>>[];
       for (final board in boardsById.values) {
         if (board.id.startsWith('prebuilt_')) {
@@ -2700,11 +2703,15 @@ class BoardService {
             _loadBoardFromAssets(board.id, board.name, includeTiles: false)
                 .then((asset) {
                   if (asset == null) return;
-                  if (board.iconAssetPath == null || board.iconAssetPath!.isEmpty) {
-                    board.iconAssetPath = asset.iconAssetPath;
+                  final icon = asset.iconAssetPath;
+                  if (icon != null && icon.isNotEmpty && validAssets.contains(icon)) {
+                    board.iconAssetPath = icon;
                   }
-                  if (board.tileIconAssetPath == null || board.tileIconAssetPath!.isEmpty) {
-                    board.tileIconAssetPath = asset.tileIconAssetPath;
+                  final tileIcon = asset.tileIconAssetPath;
+                  if (tileIcon != null &&
+                      tileIcon.isNotEmpty &&
+                      validAssets.contains(tileIcon)) {
+                    board.tileIconAssetPath = tileIcon;
                   }
                 })
                 .catchError((_) {}),

@@ -1,9 +1,9 @@
 {
-  "id": "prebuilt_lighting_and_composition",
-  "name": "Lighting and Composition",
+  "id": "prebuilt_road_safety",
+  "name": "Road Safety",
   "area": "Subject Vocab",
-  "parentBoardId": "prebuilt_photography",
-  "sortOrder": 367,
+  "parentBoardId": "prebuilt_living_life_skills",
+  "sortOrder": 379,
   "tier": 2,
   "isSubBoard": true,
   "isTertiaryBoard": false,
@@ -18,6 +18,6 @@
   "backgroundColor": "#FFFFFF",
   "tiles": [],
   "version": 0,
-  "iconAssetPath": "assets/BOARDS/Photography/Lighting and Composition.png",
-  "tileIconAssetPath": "assets/BOARDS/Photography/Lighting and Composition.png"
+  "iconAssetPath": "assets/BOARDS/PD/Road Safety.png",
+  "tileIconAssetPath": "assets/BOARDS/PD/Road Safety.png"
 }

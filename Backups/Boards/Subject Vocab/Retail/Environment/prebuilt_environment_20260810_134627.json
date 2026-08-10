@@ -1,10 +1,10 @@
 {
-  "id": "prebuilt_weather_sign",
-  "name": "Weather (Sign)",
-  "area": "Sign",
+  "id": "prebuilt_environment",
+  "name": "Environment",
+  "area": "Subject Vocab",
   "columns": 6,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": false,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
@@ -21,6 +21,5 @@
     "rows": 6,
     "blankTilesAdded": 0
   },
-  "tiles": [],
-  "parentBoardId": ""
+  "tiles": []
 }
