@@ -12,9 +12,13 @@ if not exist "pubspec.yaml" (
 echo [1/4] Updating pubspec.yaml with all current assets...
 python tools\update_pubspec_assets.py
 if errorlevel 1 (
-    echo ERROR: update_pubspec_assets.py failed.
-    pause
-    exit /b 1
+    echo Python updater failed; trying PowerShell fallback...
+    powershell -ExecutionPolicy Bypass -File "tools\update_pubspec_assets.ps1"
+    if errorlevel 1 (
+        echo ERROR: update_pubspec_assets failed.
+        pause
+        exit /b 1
+    )
 )
 
 echo.

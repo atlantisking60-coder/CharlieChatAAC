@@ -6,19 +6,19 @@
   "backgroundColor": "transparent",
   "adjustableLayout": true,
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": "assets/Common/People/i.png",
+  "iconAssetPath": "assets/Subject Vocab/Retail/Legislation/consumer rights act.png",
   "tileIconAssetPath": "assets/Common/People/i.png",
   "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
   "layout": {
-    "rows": 2,
+    "rows": 6,
     "blankTilesAdded": 0
   },
   "tiles": [
