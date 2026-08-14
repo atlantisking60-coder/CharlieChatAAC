@@ -1,6 +1,3 @@
-Numbers - Word List
-=======================
-
 plus
 subtract
 multiply

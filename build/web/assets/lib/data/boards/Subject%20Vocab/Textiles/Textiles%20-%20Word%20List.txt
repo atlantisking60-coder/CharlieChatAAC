@@ -1,6 +1,7 @@
-Textiles - Word List
-========================
-
+cad - computer aided design
+cam - computer aided manufacturing
+copy
+paste
 cotton
 cushion
 cutting mat
@@ -26,6 +27,7 @@ paper scissors
 paper template
 pattern
 pins
+plastics
 polyester
 printing
 quilting
@@ -34,12 +36,12 @@ seam
 sewing machine
 shears
 silk
-stitch
 sublimation ink
 sublimation paper
 sublimation printer
 sublimation printing
 synthetic fibres
+tack stitch
 tailor's chalk
 tape measure
 template

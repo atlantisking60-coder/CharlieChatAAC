@@ -239,8 +239,8 @@
     {
       "id": "prebuilt_english_extreme_adventure_sports",
       "label": "Extreme & Adventure Sports",
-      "category": "Custom",
-      "imageAsset": "assets/BOARDS/Sports, Activities and P.E/Extreme Sports.png",
+      "category": "Assets",
+      "imageAsset": "assets/BOARDS/Sports, Activities and PE/Extreme Sports.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": true,

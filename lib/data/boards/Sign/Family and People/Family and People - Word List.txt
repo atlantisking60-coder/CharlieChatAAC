@@ -1,32 +1,29 @@
-Family and People - Word List
-===============================
-
-Auntie - Uncle
-Baby
-Boy
-Brother
-Children
-Dad
-Doctor
-Family
-Friend
-Girl
-Grandad
-Grandmum
-I
-Jesus
-King
-Magic - Magician
-Man
-Me
-Mum
-My - Mine
-Name - Called
-Nan
-Police
-Queen
-Santa - Sack
-Sister
-Woman - Lady
-You
-Your - Yours
+auntie - uncle
+baby
+boy
+brother
+children
+dad
+doctor
+family
+friend
+girl
+grandad
+grandmum
+i
+jesus
+king
+magic - magician
+man
+me
+mum
+my - mine
+name - called
+nan
+police
+queen
+santa - sack
+sister
+woman - lady
+you
+your - yours

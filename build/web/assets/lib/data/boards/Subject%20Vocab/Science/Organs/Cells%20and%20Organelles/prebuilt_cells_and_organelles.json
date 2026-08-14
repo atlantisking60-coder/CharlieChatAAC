@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_cells_and_organelles",
+  "name": "Cells and Organelles",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 203,
+  "tier": 3,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_organs",
+  "iconAssetPath": "assets/Common/Letters/a.png",
+  "tileIconAssetPath": "assets/Common/Letters/a.png"
+}

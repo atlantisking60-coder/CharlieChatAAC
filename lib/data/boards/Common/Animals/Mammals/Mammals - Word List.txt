@@ -1,3 +1,4 @@
+mammal
 anteater
 antelope
 armadillo

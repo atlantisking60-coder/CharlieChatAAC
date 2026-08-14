@@ -1,11 +1,8 @@
-Outside - Word List
-=======================
-
-Farm - Farmer
-Flower
-Grass
-Outside
-Sea - Ocean - Water
-Sky - Heavens
-Stars
-Tree
+farm - farmer
+flower
+grass
+outside
+sea - ocean - water
+sky - heavens
+stars
+tree

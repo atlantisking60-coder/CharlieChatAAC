@@ -64,7 +64,7 @@
       "id": "prebuilt_ecosystems_deforestation",
       "label": "deforestation",
       "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Disasters/deforestation.png",
+      "imageAsset": "assets/Subject Vocab/PEEP/Disasters/deforestation.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -144,7 +144,7 @@
       "id": "prebuilt_ecosystems_ocean",
       "label": "ocean",
       "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E.E.P/Blue Planet/ocean.png",
+      "imageAsset": "assets/Subject Vocab/PEEP/Blue Planet/ocean.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -179,6 +179,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Subject Vocab/Sustainability/ecosystem.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Ecosystems.png",
   "version": 0
 }

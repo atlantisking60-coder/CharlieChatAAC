@@ -1,4 +1,5 @@
 import 'dart:async' show Completer, unawaited;
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io' show Directory, File;
 
@@ -189,9 +190,42 @@ class BoardService {
   /// Avoids repeatedly loading and scanning the full asset manifest.
   Map<String, String>? _boardAssetPathCache;
 
+  /// Cached icon metadata (iconAssetPath, tileIconAssetPath) for prebuilt
+  /// boards, keyed by board id. Avoids re-parsing board JSON files on every
+  /// area switch — the icons never change during a session.
+  final Map<String, ({String? icon, String? tileIcon})> _boardIconMetaCache = {};
+
   /// Tracks whether the local web dev server (localhost:8787) is reachable.
   /// null = untested, true = reachable, false = unreachable.
   bool? _devServerAvailable;
+
+  /// Boards the dev server answered non-200 for (JSON not on disk yet).
+  /// Cached per session so the app doesn't re-request them on every access.
+  final Set<String> _devServerMissingBoards = {};
+
+  /// Limits concurrent requests to the local dev server so a burst of parallel
+  /// board loads doesn't blow past the 3s timeout budget (previously ~700
+  /// parallel icon fetches flooded the server and timed out en masse).
+  static const int _kMaxDevServerConcurrency = 6;
+  int _devServerInFlight = 0;
+  final Queue<Completer<void>> _devServerWaiters = Queue<Completer<void>>();
+
+  Future<T> _withDevServerGate<T>(Future<T> Function() action) async {
+    if (_devServerInFlight >= _kMaxDevServerConcurrency) {
+      final completer = Completer<void>();
+      _devServerWaiters.add(completer);
+      await completer.future;
+    }
+    _devServerInFlight++;
+    try {
+      return await action();
+    } finally {
+      _devServerInFlight--;
+      if (_devServerWaiters.isNotEmpty) {
+        _devServerWaiters.removeFirst().complete();
+      }
+    }
+  }
 
   // Bump this to force every prebuilt board to be reloaded from source JSON.
   static const int _kPrebuiltBoardsSchemaVersion = 4;
@@ -269,6 +303,59 @@ class BoardService {
     }
   }
 
+  Future<void> _syncWebDevState() async {
+    if (!kIsWeb) return;
+    if (Uri.base.host != 'localhost' && Uri.base.host != '127.0.0.1') return;
+    // One up-front health check. Every later per-board request uses a short
+    // timeout and trusts this flag, so a stopped server costs one timeout
+    // instead of one per board (which made login take minutes).
+    try {
+      final ping = await http
+          .get(Uri.parse('http://localhost:8787/tabOrders'))
+          .timeout(const Duration(seconds: 3));
+      _devServerAvailable = ping.statusCode == 200;
+    } catch (_) {
+      _devServerAvailable = false;
+    }
+    if (_devServerAvailable != true) {
+      debugPrint('Dev server not reachable; using bundled assets for this session.');
+      return;
+    }
+    // Pull the runtime hierarchy and tab orders from the dev server into
+    // SharedPreferences so the live preview shows the same state as the project.
+    try {
+      final hierarchyResp = await http
+          .get(Uri.parse('http://localhost:8787/runtimeHierarchy'))
+          .timeout(const Duration(seconds: 5));
+      if (hierarchyResp.statusCode == 200 && _prefs != null) {
+        final data = json.decode(hierarchyResp.body) as Map<String, dynamic>;
+        final entries = data['entries'];
+        if (entries is List) {
+          await _prefs!.setString(runtimeHierarchyPrefsKey, json.encode(entries));
+        }
+      }
+    } catch (e) {
+      debugPrint('Web dev state sync (hierarchy) failed: $e');
+    }
+    try {
+      final tabOrdersResp = await http
+          .get(Uri.parse('http://localhost:8787/tabOrders'))
+          .timeout(const Duration(seconds: 5));
+      if (tabOrdersResp.statusCode == 200 && _prefs != null) {
+        final data = json.decode(tabOrdersResp.body) as Map<String, dynamic>;
+        final orders = (data['orders'] as Map?)?.cast<String, List<dynamic>>();
+        if (orders != null) {
+          for (final entry in orders.entries) {
+            final names = entry.value.cast<String>();
+            await _prefs!.setString(_getTabOrderKey(entry.key), json.encode(names));
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Web dev state sync (tab orders) failed: $e');
+    }
+  }
+
   String _getBoardKey(String boardId) {
     return 'board_${_currentProfileId ?? 'default'}_$boardId';
   }
@@ -315,6 +402,42 @@ class BoardService {
         rethrow;
       }
     }
+    if (kIsWeb && Uri.base.host == 'localhost') {
+      try {
+        await http
+          .post(
+            Uri.parse('http://localhost:8787/saveTabOrder'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({'area': area, 'names': names}),
+          )
+          .timeout(const Duration(seconds: 2));
+      } catch (e) {
+        debugPrint('Tab order mirror error: $e');
+      }
+    }
+  }
+
+  Future<void> _loadTabOrders() async {
+    if (!kIsWeb || _prefs == null) return;
+    if (Uri.base.host != 'localhost') return;
+    try {
+      final response = await http
+          .get(Uri.parse('http://localhost:8787/tabOrders'))
+          .timeout(const Duration(seconds: 3));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>? ?? {};
+        final orders = (data['orders'] as Map<String, dynamic>?) ?? {};
+        for (final entry in orders.entries) {
+          final area = entry.key;
+          final names = (entry.value as List<dynamic>?)?.cast<String>();
+          if (names == null) continue;
+          final encoded = json.encode(names);
+          await _prefs!.setString(_getTabOrderKey(area), encoded);
+        }
+      }
+    } catch (e) {
+      debugPrint('Tab order load error: $e');
+    }
   }
 
   Future<void> clearTabOrder(String area) async {
@@ -360,6 +483,7 @@ class BoardService {
     }
     if (kIsWeb) {
       _prefs = _deletionPrefs;
+      await _syncWebDevState();
     } else {
       final dir = await getApplicationDocumentsDirectory();
       _dataDir = Directory('${dir.path}/boards');
@@ -379,6 +503,7 @@ class BoardService {
       final userId = _currentProfileId ?? 'default';
       await loadUserCustomHierarchyEntries(userId);
       await ensureEmptyUserHierarchy(userId);
+      await _loadTabOrders();
     }
 
     // Retire any boards that should never be loaded before we populate from assets.
@@ -474,7 +599,9 @@ class BoardService {
   }
 
   /// Ensures all '[Letter] (Sign)' boards are correctly assigned to the Sign area
-  /// and marked as sub-boards of 'A-Z Of Sign'.
+  /// and marked as sub-boards of 'A-Z Of Sign' when the hierarchy says they
+  /// belong there. Boards such as 'Gender and Sexuality (Sign)' that are
+  /// top-level in the hierarchy are left as main Sign tabs.
   Future<void> fixSignBoards() async {
     final boards = await listBoards();
     final signParentId = prebuiltBoardId('A-Z Of Sign');
@@ -485,8 +612,11 @@ class BoardService {
           board.area = 'Sign';
           changed = true;
         }
-        // All '[letter] (Sign)' are sub-boards, except the A-Z main index itself
-        if (board.name != 'A-Z Of Sign' && board.name != 'A to Z Of Sign' && board.name.contains('(Sign)')) {
+        // Only force the A-Z sub-board relationship for boards the hierarchy
+        // explicitly lists under 'A-Z Of Sign'.
+        if (board.name != 'A-Z Of Sign' &&
+            board.name != 'A to Z Of Sign' &&
+            hierarchyParent(board.name) == 'A-Z Of Sign') {
           if (!board.isSubBoard) {
             board.isSubBoard = true;
             changed = true;
@@ -733,7 +863,7 @@ class BoardService {
             cached = _boardFromJson(json.decode(raw) as Map<String, dynamic>, includeTiles: false);
           } catch (_) {}
         }
-        final assetMeta = await _loadBoardFromAssets(id, name, includeTiles: false);
+        final assetMeta = await _loadBoardFromAssets(id, name, includeTiles: false, preferDevServer: false);
         if (cached != null && assetMeta != null) {
           final iconMissing = (cached.iconAssetPath == null || cached.iconAssetPath!.isEmpty) &&
               (assetMeta.iconAssetPath != null && assetMeta.iconAssetPath!.isNotEmpty);
@@ -755,20 +885,27 @@ class BoardService {
 
       // 1. Try to load from canonical lib/data/boards/[Area] JSON source (Dev Mode)
       // On Web, we fetch from the local dev server.
-      if (kIsWeb && _devServerAvailable != false && Uri.base.host == 'localhost') {
+      if (kIsWeb && _devServerAvailable == true && Uri.base.host == 'localhost' && !_devServerMissingBoards.contains(id)) {
         try {
           final area = _areaForBoardName(name);
           final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
-          final response = await http.get(uri).timeout(const Duration(seconds: 2));
-          _devServerAvailable = true;
+          final response = await _withDevServerGate(
+            () => http.get(uri).timeout(const Duration(seconds: 3)),
+          );
           if (response.statusCode == 200) {
              final board = _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
              await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: true);
              _boardCache[board.id] = board;
              return;
           }
-        } catch (_) {
+          // The server answered but has no JSON for this board on disk; don't
+          // re-request it on every preload pass.
+          _devServerMissingBoards.add(id);
+        } catch (e) {
+          // Stop hammering a server that is down; one failure disables it for
+          // this session so the remaining boards load straight from assets.
           _devServerAvailable = false;
+          debugPrint('Dev server unavailable while preloading $id: $e');
         }
       }
 
@@ -2637,8 +2774,7 @@ class BoardService {
             // area, parent). Trust the compiled/runtime hierarchy instead, unless
             // the board has been explicitly removed from the tab rows
             // (parentBoardId == '__removed__' and no longer in the hierarchy).
-            if (board.id.startsWith('prebuilt_') &&
-                (board.parentBoardId != '__removed__' || isInBoardHierarchy(board.name))) {
+            if (board.id.startsWith('prebuilt_') && board.parentBoardId != '__removed__') {
               final areaFromHierarchy = _areaForBoardName(board.name);
               board.area = areaFromHierarchy;
               final tier = hierarchyTier(board.name);
@@ -2649,6 +2785,15 @@ class BoardService {
               board.isQuinaryBoard = tier > 4;
               final parentId = hierarchyParentId(board.name);
               board.parentBoardId = parentId ?? '';
+            } else if (board.id.startsWith('prebuilt_') && board.parentBoardId == '__removed__') {
+              // De-homed boards stay hidden and must not be placed back on a
+              // main tab set. Keep the real area so the board is still
+              // reachable from links and area filters keep working.
+              board.isSubBoard = true;
+              board.isTertiaryBoard = false;
+              board.isQuaternaryBoard = false;
+              board.isQuinaryBoard = false;
+              board.tier = 2;
             }
             boardsById[board.id] = board;
           } catch (e) {
@@ -2699,22 +2844,43 @@ class BoardService {
       for (final board in boardsById.values) {
         if (board.id.startsWith('prebuilt_')) {
           if (area != null && _areaForBoardName(board.name) != area) continue;
+          // Use cached icon metadata if available (avoids re-parsing JSON)
+          final cached = _boardIconMetaCache[board.id];
+          if (cached != null) {
+            if (cached.icon != null && cached.icon!.isNotEmpty && validAssets.contains(cached.icon)) {
+              board.iconAssetPath = cached.icon;
+            }
+            if (cached.tileIcon != null && cached.tileIcon!.isNotEmpty && validAssets.contains(cached.tileIcon)) {
+              board.tileIconAssetPath = cached.tileIcon;
+            }
+            continue;
+          }
           iconFutures.add(
-            _loadBoardFromAssets(board.id, board.name, includeTiles: false)
+            _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: false)
                 .then((asset) {
-                  if (asset == null) return;
-                  final icon = asset.iconAssetPath;
-                  if (icon != null && icon.isNotEmpty && validAssets.contains(icon)) {
-                    board.iconAssetPath = icon;
+                  if (asset != null) {
+                    final icon = asset.iconAssetPath;
+                    if (icon != null && icon.isNotEmpty && validAssets.contains(icon)) {
+                      board.iconAssetPath = icon;
+                    }
+                    final tileIcon = asset.tileIconAssetPath;
+                    if (tileIcon != null &&
+                        tileIcon.isNotEmpty &&
+                        validAssets.contains(tileIcon)) {
+                      board.tileIconAssetPath = tileIcon;
+                    }
                   }
-                  final tileIcon = asset.tileIconAssetPath;
-                  if (tileIcon != null &&
-                      tileIcon.isNotEmpty &&
-                      validAssets.contains(tileIcon)) {
-                    board.tileIconAssetPath = tileIcon;
-                  }
+                  // Cache for future area switches — including boards with no
+                  // bundled JSON (negative results), so they aren't re-parsed
+                  // on every listBoards call.
+                  _boardIconMetaCache[board.id] = (
+                    icon: asset?.iconAssetPath,
+                    tileIcon: asset?.tileIconAssetPath,
+                  );
                 })
-                .catchError((_) {}),
+                .catchError((_) {
+                  _boardIconMetaCache[board.id] = (icon: null, tileIcon: null);
+                }),
           );
         }
       }
@@ -2892,7 +3058,7 @@ class BoardService {
         (board.tileIconAssetPath != null && board.tileIconAssetPath!.isNotEmpty)) {
       return;
     }
-    final asset = await _loadBoardFromAssets(board.id, board.name, includeTiles: false);
+    final asset = await _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: false);
     if (asset == null) return;
     if (board.iconAssetPath == null || board.iconAssetPath!.isEmpty) {
       board.iconAssetPath = asset.iconAssetPath;
@@ -2921,6 +3087,9 @@ class BoardService {
 
     try {
       await _clearBoardDeletion(board.id);
+      if (!kIsWeb && _projectRoot != null) {
+        await _ensureLocalImageAssets(board);
+      }
       await _writeBoard(board,
           cacheInWebStorage: true,
           // Only admin edits are written back to the source project files;
@@ -2929,12 +3098,10 @@ class BoardService {
       _boardCache[board.id] = board;
       await _saveSortOrder(board);
 
-      // Register new board in the appropriate hierarchy.
+      // Register/update the board in the appropriate hierarchy.
       // Runs on ALL platforms so web and native present identically.
       // Root-level utility boards like Favorites are excluded.
-      if (board.id == 'prebuilt_favorites') {
-        // Favorites lives at root, not in any area hierarchy.
-      } else if (!board.id.startsWith('link_') && !isInBoardHierarchy(board.name)) {
+      if (board.id != 'prebuilt_favorites' && !board.id.startsWith('link_')) {
         String? parentName;
         if (board.parentBoardId != null && board.parentBoardId!.isNotEmpty) {
           final parent = await loadBoard(board.parentBoardId!);
@@ -2944,12 +3111,10 @@ class BoardService {
         final userId = _currentProfileId ?? 'default';
 
         if (_isAdmin) {
-          // Admin edits go directly into the static/compiled hierarchy —
-          // persisted to prefs AND mirrored to the dev server which writes
-          // the change back to board_hierarchy.dart on disk.
-          await addToRuntimeHierarchy(entry);
-          _mirrorHierarchyToDevServer();
-          debugPrint('BoardHierarchy [admin]: added "${board.name}" under area '
+          // Admin edits go directly into the runtime hierarchy, which is now
+          // mirrored to the dev server on every persist.
+          await updateRuntimeHierarchyEntry(entry);
+          debugPrint('BoardHierarchy [admin]: updated "${board.name}" under area '
               '"${board.area}"${parentName != null ? ', parent "$parentName"' : ''}');
         } else {
           // User-created boards go in the per-user hierarchy —
@@ -3189,7 +3354,7 @@ class BoardService {
             headers: {'Content-Type': 'application/json'},
             body: json.encode(boardJson),
           )
-          .timeout(const Duration(seconds: 2));
+          .timeout(const Duration(seconds: 5));
       if (response.statusCode != 200) {
         debugPrint('Dev save server returned ${response.statusCode}');
       }
@@ -3864,21 +4029,39 @@ class BoardService {
     } catch (_) {}
   }
 
-  Future<Board?> _loadBoardFromAssets(String id, String name, {bool includeTiles = true}) async {
+  Future<Board?> _loadBoardFromAssets(
+    String id,
+    String name, {
+    bool includeTiles = true,
+    bool preferDevServer = true,
+  }) async {
     final area = _areaForBoardName(name);
 
     // In live web preview, prefer the dev server copy so edits made in the
-    // preview persist over the compiled asset bundle.
-    if (kIsWeb && _devServerAvailable != false && Uri.base.host == 'localhost') {
+    // preview persist over the compiled asset bundle. Icon-only metadata
+    // lookups pass preferDevServer: false and read straight from the bundled
+    // JSON — the bundled copy is identical for icons and avoids flooding the
+    // dev server with hundreds of parallel requests.
+    if (kIsWeb &&
+        preferDevServer &&
+        _devServerAvailable == true &&
+        Uri.base.host == 'localhost' &&
+        !_devServerMissingBoards.contains(id)) {
       try {
         final uri = Uri.parse('http://localhost:8787/loadBoard?id=$id&area=$area');
-        final response = await http.get(uri).timeout(const Duration(seconds: 2));
-        _devServerAvailable = true;
+        final response = await _withDevServerGate(
+          () => http.get(uri).timeout(const Duration(seconds: 3)),
+        );
         if (response.statusCode == 200) {
+          _devServerMissingBoards.remove(id);
           return _boardFromJson(json.decode(response.body) as Map<String, dynamic>, includeTiles: includeTiles);
         }
-      } catch (_) {
+        // The server answered but has no JSON for this board on disk; don't
+        // re-request it every time (each 404 logged as an error).
+        _devServerMissingBoards.add(id);
+      } catch (e) {
         _devServerAvailable = false;
+        debugPrint('Dev server unavailable for $id: $e');
       }
     }
 
@@ -4065,9 +4248,21 @@ class BoardService {
   Future<File?> _findProjectJsonFile(String id) async {
     if (kIsWeb || _projectRoot == null) return null;
     final directPath = _directProjectJsonPath(id);
-    if (directPath == null) return null;
-    final f = File(directPath);
-    if (await f.exists()) return f;
+    if (directPath != null) {
+      final f = File(directPath);
+      if (await f.exists()) return f;
+    }
+    // Fallback: some admin saves landed outside the canonical hierarchy path;
+    // search lib/data/boards for any file with this id before giving up.
+    final boardsRoot = Directory(p.join(_projectRoot!, 'lib', 'data', 'boards'));
+    if (await boardsRoot.exists()) {
+      await for (final entity in boardsRoot.list(recursive: true)) {
+        if (entity is! File) continue;
+        if (p.basename(entity.path) == '$id.json') {
+          return entity;
+        }
+      }
+    }
     return null;
   }
 
@@ -4086,6 +4281,9 @@ class BoardService {
       if (!await rootDir.exists()) await rootDir.create(recursive: true);
       return File(p.join(rootDir.path, '${board.id}.json'));
     }
+    // Prefer the canonical hierarchy-derived path so saves and loads are aligned.
+    final directPath = _directProjectJsonPath(board.id);
+    if (directPath != null) return File(directPath);
     return boardJsonPathUnder(board, _projectRoot!);
   }
 
@@ -4098,6 +4296,119 @@ class BoardService {
       return linkedBoardId;
     }
     return linkedBoardId;
+  }
+
+  /// Downloads or decodes any external image (URL or data URI) used by a tile
+  /// and saves it to the board's local assets folder, then rewrites the tile
+  /// to use that local copy.  This is only run on native builds where the
+  /// project root is known, and is skipped for web or production installs.
+  Future<void> _ensureLocalImageAssets(Board board) async {
+    if (kIsWeb || _projectRoot == null) return;
+
+    final jsonFile = await _projectJsonFileForBoard(board);
+    final boardFolder = jsonFile.parent;
+    final relativeFolder = p.relative(
+      boardFolder.path,
+      from: p.join(_projectRoot!, 'lib', 'data', 'boards'),
+    );
+    final assetDir = Directory(p.join(_projectRoot!, 'assets', relativeFolder));
+    if (!await assetDir.exists()) {
+      await assetDir.create(recursive: true);
+    }
+
+    final localPrefix = 'assets/${relativeFolder.replaceAll('\\', '/')}';
+    final existingFiles = <String>{};
+
+    for (var i = 0; i < board.tiles.length; i++) {
+      final tile = board.tiles[i];
+      final img = tile.imageAsset;
+      if (img.isEmpty || img.startsWith('assets/')) continue;
+
+      List<int> bytes = const <int>[];
+      String ext = '.png';
+      String suggestedName = '';
+
+      if (img.startsWith('data:')) {
+        try {
+          final uriData = UriData.parse(img);
+          bytes = uriData.contentAsBytes();
+          final mime = uriData.mimeType;
+          if (mime.contains('svg')) {
+            ext = '.svg';
+          } else if (mime.contains('png')) {
+            ext = '.png';
+          } else if (mime.contains('jpg') || mime.contains('jpeg')) {
+            ext = '.jpg';
+          }
+          suggestedName = tile.label.isNotEmpty ? tile.label : tile.id;
+        } catch (e) {
+          debugPrint('Could not parse data URI for tile ${tile.id}: $e');
+          continue;
+        }
+      } else if (img.startsWith('http://') || img.startsWith('https://')) {
+        try {
+          final uri = Uri.parse(img);
+          final response = await http.get(uri).timeout(const Duration(seconds: 10));
+          if (response.statusCode != 200) {
+            debugPrint('Failed to download image $img: ${response.statusCode}');
+            continue;
+          }
+          bytes = response.bodyBytes;
+          ext = p.extension(uri.path);
+          if (ext.isEmpty || !ext.startsWith('.')) {
+            final ct = response.headers['content-type'] ?? '';
+            if (ct.contains('svg')) {
+              ext = '.svg';
+            } else if (ct.contains('png')) {
+              ext = '.png';
+            } else if (ct.contains('jpg') || ct.contains('jpeg')) {
+              ext = '.jpg';
+            } else {
+              ext = '.png';
+            }
+          }
+          suggestedName = tile.label.isNotEmpty
+              ? tile.label
+              : p.basenameWithoutExtension(uri.path);
+        } catch (e) {
+          debugPrint('Could not download image $img: $e');
+          continue;
+        }
+      } else {
+        // Unknown/unhandled path; leave it alone.
+        continue;
+      }
+
+      if (bytes.isEmpty) continue;
+
+      var name = _safeFileName(suggestedName);
+      if (name.isEmpty) name = tile.id;
+      var nameWithoutExt = p.basenameWithoutExtension(name);
+      if (nameWithoutExt.isEmpty) nameWithoutExt = tile.id;
+
+      var candidate = '$nameWithoutExt$ext';
+      var counter = 1;
+      while (existingFiles.contains(candidate) ||
+             await File(p.join(assetDir.path, candidate)).exists()) {
+        counter++;
+        candidate = '${nameWithoutExt}_$counter$ext';
+      }
+      existingFiles.add(candidate);
+
+      final outFile = File(p.join(assetDir.path, candidate));
+      await outFile.writeAsBytes(bytes);
+
+      board.tiles[i] = tile.copyWith(
+        imageAsset: '$localPrefix/$candidate'.replaceAll('\\', '/'),
+      );
+    }
+  }
+
+  String _safeFileName(String value) {
+    return value
+        .replaceAll(RegExp(r'[<>:"\\/|?*]'), '_')
+        .replaceAll(RegExp(r'\s+'), '_')
+        .trim();
   }
 
   /// Public wrapper so the board editor can import JSON files.

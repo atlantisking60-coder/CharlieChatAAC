@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:io' show Directory, File;
@@ -409,6 +410,25 @@ class TopTab {
     this.board,
     this.parentBoard,
   });
+
+  TopTab copyWith({
+    String? id,
+    String? label,
+    IconData? icon,
+    String? iconAssetPath,
+    TopTabType? type,
+    Board? board,
+    Board? parentBoard,
+  }) =>
+      TopTab(
+        id: id ?? this.id,
+        label: label ?? this.label,
+        icon: icon ?? this.icon,
+        iconAssetPath: iconAssetPath ?? this.iconAssetPath,
+        type: type ?? this.type,
+        board: board ?? this.board,
+        parentBoard: parentBoard ?? this.parentBoard,
+      );
 }
 
 class _HomePageState extends State<HomePage> {
@@ -431,12 +451,18 @@ class _HomePageState extends State<HomePage> {
   AppSettings? _settings;
   List<Board> _boards = [];
   static final Map<String, String> _subjectVocabLessonIcons = {};
+
+  /// Set of every bundled web asset (assets/**). Used to reject icon paths
+  /// that don't exist in the bundle (e.g. stale 'assets/Default Tab Icons/...'
+  /// references) before they trigger console 404s. null = not loaded yet.
+  static Set<String>? _validIconAssets;
   List<TopTab> _tabs = [];
   TopTab? _activeTab;
   Board? _parentBoard;
   List<String> _availableLanguages = _fallbackLanguages;
   List<VoiceOption> _availableVoices = [];
-  bool _showAllBoardSymbols = false;
+  int _visibleBoardRows = 12;
+  String? _visibleBoardId;
   AppMode _currentMode = AppMode.home;
   bool _isUpdatingText = false;
   final ExternalSymbolService _externalSymbolService = ExternalSymbolService();
@@ -446,6 +472,7 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _boardScrollController = ScrollController();
   final ScrollController _boardHorizontalScrollController = ScrollController();
   final Map<String, ScrollController> _tabScrollControllers = {};
+  final Map<String, GlobalKey> _tabActiveKeys = {};
   final Map<String, String> _iconPathCache = {};
   bool _showScrollToTop = false;
 
@@ -484,6 +511,7 @@ class _HomePageState extends State<HomePage> {
       boardService.setCurrentProfileId(_activeProfile?.id ?? 'default');
 
       if (_subjectVocabLessonIcons.isEmpty) await _loadSubjectVocabLessonIcons();
+      await _loadValidIconAssets();
 
       // Default sub-tab order for Common > Time > Events and Occasions.
       if (boardService.getTabOrder('prebuilt_events_and_occasions') == null) {
@@ -598,7 +626,11 @@ class _HomePageState extends State<HomePage> {
       _missingBoardId = null;
       _missingBoardName = null;
       final index = _boards.indexWhere((b) => b.id == full.id);
-      if (index >= 0) _boards[index] = full;
+      if (index >= 0) {
+        _boards[index] = full;
+      } else {
+        _boards.add(full);
+      }
       _activeTab = TopTab(
         id: _activeTab!.id,
         label: _activeTab!.label,
@@ -643,6 +675,36 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       debugPrint('Error loading Subject Vocab/Lessons icon manifest: $e');
+    }
+  }
+
+  /// Loads the full set of bundled asset paths once. Icon mappings that point
+  /// at files missing from the bundle are skipped so the UI falls back to a
+  /// real bundled icon (or the default fallback) instead of firing 404s.
+  Future<void> _loadValidIconAssets() async {
+    if (_validIconAssets != null) return;
+    try {
+      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+      _validIconAssets = manifest
+          .listAssets()
+          .where((path) => path.startsWith('assets/') && path.endsWith('.png'))
+          .toSet();
+    } catch (e) {
+      debugPrint('Error loading asset manifest for icon validation: $e');
+      _validIconAssets = const {};
+    }
+  }
+
+  /// Returns true if [path] is present in the bundled asset manifest. Until
+  /// the manifest is loaded, unknown paths are assumed valid to preserve the
+  /// previous behaviour.
+  bool _isBundledIconAsset(String path) {
+    final valid = _validIconAssets;
+    if (valid == null) return true;
+    try {
+      return valid.contains(Uri.decodeFull(path));
+    } catch (_) {
+      return true;
     }
   }
 
@@ -848,11 +910,15 @@ class _HomePageState extends State<HomePage> {
       if (lessonIcon != null) return lessonIcon;
     }
 
-    // Check if we have a specific mapping for this board name
+    // Check if we have a specific mapping for this board name. Skip mappings
+    // whose target file isn't bundled (e.g. stale 'assets/Default Tab Icons/'
+    // paths) so the lookups below can find a real icon instead of 404ing.
     final upperBoardName = boardName.toUpperCase();
     for (final entry in iconMappings.entries) {
       if (entry.key.toUpperCase() == upperBoardName) {
-        return _sanitizeIconAssetPath(entry.value);
+        final mapped = _sanitizeIconAssetPath(entry.value);
+        if (_isBundledIconAsset(mapped)) return mapped;
+        break;
       }
     }
 
@@ -926,9 +992,12 @@ class _HomePageState extends State<HomePage> {
     // Specific icon path mappings for boards
 
     
-    // Fallback to dynamic path construction
+    // Fallback to dynamic path construction — only if that file is actually
+    // bundled; otherwise return empty so the caller shows its default icon
+    // instead of issuing a 404 network request.
     final fileName = boardName.replaceAll(' ', ' ');
-    return _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
+    final fallbackPath = _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
+    return _isBundledIconAsset(fallbackPath) ? fallbackPath : '';
   }
 
   IconData _getBoardIconData(Board? board) {
@@ -2367,12 +2436,41 @@ class _HomePageState extends State<HomePage> {
         // Show at least the grid size, but expand if there's content beyond it
         final actualLimit = max(gridLimit, lastContentIndex + 1);
 
-        if (!_showAllBoardSymbols && filtered.length > actualLimit) {
+        // Reset pagination state when the active board changes
+        if (_visibleBoardId != board.id) {
+          _visibleBoardId = board.id;
+          _visibleBoardRows = 12;
+        }
+
+        final contentRows = (actualLimit / board.columns).ceil();
+
+        if (contentRows > 12) {
+          final visibleTiles = (_visibleBoardRows * board.columns).clamp(0, filtered.length);
+          final limit = min(visibleTiles, actualLimit);
+          return filtered.sublist(0, limit);
+        }
+
+        if (filtered.length > actualLimit) {
           return filtered.sublist(0, actualLimit);
         }
       }
     }
     return filtered;
+  }
+
+  bool get _showMoreButton {
+    if (_activeTab?.type != TopTabType.board || _activeTab?.board == null) return false;
+    final board = _activeTab!.board!;
+    if (board.adjustableLayout) return false;
+    final search = _searchController.text.trim().toLowerCase();
+    if (search.isNotEmpty && (search.length > 1 || _isSearchableShortQuery(search))) return false;
+    final filtered = _filteredSymbols;
+    if (filtered.isEmpty) return false;
+    final lastContent = filtered.lastIndexWhere((t) =>
+        t.label.isNotEmpty || t.imageAsset.isNotEmpty || t.emoji.isNotEmpty || t.linkedBoardId.isNotEmpty);
+    final actualLimit = max(board.rows * board.columns, lastContent + 1);
+    final contentRows = (actualLimit / board.columns).ceil();
+    return contentRows > 12 && _visibleBoardRows < contentRows;
   }
 
   Future<void> _speak(String text) async {
@@ -2524,13 +2622,23 @@ class _HomePageState extends State<HomePage> {
         _parentBoard = null;
       }
 
-      // 2. Find or create the tab
+      // 2. Find or create the tab, but always use the full board we just loaded.
+      final existingIndex = _tabs.indexWhere((t) => t.id == board.id);
       TopTab? targetTab;
-      try {
-        targetTab = _tabs.firstWhere((t) => t.id == board.id);
-        // If found in top tabs, it shouldn't have a parent that forces sub-tabs
-        parent = targetTab.parentBoard;
-      } catch (_) {
+      if (existingIndex >= 0) {
+        final existing = _tabs[existingIndex];
+        parent = existing.parentBoard;
+        targetTab = TopTab(
+          id: existing.id,
+          label: existing.label,
+          icon: existing.icon,
+          iconAssetPath: existing.iconAssetPath,
+          type: existing.type,
+          board: board,
+          parentBoard: parent,
+        );
+        _tabs[existingIndex] = targetTab;
+      } else {
         // Not a top tab, create orphan sub-tab
         targetTab = TopTab(
           id: board.id,
@@ -2545,9 +2653,9 @@ class _HomePageState extends State<HomePage> {
       _activeTab = targetTab;
       _parentBoard = parent;
       _selectedCategory = 'All';
-      _showAllBoardSymbols = false;
       _persistSessionState();
     });
+    _scrollActiveTabsIntoViewAfterFrame();
   }
 
   Board _createAutoMissingBoard(String id, String name,
@@ -2640,6 +2748,7 @@ class _HomePageState extends State<HomePage> {
       _selectedCategory = 'All';
       _parentBoard = tab?.parentBoard;
     });
+    unawaited(_loadFullActiveBoard());
   }
 
   void _pushHistory() {
@@ -2678,6 +2787,7 @@ class _HomePageState extends State<HomePage> {
       );
     });
     _syncParentBoardForActiveTab();
+    await _loadFullActiveBoard();
   }
 
 /// PHRASE BUILDER
@@ -3238,7 +3348,7 @@ class _HomePageState extends State<HomePage> {
       
       final boardService = await BoardService.getInstance();
       boardService.setProjectRoot(result.settings.projectRoot);
-      await _loadBoards();
+      await _loadBoards(area: _activeArea());
 
       if (result.navigateToBoardId != null) {
         _openLinkedBoard(result.navigateToBoardId!);
@@ -3246,7 +3356,7 @@ class _HomePageState extends State<HomePage> {
 
       await _configureTts();
     } else {
-      await _loadBoards();
+      await _loadBoards(area: _activeArea());
     }
   }
 
@@ -3269,6 +3379,7 @@ class _HomePageState extends State<HomePage> {
         _parentBoard = null;
       });
       _persistSessionState();
+      _scrollActiveTabsIntoViewAfterFrame();
       return;
     }
     if (tab.type == TopTabType.board && tab.board != null) {
@@ -3329,20 +3440,20 @@ class _HomePageState extends State<HomePage> {
           parentBoard: tab.parentBoard,
         );
         _selectedCategory = 'All';
-        _showAllBoardSymbols = false;
         _parentBoard = tab.parentBoard;
       });
       _persistSessionState();
+      _scrollActiveTabsIntoViewAfterFrame();
       return;
     }
     if (tab.type == TopTabType.favorites) {
       setState(() {
         _activeTab = tab;
         _selectedCategory = 'All';
-        _showAllBoardSymbols = false;
         _parentBoard = null;
       });
       _persistSessionState();
+      _scrollActiveTabsIntoViewAfterFrame();
       return;
     }
     if (tab.type == TopTabType.settings) {
@@ -3393,6 +3504,92 @@ class _HomePageState extends State<HomePage> {
     return _isAncestor(ancestorId, parent);
   }
 
+  bool _isTabSelected(TopTab tab) {
+    return _activeTab?.id == tab.id || _isAncestor(tab.id, _activeTab?.board);
+  }
+
+  void _scrollActiveTabsIntoView() {
+    for (final key in _tabActiveKeys.values) {
+      if (key.currentContext == null) continue;
+      Scrollable.ensureVisible(
+        key.currentContext!,
+        alignment: 0.5,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  void _scrollActiveTabsIntoViewAfterFrame() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _scrollActiveTabsIntoView();
+    });
+  }
+
+  Future<void> _showTabContextMenu(TopTab tab) async {
+    final isLink = tab.board!.id.startsWith('link_');
+    final option = await showDialog<String>(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: const Text('Tab options'),
+        children: [
+          if (isLink)
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(ctx, 'relink'),
+              child: const Text('Link to a different board'),
+            ),
+          if (!isLink)
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(ctx, 'tier'),
+              child: const Text('Create a new tier underneath'),
+            ),
+        ],
+      ),
+    );
+    if (option == 'relink') {
+      await _relinkTab(tab);
+    } else if (option == 'tier') {
+      await _showReorderTabsDialog(_subTabsForBoard(tab.board), rowParent: tab.board);
+    }
+  }
+
+  Future<Board?> _relinkTab(TopTab tab) async {
+    final service = await BoardService.getInstance();
+    final allBoards = await service.listBoards(includeTiles: false);
+    if (!mounted) return null;
+    final currentTarget = tab.board!.linkedBoardId;
+    final candidates = allBoards
+        .where((b) =>
+            !b.id.startsWith('link_') &&
+            b.id != currentTarget &&
+            b.id != tab.board!.id)
+        .toList()
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    if (candidates.isEmpty) {
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => const AlertDialog(
+          content: Text('No other board available to link to.'),
+        ),
+      );
+      return null;
+    }
+    final selectedId = await _pickExistingBoard(candidates);
+    if (selectedId == null || !mounted) return null;
+    final original = await service.getBoard(selectedId);
+    if (original == null) return null;
+    final fullBoard = await service.loadBoard(tab.board!.id) ?? tab.board!;
+    fullBoard.name = original.name;
+    fullBoard.linkedBoardId = original.id;
+    fullBoard.iconAssetPath = original.iconAssetPath;
+    fullBoard.tileIconAssetPath = original.tileIconAssetPath;
+    await service.saveBoard(fullBoard);
+    if (!mounted) return null;
+    service.clearBoardCache(fullBoard.id);
+    await _loadBoards();
+    return fullBoard;
+  }
+
   Future<void> _showReorderTabsDialog(List<TopTab> boardTabs, {Board? rowParent}) async {
     await showDialog<List<TopTab>>(
       context: context,
@@ -3400,6 +3597,7 @@ class _HomePageState extends State<HomePage> {
         tabs: boardTabs,
         onDelete: _deleteTabFromReorderDialog,
         onAdd: (tabs) => _addExistingBoardToTabRow(tabs, parent: rowParent),
+        onRelink: _relinkTab,
         onSaveComplete: _loadBoards,
       ),
     );
@@ -3438,12 +3636,14 @@ class _HomePageState extends State<HomePage> {
     board.parentBoardId = '__removed__';
     board.isSubBoard = true;
     board.isTertiaryBoard = false;
-    // Load the full board (with tiles) before saving, otherwise the tile-less
-    // placeholder used in the tab list would overwrite the board with no tiles.
+    // De-homed boards are hidden from every tab row but keep their area so
+    // they stay reachable from board-link tiles.
     final fullBoard = await service.loadBoard(board.id) ?? board;
-    fullBoard.isSubBoard = board.isSubBoard;
-    fullBoard.isTertiaryBoard = board.isTertiaryBoard;
-    fullBoard.parentBoardId = board.parentBoardId;
+    fullBoard.isSubBoard = true;
+    fullBoard.isTertiaryBoard = false;
+    fullBoard.isQuaternaryBoard = false;
+    fullBoard.isQuinaryBoard = false;
+    fullBoard.parentBoardId = '__removed__';
     await service.saveBoard(fullBoard);
     service.clearBoardCache(board.id);
     await _loadBoards();
@@ -3464,7 +3664,9 @@ class _HomePageState extends State<HomePage> {
     final candidates = allBoards
         .where((b) =>
             !b.id.startsWith('link_') &&
-            (rowParent == null || b.id != rowParent.id))
+            (rowParent == null || b.id != rowParent.id) &&
+            !currentTabs.any((t) =>
+                t.id == b.id || t.board?.linkedBoardId == b.id))
         .toList()
       ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
@@ -3477,23 +3679,22 @@ class _HomePageState extends State<HomePage> {
     final targetArea = rowParent?.area ?? _activeArea();
     final parentId = rowParent?.id;
 
-    // Find a unique internal id and name for the new secondary tab.
+    final isSub = rowParent != null;
+    final tier = (rowParent?.tier ?? 1) + (isSub ? 1 : 0);
+
+    // Create a link/placeholder tab board that points to the original.
+    // The original is not moved; its parent, area, and tier stay as-is.
     final existingIds = <String>{for (final b in allBoards) b.id};
     String linkId;
-    String linkName;
     int n = 1;
     do {
-      linkName = n == 1 ? original.name : '${original.name} ($n)';
       linkId = n == 1 ? 'link_${original.id}' : 'link_${original.id}_$n';
       n++;
     } while (existingIds.contains(linkId));
 
-    final isSub = rowParent != null;
-    final tier = (rowParent?.tier ?? 1) + (isSub ? 1 : 0);
-
     final linkBoard = Board(
       id: linkId,
-      name: linkName,
+      name: original.name,
       area: targetArea,
       parentBoardId: parentId,
       linkedBoardId: original.id,
@@ -3520,7 +3721,7 @@ class _HomePageState extends State<HomePage> {
 
     return TopTab(
       id: linkBoard.id,
-      label: linkName,
+      label: original.name,
       iconAssetPath: _getBoardIconPath(linkBoard),
       type: TopTabType.board,
       board: linkBoard,
@@ -3601,6 +3802,19 @@ class _HomePageState extends State<HomePage> {
     final rowKey = _getTabRowKey(tabs);
     final controller = _tabScrollControllers.putIfAbsent(rowKey, () => ScrollController());
     final tabOrderKey = tabs.map((t) => t.id).join(',');
+    final activeKey = _tabActiveKeys.putIfAbsent(rowKey, () => GlobalKey());
+
+    final children = <Widget>[];
+    for (int i = 0; i < tabs.length; i++) {
+      if (i == reorderIndex) {
+        children.add(_buildReorderTabButton(() => _showReorderTabsDialog(reorderableTabs)));
+      }
+      final tab = tabs[i];
+      children.add(_buildTabButton(tab, i, tabs.length, activeKey: _isTabSelected(tab) ? activeKey : null));
+    }
+    if (reorderIndex == tabs.length) {
+      children.add(_buildReorderTabButton(() => _showReorderTabsDialog(reorderableTabs)));
+    }
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -3612,20 +3826,12 @@ class _HomePageState extends State<HomePage> {
       child: Scrollbar(
         controller: controller,
         thumbVisibility: true,
-        child: ListView.builder(
+        child: SingleChildScrollView(
           key: ValueKey(tabOrderKey),
           controller: controller,
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          itemCount: tabs.length + 1,
-          itemBuilder: (context, index) {
-            if (index == reorderIndex) {
-              return _buildReorderTabButton(() => _showReorderTabsDialog(reorderableTabs));
-            }
-            final tabIndex = index < reorderIndex ? index : index - 1;
-            final tab = tabs[tabIndex];
-            return _buildTabButton(tab, tabIndex, tabs.length);
-          },
+          child: Row(children: children),
         ),
       ),
     );
@@ -3650,8 +3856,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTabButton(TopTab tab, int index, int total) {
-    final selected = _activeTab?.id == tab.id || _isAncestor(tab.id, _activeTab?.board);
+  Widget _buildTabButton(TopTab tab, int index, int total, {GlobalKey? activeKey}) {
+    final selected = _isTabSelected(tab);
     final isFavorites = tab.type == TopTabType.favorites;
     final isEditor = tab.type == TopTabType.editor;
     final isUtilityTab = isFavorites || isEditor;
@@ -3670,15 +3876,15 @@ class _HomePageState extends State<HomePage> {
     }
     return GestureDetector(
       onLongPress: () {
-        if (tab.type == TopTabType.board && tab.board != null && !tab.board!.id.startsWith('link_')) {
-          _showReorderTabsDialog(_subTabsForBoard(tab.board), rowParent: tab.board);
+        if (tab.type == TopTabType.board && tab.board != null) {
+          _showTabContextMenu(tab);
         } else {
           _refreshBoardCache(tab);
         }
       },
       child: Container(
-        key: ValueKey(tab.id),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
+        key: activeKey ?? ValueKey(tab.id),
+        margin: const EdgeInsets.symmetric(horizontal: 4),
       child: Tooltip(
         message: tab.label,
         child: FilledButton(
@@ -4046,17 +4252,13 @@ class _HomePageState extends State<HomePage> {
                                   controller: _boardHorizontalScrollController,
                                 ),
                               /*FIXME*/),
-                              if (_activeTab?.type == TopTabType.board && _activeTab?.board != null &&
-                                  !_activeTab!.board!.adjustableLayout &&
-                                  _activeTab!.board!.rows >= 10 &&
-                                  _filteredSymbols.length > (_activeTab!.board!.rows * _activeTab!.board!.columns) &&
-                                  !_showAllBoardSymbols)
+                              if (_showMoreButton)
                                 Padding(
                                   padding: const EdgeInsets.all(8),
                                   child: ElevatedButton(
                                     onPressed: () {
                                       setState(() {
-                                        _showAllBoardSymbols = true;
+                                        _visibleBoardRows += 12;
                                       });
                                     },
                                     child: const Text('Show More'),
@@ -4388,8 +4590,9 @@ class _ReorderTabsDialog extends StatefulWidget {
   final List<TopTab> tabs;
   final Future<bool> Function(TopTab tab) onDelete;
   final Future<TopTab?> Function(List<TopTab> currentTabs) onAdd;
+  final Future<Board?> Function(TopTab tab) onRelink;
   final Future<void> Function() onSaveComplete;
-  const _ReorderTabsDialog({required this.tabs, required this.onDelete, required this.onAdd, required this.onSaveComplete});
+  const _ReorderTabsDialog({required this.tabs, required this.onDelete, required this.onAdd, required this.onRelink, required this.onSaveComplete});
 
   @override
   State<_ReorderTabsDialog> createState() => _ReorderTabsDialogState();
@@ -4544,6 +4747,20 @@ class _ReorderTabsDialogState extends State<_ReorderTabsDialog> {
                             ),
                           ),
                         const SizedBox(width: 4),
+                        if (tab.board?.id.startsWith('link_') ?? false)
+                          IconButton(
+                            icon: const Icon(Icons.link, color: Colors.blue),
+                            tooltip: 'Relink to another board',
+                            onPressed: () async {
+                              final updated = await widget.onRelink(tab);
+                              if (updated != null && mounted) {
+                                setState(() => _localList[index] = _localList[index].copyWith(
+                                      label: updated.name,
+                                      board: updated,
+                                    ));
+                              }
+                            },
+                          ),
                         IconButton(
                           icon: const Icon(Icons.remove_circle_outline, color: Colors.red),
                           tooltip: 'Remove from tab row',

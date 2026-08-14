@@ -211,6 +211,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Blue Planet/planet.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Planet.png",
   "version": 0
 }

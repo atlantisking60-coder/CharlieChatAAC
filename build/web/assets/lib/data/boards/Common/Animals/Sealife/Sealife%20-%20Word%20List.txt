@@ -1,4 +1,4 @@
-barnacle
+sealife
 brittle star
 clam
 coral
@@ -24,7 +24,7 @@ oyster
 phytoplankton
 plankton
 sand dollar
-sea anenome
+sea anemone
 sea cucumber
 sea lion
 sea sponge
@@ -39,3 +39,4 @@ tadpole
 walrus
 whale shark
 whale
+barnacle

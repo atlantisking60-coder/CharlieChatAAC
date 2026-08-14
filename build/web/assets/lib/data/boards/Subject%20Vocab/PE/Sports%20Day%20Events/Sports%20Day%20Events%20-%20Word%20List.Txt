@@ -1,10 +1,7 @@
-Sports Day Events - Word List
-=================================
-
+50m dash
 100m sprint
 200m race
 400m race
-50m dash
 balance beam
 ball race
 bean bag race

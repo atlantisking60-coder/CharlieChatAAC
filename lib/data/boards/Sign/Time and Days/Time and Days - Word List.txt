@@ -1,28 +1,25 @@
-Time and Days - Word List
-===========================
-
-Afternoon
-Birthday
-Christmas
-Day - Light
-Friday (0)
-Friday
-Monday (0)
-Monday
-Morning
-Night - Tonight - Evening
-Now
-Saturday (0)
-Saturday
-Sunday (0)
-Sunday
-Thursday (0)
-Thursday
-Today
-Tomorrow
-Tuesday (0)
-Tuesday
-Wednesday (0)
-Wednesday
-Week
-Yesterday
+week
+monday (0)
+tuesday (0)
+wednesday (0)
+thursday (0)
+friday (0)
+saturday (0)
+sunday (0)
+yesterday
+today
+night - tonight - evening
+tomorrow
+now
+day - light
+morning
+afternoon
+birthday
+christmas
+monday
+tuesday
+wednesday
+thursday
+friday
+saturday
+sunday

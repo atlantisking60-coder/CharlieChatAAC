@@ -1,23 +1,20 @@
-Money - Word List
-=====================
-
-10p
-1p
-20p
-2p
-50p
-5p
-bill
-card
-change
-Coin
-decimal
 money
+coin
 note
+card
 value or worth
-£1
-£10
-£2
-£20
-£5
-£50
+change
+bill
+decimal
+1 pence
+2 pence
+5 pence
+10 pence
+20 pence
+50 pence
+1 pound
+2 pounds
+5 pounds
+10 pounds
+20 pounds
+50 pounds

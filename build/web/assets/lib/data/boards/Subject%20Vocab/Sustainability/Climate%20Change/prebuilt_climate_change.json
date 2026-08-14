@@ -323,6 +323,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 0,
   "tier": 2,
-  "iconAssetPath": null,
+  "iconAssetPath": "assets/Subject Vocab/PEEP/Blue Planet/climate change.png",
+  "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Climate Change.png",
   "version": 0
 }

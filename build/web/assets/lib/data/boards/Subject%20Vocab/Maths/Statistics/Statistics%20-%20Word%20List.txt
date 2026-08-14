@@ -1,42 +1,39 @@
-Statistics - Word List
-==========================
-
-average
-bar chart
-chart
-choose
-column
-coordinate
-count
+statistics
 criteria
-diagram
 explain
-graph
-grid
-group
-information
+select
+choose
+tally
+count
 interpret
-line graph
+results
+information
+group
 make
+chart
+graph
+bar chart
+pie chart
+pictogram
+line graph
+table
+column
+row
+grid
+coordinate
+origin
+point
+position
+plot
+quadrant
+x-axis
+y-axis
+range
+average
 mean
 median
 mode
+diagram
 organise
-origin
-pair
-pictogram
-pie chart
-plot
-point
-position
-quadrant
-range
-results
-row
-select
 sort
-statistics
-table
-tally
-x-axis
-y-axis
+pair

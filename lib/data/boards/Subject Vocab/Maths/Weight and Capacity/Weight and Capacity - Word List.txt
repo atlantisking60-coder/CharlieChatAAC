@@ -1,0 +1,20 @@
+weight
+measurement
+gram (g)
+kilogram (kg)
+tonne (t)
+heavier
+balance
+lighter
+mass
+scales
+capacity
+volume
+jug
+container
+pour
+empty
+half-full
+full
+millilitres (ml)
+litres (l)

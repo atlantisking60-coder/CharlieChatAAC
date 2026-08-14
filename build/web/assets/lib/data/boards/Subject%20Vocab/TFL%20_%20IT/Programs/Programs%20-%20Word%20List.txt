@@ -1,23 +1,20 @@
-Programs - Word List
-========================
-
+microsoft 365
+word
+excel
+powerpoint
+outlook
+onedrive
+teams
+snipping tool
 blooket
 canva
 clicker
 clipchamp
-excel
-microsoft 365
 minecraft education
 monkey jam
 obs studio
-onedrive
-outlook
 pixlr
 pixton
-powerpoint
 scratch
 sketchup
-snipping tool
 soundtrap studio
-teams
-word

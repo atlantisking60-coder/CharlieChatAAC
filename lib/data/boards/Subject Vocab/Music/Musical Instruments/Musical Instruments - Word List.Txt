@@ -1,58 +1,65 @@
-Musical Instruments - Word List
-===================================
-
-accordion
-acoustic guitar
-bagpipes
-banjo
-bass drum
-blown
-bongo drums
-boomwhackers
-brass
-cajon drum
-cello
-clarinet
-conga drums
-cowbell
-cymbals
-didgeridoo
-djembe
-double bass
-drum
-electric guitar
-flute
-harmonium
-harp
-harpsichord
-hurdy gurdy
-keyboard
-lute
-mandolin
-maracas
-oboe
-ocarina
-orchestra
-organ
-percussion
-piano
-plucked
-pressed
-recorder
-saxophone
-sitar
-snare drum
-steeldrum
-string instruments
 struck
-tambourine
-tanpura
+drums
+drum
+snare drum
 timpani
-triangle
-trombone
-trumpet
-tuba
-ukulele
-violin
-wooden
+conga drums
+djembe
+percussion
+steeldrum
+cymbals
+bass drum
+maracas
+bongos
+cajon drum
+gong
+marimba
+glockenspiel
 xylophone
+tambourine
+cowbell
+triangle
+boomwhackers
+pressed
+organ
+harpsichord
+piano
+harmonium
+keyboard
+accordion
+plucked
+string instruments
+double bass
+harp
+cello
+sitar
+acoustic guitar
+electric guitar
+lute
+banjo
+viola
+violin
+mandolin
+ukulele
+tanpura
+hurdy gurdy
+blown
+brass
+tuba
+trombone
+saxophone
+french horn
+trumpet
+cornet
+bassoon
+clarinet
+oboe
+flute
+recorder
+ocarina
+didgeridoo
+bagpipes
+other words
+orchestra
+wooden
+metallic

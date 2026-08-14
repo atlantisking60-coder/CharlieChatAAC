@@ -1,0 +1,40 @@
+seconds
+minutes
+hours
+00
+clock
+time
+55
+twelve
+5
+50
+eleven
+hour
+one
+10
+ten
+to
+o'clock
+past
+two
+45
+nine
+quarter to
+Time
+quarter past
+three
+15
+eight
+minutes to
+half past
+minutes past
+four
+40
+seven
+minutes
+five
+20
+35
+six
+25
+30

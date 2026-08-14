@@ -1,26 +1,24 @@
-Equipment - Word List
-=========================
-
 beaker
-bunsen burner
-bunsen
 conical flask
 funnel
-gauze
-hair tie
-heat-proof mat
-magnet
-measuring cylinder
 measuring jug
-microscope
-pestle and mortar
-petri dish
+measuring cylinder
 pipette
-safety goggles
-scales
-scalpel
 test tube rack
 test tube
-thermometer
-tongs
+bunsen burner
+heat-proof mat
 tripod
+gauze
+tongs
+thermometer
+scales
+pestle and mortar
+magnet
+microscope
+petri dish
+scalpel
+hair tie
+apron
+safety goggles
+gloves

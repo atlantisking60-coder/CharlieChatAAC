@@ -1,0 +1,288 @@
+1 lamball
+2 cattiva
+3 chikipi
+4 lifmunk
+5 fuack
+5b fuack ignis
+6 vixy
+7 celaray
+7b celaray lux
+8 cremis
+9 croajiro
+9b croajiro noct
+10 herbil
+11 teafant
+12 gumoss
+13 pupperai
+14 clovee
+15 jolthog
+15b jolthog cryst
+16 depresso
+17 pengullet
+17b pengullet lux
+18 penking
+18b penking lux
+19 hoocrates
+20 melpaca
+21 kingpaca
+21b kingpaca cryst
+22 daedream
+23 tanzee
+23b tanzee ignis
+24 nox
+25 flambelle
+26 rooby
+27 mau
+27b mau cryst
+28 rushoar
+29 foxparks
+29b foxparks cryst
+30 killamari
+30b killamari primo
+31 fuddler
+32 eikthyrdeer
+32b eikthyrdeer terra
+33 direhowl
+34 caprity
+34b caprity noct
+35 swee
+36 sweepa
+37 turtacle
+37b turtacle terra
+38 hangyu
+38b hangyu cryst
+39 woolipop
+39b woolipop terra
+40 mozzarina
+41 azurobe
+41b azurobe cryst
+42 sparkit
+43 kelpsea
+43b kelpsea ignis
+44 ribbuny
+44b ribbuny botan
+45 jelliette
+46 jellroy
+47 amione
+48 gloopie
+48b gloopie primo
+49 galeclaw
+50 wispaw
+51 nitewing
+52 tombat
+53 tocotoco
+54 univolt
+54b univolt cryst
+55 gobfin
+55b gobfin ignis
+56 loupmoon
+56b loupmoon cryst
+57 cawgnito
+58 arsox
+59 muffly
+60 bristla
+61 cinnamoth
+62 puffolt
+63 elphidran
+63b elphidran aqua
+64 vanwyrm
+64b vanwyrm cryst
+65 felbat
+66 vaelet
+67 beegarde
+68 elizabee
+69 lovander
+70 grintale
+71 tarantriss
+72 polapup
+72b polapup terra
+73 leezpunk
+73b leezpunk ignis
+74 gorirat
+74b gorirat terra
+75 surfent
+75b surfent terra
+76 robinquill
+76b robinquill terra
+77 flopie
+78 wixen
+78b wixen noct
+79 katress
+79b katress ignis
+80 helzephyr
+80b helzephyr lux
+81 elgrove
+81b elgrove cryst
+82 lunaris
+83 fenglope
+83b fenglope lux
+84 dinossom
+84b dinossom lux
+85 bushi
+85b bushi noct
+86 munchill
+87 mammorest
+87b mammorest cryst
+88 finsider
+88b finsider ignis
+89 petallia
+89b petallia ignis
+90 leafan
+91 incineram
+91b incineram noct
+92 dazzi
+92b dazzi noct
+93 pyrin
+93b pyrin noct
+94 relaxaurus
+94b relaxaurus lux
+95 foxcicle
+96 beakon
+96b beakon cryst
+97 ghangler
+97b ghangler ignis
+98 rayhound
+98b rayhound cryst
+99 menasting
+99b menasting terra
+100 needoll
+100b needoll noct
+101 reindrix
+102 mossanda
+102b mossanda lux
+103 chillet
+103b chillet ignis
+104 ragnahawk
+105 moldron
+105b moldron cryst
+106 palumba
+107 digtoise
+108 broncherry
+108b broncherry aqua
+109 dumud
+109b dumud gild
+110 braloha
+111 kitsun
+111b kitsun noct
+112 blazehowl
+112b blazehowl noct
+113 warsect
+113b warsect terra
+114 frostplume
+115 majex
+116 sibelyx
+116b sibelyx primo
+117 maraith
+118 shroomer
+118b shroomer noct
+119 icelyn
+120 gildra
+121 jormuntide
+121b jormuntide ignis
+122 suzaku
+122b suzaku aqua
+123 dazemu
+124 quivern
+124b quivern botan
+125 lullu
+126 kikit
+127 yakumo
+128 skutlass
+128b skutlass ignis
+129 reptyro
+129b reptyro cryst
+130 starryon
+130b starryon primo
+131 pierdon
+131b pierdon cryst
+132 cryolinx
+132b cryolinx terra
+133 snugloo
+134 wumpo
+134b wumpo botan
+135 sootseer
+136 carnibora
+137 blazamut
+137b blazamut ryu
+138 dualith
+138b dualith noct
+139 anubis
+140 sekhmet
+141 prixter
+141b prixter lux
+142 tetroise
+142b tetroise primo
+143 nyafia
+144 mimog
+145 xenovader
+146 xenogard
+147 prunelia
+148 nitemary
+148b nitemary botan
+149 smokie
+149b smokie cryst
+150 omascul
+151 whalaska
+151b whalaska ignis
+152 verdash
+153 splatterina
+154 gildane
+155 dogen
+156 bulldosu
+157 celesdir
+157b celesdir noct
+158 astegon
+159 knocklem
+159b knocklem ignis
+160 silvegis
+161 azurmane
+162 valentail
+163 snock
+163b snock lux
+164 souffline
+165 lapiron
+166 hoodle
+167 slowatt
+168 bakemi
+169 solmora
+169b solmora lux
+170 lapure
+171 eidrolon
+171b eidrolon ignis
+172 dynamoff
+173 tropicaw
+174 flaracle
+175 ophydia
+176 dupin
+177 roujay
+178 venusa
+179 mycora
+180 loomen
+181 wistella
+182 solenne
+183 renjishi
+184 aegidron
+185 grizzbolt
+186 lyleen
+186b lyleen noct
+187 orserk
+188 faleris
+188b faleris aqua
+189 shadowbeak
+190 selyne
+191 bastigor
+192 shaolong
+193 silvance
+194 dandilord
+195 bellanoir
+195b bellanoir libero
+196 xenolord
+197 hartalis
+198 paladius
+199 necromus
+200 frostallion
+200b frostallion noct
+201 neptilius
+202 jetragon
+203 panthalus
+204 astralym

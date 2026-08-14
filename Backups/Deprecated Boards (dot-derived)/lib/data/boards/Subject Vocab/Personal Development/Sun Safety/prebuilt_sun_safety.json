@@ -1,0 +1,45 @@
+{
+  "id": "prebuilt_sun_safety",
+  "name": "Sun Safety",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": true,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 233,
+  "tier": 3,
+  "iconAssetPath": "assets/Subject Vocab/Science/Universe/sun.png",
+  "tileIconAssetPath": "assets/BOARDS/PD/Sun Safety.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_sun_safety_tile_1",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_keeping_safe"
+}

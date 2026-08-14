@@ -1,17 +1,14 @@
-Manners and Greetings - Word List
-===================================
-
-Afternoon
-Good
-Goodbye
-Hello
-Morning
-No
-Please
-Share
-Sorry
-Thank-you
-Together - With
-Turn
-Well Done
-Yes
+afternoon
+good
+goodbye
+hello
+morning
+no
+please
+share
+sorry
+thank-you
+together - with
+turn
+well done
+yes

@@ -1,0 +1,31 @@
+pencil
+pen
+highlighter
+felt-tip
+colouring pencil
+colouring pen
+text book
+plain paper
+lined paper
+squared paper
+graph paper
+tracing paper
+interactive board
+whiteboard
+rubber / eraser
+sharpener
+calculator
+ruler
+measuring tape
+set square
+protractor
+compass
+paper scissors
+glue stick
+counter
+dice
+spinner
+chair
+table
+tray
+clipboard

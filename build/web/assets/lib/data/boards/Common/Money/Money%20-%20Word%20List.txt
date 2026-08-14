@@ -1,10 +1,11 @@
-Money - Word List
-=====================
-
 money
 coin
 note
 card
+value or worth
+change
+bill
+decimal
 1 pence
 2 pence
 5 pence
@@ -17,7 +18,3 @@ card
 10 pounds
 20 pounds
 50 pounds
-value or worth
-change
-bill
-decimal

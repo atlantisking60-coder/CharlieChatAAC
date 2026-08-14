@@ -1,0 +1,28 @@
+{
+  "id": "prebuilt_ancient_egyptians_3100_bc_30bc",
+  "name": "Ancient Egyptians (3100 BC – 30BC)",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_peep",
+  "linkedBoardId": null,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "backgroundColor": "#FFFFFF",
+  "layout": {
+    "rows": 4,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null
+}

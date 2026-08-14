@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_nutrition",
+  "name": "Nutrition",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 223,
+  "tier": 3,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_staying_healthy",
+  "iconAssetPath": "assets/BOARDS/Science/Year 8/Nutrition.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Year 8/Nutrition.png"
+}

@@ -1,6 +1,3 @@
-Prepositions - Word List
-============================
-
 get
 put
 at

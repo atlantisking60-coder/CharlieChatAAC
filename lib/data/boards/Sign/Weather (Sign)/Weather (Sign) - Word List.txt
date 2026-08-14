@@ -1,0 +1,10 @@
+cloud   cloudy
+cold   winter
+fog   foggy
+ice   icy   frozen   freezing
+lightning
+rain   raining
+snow   snowing
+summer   hot weather
+sun   sunny
+wind   windy

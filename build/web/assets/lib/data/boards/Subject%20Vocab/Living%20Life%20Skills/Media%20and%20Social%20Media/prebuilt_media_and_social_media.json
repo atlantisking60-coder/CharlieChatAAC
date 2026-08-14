@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_media_and_social_media",
+  "name": "Media and Social Media",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 243,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 4,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_living_life_skills",
+  "iconAssetPath": "assets/BOARDS/Living Life Skills and Prepare For Adulthood and Employment/Media and Social Media.png",
+  "tileIconAssetPath": "assets/BOARDS/Living Life Skills and Prepare For Adulthood and Employment/Media and Social Media.png"
+}

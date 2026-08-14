@@ -9,11 +9,11 @@ Tutor Time
 English
 Maths
 Science
-T.F.L. / I.T.
-P.D.
-P.E.E.P.
-E.P.I.C.
-P.E.
+TFL / IT
+Personal Development
+PEEP
+EPIC
+PE
 Art
 Performing Arts
 Sustainability
@@ -31,7 +31,7 @@ Design Technology
 Hair and Beauty
 Health and Social Care
 Public Services
-S.T.E.M.
+STEM
 Option A
 Option B
 Option C

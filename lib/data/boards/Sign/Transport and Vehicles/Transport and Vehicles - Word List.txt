@@ -1,12 +1,9 @@
-Transport and Vehicles - Word List
-====================================
-
-Aeroplane - Fly
-Bike - Pedal
-Boat
-Bus - Lorry - Truck - Van
-Car - Drive
-Motorbike
-Police Car
-Tractor
-Train - Railway
+aeroplane - fly
+bike - pedal
+boat
+bus - lorry - truck - van
+car - drive
+motorbike
+police car
+tractor
+train - railway

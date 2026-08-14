@@ -1,20 +1,21 @@
-Buildings - Word List
-=========================
-
 Buildings
-Rooms and Home
+Rooms And Home
 Furniture
 Habitats
 Local Places
+Appliances
+Food Equipment
+Home Management
+building
 airport
 bank
-café
+cafe
 church
 cinema
 clinic
 coffee shop
 college
-community hall
+community centre
 court
 dentist
 fire station

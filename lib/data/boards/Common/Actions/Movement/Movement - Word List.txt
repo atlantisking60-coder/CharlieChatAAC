@@ -1,6 +1,3 @@
-Movement - Word List
-========================
-
 crawl
 dive
 float

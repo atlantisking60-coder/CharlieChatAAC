@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 571,
+  "sortOrder": 602,
   "tier": 1,
   "boxScale": 1,
   "tileHeight": 100,
@@ -560,6 +560,7 @@
       "customVoice": ""
     }
   ],
+  "version": 0,
   "iconAssetPath": "assets/Common/People/i.png",
   "tileIconAssetPath": "assets/Common/People/i.png"
 }

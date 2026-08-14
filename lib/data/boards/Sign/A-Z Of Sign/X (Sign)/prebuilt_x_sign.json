@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 554,
+  "sortOrder": 585,
   "tier": 2,
   "boxScale": 1,
   "tileHeight": 100,
@@ -470,9 +470,8 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign",
-  "rows": 4,
   "version": 0,
+  "parentBoardId": "prebuilt_a-z_of_sign",
   "iconAssetPath": "assets/Common/Letters/x.png",
   "tileIconAssetPath": "assets/Common/Letters/x.png"
 }

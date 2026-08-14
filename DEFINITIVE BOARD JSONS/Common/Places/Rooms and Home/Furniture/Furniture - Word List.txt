@@ -1,14 +1,12 @@
-Furniture - Word List
-=========================
-
 Buildings
-Rooms and Home
+Rooms And Home
 Furniture
 Habitats
 Local Places
 Appliances
 Food Equipment
 Home Management
+furniture
 armchair
 barbeque
 bath

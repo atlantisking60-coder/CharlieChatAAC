@@ -1,29 +1,30 @@
-EPIC - Word List
-====================
-
-appearance
-attitude
-body language
-clarity
-emphasis
+verbal
+what we say
+imagery
+stories
+facts
+statistics
+questions
+jokes
+persuade
+opinion
+visual
+what we see
 eye contact
 facial expression
-facts
+posture
 hand gestures
-imagery
-jokes
 movement
-opinion
+body language
+appearance
+sign
+vocal
+how we say it
+tone
+clarity
+pitch
 pace
 pause
-persuade
-pitch
-posture
 projection
-questions
-statistics
-stories
-tone
-verbal
-visual
-vocal
+emphasis
+attitude

@@ -1,6 +1,3 @@
-Team Sports - Word List
-===========================
-
 baseball
 basketball
 cricket

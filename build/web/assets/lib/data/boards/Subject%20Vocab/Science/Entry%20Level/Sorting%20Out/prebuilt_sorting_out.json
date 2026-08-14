@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_sorting_out",
+  "name": "Sorting Out",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 191,
+  "tier": 3,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_entry_level",
+  "iconAssetPath": "assets/BOARDS/Science/Entry Level/Sorting Out.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Entry Level/Sorting Out.png"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_specific_muscles",
+  "name": "Specific Muscles",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": true,
+  "isQuinaryBoard": false,
+  "sortOrder": 207,
+  "tier": 4,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": null,
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_you_only_have_one_life",
+  "name": "You Only Have One Life",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 192,
+  "tier": 3,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_entry_level",
+  "iconAssetPath": "assets/BOARDS/Science/Entry Level/You Only Have One Life.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Entry Level/You Only Have One Life.png"
+}

@@ -1,9 +1,6 @@
-Time - Word List
-====================
-
 Time (Clocks)
 Months
-Events and Occasions
+Events And Occasions
 yesterday
 today
 tomorrow

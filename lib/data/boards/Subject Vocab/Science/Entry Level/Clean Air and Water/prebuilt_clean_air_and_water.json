@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_clean_air_and_water",
+  "name": "Clean Air and Water",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 169,
+  "tier": 3,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_entry_level",
+  "iconAssetPath": "assets/BOARDS/Science/Entry Level/Clean Air and Water.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Entry Level/Clean Air and Water.png"
+}

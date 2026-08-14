@@ -1,0 +1,27 @@
+colour
+black (0)
+grey (0)
+brown (0)
+red (0)
+orange (0)
+yellow (0)
+green (0)
+blue (0)
+purple (0)
+pink (0)
+silver (0)
+gold (0)
+white (0)
+rainbow
+black
+brown
+red
+orange
+yellow
+green
+blue
+purple
+pink
+silver
+gold   golden
+white

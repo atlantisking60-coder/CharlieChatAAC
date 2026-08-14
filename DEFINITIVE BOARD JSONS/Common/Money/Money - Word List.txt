@@ -1,6 +1,3 @@
-Money - Word List
-=====================
-
 money
 coin
 note

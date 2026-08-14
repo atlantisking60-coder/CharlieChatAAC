@@ -1,0 +1,46 @@
+{
+  "id": "prebuilt_electrical_safety",
+  "name": "Electrical Safety",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_keeping_safe",
+  "sortOrder": 2,
+  "tier": 3,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "rows": 6,
+  "columns": 6,
+  "adjustableLayout": true,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "backgroundColor": "#FFFFFF",
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_electrical_safety_appliances",
+      "type": "board_link",
+      "label": "Appliances",
+      "category": "Custom",
+      "imageAsset": "assets/BOARDS/Science/Year 8/Electricity.png",
+      "emoji": "",
+      "isBoardLink": true,
+      "linkedBoardId": "prebuilt_appliances",
+      "linkedBoardName": "prebuilt_appliances",
+      "isFullScreenImage": false,
+      "bgColor": "#000000",
+      "textColor": "#FFFFFF",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "version": 0,
+  "iconAssetPath": "assets/BOARDS/Science/Year 8/Electricity.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Year 8/Electricity.png"
+}

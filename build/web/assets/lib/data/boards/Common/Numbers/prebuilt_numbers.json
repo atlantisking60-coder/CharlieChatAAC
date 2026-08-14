@@ -1191,6 +1191,24 @@
       "colSpan": 1,
       "rowSpan": 1,
       "customVoice": ""
+    },
+    {
+      "id": "prebuilt_numbers_tile_66",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
     }
   ]
 }

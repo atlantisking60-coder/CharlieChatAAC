@@ -9,7 +9,7 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 534,
+  "sortOrder": 562,
   "tier": 2,
   "boxScale": 1,
   "tileHeight": 100,
@@ -1568,6 +1568,7 @@
       "customVoice": ""
     }
   ],
+  "version": 0,
   "parentBoardId": "prebuilt_a-z_of_sign",
   "iconAssetPath": "assets/Common/People/i.png",
   "tileIconAssetPath": "assets/Common/People/i.png"

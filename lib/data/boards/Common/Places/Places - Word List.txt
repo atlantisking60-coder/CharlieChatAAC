@@ -1,11 +1,12 @@
-Places - Word List
-======================
-
 Buildings
-Rooms and Home
+Rooms And Home
 Furniture
 Habitats
 Local Places
+Appliances
+Food Equipment
+Home Management
+places
 beach
 building site
 bus stop

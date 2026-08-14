@@ -7,7 +7,9 @@
   "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
-  "sortOrder": 534,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 565,
   "tier": 2,
   "boxScale": 1,
   "tileHeight": 100,
@@ -1009,11 +1011,8 @@
       "customVoice": ""
     }
   ],
-  "parentBoardId": "prebuilt_a-z_of_sign",
-  "isQuaternaryBoard": false,
-  "isQuinaryBoard": false,
-  "rows": 4,
   "version": 0,
+  "parentBoardId": "prebuilt_a-z_of_sign",
   "iconAssetPath": "assets/Common/Letters/d.png",
   "tileIconAssetPath": "assets/Common/Letters/d.png"
 }

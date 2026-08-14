@@ -1,0 +1,32 @@
+dimensions
+length
+width
+height
+depth
+standard unit
+millimetres (mm)
+centimetres (mm)
+metres (m)
+kilometres (km)
+non-standard unit
+unit
+square centimetres (cmÂ²)
+square metres (mÂ²)
+square units
+perimeter
+boundary
+add
+side
+measurement
+area
+space inside
+times
+edge
+all
+convert or change
+difference
+estimate
+record
+inch, foot, yard, mile
+measure
+compare

@@ -1,0 +1,10 @@
+timbre
+crashy
+crisp
+bright
+deep
+loud
+sharp
+heavy
+slidey
+smooth

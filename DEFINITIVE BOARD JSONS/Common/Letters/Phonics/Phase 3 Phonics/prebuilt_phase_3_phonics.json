@@ -883,6 +883,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 25,
   "tier": 3,
-  "iconAssetPath": null,
+  "iconAssetPath": "https://d18vdu4p71yql0.cloudfront.net/libraries/arasaac/letters_2.png",
+  "tileIconAssetPath": "assets/BOARDS/English/Phonics - Phase 3.png",
   "version": 0
 }

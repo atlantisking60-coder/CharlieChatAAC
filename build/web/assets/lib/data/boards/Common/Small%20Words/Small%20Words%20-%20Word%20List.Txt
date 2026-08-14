@@ -1,6 +1,22 @@
-Small Words - Word List
-===========================
-
+Nouns (Montessori)
+Proper Nouns (Montessori)
+Abstract Nouns (Montessori)
+Collective Nouns (Montessori)
+Articles (Montessori)
+Pronouns (Montessori)
+Adjectives
+Verbs (Montessori)
+Transitive Verbs (Montessori)
+Intransitive Verbs (Montessori)
+Linking Verbs (Montessori)
+Auxiliary Verbs (Montessori)
+Adverbs (Montessori)
+Prepositions
+Conjunctions (Montessori)
+Interjections (Montessori)
+Gerunds (Montessori)
+Participles (Montessori)
+Others (Montessori)
 articles
 the
 a

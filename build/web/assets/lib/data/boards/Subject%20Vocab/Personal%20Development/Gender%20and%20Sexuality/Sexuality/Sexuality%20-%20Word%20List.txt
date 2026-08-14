@@ -1,0 +1,9 @@
+Gender
+sexuality
+heterosexual
+homosexual
+gay
+lesbian
+asexual
+bisexual
+pansexual

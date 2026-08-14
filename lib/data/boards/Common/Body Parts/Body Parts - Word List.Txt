@@ -1,6 +1,3 @@
-Body Parts - Word List
-==========================
-
 hair
 head
 forehead
@@ -38,6 +35,7 @@ toenails
 burp
 fart
 sick
+ill
 period
 Medical
 Internal Organs

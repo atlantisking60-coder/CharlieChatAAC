@@ -239,8 +239,8 @@
     {
       "id": "prebuilt_with_small_words_swimming",
       "label": "swimming",
-      "category": "Custom",
-      "imageAsset": "assets/Subject Vocab/P.E/Water and Winter Sports/swimming.png",
+      "category": "Assets",
+      "imageAsset": "assets/Subject Vocab/PE/Water and Winter Sports/swimming.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,

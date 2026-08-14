@@ -1,27 +1,14 @@
-Intro - Word List
-=====================
-
-biology
-bunsen - air hole
-bunsen - base
-bunsen - collar
-bunsen - funnel
-bunsen - gas tube
-bunsen - roaring blue flame
-bunsen - safety flame
-bunsen - splint
-chemistry
-evaluate
-health and safety
-investigate
-microscope - arm
-microscope - base
-microscope - focusing wheel
-microscope - lens
-microscope - light
-microscope - stage
-physics
-precaution
 predict
+investigate
 record
-science equipment
+evaluate
+biology
+chemistry
+physics
+equipment
+health and safety
+hazard
+symbol
+risk assessment
+safety
+precaution

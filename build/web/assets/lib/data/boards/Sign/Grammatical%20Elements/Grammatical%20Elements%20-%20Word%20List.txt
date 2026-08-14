@@ -1,5 +1,2 @@
-Grammatical Elements - Word List
-====================================
-
-And - In Addition
-The
+and - in addition
+the

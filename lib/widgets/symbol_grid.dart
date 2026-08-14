@@ -191,6 +191,14 @@ class SymbolGrid extends StatelessWidget {
                 symbolImage = SvgPicture.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, placeholderBuilder: (ctx) => Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol));
               } else {
                 symbolImage = Image.asset(imageAsset, width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
+                  // On web, assets added at runtime aren't in the compiled asset
+                  // manifest yet; fetch them straight from the host instead.
+                  if (kIsWeb) {
+                    return Image.network(_webAssetUrl(imageAsset), width: 64 * symbol.tileSize * boxScale, height: 64 * symbol.tileSize * boxScale, fit: BoxFit.contain, errorBuilder: (ctx, err, stack) {
+                      if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
+                      return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
+                    });
+                  }
                   if (symbol.isBoardLink) return Icon(Icons.folder, size: 54 * symbol.tileSize * boxScale, color: textCol);
                   return Icon(Icons.broken_image_outlined, size: 48 * symbol.tileSize * boxScale, color: textCol);
                 });

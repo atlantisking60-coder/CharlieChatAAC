@@ -1,39 +1,36 @@
-Food and Drink - Word List
-============================
-
-Apple
-Baked Beans
-Banana
-Biscuit
-Bread
-Cake - Bun - Scone
-Carrot
-Cheese
-Chew
-Chips
-Chocolate
-Coffee
-Crisps
-Cup of Tea
-Dinner - Meal
-Drink
-Eat - Food
-Egg
-Fruit
-Grape
-Hot
-Hungry
-Ice-Cream - Cornet
-Juice
-Mash Potato
-Milk
-Orange
-Pear
-Pizza
-Potato
-Sandwich
-Sausages
-Sweet
-Tomato
-Vegetable - Vegetarian
-Yoghurt
+apple
+baked beans
+banana
+biscuit
+bread
+cake - bun - scone
+carrot
+cheese
+chew
+chips
+chocolate
+coffee
+crisps
+cup of tea
+dinner - meal
+drink
+eat - food
+egg
+fruit
+grape
+hot
+hungry
+ice-cream - cornet
+juice
+mash potato
+milk
+orange
+pear
+pizza
+potato
+sandwich
+sausages
+sweet
+tomato
+vegetable - vegetarian
+yoghurt

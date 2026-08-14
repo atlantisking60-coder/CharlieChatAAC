@@ -1,21 +1,18 @@
-Animals and Nature - Word List
-================================
-
-Animal
-Bird
-Butterfly
-Cat
-Cow
-Deer
-Dog
-Donkey
-Duck
-Fish
-Fly
-Frog
-Horse - Pony - Ride
-Horse
-Pet
-Pig
-Rabbit
-Sheep
+animal
+bird
+butterfly
+cat
+cow
+deer
+dog
+donkey
+duck
+fish
+fly
+frog
+horse - pony - ride
+horse
+pet
+pig
+rabbit
+sheep

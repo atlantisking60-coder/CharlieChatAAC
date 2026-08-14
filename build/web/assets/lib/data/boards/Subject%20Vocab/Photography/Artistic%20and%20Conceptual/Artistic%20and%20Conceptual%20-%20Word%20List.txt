@@ -1,0 +1,15 @@
+theme
+concept
+mood
+style
+narrative
+abstract
+surrealism
+minimalism
+documentary
+street photography
+macro
+experimental
+portrait
+landscape
+still life

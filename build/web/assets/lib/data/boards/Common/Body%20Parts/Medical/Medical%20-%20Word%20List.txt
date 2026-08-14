@@ -1,6 +1,3 @@
-Medical - Word List
-=======================
-
 gp surgery
 hospital
 dentist

@@ -1,0 +1,47 @@
+bag - shopping
+ball - football
+book - read
+classroom
+coat - jacket
+computer
+paper
+pen - pencil
+sand - soil - flour
+school
+scissors - cut
+table
+teacher
+uniform - smart
+water
+2/finish
+2/get up
+2/help
+2/hurry - speed up
+2/listen - hear
+2/more
+2/say - tell - talk
+2/see - look
+2/sign
+2/sit down
+2/slow - slowly
+2/stand
+2/stop - wait
+2/walk
+2/work
+3/again - repeat
+3/assembly - gathering
+3/break
+3/clever
+3/come
+3/corridor - hall
+3/difficult - hard
+3/go - gone - went - sent
+3/jump
+3/music
+3/play - game
+3/read
+3/sing - song - carol
+3/wash hands - soap
+99/cuddle - teddy
+99/hide
+99/nursery

@@ -395,9 +395,29 @@ class _BoardEditorState extends State<BoardEditor> {
   Future<void> _loadAvailableBoards() async {
     final service = await BoardService.getInstance();
     final boards = await service.listBoards(includeTiles: false);
+    var available = boards;
+    if (kIsWeb && Uri.base.host == 'localhost') {
+      try {
+        final response = await http
+            .get(Uri.parse('http://localhost:8787/listBoards'))
+            .timeout(const Duration(seconds: 5));
+        if (response.statusCode == 200) {
+          final serverBoards = json.decode(response.body) as List<dynamic>;
+          final byId = {for (final b in available) b.id: b};
+          for (final raw in serverBoards) {
+            try {
+              final m = raw as Map<String, dynamic>;
+              final b = Board.fromMap(m, includeTiles: false);
+              byId.putIfAbsent(b.id, () => b);
+            } catch (_) {}
+          }
+          available = byId.values.toList();
+        }
+      } catch (_) {}
+    }
     if (!mounted) return;
     setState(() {
-      _availableBoards = boards.where((b) => b.id != board.id).toList();
+      _availableBoards = available.where((b) => b.id != board.id).toList();
     });
   }
 
@@ -436,17 +456,21 @@ class _BoardEditorState extends State<BoardEditor> {
       boardId = userBoardId(service.rawProfileId, name);
     }
 
+    final newTier = (board.tier < 5) ? board.tier + 1 : 5;
     final newBoard = Board(
       id: boardId,
       name: name,
-      area: 'Unassigned',
+      area: board.area,
       rows: defaultBoardRows,
       columns: defaultBoardColumns,
       tiles: [],
-      isSubBoard: true,
+      isSubBoard: newTier > 1,
+      isTertiaryBoard: newTier > 2,
+      isQuaternaryBoard: newTier > 3,
+      isQuinaryBoard: newTier > 4,
       adjustableLayout: true,
       parentBoardId: board.id,
-      tier: board.tier + 1, // Correctly set next tier level
+      tier: newTier,
     );
     for (var i = 0; i < newBoard.rows * newBoard.columns; i++) {
       newBoard.tiles.add(SymbolTile(
@@ -1972,9 +1996,9 @@ class _BoardEditorState extends State<BoardEditor> {
                           );
                           if (selected == 'CREATE_NEW') {
                             final newBoard = await _createNewBoardFromDialog(initialName: labelCtl.text.trim());
-                            if (newBoard != null) setDialogState(() { linkedBoardId = newBoard.id; if (labelCtl.text.trim().isEmpty) labelCtl.text = newBoard.name; });
+                            if (newBoard != null) setDialogState(() { linkedBoardId = newBoard.id; if (labelCtl.text.trim().isEmpty) labelCtl.text = _toTitleCase(newBoard.name); });
                           } else if (selected != 'DIALOG_DISMISSED') {
-                            setDialogState(() { linkedBoardId = (selected == 'NONE' ? '' : selected) ?? ''; final boardName = _boardNameForId(linkedBoardId); if (boardName != null && labelCtl.text.trim().isEmpty) labelCtl.text = boardName; });
+                            setDialogState(() { linkedBoardId = (selected == 'NONE' ? '' : selected) ?? ''; final boardName = _boardNameForId(linkedBoardId); if (boardName != null && labelCtl.text.trim().isEmpty) labelCtl.text = _toTitleCase(boardName); });
                           }
                         },
                         icon: const Icon(Icons.link_rounded),
@@ -2032,19 +2056,22 @@ class _BoardEditorState extends State<BoardEditor> {
                           if (res != null) {
                             String imagePath = res.path;
                             
-                            // Requirement: If the user uploads an image that already exists in our Assets Library, 
-                            // the app should use the existing Image.
-                            final existingAsset = await _externalSymbolService.findExistingAssetByFilename(res.name);
-                            if (existingAsset != null) {
-                              imagePath = existingAsset;
-                            } else {
-                              if (kIsWeb) {
-                                final bytes = await res.readAsBytes();
-                                final savedPath = await _mirrorImageToProject(res.name, bytes);
-                                imagePath = savedPath ?? 'data:image/png;base64,${base64Encode(bytes)}';
-                              } else if (imagePath.isNotEmpty) {
-                                imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
-                              }
+                            // If a byte-identical image already exists in the asset
+                            // library the server returns that path; otherwise it files
+                            // the new image in this board's own asset folder. Matching
+                            // is on file content only, never on filename.
+                            if (kIsWeb) {
+                              final bytes = await res.readAsBytes();
+                              final savedPath = await _mirrorImageToProject(
+                                res.name,
+                                bytes,
+                                boardId: board.id,
+                                boardArea: board.area,
+                                boardName: board.name,
+                              );
+                              imagePath = savedPath ?? 'data:image/png;base64,${base64Encode(bytes)}';
+                            } else if (imagePath.isNotEmpty) {
+                              imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
                             }
                             setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; isBoardLink = false; linkedBoardId = ''; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
                           }
@@ -2058,19 +2085,19 @@ class _BoardEditorState extends State<BoardEditor> {
                           if (res != null) {
                             String imagePath = res.path;
                             
-                            // Requirement: If the user uploads an image that already exists in our Assets Library, 
-                            // the app should use the existing Image.
-                            final existingAsset = await _externalSymbolService.findExistingAssetByFilename(res.name);
-                            if (existingAsset != null) {
-                              imagePath = existingAsset;
-                            } else {
-                              if (kIsWeb) {
-                                final bytes = await res.readAsBytes();
-                                final savedPath = await _mirrorImageToProject(res.name, bytes);
-                                imagePath = savedPath ?? 'data:image/png;base64,${base64Encode(bytes)}';
-                              } else if (imagePath.isNotEmpty) {
-                                imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
-                              }
+                            // Same content-based reuse as the Upload Image path.
+                            if (kIsWeb) {
+                              final bytes = await res.readAsBytes();
+                              final savedPath = await _mirrorImageToProject(
+                                res.name,
+                                bytes,
+                                boardId: board.id,
+                                boardArea: board.area,
+                                boardName: board.name,
+                              );
+                              imagePath = savedPath ?? 'data:image/png;base64,${base64Encode(bytes)}';
+                            } else if (imagePath.isNotEmpty) {
+                              imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
                             }
                             setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; isBoardLink = false; linkedBoardId = ''; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
                           }
@@ -2147,17 +2174,21 @@ class _BoardEditorState extends State<BoardEditor> {
       final filename = '${(label ?? 'external').replaceAll(RegExp(r'[^a-zA-Z0-9._-]+'), '_').trim()}_${DateTime.now().microsecondsSinceEpoch}${_extensionFromUrl(imageUrl)}';
       final imageBytes = (await http.get(Uri.parse(imageUrl))).bodyBytes;
       
-      // Mirror to project for backup, but always return a path symbol_grid can load.
-      // Asset paths from runtime saves aren't in the Flutter asset bundle, so
-      // we must return a network URL (native) or base64 data URI (web) instead.
-      if (kIsWeb && Uri.base.host == 'localhost') {
-        await _mirrorImageToProject(filename, imageBytes);
-      }
+      // Mirror into the project. The dev server reuses an identical existing
+      // asset when it can, otherwise it files the image in the asset folder
+      // that mirrors this board's own folder and returns that path.
+      final savedPath = await _mirrorImageToProject(
+        filename,
+        imageBytes,
+        boardId: board.id,
+        boardArea: board.area,
+        boardName: board.name,
+      );
+      if (savedPath != null && savedPath.isNotEmpty) return savedPath;
 
       if (kIsWeb) {
         return 'data:image/png;base64,${base64Encode(imageBytes)}';
       }
-      await _mirrorImageToProject(filename, imageBytes);
     } catch (e) {
       debugPrint('Unable to persist external image for admin/default profile: $e');
     }
@@ -2709,27 +2740,13 @@ class _BoardEditorState extends State<BoardEditor> {
     for (int i = 0; i < text.length; i++) {
       final ch = text[i];
       final isAlpha = RegExp(r'[a-zA-Z]').hasMatch(ch);
-      if (ch == '(' || ch == '[') {
-        nextShouldUpper = true;
-        buffer.write(ch);
-        continue;
-      }
-      if (ch == ')' || ch == ']') {
-        buffer.write(ch);
-        continue;
-      }
       if (isAlpha) {
-        if (nextShouldUpper) {
-          buffer.write(ch.toUpperCase());
-          nextShouldUpper = false;
-        } else {
-          buffer.write(ch);
-        }
+        buffer.write(nextShouldUpper ? ch.toUpperCase() : ch.toLowerCase());
+        nextShouldUpper = false;
       } else {
         buffer.write(ch);
-        if (ch == '.') {
-          nextShouldUpper = true;
-        }
+        // Treat anything that isn't a letter, number or apostrophe as a word boundary
+        nextShouldUpper = !RegExp(r"[a-zA-Z0-9']").hasMatch(ch);
       }
     }
     return buffer.toString();

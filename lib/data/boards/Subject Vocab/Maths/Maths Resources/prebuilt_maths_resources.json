@@ -126,12 +126,12 @@
     }
   ],
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
-  "tier": 3,
-  "iconAssetPath": null,
+  "tier": 2,
+  "iconAssetPath": "assets/Subject Vocab/Maths/Maths Resources/numicon.png",
   "tileIconAssetPath": null,
   "version": 0
 }

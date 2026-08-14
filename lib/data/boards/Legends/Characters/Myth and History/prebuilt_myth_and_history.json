@@ -1,0 +1,43 @@
+{
+  "id": "prebuilt_myth_and_history",
+  "name": "Myth and History",
+  "area": "Legends",
+  "columns": 6,
+  "backgroundColor": "transparent",
+  "adjustableLayout": true,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 537,
+  "tier": 2,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_myth_and_history_tile_1",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "version": 0,
+  "parentBoardId": "prebuilt_characters"
+}

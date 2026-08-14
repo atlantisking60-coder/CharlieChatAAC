@@ -1,0 +1,21 @@
+origin
+postition
+direction
+path
+location
+backwards
+up
+forwards
+turn
+rotate
+left
+step
+right
+anti-clockwise
+clockwise
+continuous
+down
+interval
+1 quarter
+1 half
+distance

@@ -1,6 +1,3 @@
-Musical Genres - Word List
-==============================
-
 alternative
 ambient
 baroque

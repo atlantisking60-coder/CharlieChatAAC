@@ -1,6 +1,3 @@
-Mad - Word List
-===================
-
 hurt
 hostile
 angry

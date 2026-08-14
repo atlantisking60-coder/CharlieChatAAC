@@ -1,7 +1,5 @@
-TFL Equipment - Word List
-=============================
-
 camera
+computer
 desk
 drawing tablet
 ergonomic pad

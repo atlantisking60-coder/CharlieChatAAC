@@ -1,0 +1,24 @@
+{
+  "id": "prebuilt_arabian_and_middle_eastern_tales",
+  "name": "Arabian and Middle Eastern Tales",
+  "area": "Legends",
+  "columns": 6,
+  "backgroundColor": "transparent",
+  "adjustableLayout": true,
+  "isSubBoard": true,
+  "isTertiaryBoard": true,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 386,
+  "tier": 3,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_myth_and_history"
+}

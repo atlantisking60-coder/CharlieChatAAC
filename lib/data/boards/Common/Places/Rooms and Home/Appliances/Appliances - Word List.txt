@@ -1,0 +1,38 @@
+Buildings
+Rooms And Home
+Furniture
+Habitats
+Local Places
+Appliances
+Food Equipment
+Home Management
+appliance
+tv
+fridge
+freezer
+fridge freezer
+washing machine
+dryer
+oven
+hob
+grill
+microwave
+kettle
+toaster
+steamer
+air fryer
+fryer
+blender
+dishwasher
+vacuum cleaner
+wet vac carpet cleaner
+computer
+lamp
+fan
+heater
+radiator
+dehumidifier
+gaming computer
+smoke alarm
+carbon monoxide detector
+boiler

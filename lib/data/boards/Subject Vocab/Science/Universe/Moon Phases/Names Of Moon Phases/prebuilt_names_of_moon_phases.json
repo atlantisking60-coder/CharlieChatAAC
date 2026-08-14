@@ -1,0 +1,28 @@
+{
+  "id": "prebuilt_names_of_moon_phases",
+  "name": "Names Of Moon Phases",
+  "area": "Subject Vocab",
+  "parentBoardId": "prebuilt_moon_phases",
+  "linkedBoardId": null,
+  "rows": 4,
+  "columns": 6,
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 4,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "backgroundColor": "#FFFFFF",
+  "layout": {
+    "rows": 4,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null
+}

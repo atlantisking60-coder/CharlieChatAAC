@@ -1,0 +1,45 @@
+{
+  "id": "prebuilt_hygiene",
+  "name": "Hygiene",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": true,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 225,
+  "tier": 2,
+  "iconAssetPath": "assets/Subject Vocab/Living Life Skills and Prepare For Adulthood and Employment/Home Management/hygiene.png",
+  "tileIconAssetPath": "assets/BOARDS/Living Life Skills and Prepare For Adulthood and Employment/Hygiene.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 4,
+    "blankTilesAdded": 0
+  },
+  "tiles": [
+    {
+      "id": "prebuilt_hygiene_tile_1",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    }
+  ],
+  "parentBoardId": "prebuilt_living_life_skills"
+}

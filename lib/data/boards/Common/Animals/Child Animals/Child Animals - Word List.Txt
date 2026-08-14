@@ -1,6 +1,3 @@
-Child Animals - Word List
-=============================
-
 calf (cow)
 calf (elephant)
 calf (moose, camel, giraffe)

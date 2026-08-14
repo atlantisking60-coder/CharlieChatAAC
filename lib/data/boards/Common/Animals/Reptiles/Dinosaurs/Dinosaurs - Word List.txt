@@ -1,6 +1,3 @@
-Dinosaurs - Word List
-=========================
-
 triassic
 azendohsaurus
 coelophysis

@@ -145,10 +145,13 @@ class BetaFooter extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           const Text(
-            'PROGRESS TRACKER - AREAS COMPLETION RATE:\n'
-            'FINISHED: Common, Sign (more images coming later from Makaton books), My school (except for \'people at my school\' baycroft classes).\n'
-            'STARTED: Subject Vocab, Legends (loads of character pictures ready to add).\n'
-            'NOT STARTED: Recipes.',
+            'STILL TO DO:\n\n'
+            '[NOTE: Some boards will have auto populated *some* of their keywords because assets are stored in their respective folders. These boards are NOT completed.]\n\n'
+            'LESSON VOCAB > Science (started), Cooking, PEEP, Religion (started), Living Life Skills, Prepare For Adulthood, (Fix Thesaurus boards). [This Week]\n\n'
+            'LEGENDS - Lots of pictures ready to go. Boards just need organising and uploading properly. [Remaining Summer]\n\n'
+            'RECIPES - Need to add each recipe. [Summer & September]\n\n'
+            'SIGN - New Makaton pictures to add gradually. [Sept - Oct]\n\n'
+            'COMMON > Time > Special Days (One for each day of the year) [Oct Half Term]',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white70,

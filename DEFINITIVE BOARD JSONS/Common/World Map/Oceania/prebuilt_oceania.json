@@ -47,8 +47,8 @@
     {
       "id": "prebuilt_oceania_northern_mariana_island",
       "label": "northern mariana island",
-      "category": "Custom",
-      "imageAsset": "https://d18vdu4p71yql0.cloudfront.net/libraries/twemoji/1f1f2-1f1f5.svg",
+      "category": "Assets",
+      "imageAsset": "assets/symbols/Custom/scaled_northern mariana island.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,

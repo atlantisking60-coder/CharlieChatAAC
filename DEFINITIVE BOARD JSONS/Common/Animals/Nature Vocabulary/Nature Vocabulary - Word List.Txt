@@ -1,6 +1,4 @@
-Nature Vocabulary - Word List
-=================================
-
+nature
 tree
 flower
 soil

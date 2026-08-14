@@ -1,0 +1,51 @@
+apron
+gloves
+safety goggles
+face mask
+face mask (full)
+3d printer
+allen keys
+brushes
+calliper
+chisel
+circular saw
+coping saw
+cutter
+disc sander
+drill bit
+drill press
+electric circular saw
+electric drill
+electric sander
+electric saw
+file
+g-clamp
+glue gun
+hack saw
+hammer
+hand drill
+hole saw
+level
+mallet
+marking gauge
+marking pencil
+nails
+planer
+pliers
+rasp
+rivet
+riveter
+sandpaper
+screwdriver - crosshead
+screwdriver - flathead
+screws
+set square
+soldering iron
+spade bit
+spanner
+stand for soldering iron
+steel rule
+tape measure
+tenon saw
+vacuum former
+wire cutters
