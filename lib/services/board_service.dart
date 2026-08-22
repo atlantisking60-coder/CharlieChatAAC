@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/board_hierarchy.dart';
+import '../data/tab_orders_data.dart';
 import '../models/symbol_tile.dart';
 import 'external_symbol_service.dart';
 import 'symbol_metadata_service.dart';
@@ -107,6 +108,22 @@ const Set<String> _retiredBoardIds = {
   'prebuilt_recipes_veg_cous_cous_salad',
   'prebuilt_recipes_veg_soup',
   'prebuilt_recipes_vegetable_samosas',
+  // Stray blank boards left over from earlier admin editing under Legends.
+  // None of these have a real JSON file, tile link, or hierarchy entry
+  // anywhere in the project (confirmed against Backups/Boards/Legends/**,
+  // which is where the dev server snapshots a board right before it gets
+  // deleted) — they were empty placeholders that got deleted once already
+  // but can resurface from a browser's own stale local storage (e.g. a
+  // different origin than the one the deletion happened on, or clicking
+  // "Restore Default Boards", which un-tombstones every prebuilt_* id).
+  // Retiring them here makes the deletion permanent regardless of browser
+  // state.
+  'prebuilt_real_people',
+  'prebuilt_mickey_and_friends',
+  'prebuilt_pokemon_generation_1_fire_red_leaf_green_ocean_blue_lightning_yellow_legends_530',
+  'prebuilt_pokemon_generation_1_fire_red_leaf_green_ocean_blue_lightning_yellow_legends_531',
+  'prebuilt_pokemon_generation_2_silver_and_gold_legends_532',
+  'prebuilt_pokemon_generation_2_silver_and_gold_legends_533',
 };
 
 String prebuiltBoardId(String name) {
@@ -518,15 +535,23 @@ class BoardService {
   String _getSharedTabOrderKey(String area) => 'board_taborder_shared_$area';
 
   List<String>? getTabOrder(String area) {
-    if (_prefs == null) return null;
-    var raw = _prefs!.getString(_getTabOrderKey(area));
-    raw ??= _prefs!.getString(_getSharedTabOrderKey(area));
-    if (raw == null || raw.isEmpty) return null;
-    try {
-      return (json.decode(raw) as List).cast<String>();
-    } catch (_) {
-      return null;
+    if (_prefs != null) {
+      var raw = _prefs!.getString(_getTabOrderKey(area));
+      raw ??= _prefs!.getString(_getSharedTabOrderKey(area));
+      if (raw != null && raw.isNotEmpty) {
+        try {
+          return (json.decode(raw) as List).cast<String>();
+        } catch (_) {
+          // Fall through to the compiled default below.
+        }
+      }
     }
+    // Nothing persisted locally (e.g. a fresh browser on the deployed site
+    // that never talked to the local dev server) — fall back to the order
+    // baked into tab_orders_data.dart at build time, same pattern as
+    // [boardHierarchy] for the board tree.
+    final fallback = defaultTabOrders[area];
+    return fallback == null ? null : List<String>.from(fallback);
   }
 
   Future<void> saveTabOrder(String area, List<String> names) async {

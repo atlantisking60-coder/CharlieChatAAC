@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BOARDS_DIR = ROOT / "lib" / "data" / "boards"
 HIERARCHY_FILE = ROOT / "lib" / "data" / "runtime_hierarchy.json"
 TAB_ORDERS_FILE = ROOT / "lib" / "data" / "tab_orders.json"
+TAB_ORDERS_DART_FILE = ROOT / "lib" / "data" / "tab_orders_data.dart"
 BUILD_WEB = ROOT / "build" / "web"
 VERSIONS_DIR = ROOT / "Backups" / "Boards"
 ASSETS_DIR = ROOT / "assets"
@@ -301,6 +302,45 @@ def _invalidate_board_index():
         _BOARD_LIST_CACHE = None
 
 
+def _dart_string(s):
+    return "'" + s.replace("\\", "\\\\").replace("'", "\\'") + "'"
+
+
+def _regenerate_tab_orders_dart(data):
+    """Bake tab_orders.json into lib/data/tab_orders_data.dart.
+
+    tab_orders.json is only ever read by this dev server, so a deployed
+    build (or any browser session that never talked to it) would otherwise
+    ignore saved tab orders entirely. defaultTabOrders is the compiled,
+    production-safe fallback the app actually ships with -- same pattern as
+    boardHierarchy in board_hierarchy.dart. Regenerate it here so it's
+    always in sync with tab_orders.json.
+    """
+    orders = data.get("orders", {})
+    lines = [
+        "/// Compiled fallback for tab (sub-board) ordering, generated from",
+        "/// lib/data/tab_orders.json. This is the production-safe source of truth:",
+        "///",
+        "/// tab_orders.json is only used locally by tools/dev_server.py to keep the",
+        "/// live-preview browser in sync while editing. It is never bundled as a",
+        "/// Flutter asset, so a deployed build (or any session that never talked to",
+        "/// the dev server) has no way to read it. [defaultTabOrders] is baked into",
+        "/// the Dart source instead, so tab order is respected everywhere -- exactly",
+        "/// like [boardHierarchy] in board_hierarchy.dart.",
+        "///",
+        "/// Regenerated automatically by tools/dev_server.py whenever an admin saves",
+        "/// a tab order (POST /saveTabOrder). Do not hand-edit -- edit tab order via",
+        "/// the app instead and let the dev server regenerate this file.",
+        "const Map<String, List<String>> defaultTabOrders = {",
+    ]
+    for area, names in orders.items():
+        names_str = ", ".join(_dart_string(n) for n in names)
+        lines.append(f"  {_dart_string(area)}: [{names_str}],")
+    lines.append("};")
+    lines.append("")
+    TAB_ORDERS_DART_FILE.write_text("\n".join(lines), encoding="utf-8")
+
+
 def _list_boards_cached():
     """Lightweight metadata for every board, parsed once and cached.
 
@@ -579,6 +619,7 @@ class DevBoardHandler(BaseHTTPRequestHandler):
                 TAB_ORDERS_FILE.parent.mkdir(parents=True, exist_ok=True)
                 with open(TAB_ORDERS_FILE, "w", encoding="utf-8") as fp:
                     json.dump(data, fp, indent=2, ensure_ascii=False)
+                _regenerate_tab_orders_dart(data)
                 return self._send_json(200, {"ok": True, "path": str(TAB_ORDERS_FILE)})
             except Exception as e:
                 return self._send_json(500, {"error": str(e)})
