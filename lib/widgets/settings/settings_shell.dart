@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../services/board_service.dart';
+import '../../services/profile_service.dart';
 import '../../services/settings_service.dart';
 import 'sections/general_section.dart';
 import 'sections/speech_section.dart';
@@ -62,6 +63,7 @@ class SettingsShell extends StatefulWidget {
     required this.availableBoards,
     required this.selectedPreferredSets,
     required this.startingBoardId,
+    this.initialProfile,
   });
 
   final AppSettings initialSettings;
@@ -70,6 +72,7 @@ class SettingsShell extends StatefulWidget {
   final List<Board> availableBoards;
   final List<String> selectedPreferredSets;
   final String startingBoardId;
+  final UserProfile? initialProfile;
 
   @override
   State<SettingsShell> createState() => _SettingsShellState();
@@ -79,6 +82,7 @@ class _SettingsShellState extends State<SettingsShell> {
   late AppSettings _settings;
   late List<String> _preferredSets;
   late String _startingBoardId;
+  UserProfile? _profile;
   String? _navigateToBoardId;
   String _activeId = 'general';
   bool _showSavedMessage = false;
@@ -89,9 +93,11 @@ class _SettingsShellState extends State<SettingsShell> {
     _settings = widget.initialSettings;
     _preferredSets = List.from(widget.selectedPreferredSets);
     _startingBoardId = widget.startingBoardId;
+    _profile = widget.initialProfile;
   }
 
   void _update(AppSettings s) => setState(() => _settings = s);
+  void _updateProfile(UserProfile p) => setState(() => _profile = p);
 
   Widget _buildSection(String id) {
     switch (id) {
@@ -112,6 +118,8 @@ class _SettingsShellState extends State<SettingsShell> {
         return ProfilesSection(
           settings: _settings,
           onChanged: _update,
+          profile: _profile,
+          onProfileChanged: _updateProfile,
           availableBoards: widget.availableBoards,
           preferredSets: _preferredSets,
           startingBoardId: _startingBoardId,
@@ -154,6 +162,7 @@ class _SettingsShellState extends State<SettingsShell> {
       preferredSymbolSets: _preferredSets,
       startingBoardId: _startingBoardId,
       navigateToBoardId: _navigateToBoardId,
+      profile: _profile,
     ));
   }
 
@@ -212,6 +221,7 @@ class _SettingsShellState extends State<SettingsShell> {
             preferredSymbolSets: _preferredSets,
             startingBoardId: _startingBoardId,
             navigateToBoardId: _navigateToBoardId,
+            profile: _profile,
           ));
         },
         child: Row(
@@ -275,6 +285,7 @@ class _SettingsShellState extends State<SettingsShell> {
             preferredSymbolSets: _preferredSets,
             startingBoardId: _startingBoardId,
             navigateToBoardId: _navigateToBoardId,
+            profile: _profile,
           ));
         },
         child: ListView.builder(

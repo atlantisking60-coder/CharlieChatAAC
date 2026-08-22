@@ -1,0 +1,9 @@
+basic
+needs
+survival
+offspring
+growth
+water
+food
+air
+breathing

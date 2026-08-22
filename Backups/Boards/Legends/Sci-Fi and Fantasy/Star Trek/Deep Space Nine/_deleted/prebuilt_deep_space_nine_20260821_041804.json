@@ -1,0 +1,25 @@
+{
+  "id": "prebuilt_deep_space_nine",
+  "name": "Deep Space Nine",
+  "area": "Legends",
+  "columns": 6,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 913,
+  "tier": 1,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

@@ -1,0 +1,49 @@
+anne of green gables (anne)
+bezukhov (war and peace)
+dantes inferno (edmond dantes)
+david copperfield
+dracula (count dracula)
+frankenstein (frankenstein's monster)
+harry potter
+jane eyre
+les miserables (cosette)
+moby dick
+moby-dick (captain ahab)
+oliver (oliver twist)
+sherlock holmes
+the catcher in the rye
+the great gatsby (jay gatsby)
+the hobbit (bilbo baggins)
+the hunger games (katniss everdeen)
+the little prince (prince)
+the lord of the rings (gandalf)
+the odyssey (odysseus)
+the picture of dorian gray
+the three musketeers (d'artagnan)
+the wizard of oz (dorothy)
+tom sawyer
+war and peace (pierre bezukhov)
+wuthering heights (heathcliff)
+20,000 leagues under the sea (captain nemo)
+a christmas carol (ebenezer scrooge)
+adventures of huckleberry finn (huck finn)
+alice's adventures in wonderland (alice)
+anna karenina (anna karenina)
+bennet (elizabeth bennet)
+don quixote
+great expectations (miss havisham)
+gulliver's travels (lemuel gulliver)
+hansel and gretel
+jekyll (dr. jekyll and mr. hyde)
+katniss (katniss everdeen)
+les misérables (jean valjean)
+life of pi (pi patel)
+peter pan
+peter pan (captain hook)
+robinson crusoe (robinson crusoe)
+the chronicles of narnia (aslan)
+the hunchback of notre dame (quasimodo)
+the scarlet letter (hester prynne)
+to kill a mockingbird (atticus finch)
+to kill a mockingbird (scout)
+treasure island (long john silver)

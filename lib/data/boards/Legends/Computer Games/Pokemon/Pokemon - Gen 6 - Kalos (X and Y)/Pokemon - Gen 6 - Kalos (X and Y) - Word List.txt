@@ -1,0 +1,125 @@
+generation 6 (x and y)
+kalos region (map)
+650. chespin
+651. quilladin
+652. chesnaught
+653. fennekin
+654. braixen
+655. delphox
+656. froakie
+657. frogadier
+658. greninja
+658. greninja - ash-greninja
+659. bunnelby
+660. diggersby
+661. fletchling
+662. fletchinder
+663. talonflame
+664. scatterbug
+665. spewpa
+666a. vivillon (archipelago pattern)
+666b. vivillon (continental pattern)
+666c. vivillon (elegant pattern)
+666d. vivillon (fancy pattern)
+666e. vivillon (garden pattern)
+666f. vivillon (high plains pattern)
+666g. vivillon (icy snow pattern)
+666h. vivillon (jungle pattern)
+666i. vivillon (marine pattern)
+666j. vivillon (meadow pattern)
+666k. vivillon (modern pattern)
+666l. vivillon (monsoon pattern)
+666m. vivillon (ocean pattern)
+666n. vivillon (polar pattern)
+666o. vivillon (pokeball pattern)
+666p. vivillon (river pattern)
+666q. vivillon (sandstorm pattern)
+666r. vivillon (savanna pattern)
+666s. vivillon (sun pattern)
+666t. vivillon (tundra pattern)
+667. litleo
+668a. pyroar
+668b. pyroar - female form
+669a. flebebe (red flower)
+669b. flabebe (yellow flower)
+669c. flabebe (orange flower)
+669d. flabebe (blue flower)
+669e. flabebe (white flower)
+670a. floette (red flower)
+670b. floette (yellow flower)
+670c. floette (orange flower)
+670d. floette (blue flower)
+670e. floette (white flower)
+670f. floette (eternal flower)
+671. florges
+671a. florges (red flower)
+671b. florges (yellow flower)
+671c. florges (orange flower)
+671d. florges (blue flower)
+671e. florges (white flower)
+672. skiddo
+673. gogoat
+674. pancham
+675. pangoro
+676a. furfrou (natural form)
+676b. furfrou (matron trim)
+676c. furfrou (dandy trim)
+676d. furfrou (debutante trim)
+676e. furfrou (diamond trim)
+676f. furfrou (heart trim)
+676g. furfrou (kabuki trim)
+676h. furfrou (star trim)
+676i. furfrou (la reine trim)
+676j. furfrou (pharaoh trim)
+677. espurr
+678. meowstic
+678. meowstic - female form
+679. honedge
+680. doublade
+681a. aegislash (shield forme)
+681b. aegislash (blade forme)
+682. spritzee
+683. aromatisse
+684. swirlix
+685. slurpuff
+686. inkay
+687. malamar
+688. binacle
+689. barbaracle
+690. skrelp
+691. dragalge
+692. clauncher
+693. clawitzer
+694. helioptile
+695. heliolisk
+696. tyrunt
+697. tyrantrum
+698. amaura
+699. aurorus
+700. sylveon
+701. hawlucha
+702. dedenne
+703. carbink
+704. goomy
+705. sliggoo
+706. goodra
+707. klefki
+708. phantump
+709. trevenant
+710a. pumpkaboo (average size)
+711a. gourgeist (average size)
+711b. gourgeist (small size)
+711c. gourgeist (large size)
+711d. gourgeist (super size)
+712. bergmite
+713. avalugg
+714. noibat
+715. noivern
+716a. xerneas (neutral mode)
+716b. xerneas (active mode)
+717. yveltal
+718. zygarde
+719. diancie
+720a. hoopa (confined)
+720b. hoopa (unbound)
+721. volcanion

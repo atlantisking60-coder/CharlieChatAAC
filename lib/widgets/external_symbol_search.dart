@@ -21,6 +21,7 @@ class ExternalSymbolSearchScreen extends StatefulWidget {
 
 class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen> {
   final _queryController = TextEditingController();
+  final _providerScrollController = ScrollController();
   final _service = ExternalSymbolService();
   final _providers = [
     'All Libraries',
@@ -35,7 +36,7 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
     'Snap Core',
     'Tobii Dynavox'
   ];
-  String _selectedProvider = 'All Libraries';
+  String _selectedProvider = 'Assets';
   bool _loading = false;
   String? _error;
   List<ExternalSymbol> _results = [];
@@ -59,6 +60,7 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
   @override
   void dispose() {
     _queryController.dispose();
+    _providerScrollController.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -388,9 +390,17 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
         child: Column(
           children: [
             SingleChildScrollView(
+              controller: _providerScrollController,
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: _providers.map((provider) {
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onHorizontalDragUpdate: (details) {
+                  _providerScrollController.jumpTo(
+                    _providerScrollController.position.pixels - details.delta.dx,
+                  );
+                },
+                child: Row(
+                  children: _providers.map((provider) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: ChoiceChip(
@@ -410,6 +420,7 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
                     ),
                   );
                 }).toList(),
+              ),
               ),
             ),
             const SizedBox(height: 12),

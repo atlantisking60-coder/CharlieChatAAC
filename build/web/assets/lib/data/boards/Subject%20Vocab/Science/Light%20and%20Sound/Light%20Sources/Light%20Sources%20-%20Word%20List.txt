@@ -1,0 +1,6 @@
+light
+white light
+visible light
+colour
+spectrum
+refraction

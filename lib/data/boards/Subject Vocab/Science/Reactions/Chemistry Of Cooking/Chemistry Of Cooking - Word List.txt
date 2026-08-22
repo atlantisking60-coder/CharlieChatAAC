@@ -1,0 +1,8 @@
+variables
+accuracy
+precision
+enquiry
+new material
+not usually reversible
+gas given off
+degree of trust

@@ -1,4 +1,4 @@
-# SIGN AREA - Board Hierarchy & Tab Order
+# SIGN AREA - Board Hierarchy and Tab Order
 
 > **Source of Truth** - This document defines the exact board hierarchy and tab
 > ordering for the Sign area. It must only be edited manually by the project
@@ -10,40 +10,41 @@
 |----|-----------------------------------------|
 | 1  | Sign Main                               |
 | 2  | A-Z Of Sign                             |
-| 3  | Manners & Greetings                     |
-| 4  | Family & People                         |
-| 5  | Feelings & Health                       |
+| 2  | Sign Of The Week                        |
+| 3  | Manners and Greetings                     |
+| 4  | Family and People                         |
+| 5  | Feelings and Health                       |
 | 6  | Questions                               |
 | 7  | Grammatical Elements                    |
 | 8  | Prepositions                            |
-| 9  | Descriptions & Attributes               |
+| 9  | Descriptions and Attributes               |
 | 10 | Colours                                 |
 | 11 | Numbers                                 |
-| 12 | Quantity & Measurement                  |
-| 13 | Time & Days                             |
+| 12 | Quantity and Measurement                  |
+| 13 | Time and Days                             |
 | 14 | Letters                                 |
-| 15 | Food & Drink                            |
+| 15 | Food and Drink                            |
 | 16 | Personal Actions                        |
 | 17 | Shared Activities                       |
 | 18 | Personal Hygiene                        |
-| 19 | Clothing & Personal                     |
+| 19 | Clothing and Personal                     |
 | 20 | Personal Possessions                    |
-| 21 | Home & Household                        |
+| 21 | Home and Household                        |
 | 22 | General Objects                         |
 | 23 | Computer Items                          |
-| 24 | School & Instructions                   |
-| 25 | Leisure Activities & Interests           |
+| 24 | School and Instructions                   |
+| 25 | Leisure Activities and Interests           |
 | 26 | Sport                                   |
-| 27 | Animals & Nature                        |
+| 27 | Animals and Nature                        |
 | 28 | Weather                                 |
 | 29 | Outside                                 |
 | 30 | Places                                  |
-| 31 | Transport & Vehicles                    |
+| 31 | Transport and Vehicles                    |
 | 32 | Money                                   |
 | 33 | Public Notices                          |
 | 34 | Other Countries                         |
-| 35 | Religion & Customs                      |
-| 36 | Gender & Sexuality                      |
+| 35 | Religion and Customs                      |
+| 36 | Gender and Sexuality                      |
 
 ---
 
@@ -78,40 +79,40 @@ A-Z Of Sign
     X (Sign)
     Y (Sign)
     Z (Sign)
-Manners & Greetings
-Family & People
-Feelings & Health
+Manners and Greetings
+Family and People
+Feelings and Health
 Questions
 Grammatical Elements
 Prepositions
-Descriptions & Attributes
+Descriptions and Attributes
 Colours
 Numbers
-Quantity & Measurement
-Time & Days
+Quantity and Measurement
+Time and Days
 Letters
-Food & Drink
+Food and Drink
 Personal Actions
 Shared Activities
 Personal Hygiene
-Clothing & Personal
+Clothing and Personal
 Personal Possessions
-Home & Household
+Home and Household
 General Objects
 Computer Items
-School & Instructions
-Leisure Activities & Interests
+School and Instructions
+Leisure Activities and Interests
 Sport
-Animals & Nature
+Animals and Nature
 Weather
 Outside
 Places
-Transport & Vehicles
+Transport and Vehicles
 Money
 Public Notices
 Other Countries
-Religion & Customs
-Gender & Sexuality
+Religion and Customs
+Gender and Sexuality
 ```
 
 ---

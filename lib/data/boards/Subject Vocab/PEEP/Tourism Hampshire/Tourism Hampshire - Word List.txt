@@ -1,0 +1,35 @@
+england
+hampshire
+hampshire districts
+urban
+rural
+tourism
+tourist
+attraction
+leisure
+museum
+landmark
+historical
+cultural
+natural
+wildlife
+location
+county
+city
+town
+village
+new forest
+southampton
+portsmouth
+winchester
+chichester
+new forest location
+southampton location
+portsmouth location
+winchester location
+chichester location
+paulton's park
+porchester castle
+historic dockyard
+marwell zoo
+beaches

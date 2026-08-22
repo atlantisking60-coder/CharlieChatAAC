@@ -1,15 +1,20 @@
-Health - Word List
-======================
-
-body systems
-check-up
-disease
-health habits
 health
+wellbeing
+body systems
+disease
 illness prevention
+hygiene
 immunity
-medicine
-physical health
 symptoms
 treatment
+medicine
 vaccination
+growth
+development
+balance
+safety
+risk factors
+recovery
+physical health
+health habits
+check-up

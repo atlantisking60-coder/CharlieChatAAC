@@ -164,10 +164,18 @@ def _resolve_existing_asset_dir(rel):
 def _canonical_board_path(area, name):
     """Build the canonical on-disk folder for a board from its hierarchy."""
     parts = []
+    seen = set()
     current = name
     for _ in range(20):
         if current is None or current not in BOARD_HIERARCHY:
             break
+        if current in seen:
+            # Cycle in the hierarchy data (shouldn't happen, but has before
+            # from stale in-memory data) — stop instead of nesting forever.
+            print(f"WARNING: cycle detected in BOARD_HIERARCHY at '{current}', "
+                  f"stopping canonical path resolution for '{name}'")
+            break
+        seen.add(current)
         entry_area, parent = BOARD_HIERARCHY[current]
         if entry_area != area:
             break

@@ -1075,11 +1075,18 @@ class ExternalSymbolService {
     return best;
   }
 
+  static const _relevanceStopWords = {
+    'the', 'a', 'an', 'of', 'and', '&', 'to', 'in', 'on', 'for', 'with', 'is', 'it', 'at', 'by'
+  };
+
   List<ExternalSymbol> sortByRelevance(List<ExternalSymbol> symbols, String query, {List<String>? preferredSets, List<String>? priorityPaths}) {
     final lowerQuery = query.trim().toLowerCase();
     if (lowerQuery.isEmpty) return symbols;
 
-    final queryWords = lowerQuery.split(_wordSeparator).where((s) => s.isNotEmpty).toList();
+    final queryWords = lowerQuery
+        .split(_wordSeparator)
+        .where((s) => s.isNotEmpty && !_relevanceStopWords.contains(s))
+        .toList();
     if (queryWords.isEmpty) return symbols;
 
     // Pre-calculate scores to avoid O(N log N * Words) complexity during sort.
@@ -1205,11 +1212,12 @@ class ExternalSymbolService {
     // Strong phrase match
     if (_isSubsequence(queryWords, labelWords)) return 1;
 
-    var total = 0;
+    var best = 9999;
     for (int i = 0; i < queryWords.length; i++) {
-      total += _wordScoreOptimized(queryWords[i], queryWords[i], labelWords, l, '');
+      final score = _wordScoreOptimized(queryWords[i], queryWords[i], labelWords, l, '');
+      if (score < best) best = score;
     }
-    return total;
+    return best;
   }
 
   int _wordScoreOptimized(String word, String normWord, List<String> labelWords, String label, String normLabel) {

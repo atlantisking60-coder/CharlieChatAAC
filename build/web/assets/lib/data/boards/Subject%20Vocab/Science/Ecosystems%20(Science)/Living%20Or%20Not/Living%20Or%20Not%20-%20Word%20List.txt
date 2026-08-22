@@ -1,0 +1,13 @@
+movement
+respiration
+sensitivity
+growth
+reproduction
+excretion
+nutrition
+living
+dead
+not living
+alive
+dead
+not alive

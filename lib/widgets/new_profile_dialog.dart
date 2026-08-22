@@ -45,9 +45,9 @@ class _NewProfileDialogState extends State<NewProfileDialog> {
 
   Future<void> _pickImage() async {
     try {
-      final result = await FilePicker.pickFiles(type: FileType.image);
-      if (result == null || result.files.isEmpty) return;
-      final file = result.files.single;
+      final files = await FilePicker.pickFiles(type: FileType.image);
+      if (files.isEmpty) return;
+      final file = files.single;
       if (kIsWeb) {
         final bytes = await file.readAsBytes();
         setState(() {

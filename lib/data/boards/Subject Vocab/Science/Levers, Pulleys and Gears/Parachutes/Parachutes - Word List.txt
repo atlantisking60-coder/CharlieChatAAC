@@ -1,0 +1,8 @@
+parachute
+variables
+support
+gravity
+fall
+earth
+air resistance
+friction

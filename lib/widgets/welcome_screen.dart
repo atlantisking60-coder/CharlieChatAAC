@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:uuid/uuid.dart';
+
+import '../services/firebase_profile_sync_service.dart';
 import '../services/profile_service.dart';
 import 'auth_guard.dart';
 
@@ -15,6 +18,7 @@ class WelcomeScreen extends StatelessWidget {
   final ValueChanged<String> onProfileSelected;
   final VoidCallback onCreateProfile;
   final ValueChanged<UserProfile> onDeleteProfile;
+  final ValueChanged<UserProfile>? onDownloadedProfile;
 
   const WelcomeScreen({
     super.key,
@@ -24,6 +28,7 @@ class WelcomeScreen extends StatelessWidget {
     required this.onProfileSelected,
     required this.onCreateProfile,
     required this.onDeleteProfile,
+    this.onDownloadedProfile,
   });
 
   @override
@@ -105,6 +110,11 @@ class WelcomeScreen extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
+                              icon: const Icon(Icons.cloud_download_outlined),
+                              tooltip: 'Download profile',
+                              onPressed: () => _showDownloadDialog(context),
+                            ),
+                            IconButton(
                               icon: const Icon(Icons.person_add_alt),
                               tooltip: 'Create profile',
                               onPressed: onCreateProfile,
@@ -175,14 +185,86 @@ class WelcomeScreen extends StatelessWidget {
       return;
     }
 
-    final result = await showDialog<bool>(
+    onProfileSelected(adminProfile.id);
+  }
+
+  Future<void> _showDownloadDialog(BuildContext context) async {
+    final idController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    final onlineId = await showDialog<String>(
       context: context,
-      barrierDismissible: false,
-      builder: (ctx) => _AdminLoginDialog(adminProfile: adminProfile),
+      builder: (ctx) => AlertDialog(
+        title: const Text('Download Profile'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: idController,
+              decoration: const InputDecoration(
+                labelText: 'Profile ID',
+                hintText: 'Enter the online profile ID',
+              ),
+              autofocus: true,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Password (optional)',
+                hintText: 'If the profile is protected',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(idController.text.trim()),
+            child: const Text('Download'),
+          ),
+        ],
+      ),
     );
 
-    if (result == true) {
-      onProfileSelected(adminProfile.id);
+    if (onlineId == null || onlineId.isEmpty) return;
+    if (!context.mounted) return;
+
+    try {
+      final downloaded = await FirebaseProfileSyncService.instance
+          .downloadProfile(onlineId);
+      if (downloaded == null) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Profile not found')),
+          );
+        }
+        return;
+      }
+
+      // Assign a fresh local ID so it doesn't collide with existing profiles
+      final localId = const Uuid().v4();
+      final imported = downloaded.copyWith(
+        id: localId,
+        onlineId: onlineId,
+      );
+
+      if (context.mounted) {
+        onDownloadedProfile?.call(imported);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Download failed: $e')),
+        );
+      }
+    } finally {
+      idController.dispose();
+      passwordController.dispose();
     }
   }
 
@@ -301,78 +383,6 @@ class WelcomeScreen extends StatelessWidget {
         return 'assets/Common/Time/Months/december.png';
       default:
         return 'assets/Common/Time/Months/january.png';
-    }
-  }
-}
-
-class _AdminLoginDialog extends StatefulWidget {
-  final UserProfile adminProfile;
-  const _AdminLoginDialog({required this.adminProfile});
-
-  @override
-  State<_AdminLoginDialog> createState() => _AdminLoginDialogState();
-}
-
-class _AdminLoginDialogState extends State<_AdminLoginDialog> {
-  late final TextEditingController _usernameController;
-  late final TextEditingController _passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    _usernameController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    // Note: Controllers are not explicitly disposed to avoid a Flutter race condition
-    // where TextFields rebuild during the closing animation of a dialog.
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Admin Access'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _usernameController,
-            decoration: const InputDecoration(labelText: 'Username'),
-            autofocus: true,
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(labelText: 'Password'),
-            onSubmitted: (_) => _handleLogin(),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-        FilledButton(
-          onPressed: _handleLogin,
-          child: const Text('Login'),
-        ),
-      ],
-    );
-  }
-
-  void _handleLogin() {
-    final enteredUsername = _usernameController.text.trim().toLowerCase();
-    final enteredPassword = _passwordController.text.trim();
-    
-    final actualUsername = (widget.adminProfile.username ?? 'admin').toLowerCase();
-    final actualPassword = widget.adminProfile.password ?? 'baycr0ft';
-
-    if (enteredUsername == actualUsername && enteredPassword == actualPassword) {
-      Navigator.of(context).pop(true);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Incorrect username or password')));
     }
   }
 }

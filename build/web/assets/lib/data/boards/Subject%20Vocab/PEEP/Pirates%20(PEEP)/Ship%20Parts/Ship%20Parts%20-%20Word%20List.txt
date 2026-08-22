@@ -1,0 +1,14 @@
+port
+bow
+starboard
+stern
+deck
+helm
+sail
+rigging
+crows nest
+mast
+hull
+rudder
+anchor
+cannon

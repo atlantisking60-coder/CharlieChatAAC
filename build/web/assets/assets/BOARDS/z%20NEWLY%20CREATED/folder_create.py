@@ -2,9 +2,8 @@ import sys
 import os
 from PIL import Image
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BLANK_PATH = os.path.join(SCRIPT_DIR, 'BLANK.png')
-OUTPUT_DIR = SCRIPT_DIR
+BLANK_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'BOARDS', 'BLANK.png')
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'BOARDS', 'z NEWLY CREATED')
 
 def create_folder_icon(char_path):
     if not os.path.exists(BLANK_PATH):
@@ -35,41 +34,28 @@ def create_folder_icon(char_path):
     composite.paste(char_img, (x, y), char_img)
 
     basename = os.path.splitext(os.path.basename(char_path))[0]
-    basename = basename.title()
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     output_path = os.path.join(OUTPUT_DIR, basename + '.png')
     composite.save(output_path, 'PNG')
-    print(f'Created: {basename}.png')
+    print(f'Created: {output_path}')
     return True
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print('Usage: Drag image files onto this script (up to 50)')
+        print('Usage: Drag an image file onto this script')
         input('Press Enter to exit...')
         sys.exit(1)
 
-    files = sys.argv[1:]
+    image_path = sys.argv[1]
 
-    if len(files) > 50:
-        print(f'ERROR: Too many files ({len(files)}). Maximum is 50.')
+    if not os.path.isfile(image_path):
+        print(f'ERROR: File not found: {image_path}')
         input('Press Enter to exit...')
         sys.exit(1)
 
-    print(f'Processing {len(files)} file(s)...\n')
-
-    success_count = 0
-    fail_count = 0
-
-    for image_path in files:
-        if not os.path.isfile(image_path):
-            print(f'SKIP: File not found: {image_path}')
-            fail_count += 1
-            continue
-
-        if create_folder_icon(image_path):
-            success_count += 1
-        else:
-            fail_count += 1
-
-    print(f'\nDone: {success_count} created, {fail_count} failed')
+    success = create_folder_icon(image_path)
+    if success:
+        print('Folder icon created successfully!')
+    else:
+        print('Failed to create folder icon.')
     input('Press Enter to exit...')

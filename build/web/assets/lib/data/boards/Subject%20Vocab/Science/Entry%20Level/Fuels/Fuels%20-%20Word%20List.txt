@@ -1,9 +1,20 @@
-Fuels - Word List
-=====================
-
+carbon
+combustion
 cracking
+crude oil
+flammable
+fossil fuel
 fraction
+fuel
 hydrocarbon
 methane
-monomer, polymerisation, polymer
+natural gas
+plastics
+monomer
+polymerisation
+polymer
+refining
+cracking
+fraction
+polymerisation
 refining

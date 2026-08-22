@@ -54,7 +54,6 @@ Gods, Titans, Heroes and Monsters
     Other Mythology
 Fairy Tale Characters
 Disney Stories
-    Mickey and Friends
     1937 Snow White and The Seven Dwarfs
     1940 Fantasia
     1940 Pinocchio
@@ -77,10 +76,8 @@ Disney Stories
     1986 The Great Mouse Detective
     1988 Oliver and Company
     1989 The Little Mermaid
-    1990 The Rescuers Down Under
     1991 Beauty and The Beast
     1992 Aladdin
-    1993 The Nightmare Before Christmas
     1994 The Lion King
     1995 Pocahontas
     1995 Toy Story
@@ -122,7 +119,6 @@ Disney Stories
     2021 Encanto
     2021 Luca
     2021 Raya and The Last Dragon
-    2022 Lightyear
     2022 Strange World
     2022 Turning Red
     2023 Elemental
@@ -156,7 +152,7 @@ Misc
 
 - `[Link to ...]` entries indicate cross-area board links, not child boards.
 - `Gods, Titans, Heroes and Monsters` is now a top-level tab (previously a child of Characters).
-- `Disney Stories` is now a top-level tab with Mickey and Friends and all films as children.
+- `Disney Stories` is now a top-level tab with all films as children.
 - `Star Trek` has `Starships` as its only child board.
 - `Creatures and Races` appears in two positions in the hierarchy as specified.
 - Disney Stories films are ordered chronologically by release year.

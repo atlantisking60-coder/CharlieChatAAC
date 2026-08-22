@@ -1,5 +1,8 @@
-Novel Materials - Word List
-===============================
-
 alloy
+atoms
+joined
+together
+bond
+covalent bond
+diamond
 graphite

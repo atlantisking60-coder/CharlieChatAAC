@@ -1,0 +1,40 @@
+britain
+kingdoms
+provinces
+northumbria
+mercia
+east anglia
+essex
+kent
+sussex
+wessex
+canterbury
+burh (fortified town)
+settlement
+village
+homestead
+hall
+hut
+monastery
+alfred the great
+offa of mercia
+aethelstan
+ethelred the unready
+harold godwinson
+saint augustine
+norman
+roman
+celts
+jutes (jutland, scandinavia)
+angles (denmark, sweden, germany)
+saxons (north germany)
+vikings
+danes
+monks
+slave
+ceorl (free peasant)
+thane (noble)
+craftsman
+scribe
+warrior
+beowulf

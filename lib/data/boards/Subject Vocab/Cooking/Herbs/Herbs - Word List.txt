@@ -1,6 +1,3 @@
-Herbs - Word List
-=====================
-
 basil
 bay leaf
 chamomile

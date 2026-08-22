@@ -1,0 +1,25 @@
+{
+  "id": "prebuilt_pokemon_generation_1_fire_red_leaf_green_ocean_blue_lightning_yellow_legends_531",
+  "name": "Pokemon - Generation 1 (Fire Red, Leaf Green, Ocean Blue, Lightning Yellow) (Legends_531)",
+  "area": "Legends",
+  "columns": 6,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 877,
+  "tier": 1,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

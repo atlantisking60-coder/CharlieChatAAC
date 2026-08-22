@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_evolution_and_genes",
+  "name": "Evolution and Genes",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 194,
+  "tier": 2,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_science",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
+}

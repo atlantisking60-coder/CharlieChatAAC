@@ -1,9 +1,0 @@
-aeroplane - fly
-bike - pedal
-boat
-bus - lorry - truck - van
-car - drive
-motorbike
-police car
-tractor
-train - railway

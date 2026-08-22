@@ -24,8 +24,8 @@ part 'generate_boards_json.dart';
 /// or Native (Real File System).
 
 
-const int defaultBoardColumns = 6;
-const int defaultBoardRows = 6;
+const int defaultBoardColumns = 8;
+const int defaultBoardRows = 1;
 const String defaultBoardColor = 'transparent';
 const String lightGreenBoardColor = '#90EE90';
 const String darkBlueBoardColor = '#1E3A8A';
@@ -57,11 +57,67 @@ const Set<String> _retiredBoardIds = {
   'prebuilt_events_occasions',
   'prebuilt_habitats_science',
   'prebuilt_habitats_2',
+  // The real, correct id for every Recipes sub-board matches its JSON
+  // filename under lib/data/boards/Recipes/**/prebuilt_*.json (e.g.
+  // prebuilt_pizza_toast.json has id "prebuilt_pizza_toast") — that's what
+  // both the dev server and Flutter's asset lookup resolve by filename, and
+  // what prebuilt_recipes.json's tile links point at. The ids below (with an
+  // extra "recipes_" infix) never matched any real file. They only exist as
+  // stray ghost boards created in browser storage while that infix mismatch
+  // was being tracked down (auto-created blank placeholders, and a couple of
+  // manually re-saved copies under area "Common"). Do not re-add the real,
+  // filename-matching recipe ids here — use _removeDuplicateNameBoards for
+  // genuine duplicate cleanup instead.
+  'prebuilt_recipes_bacon_and_mushroom_risotto',
+  'prebuilt_recipes_banana_dolphins',
+  'prebuilt_recipes_beef_lasagne',
+  'prebuilt_recipes_breakfast_muffins',
+  'prebuilt_recipes_brilliant_bread',
+  'prebuilt_recipes_chicken_fajitas',
+  'prebuilt_recipes_chilli_con_carne',
+  'prebuilt_recipes_christmas_cookies',
+  'prebuilt_recipes_cottage_pie',
+  'prebuilt_recipes_cupcakes',
+  'prebuilt_recipes_dutch_apple_cake',
+  'prebuilt_recipes_easy_veg_frittatas',
+  'prebuilt_recipes_egg_fried_rice',
+  'prebuilt_recipes_eggy_bread',
+  'prebuilt_recipes_fruit_scones',
+  'prebuilt_recipes_ginger_biscuits',
+  'prebuilt_recipes_herby_veg_crumble',
+  'prebuilt_recipes_italian_pasta',
+  'prebuilt_recipes_macaroni_cheese',
+  'prebuilt_recipes_mince_pies',
+  'prebuilt_recipes_mini_carrot_cakes',
+  'prebuilt_recipes_mini_meatballs',
+  'prebuilt_recipes_pasta_fiorentina',
+  'prebuilt_recipes_pizza_toast',
+  'prebuilt_recipes_pizza_wheels',
+  'prebuilt_recipes_potato_cakes',
+  'prebuilt_recipes_savoury_rice',
+  'prebuilt_recipes_simple_spring_rolls',
+  'prebuilt_recipes_sizzling_stir_fry',
+  'prebuilt_recipes_spicy_bean_burger',
+  'prebuilt_recipes_sweet_pancake',
+  'prebuilt_recipes_thai_green_curry',
+  'prebuilt_recipes_toastie',
+  'prebuilt_recipes_tomato_and_basil_tart',
+  'prebuilt_recipes_tuna_pasta_bake',
+  'prebuilt_recipes_turkey_burgers',
+  'prebuilt_recipes_veg_cous_cous_salad',
+  'prebuilt_recipes_veg_soup',
+  'prebuilt_recipes_vegetable_samosas',
 };
 
 String prebuiltBoardId(String name) {
   if (name.toLowerCase() == 'a-z of sign' || name.toLowerCase() == 'a-z of sign') {
     return 'prebuilt_a-z_of_sign';
+  }
+  if (name == 'Not Disney Animations' || name == 'Animations (Not Disney)') {
+    return 'prebuilt_not_disney_animations';
+  }
+  if (name == 'The Turtles') {
+    return 'prebuilt_turtles';
   }
   return 'prebuilt_${name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
 }
@@ -89,6 +145,8 @@ class Board {
   String? iconAssetPath;
   String? tileIconAssetPath;
   int version;
+  bool adminUpdatePending;
+  String? adminVersionId;
 
   Board({
     required this.id,
@@ -113,6 +171,8 @@ class Board {
     this.iconAssetPath,
     this.tileIconAssetPath,
     this.version = 0,
+    this.adminUpdatePending = false,
+    this.adminVersionId,
   });
 
   Map<String, dynamic> toMap() => {
@@ -138,6 +198,8 @@ class Board {
         'iconAssetPath': iconAssetPath,
         'tileIconAssetPath': tileIconAssetPath,
         'version': version,
+        'adminUpdatePending': adminUpdatePending,
+        'adminVersionId': adminVersionId,
       };
 
   factory Board.fromMap(Map<String, dynamic> m, {bool includeTiles = true}) => Board(
@@ -171,7 +233,63 @@ class Board {
         iconAssetPath: m['iconAssetPath'] as String?,
         tileIconAssetPath: m['tileIconAssetPath'] as String?,
         version: (m['version'] as num?)?.toInt() ?? 0,
+        adminUpdatePending: m['adminUpdatePending'] ?? false,
+        adminVersionId: m['adminVersionId'] as String?,
       );
+
+  Board copyWith({
+    String? id,
+    String? name,
+    String? area,
+    String? parentBoardId,
+    String? linkedBoardId,
+    int? rows,
+    int? columns,
+    bool? adjustableLayout,
+    double? boxScale,
+    double? tileHeight,
+    double? tileWidth,
+    String? backgroundColor,
+    List<SymbolTile>? tiles,
+    bool? isSubBoard,
+    bool? isTertiaryBoard,
+    bool? isQuaternaryBoard,
+    bool? isQuinaryBoard,
+    int? sortOrder,
+    int? tier,
+    String? iconAssetPath,
+    String? tileIconAssetPath,
+    int? version,
+    bool? adminUpdatePending,
+    String? adminVersionId,
+  }) {
+    return Board(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      area: area ?? this.area,
+      parentBoardId: parentBoardId ?? this.parentBoardId,
+      linkedBoardId: linkedBoardId ?? this.linkedBoardId,
+      rows: rows ?? this.rows,
+      columns: columns ?? this.columns,
+      tiles: tiles ?? this.tiles,
+      adjustableLayout: adjustableLayout ?? this.adjustableLayout,
+      boxScale: boxScale ?? this.boxScale,
+      tileHeight: tileHeight ?? this.tileHeight,
+      tileWidth: tileWidth ?? this.tileWidth,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      isSubBoard: isSubBoard ?? this.isSubBoard,
+      isTertiaryBoard: isTertiaryBoard ?? this.isTertiaryBoard,
+      isQuaternaryBoard: isQuaternaryBoard ?? this.isQuaternaryBoard,
+      isQuinaryBoard: isQuinaryBoard ?? this.isQuinaryBoard,
+      sortOrder: sortOrder ?? this.sortOrder,
+      tier: tier ?? this.tier,
+      iconAssetPath: iconAssetPath ?? this.iconAssetPath,
+      tileIconAssetPath: tileIconAssetPath ?? this.tileIconAssetPath,
+      version: version ?? this.version,
+      adminUpdatePending: adminUpdatePending ?? this.adminUpdatePending,
+      adminVersionId: adminVersionId ?? this.adminVersionId,
+    );
+  }
 }
 
 class BoardService {
@@ -231,6 +349,9 @@ class BoardService {
   static const int _kPrebuiltBoardsSchemaVersion = 4;
 
   BoardService._();
+
+  /// Public accessor for the already-initialised singleton.
+  static BoardService? get instance => _instance;
 
   static Future<BoardService> getInstance({String? projectRoot}) async {
     if (_instance != null) {
@@ -366,16 +487,40 @@ class BoardService {
 
   Future<void> _saveSortOrder(Board board) async {
     if (_prefs == null) return;
-    await _prefs!.setInt(_getSortOrderKey(board.id), board.sortOrder);
+    final key = _getSortOrderKey(board.id);
+    try {
+      await _prefs!.setInt(key, board.sortOrder);
+    } catch (e) {
+      if (e.toString().contains('QuotaExceededError')) {
+        debugPrint('localStorage quota exceeded while saving sort order for ${board.id}. Freeing caches.');
+        await _freeLocalStorageSpace(excludeKey: key);
+        try {
+          await _prefs!.setInt(key, board.sortOrder);
+        } catch (e2) {
+          debugPrint('Still cannot save sort order after freeing cache: $e2');
+        }
+      } else {
+        rethrow;
+      }
+    }
   }
 
   String _getTabOrderKey(String area) {
     return 'board_taborder_${_currentProfileId ?? 'default'}_$area';
   }
 
+  // Shared, profile-independent bucket for the authoritative tab order
+  // shipped in lib/data/tab_orders.json. Dev-sync (_loadTabOrders) runs
+  // during _init(), before setCurrentProfileId() is called (the active
+  // profile isn't known yet), so it can only ever populate the 'default'
+  // profile's key. Reading/writing this shared key too means every
+  // profile sees the correct/latest order, not just 'default'/'admin'.
+  String _getSharedTabOrderKey(String area) => 'board_taborder_shared_$area';
+
   List<String>? getTabOrder(String area) {
     if (_prefs == null) return null;
-    final raw = _prefs!.getString(_getTabOrderKey(area));
+    var raw = _prefs!.getString(_getTabOrderKey(area));
+    raw ??= _prefs!.getString(_getSharedTabOrderKey(area));
     if (raw == null || raw.isEmpty) return null;
     try {
       return (json.decode(raw) as List).cast<String>();
@@ -387,16 +532,18 @@ class BoardService {
   Future<void> saveTabOrder(String area, List<String> names) async {
     if (_prefs == null) return;
     final encoded = json.encode(names);
+    final key = _getTabOrderKey(area);
     try {
-      await _prefs!.setString(_getTabOrderKey(area), encoded);
+      await _prefs!.setString(key, encoded);
+      await _prefs!.setString(_getSharedTabOrderKey(area), encoded);
     } catch (e) {
       if (e.toString().contains('QuotaExceededError')) {
-        await _freeLocalStorageSpace();
+        await _freeLocalStorageSpace(excludeKey: key);
         try {
-          await _prefs!.setString(_getTabOrderKey(area), encoded);
+          await _prefs!.setString(key, encoded);
+          await _prefs!.setString(_getSharedTabOrderKey(area), encoded);
         } catch (e2) {
           debugPrint('Still cannot save tab order after freeing cache: $e2');
-          rethrow;
         }
       } else {
         rethrow;
@@ -432,6 +579,10 @@ class BoardService {
           final names = (entry.value as List<dynamic>?)?.cast<String>();
           if (names == null) continue;
           final encoded = json.encode(names);
+          // Populate the shared key so every profile sees this order, plus
+          // the 'default'/'admin' profile key directly (in case any code
+          // reads it before this profile is known).
+          await _prefs!.setString(_getSharedTabOrderKey(area), encoded);
           await _prefs!.setString(_getTabOrderKey(area), encoded);
         }
       }
@@ -529,31 +680,39 @@ class BoardService {
     await _removeDuplicateNameBoards();
   }
 
-  /// Remove any boards that share a name with another board, keeping the one
-  /// with the most tiles (or the prebuilt one if tile counts are equal).
+  /// Remove any boards that share both a name and an area with another
+  /// board (same board that ended up with two ids — e.g. from an old
+  /// content merge), keeping the one with the most real content.
+  ///
+  /// This used to skip any duplicate whose id started with 'prebuilt_', to
+  /// avoid deleting curated content. But that meant two genuinely duplicate
+  /// prebuilt boards (same name, same area — always a bug, never intentional)
+  /// were kept forever and could keep re-surfacing as a second, empty tab
+  /// next to the real one. Two boards sharing both name AND area is never a
+  /// legitimate case, so we now always delete the inferior one regardless of
+  /// id prefix, which also permanently marks it deleted so it can't resurface.
   Future<void> _removeDuplicateNameBoards() async {
     try {
       final boards = await listBoards();
-      final byName = <String, List<Board>>{};
+      final byNameAndArea = <String, List<Board>>{};
       for (final b in boards) {
-        byName.putIfAbsent(b.name.toLowerCase(), () => []).add(b);
+        byNameAndArea
+            .putIfAbsent('${b.name.toLowerCase()}|${b.area}', () => [])
+            .add(b);
       }
-      for (final entry in byName.entries) {
+      for (final entry in byNameAndArea.entries) {
         if (entry.value.length <= 1) continue;
-        // Keep the board with the most tiles; prefer prebuilt IDs on ties
+        // Keep the board with the most real (non-blank, labelled) content;
+        // raw tile count alone can be misleading (blank placeholder tiles).
+        int meaningfulTiles(Board b) =>
+            b.tiles.where((t) => t.label.trim().isNotEmpty).length;
         entry.value.sort((a, b) {
-          final tileCmp = b.tiles.length.compareTo(a.tiles.length);
-          if (tileCmp != 0) return tileCmp;
-          final aPrebuilt = a.id.startsWith('prebuilt_') ? 1 : 0;
-          final bPrebuilt = b.id.startsWith('prebuilt_') ? 1 : 0;
-          return bPrebuilt.compareTo(aPrebuilt);
+          final meaningfulCmp = meaningfulTiles(b).compareTo(meaningfulTiles(a));
+          if (meaningfulCmp != 0) return meaningfulCmp;
+          return b.tiles.length.compareTo(a.tiles.length);
         });
         for (final dup in entry.value.skip(1)) {
-          if (dup.id.startsWith('prebuilt_')) {
-            debugPrint('Skipping prebuilt duplicate "${dup.name}" (id: ${dup.id})');
-            continue;
-          }
-          debugPrint('Removing duplicate board "${dup.name}" (id: ${dup.id})');
+          debugPrint('Removing duplicate board "${dup.name}" (id: ${dup.id}, area: ${dup.area})');
           await deleteBoard(dup.id);
         }
       }
@@ -2856,11 +3015,11 @@ class BoardService {
             continue;
           }
           iconFutures.add(
-            _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: false)
+            _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: true)
                 .then((asset) {
                   if (asset != null) {
                     final icon = asset.iconAssetPath;
-                    if (icon != null && icon.isNotEmpty && validAssets.contains(icon)) {
+                    if (icon != null && icon.isNotEmpty) {
                       board.iconAssetPath = icon;
                     }
                     final tileIcon = asset.tileIconAssetPath;
@@ -3050,20 +3209,34 @@ class BoardService {
     return board;
   }
 
+  /// Public helper to load a board's TAB icon only, without its full tile
+  /// list. Used when precaching icons for many sibling boards at once (e.g.
+  /// opening a category with lots of children) — tileIconAssetPath isn't
+  /// needed for that and skipping it avoids one network round-trip per
+  /// board when the dev server is the board source.
+  Future<void> preloadBoardIcon(Board board) async =>
+      _ensureBoardIcons(board, tabIconOnly: true);
+
   /// If a prebuilt board is missing its tab or tile icon, fill it from the
   /// canonical asset JSON so the editor and tabs show the correct icon.
-  Future<void> _ensureBoardIcons(Board board) async {
+  /// board_index.dart (the compiled hierarchy) only ever carries
+  /// iconAssetPath, never tileIconAssetPath, so requiring both before
+  /// skipping the network fetch meant every board without a full JSON load
+  /// yet — e.g. every sibling in a large category like Disney Stories —
+  /// always triggered a fetch just to resolve its tab icon.
+  Future<void> _ensureBoardIcons(Board board, {bool tabIconOnly = false}) async {
     if (!board.id.startsWith('prebuilt_')) return;
-    if ((board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) &&
-        (board.tileIconAssetPath != null && board.tileIconAssetPath!.isNotEmpty)) {
+    final hasIcon = board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty;
+    final hasTileIcon = board.tileIconAssetPath != null && board.tileIconAssetPath!.isNotEmpty;
+    if (tabIconOnly ? hasIcon : (hasIcon && hasTileIcon)) {
       return;
     }
-    final asset = await _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: false);
+    final asset = await _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: true);
     if (asset == null) return;
     if (board.iconAssetPath == null || board.iconAssetPath!.isEmpty) {
       board.iconAssetPath = asset.iconAssetPath;
     }
-    if (board.tileIconAssetPath == null || board.tileIconAssetPath!.isEmpty) {
+    if (!tabIconOnly && (board.tileIconAssetPath == null || board.tileIconAssetPath!.isEmpty)) {
       board.tileIconAssetPath = asset.tileIconAssetPath;
     }
   }
@@ -3090,15 +3263,12 @@ class BoardService {
       if (!kIsWeb && _projectRoot != null) {
         await _ensureLocalImageAssets(board);
       }
-      await _writeBoard(board,
-          cacheInWebStorage: true,
-          // Only admin edits are written back to the source project files;
-          // other profiles keep their changes in their own storage.
-          mirrorToDisk: _isAdmin);
-      _boardCache[board.id] = board;
-      await _saveSortOrder(board);
 
-      // Register/update the board in the appropriate hierarchy.
+      // Register/update the board in the appropriate hierarchy BEFORE writing
+      // the JSON so that _projectJsonFileForBoard can resolve the canonical
+      // on-disk path from the runtime hierarchy. Without this, new/moved boards
+      // fall back to their existing file location (often _temp/) instead of the
+      // area/parent the admin just selected.
       // Runs on ALL platforms so web and native present identically.
       // Root-level utility boards like Favorites are excluded.
       if (board.id != 'prebuilt_favorites' && !board.id.startsWith('link_')) {
@@ -3124,6 +3294,14 @@ class BoardService {
               '"${board.area}"${parentName != null ? ', parent "$parentName"' : ''}');
         }
       }
+
+      await _writeBoard(board,
+          cacheInWebStorage: true,
+          // Only admin edits are written back to the source project files;
+          // other profiles keep their changes in their own storage.
+          mirrorToDisk: _isAdmin);
+      _boardCache[board.id] = board;
+      await _saveSortOrder(board);
 
       if (recordSync) {
         try {
@@ -3232,6 +3410,10 @@ class BoardService {
     await _ensurePrebuiltBoards();
     await _ensureProjectBoardsFromAssets();
     await _ensureMissingSubboards();
+    // Permanently-retired ids (see _retiredBoardIds) must never come back,
+    // even though the blanket un-delete above just cleared their tombstones.
+    await retireSpecifiedBoards();
+    await _removeDuplicateNameBoards();
   }
 
 /// WRITER
@@ -3240,10 +3422,31 @@ class BoardService {
 /// the primary storage (Web or Native).
 /// If admin profile is active, also saves to default profile.
 
-  Future<void> _freeLocalStorageSpace() async {
+  /// Public helper to free recoverable web caches when localStorage is full.
+  Future<void> freeWebStorage({String? excludeKey}) async => _freeLocalStorageSpace(excludeKey: excludeKey);
+
+  Future<void> _freeLocalStorageSpace({String? excludeKey}) async {
     if (!kIsWeb || _prefs == null) return;
     // The symbol metadata cache can be rebuilt in memory; free its persisted copy.
     await _prefs!.remove('aac_symbol_metadata_v1');
+    // The runtime hierarchy will be re-synced from the dev server on the next load.
+    await _prefs!.remove(runtimeHierarchyPrefsKey);
+
+    try {
+      final keys = _prefs!.getKeys();
+      for (final key in keys) {
+        if (key == excludeKey) continue;
+        final name = key.replaceFirst('flutter.', '');
+        // Drop prebuilt board caches / sort-orders / tab-orders. They can be
+        // re-fetched from the dev server or re-computed on the next load.
+        if ((name.startsWith('board_') || name.startsWith('board_sortorder_') || name.startsWith('board_taborder_')) &&
+            name.contains('_prebuilt_')) {
+          await _prefs!.remove(key);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error while pruning prebuilt caches: $e');
+    }
   }
 
   Future<void> _writeBoard(Board board, {bool mirrorToDisk = true, bool cacheInWebStorage = true}) async {
@@ -3278,10 +3481,15 @@ class BoardService {
           await _prefs!.setString(key, encoded);
         } catch (e) {
           if (e.toString().contains('QuotaExceededError')) {
-            debugPrint('localStorage quota exceeded while saving board ${board.id}. Freeing caches and skipping.');
-            await _freeLocalStorageSpace();
-            // Skip the localStorage cache for this board; it can be re-loaded from source.
-            return;
+            debugPrint('localStorage quota exceeded while saving board ${board.id}. Freeing caches and retrying.');
+            await _freeLocalStorageSpace(excludeKey: key);
+            try {
+              await _prefs!.setString(key, encoded);
+            } catch (e2) {
+              debugPrint('Still cannot save board ${board.id} after freeing caches: $e2');
+              // Skip the localStorage cache for this board; it can be re-loaded from source.
+              return;
+            }
           } else {
             rethrow;
           }
@@ -3482,6 +3690,58 @@ class BoardService {
       entityId: id,
       operation: SyncOperation.delete,
     );
+  }
+
+  /// Permanently delete an Unassigned board and remove it from the runtime hierarchy.
+  /// Only available to admins. Throws if the board is not Unassigned or if a real
+  /// (non-Unassigned) board with the same name exists.
+  Future<void> deleteUnassignedBoardCompletely(String id) async {
+    if (!_isAdmin) throw Exception('Only admins can delete unassigned boards.');
+
+    final board = await loadBoard(id);
+    if (board == null) throw Exception('Board not found: $id');
+
+    if (board.area != 'Unassigned') {
+      throw Exception('Board "${board.name}" is not in the Unassigned area.');
+    }
+
+    final lowerName = board.name.toLowerCase();
+    final realVersion = runtimeBoardHierarchy.any(
+      (e) => e.name.toLowerCase() == lowerName && e.area != 'Unassigned',
+    );
+    if (realVersion) {
+      throw Exception('A non-Unassigned board named "${board.name}" still exists; '
+          'delete the real version first if that is what you meant.');
+    }
+
+    // Remove from runtime hierarchy first.
+    await removeFromRuntimeHierarchy(board.name);
+
+    // Remove from in-memory cache and delete the source JSON file where possible.
+    _boardCache.remove(id);
+    _deletedBoardIds.remove(id);
+
+    final key = _getBoardKey(id);
+    if (_prefs != null) await _prefs!.remove(key);
+
+    if (!kIsWeb && _projectRoot != null) {
+      final jsonFile = await _findProjectJsonFile(id);
+      if (jsonFile != null && await jsonFile.exists()) {
+        await jsonFile.delete();
+        // Remove now-empty parent directories up to lib/data/boards.
+        var dir = jsonFile.parent;
+        final boardsRoot = p.normalize(p.join(_projectRoot!, 'lib', 'data', 'boards'));
+        while (p.normalize(dir.path) != boardsRoot &&
+               p.normalize(dir.path).startsWith(boardsRoot) &&
+               await dir.exists() &&
+               dir.listSync().isEmpty) {
+          await dir.delete(recursive: false);
+          dir = dir.parent;
+        }
+      }
+    }
+
+    debugPrint('Deleted unassigned board ${board.name} ($id)');
   }
 
   /// POST a board deletion to the local dev server so deletions made in the web
@@ -3925,7 +4185,6 @@ class BoardService {
       '1989 The Little Mermaid',
       '1991 Beauty and The Beast',
       '1992 Aladdin',
-      '1993 The Nightmare Before Christmas',
       '1994 The Lion King',
       '1995 Pocahontas',
       '1995 Toy Story',

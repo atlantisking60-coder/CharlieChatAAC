@@ -1,0 +1,106 @@
+generation 8 (sword and shield)
+galar region (map)
+810. grookey
+811. thwackey
+812. rillaboom
+813. scorbunny
+814. raboot
+815. cinderace
+816. sobble
+817. drizzile
+818. inteleon
+819. skwovet
+820. greedent
+821. rookidee
+822. corvisquire
+823. corviknight
+824. blipbug
+825. dottler
+826. orbeetle
+827. nickit
+828. thievul
+829. gossifleur
+830. eldegoss
+831. wooloo
+832. dubwool
+833. chewtle
+834. drednaw
+835. yamper
+836. boltund
+837. rolycoly
+838. carkol
+839. coalossal
+840. applin
+841. flapple
+842. appletun
+843. silicobra
+844. sandaconda
+845. cramorant
+846. arrokuda
+847. barraskewda
+848. toxel
+849a. toxtricity (amped form)
+849b. toxtricity (low key form)
+850. sizzlipede
+851. centiskorch
+852. clobbopus
+853. grapploct
+854. sinistea
+855. polteageist
+856. hatenna
+857. hattrem
+858. hatterene
+859. impidimp
+860. morgrem
+861. grimmsnarl
+862. obstagoon
+863. perrserker
+864. cursola
+865. sirfetch'd
+866. mr. rime
+867. runerigus
+868. milcery
+869a. alcremie (strawberry sweet)
+869b. alcremie (love sweet)
+869c. alcremie (berry sweet)
+869d. alcremie (clover sweet)
+869e. alcremie (flower sweet)
+869f. alcremie (star sweet)
+869g. alcremie (ribbon sweet)
+870. falinks
+871. pincurchin
+872. snom
+873. frosmoth
+874. stonjourner
+875a. eiscue (ice face)
+875b. eiscue (noice face)
+876a. indeedee (male)
+876b. indeedee (female)
+877a. morpeko (full belly mode)
+877b. morpeko (hangry mode)
+878. cufant
+879. copperajah
+880. dracozolt
+881. arctozolt
+882. dracovish
+883. arctovish
+884. duraludon
+885. dreepy
+886. drakloak
+887. dragapult
+888a. zacian (hero of many
+888b. zacian (crowned sword)
+889a. zamazenta (hero of many
+889b. zamazenta (crowned shield)
+890. eternatus
+891. kubfu
+892a. urshifu (single strike style)
+892b. urshifu (rapid strike style)
+893. zarude
+894. regieleki
+895. regidrago
+896. glastrier
+897. spectrier
+898a. calyrex
+898b. calyrex (ice rider)
+898c. calyrex (shadow rider)

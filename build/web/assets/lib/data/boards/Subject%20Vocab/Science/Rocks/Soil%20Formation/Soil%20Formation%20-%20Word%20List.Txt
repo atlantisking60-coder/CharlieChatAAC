@@ -1,30 +1,45 @@
-Soil Formation - Word List
-==============================
-
-bedrock (r horizon)
-biological weathering
-chemical weathering
-deposition
-eluviation layer (e horizon)
-freeze-thaw weathering
-humification
-humus
-land degradation
-leaching
-loamy
-nutrient cycling
-organic layer (o horizon)
-parent rock (c horizon)
-peaty
+soil
 pedology
-permeability
-ph level
-silt
+mineral
+organic material
 soil fertility
 soil formation
-soil layers
+humus
+weathering
+physical weathering
+biological weathering
+chemical weathering
+decomposition
+leaching
+erosion
+humification
+deposition
+soil formation
+soil texture
+organic layer
+topsoil layer
+eluviation layer
+subsoil layer
+parent rock layer
+bedrock
 soil profile
+soil properties
+texture
+sand
+silt
+clay
+structure
+porosity
+permeability
+moisture
+pH level
 soil types
-soil
-subsoil layer (b horizon)
-topsoil layer (a horizon)
+loamy
+peaty
+chalk
+nutrient cycle
+organisms
+microbes
+agriculture
+land degradation
+soil conservation

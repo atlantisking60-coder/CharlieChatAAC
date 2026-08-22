@@ -1,8 +1,0 @@
-farm - farmer
-flower
-grass
-outside
-sea - ocean - water
-sky - heavens
-stars
-tree

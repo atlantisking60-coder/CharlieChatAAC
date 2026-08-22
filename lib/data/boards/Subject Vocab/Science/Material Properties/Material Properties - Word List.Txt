@@ -1,38 +1,6 @@
-Material Properties - Word List
-===================================
-
-absorbent
-aluminium
-bend
-blunt
-bumpy
-buoyancy
-copper
-density
-dull
-flat
-flexible
-float
-glass
-heavy
-light
-materials
-metals (2)
-nickel
-opaque
-properties
-rigid
-rough
-sharp
-shiny
-sink
-smooth
-squash
-steel
-stretch
-strong
-translucent
-transparent
-waterproof
-weak
-wood
+Types Of Materials
+Absorbent Or Waterproof
+Float Or Sink
+Flexible Or Rigid
+Transparent, Translucent Or Opaque
+Shiny Or Dull

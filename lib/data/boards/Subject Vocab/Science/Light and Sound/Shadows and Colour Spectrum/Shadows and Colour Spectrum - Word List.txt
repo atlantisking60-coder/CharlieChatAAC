@@ -1,0 +1,6 @@
+transparent
+translucent
+opaque
+shadow
+light source
+measure

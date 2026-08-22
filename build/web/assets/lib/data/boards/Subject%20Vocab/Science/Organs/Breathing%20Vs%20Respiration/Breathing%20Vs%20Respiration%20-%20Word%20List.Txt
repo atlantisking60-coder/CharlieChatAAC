@@ -1,21 +1,28 @@
-Breathing Vs Respiration - Word List
-========================================
-
-addiction
-alveoli
+Internal Organs
 breathing
-bronchioles
+respiration
+lungs
+windpipe
+trachea
+thorax
+diaphragm
+alveoli
 bronchus
-cancer
+bronchioles
+oxygen
+capillaries
+blood supply
+ventilation
+smoking
+nicotine
+tar
 carbon monoxide
 heart disease
+cancer
+addiction
 limewater
-lungs
-nicotine
-oxygen
-respiratory system
-smoking
-tar
-thorax
-trachea
-ventilation
+colourless
+milky
+glucose
+carbon dioxide
+energy

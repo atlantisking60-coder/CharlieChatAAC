@@ -1,14 +1,13 @@
-Protein - Word List
-=======================
-
 beef
 chicken
 chickpeas
 duck
+eggs
 egg whites
 kidney beans
 lamb
 lentils
+nuts
 omelette
 pork
 seafood

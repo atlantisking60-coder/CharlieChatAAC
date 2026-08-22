@@ -1,0 +1,35 @@
+police
+ambulance
+firefighter
+lifeguard
+red cross
+police station
+hospital
+fire service
+air rescue
+first aid
+allergy
+cut
+bruise
+burn
+scald
+hay fever
+infection
+broken bone
+seizure
+nose bleed
+head injury
+inhaler
+epipen
+medical gloves
+eye wash
+plaster
+gauze
+bandage
+sling
+sterile dressing
+stitches
+eye patch
+surgical scissors
+antibacterial
+cling film

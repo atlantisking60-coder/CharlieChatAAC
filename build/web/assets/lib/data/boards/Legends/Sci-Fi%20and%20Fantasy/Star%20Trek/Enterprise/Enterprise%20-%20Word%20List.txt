@@ -1,0 +1,15 @@
+enterprise
+(captain) jonathan archer
+(commander) charles trip tucker iii
+(doctor) phlox
+(lieutenant) malcolm reed
+(ensign) hoshi sato
+(admiral) maxwell forrest
+(ambassador) sovak
+(ambassador) soval
+(commander) shran
+(ensign) travis mayweather
+(sub-commander) t'pol
+(suliban) silik
+tellarite
+xindi - insectoid

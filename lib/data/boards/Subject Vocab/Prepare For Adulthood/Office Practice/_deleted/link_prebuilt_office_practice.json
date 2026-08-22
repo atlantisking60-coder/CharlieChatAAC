@@ -1,0 +1,26 @@
+{
+  "id": "link_prebuilt_office_practice",
+  "name": "Office Practice",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 2,
+  "iconAssetPath": "assets/Common/Places/Rooms and Home/office.png",
+  "tileIconAssetPath": null,
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 6,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "prebuilt_prepare_for_adulthood"
+}

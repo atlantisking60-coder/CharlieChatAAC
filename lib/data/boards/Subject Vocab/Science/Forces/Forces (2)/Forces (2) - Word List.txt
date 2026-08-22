@@ -1,0 +1,12 @@
+force
+push
+pull
+theory
+reliable
+valid
+test
+investigate
+measure
+rough
+smooth
+friction

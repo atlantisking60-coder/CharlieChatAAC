@@ -23,6 +23,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:record/record.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 
 import '../models/symbol_tile.dart';
@@ -33,6 +34,7 @@ import '../services/board_service.dart';
 import '../services/external_symbol_service.dart';
 import '../services/board_icon_resolver.dart';
 import '../services/board_archive_service.dart';
+import '../services/firebase_profile_sync_service.dart';
 import '../services/profile_service.dart';
 import '../services/settings_service.dart';
 import '../utils/board_export_utils.dart';
@@ -156,6 +158,7 @@ class _BoardEditorState extends State<BoardEditor> {
   bool _isDragging = false;
   final _scrollController = ScrollController();
   bool _showScrollToTop = false;
+  bool _shouldShowPush = false;
 
   @override
   void initState() {
@@ -173,7 +176,7 @@ class _BoardEditorState extends State<BoardEditor> {
           tier: widget.initialTier,
           rows: defaultBoardRows,
           columns: defaultBoardColumns,
-          adjustableLayout: true,
+          adjustableLayout: false,
           backgroundColor: defaultBoardColor,
           boxScale: 1.0,
           tiles: []);
@@ -240,6 +243,11 @@ class _BoardEditorState extends State<BoardEditor> {
     setState(() {
       _activeProfile = profileService.activeProfile;
     });
+    if (_activeProfile?.role != 'admin') {
+      await _checkForAdminUpdate();
+    } else {
+      await _evaluatePushButton();
+    }
   }
 
   Future<void> _loadCustomColors() async {
@@ -468,7 +476,7 @@ class _BoardEditorState extends State<BoardEditor> {
       isTertiaryBoard: newTier > 2,
       isQuaternaryBoard: newTier > 3,
       isQuinaryBoard: newTier > 4,
-      adjustableLayout: true,
+      adjustableLayout: false,
       parentBoardId: board.id,
       tier: newTier,
     );
@@ -482,12 +490,22 @@ class _BoardEditorState extends State<BoardEditor> {
         textColor: '#000000',
       ));
     }
-    await service.saveBoard(newBoard);
-    await _loadAvailableBoards();
-    if (!_availableBoards.any((b) => b.id == newBoard.id)) {
-      setState(() => _availableBoards.add(newBoard));
+    try {
+      await service.saveBoard(newBoard);
+      await _loadAvailableBoards();
+      if (!_availableBoards.any((b) => b.id == newBoard.id)) {
+        setState(() => _availableBoards.add(newBoard));
+      }
+      return newBoard;
+    } catch (e, s) {
+      debugPrint('Create new board failed: $e\n$s');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not create board: $e')),
+        );
+      }
+      return null;
     }
-    return newBoard;
   }
 
   Future<void> importPictureFolder({bool fullScreen = false}) async {
@@ -520,14 +538,14 @@ class _BoardEditorState extends State<BoardEditor> {
     } catch (_) {}
     try {
       if (kIsWeb) {
-        final result = await FilePicker.pickFiles(
+        final pickedFiles = await FilePicker.pickFiles(
           type: FileType.image,
           dialogTitle: 'Select picture files',
           allowMultiple: true,
           withData: true,
         );
-        if (result != null && result.files.isNotEmpty) {
-          for (final f in result.files) {
+        if (pickedFiles.isNotEmpty) {
+          for (final f in pickedFiles) {
             try {
               final tile = await _tileFromPlatformFile(f,
                   fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true, projectAssets: projectAssets);
@@ -558,14 +576,14 @@ class _BoardEditorState extends State<BoardEditor> {
             }
           }
         } else {
-          final pickResult = await FilePicker.pickFiles(
+          final pickedFiles = await FilePicker.pickFiles(
             dialogTitle: 'Select pictures for board',
             type: FileType.image,
             allowMultiple: true,
             withData: true,
           );
-          if (pickResult != null && pickResult.files.isNotEmpty) {
-            for (final f in pickResult.files) {
+          if (pickedFiles.isNotEmpty) {
+            for (final f in pickedFiles) {
               try {
                 final tile = await _tileFromPlatformFile(f,
                     fullScreen: fullScreen, boardId: board.id, skipOnlineSearch: true, projectAssets: projectAssets);
@@ -961,15 +979,18 @@ class _BoardEditorState extends State<BoardEditor> {
 
   Future<void> _importBoardFromJson() async {
     try {
-      final result = await FilePicker.pickFiles(
+      final files = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
-      if (result == null || result.files.isEmpty) return;
-      final file = result.files.first;
+      if (files.isEmpty) return;
+      final file = files.first;
       String raw;
       if (kIsWeb) {
-        if (file.bytes == null) {
+        try {
+          final bytes = await file.readAsBytes();
+          raw = String.fromCharCodes(bytes);
+        } catch (_) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Could not read file.')),
@@ -977,7 +998,6 @@ class _BoardEditorState extends State<BoardEditor> {
           }
           return;
         }
-        raw = String.fromCharCodes(file.bytes!);
       } else {
         if (file.path == null) {
           if (mounted) {
@@ -1397,15 +1417,24 @@ class _BoardEditorState extends State<BoardEditor> {
                   /* auto-save disabled — only the Save Board button persists */
                 },
               ),
-            if (_isBlankTile(board.tiles[index]))
+            if (_isBlankTile(board.tiles[index])) ...[
               ListTile(
                 leading: const Icon(Icons.arrow_upward),
-                title: const Text('Move everything up'),
+                title: const Text('Move up by 1'),
                 onTap: () {
                   Navigator.of(ctx).pop();
-                  _moveEverythingUp(index);
+                  _moveUpByOne(index);
                 },
               ),
+              ListTile(
+                leading: const Icon(Icons.vertical_align_top),
+                title: const Text('Remove empty tiles'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _removeConsecutiveEmptyTiles(index);
+                },
+              ),
+            ],
             if (!_isBlankTile(board.tiles[index]))
               ListTile(
                 leading: const Icon(Icons.arrow_downward),
@@ -1435,13 +1464,32 @@ class _BoardEditorState extends State<BoardEditor> {
     );
   }
 
-  void _moveEverythingUp(int index) {
+  void _moveUpByOne(int index) {
     if (index < 0 || index >= board.tiles.length - 1) return;
     setState(() {
       for (var i = index; i < board.tiles.length - 1; i++) {
         board.tiles[i] = board.tiles[i + 1];
       }
       board.tiles[board.tiles.length - 1] = _blankTile(board.tiles.length - 1);
+      _ensureTileCapacity(board.tiles.length);
+    });
+  }
+
+  void _removeConsecutiveEmptyTiles(int index) {
+    if (index < 0 || index >= board.tiles.length) return;
+    if (!_isBlankTile(board.tiles[index])) return;
+
+    var count = 0;
+    for (var i = index; i < board.tiles.length && _isBlankTile(board.tiles[i]); i++) {
+      count++;
+    }
+    if (count == 0) return;
+
+    setState(() {
+      board.tiles = [
+        ...board.tiles.sublist(0, index),
+        ...board.tiles.sublist(index + count),
+      ];
       _ensureTileCapacity(board.tiles.length);
     });
   }
@@ -1621,19 +1669,18 @@ class _BoardEditorState extends State<BoardEditor> {
 
     Uint8List? fileBytes;
     String? localFilePath;
-    if (kIsWeb) {
-      fileBytes = file.bytes;
-    } else if (file.path != null && file.path!.isNotEmpty) {
-      localFilePath = file.path!;
-      try {
-        fileBytes = await File(localFilePath).readAsBytes();
-      } catch (_) {}
-    } else if (file.bytes != null) {
-      fileBytes = file.bytes;
-      final tempDir = await getTemporaryDirectory();
-      final tempFile = File('${tempDir.path}/${file.name}');
-      await tempFile.writeAsBytes(file.bytes!);
-      localFilePath = tempFile.path;
+    try {
+      fileBytes = await file.readAsBytes();
+    } catch (_) {}
+    if (!kIsWeb) {
+      if (file.path != null && file.path!.isNotEmpty) {
+        localFilePath = file.path;
+      } else if (fileBytes != null) {
+        final tempDir = await getTemporaryDirectory();
+        final tempFile = File('${tempDir.path}/${file.name}');
+        await tempFile.writeAsBytes(fileBytes);
+        localFilePath = tempFile.path;
+      }
     }
 
     String imagePath = '';
@@ -1933,8 +1980,9 @@ class _BoardEditorState extends State<BoardEditor> {
     final rowSpanCtl = TextEditingController(text: tile.rowSpan.toString());
     var isBoardLink = tile.isBoardLink;
     var isFullScreenImage = tile.isFullScreenImage;
+    var isSilent = tile.isSilent;
     var linkedBoardId = tile.linkedBoardId;
-    String tileType = isBoardLink ? 'link_to_board' : (isFullScreenImage ? 'open_picture' : 'normal_word');
+    String tileType = isSilent ? 'silent_word' : (isBoardLink ? 'link_to_board' : (isFullScreenImage ? 'open_picture' : 'normal_word'));
     if (!mounted) return;
     await showDialog(
       context: context,
@@ -1964,6 +2012,7 @@ class _BoardEditorState extends State<BoardEditor> {
                         DropdownMenuItem(value: 'normal_word', child: Text('Normal word')),
                         DropdownMenuItem(value: 'link_to_board', child: Text('Link to board')),
                         DropdownMenuItem(value: 'open_picture', child: Text('Open picture in full screen')),
+                        DropdownMenuItem(value: 'silent_word', child: Text('Silent word')),
                       ],
                       onChanged: (v) {
                         if (v == null) return;
@@ -1971,11 +2020,20 @@ class _BoardEditorState extends State<BoardEditor> {
                           tileType = v;
                           isBoardLink = v == 'link_to_board';
                           isFullScreenImage = v == 'open_picture';
+                          isSilent = v == 'silent_word';
                           if (!isBoardLink) linkedBoardId = '';
                           if (v == 'link_to_board') {
                             labelCtl.text = _toTitleCase(labelCtl.text);
                             if (bgCtl.text == 'transparent' || bgCtl.text.isEmpty) bgCtl.text = '#000000';
                             if (txtCtl.text == '#000000' || txtCtl.text.isEmpty) txtCtl.text = '#FFFFFF';
+                            // Only auto-fill an icon if the tile doesn't already
+                            // have an image set — linking to a board should
+                            // never clobber an existing custom image.
+                            if (tile.imageAsset.isEmpty) {
+                              tile.imageAsset = resolveBoardLinkIconAssetPath(
+                                  _toTitleCase(labelCtl.text.trim()));
+                              imageUpdated = true;
+                            }
                           } else if (v == 'normal_word') {
                             labelCtl.text = labelCtl.text.toLowerCase();
                             bgCtl.text = 'transparent';
@@ -1998,7 +2056,23 @@ class _BoardEditorState extends State<BoardEditor> {
                             final newBoard = await _createNewBoardFromDialog(initialName: labelCtl.text.trim());
                             if (newBoard != null) setDialogState(() { linkedBoardId = newBoard.id; if (labelCtl.text.trim().isEmpty) labelCtl.text = _toTitleCase(newBoard.name); });
                           } else if (selected != 'DIALOG_DISMISSED') {
-                            setDialogState(() { linkedBoardId = (selected == 'NONE' ? '' : selected) ?? ''; final boardName = _boardNameForId(linkedBoardId); if (boardName != null && labelCtl.text.trim().isEmpty) labelCtl.text = _toTitleCase(boardName); });
+                            setDialogState(() {
+                              linkedBoardId = (selected == 'NONE' ? '' : selected) ?? '';
+                              final boardName = _boardNameForId(linkedBoardId);
+                              if (boardName != null) {
+                                if (labelCtl.text.trim().isEmpty) {
+                                  labelCtl.text = _toTitleCase(boardName);
+                                }
+                                // Only auto-fill an icon if the tile doesn't
+                                // already have an image set — selecting a
+                                // destination board should never clobber an
+                                // existing custom image.
+                                if (tile.imageAsset.isEmpty) {
+                                  tile.imageAsset = resolveBoardLinkIconAssetPath(_toTitleCase(boardName));
+                                  imageUpdated = true;
+                                }
+                              }
+                            });
                           }
                         },
                         icon: const Icon(Icons.link_rounded),
@@ -2116,7 +2190,7 @@ class _BoardEditorState extends State<BoardEditor> {
                     Center(child: Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3), borderRadius: BorderRadius.circular(20), border: Border.all(color: Theme.of(context).colorScheme.outlineVariant)), child: Column(mainAxisSize: MainAxisSize.min, children: [
                       const Text('Live Preview', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey)),
                       const SizedBox(height: 8),
-                      SizedBox(width: 120.0 * (double.tryParse(colSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), height: 120.0 * (double.tryParse(rowSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), child: Material(elevation: 4, shadowColor: Colors.black26, borderRadius: BorderRadius.circular(16), clipBehavior: Clip.antiAlias, color: _colorFromHex(bgCtl.text, Colors.transparent), child: _buildTileContent(SymbolTile(id: 'preview', label: labelCtl.text, category: tile.category, imageAsset: tile.imageAsset, emoji: tile.emoji, isBoardLink: isBoardLink, isFullScreenImage: isFullScreenImage, linkedBoardId: linkedBoardId, tileSize: double.tryParse(sizeCtl.text) ?? 1.0, colSpan: int.tryParse(colSpanCtl.text) ?? 1, rowSpan: int.tryParse(rowSpanCtl.text) ?? 1, bgColor: bgCtl.text, textColor: txtCtl.text), _colorFromHex(bgCtl.text, Colors.transparent), _colorFromHex(txtCtl.text, Colors.black)))),
+                      SizedBox(width: 120.0 * (double.tryParse(colSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), height: 120.0 * (double.tryParse(rowSpanCtl.text) ?? 1.0).clamp(1.0, 3.0), child: Material(elevation: 4, shadowColor: Colors.black26, borderRadius: BorderRadius.circular(16), clipBehavior: Clip.antiAlias, color: _colorFromHex(bgCtl.text, Colors.transparent), child: _buildTileContent(SymbolTile(id: 'preview', label: labelCtl.text, category: tile.category, imageAsset: tile.imageAsset, emoji: tile.emoji, isBoardLink: isBoardLink, isFullScreenImage: isFullScreenImage, isSilent: isSilent, linkedBoardId: linkedBoardId, tileSize: double.tryParse(sizeCtl.text) ?? 1.0, colSpan: int.tryParse(colSpanCtl.text) ?? 1, rowSpan: int.tryParse(rowSpanCtl.text) ?? 1, bgColor: bgCtl.text, textColor: txtCtl.text), _colorFromHex(bgCtl.text, Colors.transparent), _colorFromHex(txtCtl.text, Colors.black)))),
                     ]))),
                     const SizedBox(height: 12),
                     if (tile.customVoice.isNotEmpty) Row(children: [ Expanded(child: ElevatedButton.icon(onPressed: () async { final player = AudioPlayer(); await player.setVolume(1.0); await player.play(DeviceFileSource(tile.customVoice)); }, icon: const Icon(Icons.play_arrow), label: const Text('Play Recording'))), const SizedBox(width: 8), Expanded(child: ElevatedButton.icon(onPressed: () { setDialogState(() { tile.customVoice = ''; }); }, icon: const Icon(Icons.delete), label: const Text('Delete')))]) else const SizedBox.shrink(),
@@ -2129,9 +2203,6 @@ class _BoardEditorState extends State<BoardEditor> {
               TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
               TextButton(onPressed: () async {
                 var newLabel = labelCtl.text.trim();
-                if (tileType == 'normal_word') {
-                  newLabel = newLabel.toLowerCase();
-                }
                 var newImageAsset = tile.imageAsset;
                 if (wasBlank && newLabel.isNotEmpty && newImageAsset.isEmpty && !imageExplicitlyRemoved && !imageUpdated) {
                   final autoTile = await _tileFromWordWithSymbol(newLabel);
@@ -2149,8 +2220,10 @@ class _BoardEditorState extends State<BoardEditor> {
                   tile.rowSpan = newRowSpan;
                   tile.isBoardLink = isBoardLink;
                   tile.isFullScreenImage = isFullScreenImage;
+                  tile.isSilent = isSilent;
                   tile.linkedBoardId = linkedBoardId;
                 });
+                await _maybeTagAsset(newLabel, newImageAsset);
                 await BoardService.getInstance();
                 /* auto-save disabled — only the Save Board button persists */
                 if (mounted && ctx.mounted) Navigator.of(ctx).pop();
@@ -2257,6 +2330,168 @@ class _BoardEditorState extends State<BoardEditor> {
     }
   }
 
+  Widget _buildAdminUpdateBanner(BuildContext context) {
+    return MaterialBanner(
+      content: const Text(
+        'UPDATED: A newer admin version of this board is available.',
+      ),
+      leading: const Icon(Icons.update, color: Colors.orange),
+      actions: [
+        TextButton(
+          onPressed: () => _resolveAdminUpdate(AdminResolution.overwrite),
+          child: const Text('replace with new'),
+        ),
+        TextButton(
+          onPressed: () => _resolveAdminUpdate(AdminResolution.append),
+          child: const Text('Add new tiles'),
+        ),
+        TextButton(
+          onPressed: () => _resolveAdminUpdate(AdminResolution.keep),
+          child: const Text('Keep mine'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAdminPushButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: FilledButton.icon(
+          onPressed: _isSaving ? null : _pushAdminBoard,
+          icon: const Icon(Icons.cloud_upload, size: 18),
+          label: const Text('Push update to admin'),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _resolveAdminUpdate(AdminResolution resolution) async {
+    try {
+      final adminBoard =
+          await FirebaseProfileSyncService.instance.downloadAdminBoard(board.id);
+      if (adminBoard == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Admin version not found')),
+          );
+        }
+        return;
+      }
+      final resolved = await FirebaseProfileSyncService.instance
+          .resolveAdminUpdate(board, adminBoard, resolution);
+      setState(() => board = resolved);
+      await widget.onSave(resolved);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Board updated')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Update failed: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _pushAdminBoard() async {
+    try {
+      setState(() {
+        _isSaving = true;
+      });
+      board.version = board.version + 1;
+      board.adminVersionId = board.version.toString();
+      await FirebaseProfileSyncService.instance.pushAdminBoard(board);
+      await widget.onSave(board);
+      setState(() => _shouldShowPush = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Pushed to admin boards')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Push failed: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  Future<void> _evaluatePushButton() async {
+    try {
+      final adminBoard =
+          await FirebaseProfileSyncService.instance.downloadAdminBoard(board.id);
+      if (adminBoard == null) {
+        setState(() => _shouldShowPush = true);
+        return;
+      }
+      final local = _comparableMap(board);
+      final remote = _comparableMap(adminBoard);
+      setState(() => _shouldShowPush = jsonEncode(local) != jsonEncode(remote));
+    } catch (e) {
+      setState(() => _shouldShowPush = true);
+    }
+  }
+
+  Map<String, dynamic> _comparableMap(Board b) {
+    final m = Map<String, dynamic>.from(b.toMap());
+    m.remove('version');
+    m.remove('adminVersionId');
+    m.remove('adminUpdatePending');
+    return m;
+  }
+
+  Future<void> _checkForAdminUpdate() async {
+    try {
+      final adminBoard =
+          await FirebaseProfileSyncService.instance.downloadAdminBoard(board.id);
+      if (adminBoard == null) return;
+
+      final adminVersion = adminBoard.version;
+      final lastAdminVersion = int.tryParse(board.adminVersionId ?? '') ?? 0;
+
+      if (adminVersion <= lastAdminVersion) return;
+
+      if (board.version <= lastAdminVersion) {
+        final updated = await FirebaseProfileSyncService.instance
+            .resolveAdminUpdate(board, adminBoard, AdminResolution.overwrite);
+        setState(() => board = updated);
+        await widget.onSave(updated);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Board updated to latest version')),
+          );
+        }
+      } else {
+        setState(() {
+          board.adminUpdatePending = true;
+          board.adminVersionId = adminVersion.toString();
+        });
+      }
+    } catch (e) {
+      debugPrint('Admin update check failed: $e');
+    }
+  }
+
+  Future<void> _saveBoard() async {
+    setState(() => _isSaving = true);
+    try {
+      board.version = board.version + 1;
+      await widget.onSave(board);
+      if (_activeProfile?.role == 'admin') {
+        await _evaluatePushButton();
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final boardBg = board.backgroundColor == 'transparent' ? Colors.transparent : _colorFromHex(board.backgroundColor, Colors.transparent);
@@ -2268,6 +2503,8 @@ class _BoardEditorState extends State<BoardEditor> {
             controller: _scrollController,
             child: Column(
           children: [
+            if (board.adminUpdatePending) _buildAdminUpdateBanner(context),
+            if (_activeProfile?.role == 'admin' && _shouldShowPush) _buildAdminPushButton(context),
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Expanded(child: TextField(controller: _nameController, decoration: const InputDecoration(labelText: 'Board name'), onChanged: (v) => board.name = v)),
               const SizedBox(width: 8),
@@ -2406,7 +2643,7 @@ class _BoardEditorState extends State<BoardEditor> {
                             if (rows != board.rows || cols != board.columns) _resizeBoard(rows, cols);
                             
                             // 5s timeout to prevent being stuck forever if something hangs
-                            await widget.onSave(board).timeout(
+                            await _saveBoard().timeout(
                                   const Duration(seconds: 5),
                                   onTimeout: () => debugPrint('Save timed out'),
                                 );
@@ -2741,6 +2978,19 @@ class _BoardEditorState extends State<BoardEditor> {
       final ch = text[i];
       final isAlpha = RegExp(r'[a-zA-Z]').hasMatch(ch);
       if (isAlpha) {
+        // Keep the word 'and' lowercase wherever it appears.
+        final isAnd = nextShouldUpper &&
+            i + 2 < text.length &&
+            ch.toLowerCase() == 'a' &&
+            text[i + 1].toLowerCase() == 'n' &&
+            text[i + 2].toLowerCase() == 'd' &&
+            (i + 3 == text.length || !RegExp(r"[a-zA-Z0-9']").hasMatch(text[i + 3]));
+        if (isAnd) {
+          buffer.write('and');
+          nextShouldUpper = false;
+          i += 2;
+          continue;
+        }
         buffer.write(nextShouldUpper ? ch.toUpperCase() : ch.toLowerCase());
         nextShouldUpper = false;
       } else {
@@ -2787,6 +3037,10 @@ class _BoardEditorState extends State<BoardEditor> {
             tile.bgColor = '#000000';
             tile.textColor = '#FFFFFF';
             tile.label = _toTitleCase(tile.label);
+            // Never clobber an existing custom image.
+            if (tile.imageAsset.isEmpty) {
+              tile.imageAsset = resolveBoardLinkIconAssetPath(tile.label);
+            }
             break;
           case 'open_picture':
             tile.isBoardLink = false;
@@ -2797,6 +3051,15 @@ class _BoardEditorState extends State<BoardEditor> {
         }
       }
     });
+    if (type == 'link_to_board') {
+      Future(() async {
+        for (final tile in board.tiles) {
+          if (tile.isBoardLink && tile.imageAsset.startsWith('assets/')) {
+            await _maybeTagAsset(tile.label, tile.imageAsset);
+          }
+        }
+      });
+    }
   }
 
   Widget _buildTileContent(SymbolTile t, Color bg, Color txt) {
@@ -2881,19 +3144,140 @@ class _EditorGridLayout {
   const _EditorGridLayout({required this.columns, required this.childAspectRatio});
 }
 
-class FullScreenImageView extends StatelessWidget {
+class FullScreenImageView extends StatefulWidget {
   final String imagePath;
   const FullScreenImageView({super.key, required this.imagePath});
+
+  @override
+  State<FullScreenImageView> createState() => _FullScreenImageViewState();
+}
+
+class _FullScreenImageViewState extends State<FullScreenImageView> {
+  final TransformationController _controller = TransformationController();
+  double _scale = 1.0;
+  Color _backgroundColor = Colors.white;
+  static const double _minScale = 1.0;
+  static const double _maxScale = 5.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_onTransformChanged);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTransformChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onTransformChanged() {
+    _scale = _controller.value.getMaxScaleOnAxis().clamp(_minScale, _maxScale);
+  }
+
+  Widget _image(double width, double height) {
+    final p = widget.imagePath;
+    if (p.startsWith('http')) {
+      if (p.toLowerCase().endsWith('.svg')) {
+        return SvgPicture.network(p, fit: BoxFit.contain, width: width, height: height);
+      }
+      return Image.network(p, fit: BoxFit.contain, width: width, height: height);
+    }
+    if (p.startsWith('assets/')) {
+      if (p.toLowerCase().endsWith('.svg')) {
+        return SvgPicture.asset(p, fit: BoxFit.contain, width: width, height: height);
+      }
+      return Image.asset(p, fit: BoxFit.contain, width: width, height: height);
+    }
+    if (kIsWeb) return Image.network(p, fit: BoxFit.contain, width: width, height: height);
+    return Image.file(File(p), fit: BoxFit.contain, width: width, height: height);
+  }
+
+  void _zoomAt(Offset? focal) {
+    final newScale = (_scale == _maxScale)
+        ? _minScale
+        : (_scale * 1.5).clamp(_minScale, _maxScale);
+    _scale = newScale;
+    final viewport = MediaQuery.of(context).size;
+    final x = (focal?.dx ?? viewport.width / 2);
+    final y = (focal?.dy ?? viewport.height / 2);
+    _controller.value = Matrix4.identity()
+      ..translate(x, y)
+      ..scale(newScale)
+      ..translate(-x, -y);
+    setState(() {});
+  }
+
+  void _handlePointerSignal(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      final bool ctrl = HardwareKeyboard.instance.isLogicalKeyPressed(LogicalKeyboardKey.controlLeft) ||
+          HardwareKeyboard.instance.isLogicalKeyPressed(LogicalKeyboardKey.controlRight);
+      if (ctrl) {
+        final step = event.scrollDelta.dy > 0 ? 0.9 : 1.1;
+        _scale = (_scale * step).clamp(_minScale, _maxScale);
+        _controller.value = Matrix4.identity()..scale(_scale);
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: const Text('Full Image')), 
-      body: SizedBox.expand(
-        child: Hero(
-          tag: imagePath,
-          child: imagePath.startsWith('http') 
-            ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.network(imagePath, fit: BoxFit.contain) : Image.network(imagePath, fit: BoxFit.contain)) 
-            : (imagePath.startsWith('assets/') ? (imagePath.toLowerCase().endsWith('.svg') ? SvgPicture.asset(imagePath, fit: BoxFit.contain) : Image.asset(imagePath, fit: BoxFit.contain)) : (kIsWeb ? Image.network(imagePath, fit: BoxFit.contain) : Image.file(File(imagePath), fit: BoxFit.contain))),
+      backgroundColor: _backgroundColor,
+      appBar: AppBar(
+        title: const Text('Full Image'),
+        actions: [
+          OutlinedButton(
+            onPressed: () => setState(() => _backgroundColor = Colors.transparent),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.black,
+              side: const BorderSide(color: Colors.black),
+              backgroundColor: Colors.transparent,
+            ),
+            child: const Text('Transparent'),
+          ),
+          OutlinedButton(
+            onPressed: () => setState(() => _backgroundColor = Colors.black),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.white,
+              side: const BorderSide(color: Colors.black),
+              backgroundColor: Colors.black,
+            ),
+            child: const Text('Black'),
+          ),
+          OutlinedButton(
+            onPressed: () => setState(() => _backgroundColor = Colors.white),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.black,
+              side: const BorderSide(color: Colors.black),
+              backgroundColor: Colors.white,
+            ),
+            child: const Text('White'),
+          ),
+        ],
+      ),
+      body: Listener(
+        onPointerSignal: _handlePointerSignal,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            InteractiveViewer(
+              transformationController: _controller,
+              panEnabled: true,
+              scaleEnabled: true,
+              minScale: _minScale,
+              maxScale: _maxScale,
+              boundaryMargin: const EdgeInsets.all(double.infinity),
+              child: _image(size.width, size.height),
+            ),
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTapUp: (details) => _zoomAt(details.localPosition),
+            ),
+          ],
         ),
       ),
     );

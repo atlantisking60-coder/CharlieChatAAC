@@ -1,0 +1,25 @@
+{
+  "id": "prebuilt_mince_pies",
+  "name": "Mince Pies",
+  "area": "Recipes",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 0,
+  "tier": 1,
+  "iconAssetPath": null,
+  "tileIconAssetPath": null,
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

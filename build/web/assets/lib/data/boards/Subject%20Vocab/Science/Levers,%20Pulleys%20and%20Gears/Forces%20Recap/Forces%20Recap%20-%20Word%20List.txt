@@ -1,0 +1,13 @@
+force
+push
+pull
+magnetism
+attract
+repel
+air resistance
+gravity
+falling
+water resistance
+sink
+float
+friction

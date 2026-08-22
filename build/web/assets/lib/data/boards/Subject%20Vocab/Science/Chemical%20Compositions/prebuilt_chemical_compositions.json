@@ -2,20 +2,23 @@
   "id": "prebuilt_chemical_compositions",
   "name": "Chemical Compositions",
   "area": "Subject Vocab",
-  "columns": 6,
+  "columns": 8,
   "backgroundColor": "#FFFFFF",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 156,
   "tier": 2,
+  "iconAssetPath": "assets/Subject Vocab/Science/Acids, Alkelis and Energy/Chemical Compositions/nitric acid.png",
+  "tileIconAssetPath": "assets/BOARDS/Science/Year 7/Chemistry.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
   "layout": {
-    "rows": 4,
+    "rows": 1,
     "blankTilesAdded": 0
   },
   "tiles": [
@@ -182,8 +185,5 @@
       "customVoice": ""
     }
   ],
-  "version": 0,
-  "parentBoardId": "prebuilt_science",
-  "iconAssetPath": "assets/Common/People/i.png",
-  "tileIconAssetPath": "assets/Common/People/i.png"
+  "parentBoardId": "prebuilt_science"
 }

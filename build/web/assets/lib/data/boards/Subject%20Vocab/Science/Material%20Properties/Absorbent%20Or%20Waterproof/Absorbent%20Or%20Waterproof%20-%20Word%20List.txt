@@ -1,0 +1,7 @@
+material
+properties
+hypothesis
+absorbant
+waterproof
+strong
+weak

@@ -1,0 +1,35 @@
+temporalis
+masseter
+sternocleidomastoid
+platysma
+anterior deltoid
+pectorals
+rectus abdominis
+upper abs
+lower abs
+obliques
+trapezius
+erector spinae
+biceps brachii
+triceps brachii
+forearm flexors
+posterior deltoid
+rhomboids
+latissimus dorsi
+thoracolumbar fascia
+iliopsoas
+quadriceps
+rectus femoris
+vastus medialis
+vastus lateralis
+gracilis
+tensor fasciae latae
+hamstrings
+biceps femoris
+semitendinosus
+semimembranosus
+gluteus
+outer thigh
+inner thigh
+tibialis
+gastrocnemius

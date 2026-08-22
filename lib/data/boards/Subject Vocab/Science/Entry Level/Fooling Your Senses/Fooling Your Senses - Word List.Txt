@@ -1,23 +1,32 @@
-Fooling Your Senses - Word List
-===================================
-
-balance (equilibrioception)
-body needs (interoception) (hunger, thirst, heartbeat, need to breathe)
+senses
+sight (vision)
+hearing (audition)
+smell (olfaction)
+taste (gustation)
+touch (somatosensation)
 body position (proprioception)
-brain interpretation
+balance (equilibrioception)
+temperature (thermoception)
+pain (nociception)
+body needs (interoception)
+passage of time (chronoception)
+stretch pressure (mechanoreception)
 chemical changes (chemoreception)
-context clues
+itch (pruriception)
+muscle
+optical illusion
+perception
+brain interpretation
+retina
+light
+colour
+pattern
 depth perception
 echo
-expectation
-itch (pruriception)
-misinterpret
-optical illusion
-pain (nociception)
-passage of time (chronoception)
-perception
-retina
-senses
 smell taste link
-stretch or pressure (mechanoreception)
-temperature (thermoception)
+flavour illusion
+sensory illusion
+misinterpret
+brain pathways
+expectation
+context clues

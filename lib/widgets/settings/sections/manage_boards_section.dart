@@ -193,7 +193,9 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   String _getBoardPath(Board board) {
     final List<String> parts = [board.name];
     Board? current = board;
+    final visited = <String>{};
     while (current != null && (current.isSubBoard || current.isTertiaryBoard) && current.parentBoardId != null) {
+      if (!visited.add(current.id)) break; // cycle guard
       final parentId = current.parentBoardId;
       final parent = _allBoardsPool.cast<Board?>().firstWhere((b) => b?.id == parentId, orElse: () => null);
       if (parent != null) {

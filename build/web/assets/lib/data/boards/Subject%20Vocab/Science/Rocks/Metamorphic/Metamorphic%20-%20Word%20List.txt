@@ -1,11 +1,22 @@
-Metamorphic - Word List
-===========================
-
-compression
-foliated
-gneiss
-marble
 metamorphic
+rock
+mineral
+heat
+pressure
+compression
+recrystallization
+foliated
 non-foliated
-quartzite
+physical properties
+crystalline
+texture
+change
+colour
+hardness
+grain size
+density
+luster
+marble
 slate
+gneiss
+quartzite

@@ -1,10 +1,20 @@
-The Skeleton - Word List
-============================
-
-bone
-coccyx
-ribs
-scapula
+Internal Organs
 skeleton
+bones
+bone
 skull
+mandible (jaw)
+scapula
+clavicle (collar bone)
+humerus
+elbow
+radius
+ulna
 spine, spinal cord
+ribs
+pelvis
+соссух
+femur
+patella (kneecap)
+tibia
+fibia

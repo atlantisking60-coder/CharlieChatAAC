@@ -7,3 +7,9 @@ analyzer:
     - .dart_tool/**
     - .idea/**
     - .vscode/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

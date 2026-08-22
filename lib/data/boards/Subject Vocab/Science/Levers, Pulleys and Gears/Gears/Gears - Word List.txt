@@ -1,0 +1,15 @@
+gears
+accuracy
+precision
+variables
+friction
+gravity
+mechanism
+transfer
+modify
+force
+speed
+direction
+load
+fulcrum
+effort

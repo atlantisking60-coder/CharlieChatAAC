@@ -1,6 +1,11 @@
-Sorting Out - Word List
-===========================
-
-crystal
 distillation
+filtration
+separation
+soluble
+solubility
+insoluble
+solvent
+solute
+solution
 sort
+crystal

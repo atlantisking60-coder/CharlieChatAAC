@@ -1,21 +1,20 @@
-Digestive System - Word List
-================================
-
-absorption
-bladder
-colon
-digestion
+Internal Organs
 digestive system
-esophagus
-gallbladder
-gastric acid
+digestion
+organs
 ingestion
-intestines
-kidneys
-large intestine
-liver
-metabolism
-pancreas
+mouth
 saliva
-small intestine
+oesophagus
+liver
+gallbladder
+pancreas
 stomach
+gastric acid
+intestines
+small intestine
+large intestine
+colon
+kidneys
+bladder
+metabolism

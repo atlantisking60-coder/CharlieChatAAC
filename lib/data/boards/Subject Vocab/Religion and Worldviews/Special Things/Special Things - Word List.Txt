@@ -1,9 +1,12 @@
-Special Things - Word List
-==============================
-
-artefact
+symbol
+cross
+prayer mat
+menorah
+diya
+kara
+lotus
 candles
 holy book
-kara
-menorah
-prayer mat
+artefact
+special
+meaning

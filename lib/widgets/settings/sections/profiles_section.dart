@@ -3,7 +3,9 @@ import 'dart:io' show File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../services/board_service.dart';
+import '../../../services/profile_service.dart';
 import '../../../services/settings_service.dart';
 import '../settings_widgets.dart';
 
@@ -12,6 +14,8 @@ class ProfilesSection extends StatefulWidget {
     super.key,
     required this.settings,
     required this.onChanged,
+    this.profile,
+    this.onProfileChanged,
     required this.availableBoards,
     required this.preferredSets,
     required this.startingBoardId,
@@ -21,6 +25,8 @@ class ProfilesSection extends StatefulWidget {
 
   final AppSettings settings;
   final ValueChanged<AppSettings> onChanged;
+  final UserProfile? profile;
+  final ValueChanged<UserProfile>? onProfileChanged;
   final List<Board> availableBoards;
   final List<String> preferredSets;
   final String startingBoardId;
@@ -47,16 +53,17 @@ class _ProfilesSectionState extends State<ProfilesSection> {
 
   Future<void> _pickProfileImage() async {
     try {
-      final result = await FilePicker.pickFiles(type: FileType.image);
-      if (result == null || !mounted) return;
+      final files = await FilePicker.pickFiles(type: FileType.image);
+      if (files.isEmpty || !mounted) return;
+      final file = files.single;
       if (kIsWeb) {
-        final bytes = await result.files.single.readAsBytes();
+        final bytes = await file.readAsBytes();
         widget.onChanged(widget.settings.copyWith(
             profileImage: 'data:image/png;base64,${base64Encode(bytes)}'));
       } else {
-        if (result.files.single.path != null) {
+        if (file.path != null) {
           widget.onChanged(
-              widget.settings.copyWith(profileImage: result.files.single.path));
+              widget.settings.copyWith(profileImage: file.path));
         }
       }
     } catch (e) {
@@ -80,6 +87,8 @@ class _ProfilesSectionState extends State<ProfilesSection> {
           title: 'Profiles',
           subtitle: 'Profile image, symbol sets and starting board',
         ),
+
+        if (widget.profile != null) _buildProfileIdentity(widget.profile!),
 
         // ── Profile image ─────────────────────────────────────────────────
         SettingsGroup(
@@ -190,6 +199,72 @@ class _ProfilesSectionState extends State<ProfilesSection> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileIdentity(UserProfile profile) {
+    final cs = Theme.of(context).colorScheme;
+    final isLocked = profile.role == 'default' || profile.role == 'admin';
+
+    return SettingsGroup(
+      title: 'Profile Identity',
+      children: [
+        // Online ID
+        ListTile(
+          leading: const Icon(Icons.key_outlined),
+          title: const Text('Profile ID'),
+          subtitle: Text(
+            profile.onlineId.isEmpty ? 'Not set' : profile.onlineId,
+            style: TextStyle(fontSize: 13, color: cs.onSurfaceVariant),
+          ),
+          trailing: profile.onlineId.isEmpty
+              ? null
+              : IconButton(
+                  icon: const Icon(Icons.copy, size: 18),
+                  tooltip: 'Copy profile ID',
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: profile.onlineId));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Profile ID copied')),
+                    );
+                  },
+                ),
+        ),
+        // Role
+        ListTile(
+          leading: const Icon(Icons.badge_outlined),
+          title: const Text('Role'),
+          subtitle: Text(profile.role, style: TextStyle(color: cs.onSurfaceVariant)),
+          trailing: isLocked
+              ? const Icon(Icons.lock, size: 18)
+              : null,
+        ),
+        // Password
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          child: TextField(
+            controller: TextEditingController(text: profile.password ?? ''),
+            obscureText: true,
+            decoration: const InputDecoration(
+              labelText: 'Profile password',
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.lock_outline),
+            ),
+            onChanged: (value) {
+              widget.onProfileChanged?.call(profile.copyWith(password: value));
+            },
+          ),
+        ),
+        // Sync online
+        SwitchListTile(
+          secondary: const Icon(Icons.cloud_upload_outlined),
+          title: const Text('Store this profile online'),
+          value: profile.syncEnabled,
+          onChanged: (value) {
+            widget.onProfileChanged?.call(profile.copyWith(syncEnabled: value));
+          },
         ),
       ],
     );

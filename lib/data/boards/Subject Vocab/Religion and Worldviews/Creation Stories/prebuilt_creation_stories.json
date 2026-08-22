@@ -16,7 +16,7 @@
       "id": "prebuilt_creation_stories_creation",
       "label": "creation",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/PD/Wider World/living in the wider world.png",
+      "imageAsset": "assets/Subject Vocab/Personal Development/Wider World/living in the wider world.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -48,7 +48,7 @@
       "id": "prebuilt_creation_stories_world",
       "label": "world",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/PD/Wider World/living in the wider world.png",
+      "imageAsset": "assets/Subject Vocab/Personal Development/Wider World/living in the wider world.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -355,7 +355,7 @@
   "isQuinaryBoard": false,
   "sortOrder": 294,
   "tier": 2,
-  "iconAssetPath": "assets/Subject Vocab/PD/Wider World/living in the wider world.png",
-  "tileIconAssetPath": "assets/BOARDS/PD/Living In The Wider World.png",
+  "iconAssetPath": "assets/Subject Vocab/Personal Development/Wider World/living in the wider world.png",
+  "tileIconAssetPath": "assets/BOARDS/Personal Development/Living In The Wider World.png",
   "version": 0
 }

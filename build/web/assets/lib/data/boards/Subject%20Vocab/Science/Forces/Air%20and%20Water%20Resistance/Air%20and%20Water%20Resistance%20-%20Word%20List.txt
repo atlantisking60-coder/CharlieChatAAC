@@ -1,0 +1,15 @@
+gravity
+newtons
+newton meter
+earth
+falling
+balanced
+unbalanced
+force
+air resistance
+parachute
+water resistance
+sink
+float
+buoyancy
+boat

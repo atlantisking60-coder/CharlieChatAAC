@@ -1,17 +1,16 @@
-PH Scale - Word List
-========================
-
-pH1
-pH10
-pH11
-pH12
-pH13
-pH14
-pH2
-pH3
-pH4
-pH5
-pH6
-pH7
-pH8
-pH9
+Ph Scale Numbers
+ph level
+potential
+hydrogen
+acidity
+alkalinity
+neutral
+hydroxide
+strong
+weak
+universal indicator
+litmus paper
+ion
+proton
+phenolphthalein
+corrosive

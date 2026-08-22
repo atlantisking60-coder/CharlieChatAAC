@@ -1,10 +1,12 @@
-Full Spectrum - Word List
-=============================
-
-infrared emitter
-infrared radiation
-infrared
+prism
+wave
 laser
-ultraviolet emitter
-ultraviolet radiation
+light
+infrared
+infrared radiation
 ultraviolet
+ultraviolet radiation
+visible light
+infrared emission
+ultraviolet emission
+visible spectrum

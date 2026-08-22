@@ -1,0 +1,27 @@
+state
+solid
+liquid
+gas
+energy
+particles
+packed together
+spread out
+far apart
+temperature
+shape
+size
+volume
+heat
+cooldown
+properties
+hard
+runny
+hot
+cold
+flow
+melt
+freeze
+evaporation
+condensation
+solid to liquid
+liquid to gas

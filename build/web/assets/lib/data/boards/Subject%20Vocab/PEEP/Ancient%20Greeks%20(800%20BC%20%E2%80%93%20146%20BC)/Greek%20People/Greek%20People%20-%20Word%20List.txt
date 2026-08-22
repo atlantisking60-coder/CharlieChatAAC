@@ -1,0 +1,14 @@
+philosophy
+socrates
+plato
+aristotle
+maths
+pythagoras
+archimedes
+euclid
+theatre
+sophocles
+euripides
+aristophanes
+medicine
+hippocrates

@@ -1,0 +1,14 @@
+Animals
+mammal
+bird
+reptile
+amphibian
+insect
+arachnid
+invertebrate
+fish
+herbivore
+carnivore
+omnivore
+piscivore
+scavenger

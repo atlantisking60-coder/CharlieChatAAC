@@ -1,0 +1,10 @@
+earth
+crust
+continental crust
+oceanic crust
+mantle
+upper mantle
+lower mantle
+core
+outer core
+inner core

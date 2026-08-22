@@ -1,0 +1,12 @@
+people
+event
+environment
+place
+geography
+history
+local
+global
+seasons
+month
+location
+era

@@ -1,0 +1,25 @@
+punctuation
+full stop
+comma
+question mark
+exclamation mark
+apostrophe
+quotation marks
+dash
+hyphen
+open bracket or parenthesis
+close bracket or parenthesis
+colon
+semi colon
+full stop
+comma
+question mark
+exclamation mark
+apostrophe
+quotation marks
+dash
+hyphen
+open bracket or parenthesis
+close bracket or parenthesis
+colon
+semi colon

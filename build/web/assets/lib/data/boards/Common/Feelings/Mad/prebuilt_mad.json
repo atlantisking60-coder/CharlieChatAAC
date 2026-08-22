@@ -2,7 +2,7 @@
   "id": "prebuilt_mad",
   "name": "Mad",
   "area": "Common",
-  "parentBoardId": "prebuilt_feelings",
+  "parentBoardId": "prebuilt_feelings_common",
   "linkedBoardId": null,
   "rows": 6,
   "columns": 4,

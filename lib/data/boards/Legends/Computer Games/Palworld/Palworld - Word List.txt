@@ -1,0 +1,300 @@
+000a green slime
+000b blue slime
+000c red slime
+000d purple slime
+000e illuminant slime
+000f rainbow slime
+000g enchanted sword
+000h cave bat
+000i illuminant bat
+000j demon eye
+000k eye of cthulhu
+000l moon lord
+001 lamball
+002 cattiva
+003 chikipi
+004 lifmunk
+005 fuack
+005b fuack ignis
+006 vixy
+007 celaray
+007b celaray lux
+008 cremis
+009 croajiro
+009b croajiro noct
+010 herbil
+011 teafant
+012 gumoss
+013 pupperai
+014 clovee
+015 jolthog
+015b jolthog cryst
+016 depresso
+017 pengullet
+017b pengullet lux
+018 penking
+018b penking lux
+019 hoocrates
+020 melpaca
+021 kingpaca
+021b kingpaca cryst
+022 daedream
+023 tanzee
+023b tanzee ignis
+024 nox
+025 flambelle
+026 rooby
+027 mau
+027b mau cryst
+028 rushoar
+029 foxparks
+029b foxparks cryst
+030 killamari
+030b killamari primo
+031 fuddler
+032 eikthyrdeer
+032b eikthyrdeer terra
+033 direhowl
+034 caprity
+034b caprity noct
+035 swee
+036 sweepa
+037 turtacle
+037b turtacle terra
+038 hangyu
+038b hangyu cryst
+039 woolipop
+039b woolipop terra
+040 mozzarina
+041 azurobe
+041b azurobe cryst
+042 sparkit
+043 kelpsea
+043b kelpsea ignis
+044 ribbuny
+044b ribbuny botan
+045 jelliette
+046 jellroy
+047 amione
+048 gloopie
+048b gloopie
+049 galeclaw
+050 wispaw
+051 nitewing
+052 tombat
+053 tocotoco
+054 univolt
+054b univolt cryst
+055 gobfin
+055b gobfin ignis
+056 loupmoon
+056b loupmoon cryst
+057 cawgnito
+058 arsox
+059 muffly
+060 bristla
+061 cinnamoth
+062 puffolt
+063 elphidran
+063b elphidran aqua
+064 vanwyrm
+064b vanwyrm cryst
+065 felbat
+066 vaelet
+067 beegarde
+068 elizabee
+069 lovander
+070 grintale
+071 tarantriss
+072 polapup
+072b polapup terra
+073 leezpunk
+073b leezpunk ignis
+074 gorirat
+074b gorirat terra
+075 surfent
+075b surfent terra
+076 robinquill
+076b robinquill terra
+077 flopie
+078 wixen
+078b wixen noct
+079 katress
+079b katress ignis
+080 helzephyr
+080b helzephyr lux
+081 elgrove
+081b elgrove cryst
+082 lunaris
+083 fenglope
+083b fenglope lux
+084 dinossom
+084b dinossom lux
+085 bushi
+085b bushi noct
+086 munchill
+087 mammorest
+087b mammorest cryst
+088 finsider
+088b finsider ignis
+089 petallia
+089b petallia ignis
+090 leafan
+091 incineram
+091b incineram noct
+092 dazzi
+092b dazzi noct
+093 pyrin
+093b pyrin noct
+094 relaxaurus
+094b relaxaurus lux
+095 foxcicle
+096 beakon
+096b beakon cryst
+097 ghangler
+097b ghangler ignis
+098 rayhound
+098b rayhound cryst
+099 menasting
+099b menasting terra
+100 needoll
+100b needoll noct
+101 reindrix
+102 mossanda
+102b mossanda lux
+103 chillet
+103b chillet ignis
+104 ragnahawk
+105 moldron
+105b moldron cryst
+106 palumba
+107 digtoise
+108 broncherry
+108b broncherry aqua
+109 dumud
+109b dumud gild
+110 braloha
+111 kitsun
+111b kitsun noct
+112 blazehowl
+112b blazehowl noct
+113 warsect
+113b warsect terra
+114 frostplume
+115 majex
+116 sibelyx
+116b sibelyx primo
+117 maraith
+118 shroomer
+118b shroomer noct
+119 icelyn
+120 gildra
+121 jormuntide
+121b jormuntide ignis
+122 suzaku
+122b suzaku aqua
+123 dazemu
+124 quivern
+124b quivern botan
+125 lullu
+126 kikit
+127 yakumo
+128 skutlass
+128b skutlass ignis
+129 reptyro
+129b reptyro cryst
+130 starryon
+130b starryon primo
+131 pierdon
+131b pierdon cryst
+132 cryolinx
+132b cryolinx terra
+133 snugloo
+134 wumpo
+134b wumpo botan
+135 sootseer
+136 carnibora
+137 blazamut
+137b blazamut ryu
+138 dualith
+138b dualith noct
+139 anubis
+140 sekhmet
+141 prixter
+141b prixter lux
+142 tetroise
+142b tetroise primo
+143 nyafia
+144 mimog
+145 xenovader
+146 xenogard
+147 prunelia
+148 nitemary
+148b nitemary botan
+149 smokie
+149b smokie cryst
+150 omascul
+151 whalaska
+151b whalaska ignis
+152 verdash
+153 splatterina
+154 gildane
+155 dogen
+156 bulldosu
+157 celesdir
+157b celesdir noct
+158 astegon
+159 knocklem
+159b knocklem ignis
+160 silvegis
+161 azurmane
+162 valentail
+163 snock
+163b snock lux
+164 souffline
+165 lapiron
+166 hoodle
+167 slowatt
+168 bakemi
+169 solmora
+169b solmora lux
+170 lapure
+171 eidrolon
+171b eidrolon ignis
+172 dynamoff
+173 tropicaw
+174 flaracle
+175 ophydia
+176 dupin
+177 roujay
+178 venusa
+179 mycora
+180 loomen
+181 wistella
+182 solenne
+183 renjishi
+184 aegidron
+185 grizzbolt
+186 lyleen
+186b lyleen noct
+187 orserk
+188 faleris
+188b faleris aqua
+189 shadowbeak
+190 selyne
+191 bastigor
+192 shaolong
+193 silvance
+194 dandilord
+195 bellanoir
+195b bellanoir libero
+196 xenolord
+197 hartalis
+198 paladius
+199 necromus
+200 frostallion
+200b frostallion noct
+201 neptilius
+202 jetragon
+203 panthalus
+204 astralym

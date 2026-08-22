@@ -1,0 +1,7 @@
+sound
+volume
+loudness
+sound wave
+amplitude
+frequency
+pitch

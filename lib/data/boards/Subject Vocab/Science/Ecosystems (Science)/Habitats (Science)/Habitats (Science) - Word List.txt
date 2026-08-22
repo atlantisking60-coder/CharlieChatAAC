@@ -1,0 +1,11 @@
+Habitats
+habitat
+microhabitat
+features
+needs
+survival
+dry
+damp
+wet
+light
+dark

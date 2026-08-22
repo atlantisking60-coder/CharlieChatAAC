@@ -1,0 +1,28 @@
+Basic Components
+circuit
+series circuit
+parallel circuit
+component
+electrical
+electricity
+power
+power source
+current
+flow
+on
+off
+complete circuit
+broken circuit
+connecting parts
+connected
+loose
+secure
+metal
+low voltage
+high voltage
+battery
+safety
+energy
+ammeter
+voltmeter
+timer

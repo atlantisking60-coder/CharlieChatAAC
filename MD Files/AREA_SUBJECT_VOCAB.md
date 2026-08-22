@@ -157,7 +157,7 @@
 - Great Britain
 - Industrial Revolution
 - Journeys Through Time
-- Keywords
+- PEEP Keywords
 - Heroes
 - Maps & Atlas
 - Crew
@@ -198,7 +198,7 @@
 
 - Angels
 - Belonging & Baptism
-- Community
+- Community (RWV)
 - Creation Stories
 - Good & Evil
 - Hindu Traditions
@@ -271,11 +271,11 @@
 - Pushes & Pulls
 - Sorting Out
 - You Only Have One Life
-- Equipment
+- Equipment For Science
 - Evolution & Genes
 - Forces
 - Hazard Symbols
-- Intro
+- Intro to Science
 - Levers, Pulleys & Gears
 - Light & Sound
 - Material Properties

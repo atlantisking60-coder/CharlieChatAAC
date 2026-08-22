@@ -31,8 +31,12 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo [1b] Running flutter pub get...
-echo [1b] Running flutter pub get...             >> "%LOGFILE%"
+echo [1b] Running flutter clean...
+echo [1b] Running flutter clean...               >> "%LOGFILE%"
+call flutter clean                              >> "%LOGFILE%" 2>&1
+
+echo [1c] Running flutter pub get...
+echo [1c] Running flutter pub get...             >> "%LOGFILE%"
 call flutter pub get                            >> "%LOGFILE%" 2>&1
 if errorlevel 1 (
     echo.
@@ -41,8 +45,8 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo [1c] Building Flutter web app...
-echo [1c] Building Flutter web app...            >> "%LOGFILE%"
+echo [1d] Building Flutter web app...
+echo [1d] Building Flutter web app...            >> "%LOGFILE%"
 if exist "build\web" rd /s /q "build\web"
 call flutter build web --no-wasm-dry-run --no-tree-shake-icons >> "%LOGFILE%" 2>&1
 if errorlevel 1 (

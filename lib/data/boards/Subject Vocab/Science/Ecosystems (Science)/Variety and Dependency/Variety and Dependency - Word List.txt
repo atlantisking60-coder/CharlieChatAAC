@@ -1,0 +1,12 @@
+Habitats
+habitat
+dependence
+food chain
+predator
+prey
+food chain
+omnivore
+carnivore
+herbivore
+psicivore
+scavenger

@@ -1,8 +1,20 @@
-Exercise - Word List
-========================
-
-aerobics
+exercise
+physical activity
+fitness
+strength
+endurance
+flexibility
+balance
+heart rate
+muscles
 bones
 cardiovascular
-exercise
+coordination
+aerobic exercise
+anaerobic exercise
+warmup
+cooldown
+movement
+energy use
 injury prevention
+recovery

@@ -1,17 +1,19 @@
-Getting The Message - Word List
-===================================
-
 binary number
-digital signal
 digital
+digital signal
 electrical signal
 electromagnetic spectrum
-electromagnetic
+infrared radiation
 longitudinal wave
+loud
+loudness
 microwave radiation
 optical fibre
+quiet
 radio wave
-sound compression
+sound compession
 sound vibration
+sound wave
 speed of light
 wave speed
+electromagnetic spectrum

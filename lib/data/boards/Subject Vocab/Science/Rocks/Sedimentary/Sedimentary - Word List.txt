@@ -1,17 +1,30 @@
-Sedimentary - Word List
-===========================
-
-cementation
-clastic
-clay
-compaction
-flint
-limestone
-peat
-pebble
-sand
-sandstone
 sedimentary
-shale
-stratification
+rock
 weathering
+erosion
+sand
+clay
+pebbles
+peat
+compaction
+cementation
+stratification
+layer
+layers
+fossil
+clastic
+chemical sedimentary
+organic sedimentary
+particles
+stone
+processes
+physical properties
+texture
+grain size
+porosity
+river
+sandstone
+limestone
+shale
+chalk
+flint

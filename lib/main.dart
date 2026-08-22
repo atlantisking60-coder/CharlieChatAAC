@@ -4,9 +4,10 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:io' show Directory, File;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart' show AssetManifest, rootBundle;
+import 'package:flutter/services.dart' show AssetManifest, rootBundle, HardwareKeyboard, LogicalKeyboardKey;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -46,17 +47,18 @@ import 'utils/board_export_download.dart';
 import 'widgets/pin_lock_guard.dart';
 import 'utils/responsive_layout.dart';
 
-const int defaultBoardRows = 6;
-const int defaultBoardColumns = 6;
+const int defaultBoardRows = 1;
+const int defaultBoardColumns = 8;
 
 enum AppMode {
   home,
+  school,
+  sign,
+  mySchool,
   legends,
   recipes,
-  sign,
-  school,
-  mySchool,
   personal,
+  unassigned,
 }
 
 /// ENTRY POINT
@@ -312,6 +314,17 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
     });
   }
 
+  Future<void> _importDownloadedProfile(UserProfile profile) async {
+    await _profileService.createProfile(profile);
+    setState(() {
+      _profiles = _profileService.profiles;
+      _activeProfileId = profile.id;
+      _settings = profile.settings;
+      _selectedProfileId = profile.id;
+      _showWelcome = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 /// APP SHELL 
@@ -355,6 +368,7 @@ class _CharlieChatAppState extends State<CharlieChatApp> {
                   ),
                   onCreateProfile: _createNewProfile,
                   onDeleteProfile: _deleteProfile,
+                  onDownloadedProfile: _importDownloadedProfile,
                 )
               : HomePage(
                   key: ValueKey(_selectedProfileId),
@@ -471,6 +485,8 @@ class _HomePageState extends State<HomePage> {
   final AudioPlayer _customVoicePlayer = AudioPlayer();
   final ScrollController _boardScrollController = ScrollController();
   final ScrollController _boardHorizontalScrollController = ScrollController();
+  double _gridZoom = 1.0;
+  double _gridZoomStart = 1.0;
   final Map<String, ScrollController> _tabScrollControllers = {};
   final Map<String, GlobalKey> _tabActiveKeys = {};
   final Map<String, String> _iconPathCache = {};
@@ -479,6 +495,13 @@ class _HomePageState extends State<HomePage> {
   // Sub-boards that are hidden from the top-level tab bar but shown as a second row when their parent is active.
   static const List<String> _subBoardNames = [];
   final Map<String, SymbolTile> _typedWordCache = {};
+  // Lazily-built index of label -> tile across every board in every area
+  // (not just the currently-loaded area's boards), so a typed word that
+  // genuinely has a symbol elsewhere in the app (e.g. "help" on Common
+  // Words) is still found while e.g. the Sentence Creator (Subject Vocab)
+  // is active.
+  Map<String, SymbolTile>? _globalWordIndex;
+  Future<Map<String, SymbolTile>>? _globalWordIndexFuture;
   List<SymbolTile> _localAssetResults = [];
   String _lastAssetSearchQuery = '';
 
@@ -525,6 +548,22 @@ class _HomePageState extends State<HomePage> {
         ]);
       }
 
+      // Default main tab order for My School.
+      if (boardService.getTabOrder('My School') == null) {
+        await boardService.saveTabOrder('My School', [
+          'Baycroft Expects',
+          'Food Options',
+          'Thinking Skills',
+          'When Things Go Wrong',
+          'Blank Levels',
+          'My School Lessons',
+          'Class Equipment',
+          'People At School',
+          'School Events',
+          'Other Useful Stuff',
+        ]);
+      }
+
       // Load the Common area tab list as placeholders, then fill the active
       // board. Only the selected board's tiles are loaded at startup.
       _currentMode = AppMode.home;
@@ -567,16 +606,12 @@ class _HomePageState extends State<HomePage> {
         return AppMode.school;
       case 'Personal':
         return AppMode.personal;
+      case 'Unassigned':
+        return AppMode.unassigned;
       case 'Common':
       default:
         return AppMode.home;
     }
-  }
-
-  AppMode _getModeForBoard(String boardId) {
-    final board = _boards.cast<Board?>().firstWhere((b) => b?.id == boardId, orElse: () => null);
-    if (board == null) return AppMode.home;
-    return _appModeForArea(board.area);
   }
 
   Future<void> _persistSessionState() async {
@@ -592,6 +627,9 @@ class _HomePageState extends State<HomePage> {
         await prefs.remove('active_parent_id');
       }
     } catch (e) {
+      if (e.toString().contains('QuotaExceededError')) {
+        await BoardService.instance?.freeWebStorage();
+      }
       debugPrint('Error persisting session state: $e');
     }
   }
@@ -653,6 +691,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   String _bestBoardIconPath(String boardName, List<String> paths) {
+    if (paths.isEmpty) return '';
     final lower = boardName.toLowerCase();
     // Prefer an exact file-name match
     for (final path in paths) {
@@ -708,18 +747,31 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _preResolveChildIcons(Board parent) {
+  // Resolves and precaches icons for a board's children. Boards with many
+  // children (e.g. Disney Stories has ~70 movies) used to do this as a
+  // sequential await-per-child loop, which could take many seconds and
+  // blocked navigation until every single icon had resolved. Now the work
+  // for all children runs concurrently, and callers no longer need to await
+  // this before showing the board — the icons simply pop in once ready via
+  // the trailing setState.
+  Future<void> _preResolveChildIcons(Board parent) async {
     final children = _boards.where((b) => b.parentBoardId == parent.id).toList();
-    for (final child in children) {
-      final path = _getBoardIconPath(child);
-      if (path.startsWith('assets/')) {
-        precacheImage(
-          AssetImage(path),
-          context,
-          size: const Size(36, 36),
-        ).catchError((_) {});
-      }
-    }
+    if (children.isEmpty) return;
+    await Future.wait(children.map((child) async {
+      try {
+        await BoardService.instance?.preloadBoardIcon(child);
+        if (!mounted) return;
+        final path = _getBoardIconPath(child);
+        if (path.startsWith('assets/')) {
+          await precacheImage(
+            AssetImage(path),
+            context,
+            size: const Size(36, 36),
+          ).catchError((_) {});
+        }
+      } catch (_) {}
+    }));
+    if (mounted) setState(() {});
   }
 
   String _getBoardIconPath(Board board) {
@@ -750,6 +802,8 @@ class _HomePageState extends State<HomePage> {
       'English': 'assets/Subject Vocab/Lessons/English.png',
       'Maths': 'assets/Subject Vocab/Lessons/Maths.png',
       'Science': 'assets/Subject Vocab/Lessons/Science.png',
+      'Equipment For Science': 'assets/BOARDS/Science/Year 7/Science Equipment.png',
+      'PEEP Keywords': 'assets/BOARDS/Keywords.png',
       'TFL': 'assets/Subject Vocab/Lessons/TFL.png',
       'Personal Development': 'assets/Subject Vocab/Lessons/PD.png',
       'PEEP': 'assets/Subject Vocab/Lessons/PEEP.png',
@@ -1302,10 +1356,46 @@ class _HomePageState extends State<HomePage> {
       final bIdx = commonOrder[b.toLowerCase()] ?? 999;
       return aIdx.compareTo(bIdx);
     });
-    // Boards that belong to Legends mode (in exact order)
-    final legendsBoardNames = ['Legends', 'Characters', 'Real People'];
-    // Boards that belong to School mode (in order: main first)
-    final schoolBoardNames = ['Subject Vocab'];
+    // Boards that belong to Legends mode (saved order, then hierarchy)
+    final legendsOrder = BoardService.current?.getTabOrder('Legends') ?? [];
+    final legendsOrderMap = {
+      for (int i = 0; i < legendsOrder.length; i++)
+        legendsOrder[i].toLowerCase(): i
+    };
+    final legendsBoardNames = hierarchyTopLevel('Legends')..sort((a, b) {
+      final aSaved = legendsOrderMap[a.toLowerCase()];
+      final bSaved = legendsOrderMap[b.toLowerCase()];
+      if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+      if (aSaved != null) return -1;
+      if (bSaved != null) return 1;
+      final aIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == a.toLowerCase());
+      final bIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == b.toLowerCase());
+      if (aIdx == -1) return 1;
+      if (bIdx == -1) return -1;
+      return aIdx.compareTo(bIdx);
+    });
+    // Boards that belong to School mode (saved order, then hierarchy)
+    final schoolOrder = BoardService.current?.getTabOrder('Subject Vocab') ?? [];
+    final schoolOrderMap = {
+      for (int i = 0; i < schoolOrder.length; i++)
+        schoolOrder[i].toLowerCase(): i
+    };
+    final schoolBoardNames = hierarchyTopLevel('Subject Vocab')..sort((a, b) {
+      final aSaved = schoolOrderMap[a.toLowerCase()];
+      final bSaved = schoolOrderMap[b.toLowerCase()];
+      if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+      if (aSaved != null) return -1;
+      if (bSaved != null) return 1;
+      final aIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == a.toLowerCase());
+      final bIdx = runtimeBoardHierarchy
+          .indexWhere((e) => e.name.toLowerCase() == b.toLowerCase());
+      if (aIdx == -1) return 1;
+      if (bIdx == -1) return -1;
+      return aIdx.compareTo(bIdx);
+    });
     // Boards that belong to My School mode (in order: main first)
     final mySchoolOrder = BoardService.current?.getTabOrder('My School') ?? [];
     final mySchoolOrderMap = {
@@ -1341,10 +1431,7 @@ class _HomePageState extends State<HomePage> {
         final addedHomeBoardIds = <String>{};
         for (final boardName in homeBoardNames) {
           // Look for board by name within the current area (case-insensitive)
-          final board = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
-            orElse: () => null,
-          );
+          final board = _boardForTabName(boardName, _activeArea());
           if (board != null && !board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
@@ -1385,7 +1472,7 @@ class _HomePageState extends State<HomePage> {
         break;
 
       case AppMode.legends:
-        // Legends mode: Show the legend boards in the exact requested order
+        // Legends mode: Show the legend boards in the order defined by board_hierarchy.dart
         allTabs.add(TopTab(
             id: 'favorites',
             label: 'Favorites',
@@ -1393,11 +1480,29 @@ class _HomePageState extends State<HomePage> {
             type: TopTabType.favorites));
         final addedLegendsBoardIds = <String>{};
         for (final boardName in legendsBoardNames) {
-          final board = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
-            orElse: () => null,
-          );
-          if (board != null && !board.isSubBoard) {
+          final matches = _boards.where((b) => b.name.toLowerCase() == boardName.toLowerCase()).toList();
+          final legendsMatches = matches.where((b) => b.area == 'Legends').toList();
+          if (legendsMatches.isEmpty && matches.isNotEmpty) {
+            // A board with this name exists but has been moved to another area.
+            continue;
+          }
+          if (legendsMatches.isEmpty) continue;
+          final board = legendsMatches.first;
+          if (!board.isSubBoard) {
+            allTabs.add(TopTab(
+                id: board.id,
+                label: _tabLabelForBoard(board),
+                iconAssetPath: _getBoardIconPath(board),
+                type: TopTabType.board,
+                board: board));
+            addedLegendsBoardIds.add(board.id);
+          }
+        }
+        // Add any custom boards that are explicitly in the Legends area.
+        for (final board in _boards) {
+          if (board.area == 'Legends' &&
+              !board.isSubBoard &&
+              !addedLegendsBoardIds.contains(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1420,16 +1525,63 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
             icon: Icons.favorite,
             type: TopTabType.favorites));
+        // Build a name -> id map straight from the "Recipes" board's own
+        // tiles. This is the exact same linkedBoardId tapping that tile
+        // would open, so the tab bar can never disagree with the tile —
+        // matching by name alone against the (possibly stale-cached, or
+        // once-duplicated) board list could otherwise pick a different
+        // board than the one the tile actually links to.
+        final recipesLanding = _boards.cast<Board?>().firstWhere(
+              (b) => b?.id == 'prebuilt_recipes',
+              orElse: () => null,
+            );
+        final recipesTileIds = <String, String>{
+          for (final tile in recipesLanding?.tiles ?? const <SymbolTile>[])
+            if (tile.isBoardLink && tile.linkedBoardId.isNotEmpty)
+              tile.label.toLowerCase(): tile.linkedBoardId,
+        };
+        final recipesOrder = BoardService.current?.getTabOrder('Recipes') ?? [];
+        final recipesOrderMap = {
+          for (int i = 0; i < recipesOrder.length; i++)
+            recipesOrder[i].toLowerCase(): i
+        };
+        final recipesBoardNames = _boards
+            .where((b) => b.area == 'Recipes' && !b.isSubBoard)
+            .map((b) => b.name)
+            .toSet()
+            .toList()
+          ..sort((a, b) {
+            final aSaved = recipesOrderMap[a.toLowerCase()];
+            final bSaved = recipesOrderMap[b.toLowerCase()];
+            if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+            if (aSaved != null) return -1;
+            if (bSaved != null) return 1;
+            return a.toLowerCase().compareTo(b.toLowerCase());
+          });
         final addedRecipesBoardIds = <String>{};
-        for (final board in _boards) {
-          if (board.area == 'Recipes' && !board.isSubBoard) {
+        for (final boardName in recipesBoardNames) {
+          final tileId = recipesTileIds[boardName.toLowerCase()];
+          Board? board;
+          if (tileId != null) {
+            board = _boards.cast<Board?>().firstWhere(
+                  (b) => b?.id == tileId,
+                  orElse: () => null,
+                );
+          }
+          board ??= _boards.cast<Board?>().firstWhere(
+                (b) =>
+                    b?.name.toLowerCase() == boardName.toLowerCase() &&
+                    b?.area == 'Recipes',
+                orElse: () => null,
+              );
+          if (board == null || board.isSubBoard) continue;
+          if (addedRecipesBoardIds.add(board.id)) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
                 iconAssetPath: _getBoardIconPath(board),
                 type: TopTabType.board,
                 board: board));
-            addedRecipesBoardIds.add(board.id);
           }
         }
         allTabs.add(TopTab(
@@ -1446,7 +1598,17 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
             icon: Icons.favorite,
             type: TopTabType.favorites));
+        final signOrder = BoardService.current?.getTabOrder('Sign') ?? [];
+        final signOrderMap = {
+          for (int i = 0; i < signOrder.length; i++)
+            signOrder[i].toLowerCase(): i
+        };
         final signBoardNames = hierarchyTopLevel('Sign')..sort((a, b) {
+          final aSaved = signOrderMap[a.toLowerCase()];
+          final bSaved = signOrderMap[b.toLowerCase()];
+          if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+          if (aSaved != null) return -1;
+          if (bSaved != null) return 1;
           final aIdx = runtimeBoardHierarchy
               .indexWhere((e) => e.name.toLowerCase() == a.toLowerCase());
           final bIdx = runtimeBoardHierarchy
@@ -1506,13 +1668,9 @@ class _HomePageState extends State<HomePage> {
         final addedSchoolBoardIds = <String>{};
         for (final boardName in schoolBoardNames) {
           // Look for board by name within the current area
-          final boardMatch = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
-            orElse: () => null,
-          );
+          final board = _boardForTabName(boardName, _activeArea());
           
-          if (boardMatch == null) continue;
-          final board = boardMatch;
+          if (board == null) continue;
           if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
@@ -1553,13 +1711,9 @@ class _HomePageState extends State<HomePage> {
         final addedMySchoolBoardIds = <String>{};
         for (final boardName in mySchoolBoardNames) {
           // Look for board by name within the current area
-          final boardMatch = _boards.cast<Board?>().firstWhere(
-            (b) => b?.name.toLowerCase() == boardName.toLowerCase() && b?.area == _activeArea(),
-            orElse: () => null,
-          );
+          final board = _boardForTabName(boardName, _activeArea());
           
-          if (boardMatch == null) continue;
-          final board = boardMatch;
+          if (board == null) continue;
           if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
@@ -1597,8 +1751,32 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
             icon: Icons.favorite,
             type: TopTabType.favorites));
-        for (final board in _boards) {
-          if (board.area == 'Personal' && !board.isSubBoard) {
+        final personalOrder = BoardService.current?.getTabOrder('Personal') ?? [];
+        final personalOrderMap = {
+          for (int i = 0; i < personalOrder.length; i++)
+            personalOrder[i].toLowerCase(): i
+        };
+        final personalBoardNames = _boards
+            .where((b) => b.area == 'Personal' && !b.isSubBoard)
+            .map((b) => b.name)
+            .toList()
+          ..sort((a, b) {
+            final aSaved = personalOrderMap[a.toLowerCase()];
+            final bSaved = personalOrderMap[b.toLowerCase()];
+            if (aSaved != null && bSaved != null) return aSaved.compareTo(bSaved);
+            if (aSaved != null) return -1;
+            if (bSaved != null) return 1;
+            return a.toLowerCase().compareTo(b.toLowerCase());
+          });
+        for (final boardName in personalBoardNames) {
+          final matches = _boards
+              .where((b) =>
+                  b.name.toLowerCase() == boardName.toLowerCase() &&
+                  b.area == 'Personal')
+              .toList();
+          if (matches.isEmpty) continue;
+          final board = matches.first;
+          if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1612,6 +1790,20 @@ class _HomePageState extends State<HomePage> {
             label: 'New Board',
             icon: Icons.edit,
             type: TopTabType.editor));
+        break;
+
+      case AppMode.unassigned:
+        // Admin-only: show Unassigned boards so they can be reviewed/deleted.
+        for (final board in _boards) {
+          if (board.area == 'Unassigned' && !board.isSubBoard) {
+            allTabs.add(TopTab(
+                id: board.id,
+                label: _tabLabelForBoard(board),
+                iconAssetPath: _getBoardIconPath(board),
+                type: TopTabType.board,
+                board: board));
+          }
+        }
         break;
     }
     
@@ -1720,6 +1912,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// Returns sub-board tabs for any parent board that links to sub-boards.
+  /// Resolve a top-level tab board by name within [area], preferring a real
+  /// board over a stale link board when several boards share the same name
+  /// (e.g. an empty `link_prebuilt_*` board shadowing the real board).
+  Board? _boardForTabName(String boardName, String area) {
+    final matches = _boards
+        .where((b) =>
+            b.name.toLowerCase() == boardName.toLowerCase() && b.area == area)
+        .toList();
+    if (matches.isEmpty) return null;
+    return matches.firstWhere(
+      (b) => !b.id.startsWith('link_'),
+      orElse: () => matches.first,
+    );
+  }
+
   List<TopTab> _subTabsForBoard(Board? board) {
     if (board == null) return [];
     
@@ -1751,7 +1958,20 @@ class _HomePageState extends State<HomePage> {
       final childrenTabs = <TopTab>[];
       final seenIds = <String>{};
       for (final name in savedOrder) {
-        final b = _boards.cast<Board?>().firstWhere((b) => b?.name.toLowerCase() == name.toLowerCase(), orElse: () => null);
+        // Prefer a real board over an empty link board when several boards
+        // share the same name, otherwise stale link boards can shadow the
+        // real board and show an empty/wrong board. Fall back to the link
+        // board when it is the only match for that name.
+        final matching = _boards
+            .where((b) => b.name.toLowerCase() == name.toLowerCase())
+            .toList();
+        Board? b;
+        if (matching.isNotEmpty) {
+          b = matching.firstWhere(
+            (candidate) => !candidate.id.startsWith('link_'),
+            orElse: () => matching.first,
+          );
+        }
         if (b != null && seenIds.add(b.id)) {
           childrenTabs.add(TopTab(
             id: b.id,
@@ -2204,15 +2424,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-/// This is the core speech function. It stops any current speech 
+/// This is the core speech function. It stops any current speech
 /// and plays the new string based on the user's voice settings.
 
-  Future<void> _speakText(String text, {bool saveHistory = false}) async {
+  String _buildSpeakableText(String text) {
+    return text
+        .replaceAll(RegExp(r'[^\w\s]+'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+  }
+
+  Future<void> _speakText(String text, {bool saveHistory = false, String? displayText}) async {
     if (text.trim().isEmpty) return;
     await _tts.stop();
     await _tts.speak(text);
     if (saveHistory) {
-      await _saveHistory(text);
+      await _saveHistory(displayText ?? text);
     }
   }
 
@@ -2395,10 +2622,7 @@ class _HomePageState extends State<HomePage> {
     if (_activeTab?.type == TopTabType.board && _activeTab?.board != null && (search.isEmpty || (search.length == 1 && !_isSearchableShortQuery(search)))) {
       final board = _activeTab!.board!;
 
-      if (board.adjustableLayout) {
-        // Requirement: ensure that it always includes the very last tile on the board, and finishes there.
-        // It should not cut tiles off, nor should I any more extra blank tiles than is needed.
-        
+      if (board.rows > 0 && board.columns > 0) {
         // Find the index of the last tile that has any content (label, image, or emoji)
         int lastContentIndex = -1;
         for (int i = filtered.length - 1; i >= 0; i--) {
@@ -2408,38 +2632,25 @@ class _HomePageState extends State<HomePage> {
             break;
           }
         }
-        
-        // We show all tiles up to the last filled one, plus exactly ONE blank space at the end
-        // for adding new content.
+
+        // Empty board: show at most one "Add" tile
         if (lastContentIndex == -1) {
-          // Board is completely empty, just show one "Add" tile
           return filtered.isEmpty ? [] : filtered.sublist(0, 1);
         }
-        
-        final displayCount = (lastContentIndex + 2).clamp(1, filtered.length);
-        return filtered.sublist(0, displayCount);
-      }
 
-      if (!board.adjustableLayout && board.rows > 0 && board.columns > 0) {
         final gridLimit = board.rows * board.columns;
-        
-        // Find the index of the last tile that has any content
-        int lastContentIndex = -1;
-        for (int i = filtered.length - 1; i >= 0; i--) {
-          final t = filtered[i];
-          if (t.label.isNotEmpty || t.imageAsset.isNotEmpty || t.emoji.isNotEmpty || t.linkedBoardId.isNotEmpty) {
-            lastContentIndex = i;
-            break;
-          }
-        }
-        
-        // Show at least the grid size, but expand if there's content beyond it
-        final actualLimit = max(gridLimit, lastContentIndex + 1);
+        // Adjustable boards show up to the last filled tile plus one blank;
+        // fixed boards show at least the full grid, expanding if content goes beyond it.
+        final actualLimit = board.adjustableLayout
+            ? (lastContentIndex + 2).clamp(1, filtered.length)
+            : max(gridLimit, lastContentIndex + 1);
 
-        // Reset pagination state when the active board changes
+        // Reset pagination state when the active board changes.
+        // Start with a small number of rows so large boards (e.g. Disney Stories)
+        // render quickly, with a 'Show More' button to reveal the rest.
         if (_visibleBoardId != board.id) {
           _visibleBoardId = board.id;
-          _visibleBoardRows = 12;
+          _visibleBoardRows = 3;
         }
 
         final contentRows = (actualLimit / board.columns).ceil();
@@ -2450,9 +2661,7 @@ class _HomePageState extends State<HomePage> {
           return filtered.sublist(0, limit);
         }
 
-        if (filtered.length > actualLimit) {
-          return filtered.sublist(0, actualLimit);
-        }
+        return filtered.sublist(0, min(actualLimit, filtered.length));
       }
     }
     return filtered;
@@ -2461,14 +2670,17 @@ class _HomePageState extends State<HomePage> {
   bool get _showMoreButton {
     if (_activeTab?.type != TopTabType.board || _activeTab?.board == null) return false;
     final board = _activeTab!.board!;
-    if (board.adjustableLayout) return false;
     final search = _searchController.text.trim().toLowerCase();
     if (search.isNotEmpty && (search.length > 1 || _isSearchableShortQuery(search))) return false;
     final filtered = _filteredSymbols;
     if (filtered.isEmpty) return false;
     final lastContent = filtered.lastIndexWhere((t) =>
         t.label.isNotEmpty || t.imageAsset.isNotEmpty || t.emoji.isNotEmpty || t.linkedBoardId.isNotEmpty);
-    final actualLimit = max(board.rows * board.columns, lastContent + 1);
+    if (lastContent == -1) return false;
+    final gridLimit = board.rows * board.columns;
+    final actualLimit = board.adjustableLayout
+        ? (lastContent + 2).clamp(1, filtered.length)
+        : max(gridLimit, lastContent + 1);
     final contentRows = (actualLimit / board.columns).ceil();
     return contentRows > 12 && _visibleBoardRows < contentRows;
   }
@@ -2543,6 +2755,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _onBoardScaleStart(ScaleStartDetails details) {
+    _gridZoomStart = _gridZoom;
+  }
+
+  void _onBoardScaleUpdate(ScaleUpdateDetails details) {
+    if (details.scale == 1.0) return;
+    final newZoom = (_gridZoomStart * details.scale).clamp(0.5, 2.0);
+    if (newZoom != _gridZoom) {
+      setState(() {
+        _gridZoom = newZoom;
+      });
+    }
+  }
+
+  void _onBoardPointerSignal(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      final bool ctrl = HardwareKeyboard.instance.isLogicalKeyPressed(LogicalKeyboardKey.controlLeft) ||
+          HardwareKeyboard.instance.isLogicalKeyPressed(LogicalKeyboardKey.controlRight);
+      if (ctrl) {
+        final step = event.scrollDelta.dy > 0 ? 0.9 : 1.1;
+        final newZoom = (_gridZoom * step).clamp(0.5, 2.0);
+        if (newZoom != _gridZoom) {
+          setState(() {
+            _gridZoom = newZoom;
+          });
+        }
+      }
+    }
+  }
+
   void _handleSymbolTap(SymbolTile symbol) {
     if (symbol.isBoardLink) {
       _openLinkedBoard(symbol.linkedBoardId);
@@ -2575,12 +2817,22 @@ class _HomePageState extends State<HomePage> {
       if (full != null) pending = full;
     }
     final board = pending ?? _createEmptySubboard(boardId);
-    if (!_boards.any((b) => b.id == boardId)) {
+    // Replace any stale/placeholder entry for this id (e.g. a ghost board
+    // cached with a wrong area) with the freshly-resolved board so later
+    // lookups by id (including the mode check just below) see the correct
+    // area rather than leftover bad data.
+    final existingBoardIndex = _boards.indexWhere((b) => b.id == board.id);
+    if (existingBoardIndex >= 0) {
+      _boards[existingBoardIndex] = board;
+    } else {
       _boards.add(board);
     }
     if (!mounted) return;
 
-    final targetMode = _getModeForBoard(board.id);
+    // Use the freshly-resolved board's own area directly rather than
+    // re-looking it up in `_boards` — avoids picking up a stale/ghost
+    // placeholder area for the same id.
+    final targetMode = _appModeForArea(board.area);
     if (_currentMode != targetMode) {
       setState(() {
         _currentMode = targetMode;
@@ -2591,7 +2843,11 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
     }
 
-    _preResolveChildIcons(board);
+    // Don't block showing the board on icon preloading — this can be slow
+    // for boards with many children (e.g. Disney Stories). Icons pop in via
+    // their own setState once ready.
+    unawaited(_preResolveChildIcons(board));
+    if (!mounted) return;
     setState(() {
       final boardIndex = _boards.indexWhere((b) => b.id == board.id);
       if (boardIndex >= 0) {
@@ -2666,7 +2922,7 @@ class _HomePageState extends State<HomePage> {
       area: area ?? hierarchyArea(name),
       rows: defaultBoardRows,
       columns: defaultBoardColumns,
-      adjustableLayout: true,
+      adjustableLayout: false,
       backgroundColor: defaultBoardColor,
       tiles: const [],
       isSubBoard: isSubBoard,
@@ -2696,7 +2952,7 @@ class _HomePageState extends State<HomePage> {
       area: _activeArea(),
       rows: defaultBoardRows,
       columns: defaultBoardColumns,
-      adjustableLayout: true,
+      adjustableLayout: false,
       backgroundColor: defaultBoardColor,
       tiles: const [],
       isSubBoard: false,
@@ -2800,12 +3056,63 @@ class _HomePageState extends State<HomePage> {
     return !RegExp(r'[a-zA-Z0-9]').hasMatch(trimmed);
   }
 
+  static const Map<String, String> _silentPunctuation = {
+    'fullstop': '.',
+    'fullstop.': '.',
+    'period': '.',
+    'dot': '.',
+    'comma': ',',
+    'comma,': ',',
+    'questionmark': '?',
+    'questionmark?': '?',
+    'question': '?',
+    'exclamationmark': '!',
+    'exclamationmark!': '!',
+    'exclamation': '!',
+    'apostrophe': "'",
+    "apostrophe'": "'",
+    'quotationmarks': '"',
+    'quotationmark': '"',
+    'quotemarks': '"',
+    'quotes': '"',
+    'quote': '"',
+    'dash': '-',
+    'hyphen': '-',
+    'openbracketorparenthesis': '(',
+    'openbracket': '(',
+    'openbrackets': '(',
+    'openparenthesis': '(',
+    'openparentheses': '(',
+    'openbracketorparenthesis(': '(',
+    'closebracketorparenthesis': ')',
+    'closebracket': ')',
+    'closebrackets': ')',
+    'closeparenthesis': ')',
+    'closeparentheses': ')',
+    'closebracketorparenthesis)': ')',
+    'colon': ':',
+    'colon:': ':',
+    'semicolon': ';',
+    'semicolon;': ';',
+  };
+
+  String? _punctuationForSilent(String label) {
+    final key = label.toLowerCase().replaceAll(RegExp(r'[\s-]'), '');
+    if (_silentPunctuation.containsKey(key)) return _silentPunctuation[key];
+    final trimmed = label.trim();
+    if (trimmed.isNotEmpty && trimmed.length == 1 && !RegExp(r'[a-zA-Z0-9]').hasMatch(trimmed)) return trimmed;
+    return null;
+  }
+
   String _buildPhraseText() {
-    if (_phrase.isEmpty) return '';
-    final buffer = StringBuffer(_phrase.first.label);
-    for (int i = 1; i < _phrase.length; i++) {
+    final buffer = StringBuffer();
+    for (int i = 0; i < _phrase.length; i++) {
       final symbol = _phrase[i];
-      if (_isPunctuation(symbol.label)) {
+      if (symbol.isSilent) {
+        final punct = _punctuationForSilent(symbol.label);
+        if (punct == null || punct.isEmpty) continue;
+        buffer.write(punct);
+      } else if (buffer.isEmpty || _isPunctuation(symbol.label)) {
         buffer.write(symbol.label.trim());
       } else {
         buffer.write(' ${symbol.label.trim()}');
@@ -2853,7 +3160,42 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  SymbolTile? _findSymbolForTypedWord(String word) {
+  /// Builds (once, then caches) an index of every tile's label to that tile,
+  /// scanning every board in every area — not just whatever's currently
+  /// loaded into [_boards]. Used as a fallback so typed words still find a
+  /// real, exact symbol even if it only exists on a board from a different
+  /// area than the one currently active.
+  Future<Map<String, SymbolTile>> _ensureGlobalWordIndex() async {
+    if (_globalWordIndex != null) return _globalWordIndex!;
+    if (_globalWordIndexFuture != null) return _globalWordIndexFuture!;
+    final future = () async {
+      final index = <String, SymbolTile>{};
+      try {
+        final service = await BoardService.getInstance();
+        final allBoards = await service.listBoards(includeTiles: true);
+        for (final board in allBoards) {
+          for (final tile in board.tiles) {
+            final label = tile.label.toLowerCase().trim();
+            if (label.isEmpty) continue;
+            final existing = index[label];
+            // Prefer a tile that actually has an image over a label-only one.
+            if (existing == null ||
+                (existing.imageAsset.isEmpty && tile.imageAsset.isNotEmpty)) {
+              index[label] = tile;
+            }
+          }
+        }
+      } catch (_) {
+        // Leave whatever was gathered before the failure; better than nothing.
+      }
+      _globalWordIndex = index;
+      return index;
+    }();
+    _globalWordIndexFuture = future;
+    return future;
+  }
+
+  Future<SymbolTile?> _findSymbolForTypedWord(String word) async {
     final lower = word.toLowerCase().trim();
     if (lower.isEmpty) return null;
     if (_typedWordCache.containsKey(lower)) {
@@ -2873,11 +3215,17 @@ class _HomePageState extends State<HomePage> {
         return symbol;
       }
     }
+    final globalIndex = await _ensureGlobalWordIndex();
+    final globalHit = globalIndex[lower];
+    if (globalHit != null) {
+      _typedWordCache[lower] = globalHit;
+      return globalHit;
+    }
     const suffixes = ['ies', 'es', 'ing', 'ed', 'er', 'est', 'ion', 'tion', 'ly', 's'];
     for (final suffix in suffixes) {
       if (lower.endsWith(suffix) && lower.length > suffix.length + 2) {
         final base = lower.substring(0, lower.length - suffix.length);
-        final baseTile = _findExactSymbol(base);
+        final baseTile = _findExactSymbol(base) ?? globalIndex[base];
         if (baseTile != null) {
           _typedWordCache[lower] = baseTile;
           return baseTile;
@@ -2899,6 +3247,33 @@ class _HomePageState extends State<HomePage> {
     return null;
   }
 
+  /// Whether [candidateLabel] is a genuine match for the typed [word], rather
+  /// than just "the least-bad option a fuzzy/relevance search happened to
+  /// return". Used to stop the sentence builder showing an unrelated picture
+  /// (e.g. typing "help" resulting in "back") for words with no real symbol.
+  bool _isPlausibleWordMatch(String candidateLabel, String word) {
+    final c = candidateLabel.toLowerCase().trim();
+    final w = word.toLowerCase().trim();
+    if (c.isEmpty || w.isEmpty) return false;
+    if (c == w) return true;
+    String stripSuffix(String s) {
+      const suffixes = ['ies', 'es', 'ing', 'ed', 'er', 'est', 'ion', 'tion', 'ly', 's'];
+      for (final suf in suffixes) {
+        if (s.length > suf.length + 2 && s.endsWith(suf)) {
+          return s.substring(0, s.length - suf.length);
+        }
+      }
+      return s;
+    }
+    if (stripSuffix(c) == stripSuffix(w)) return true;
+    // Whole-word containment only (e.g. "help me" contains "help"), guarded
+    // by a minimum length so short unrelated words can't coincidentally
+    // "contain" each other.
+    if (c.length >= 4 && w.contains(c)) return true;
+    if (w.length >= 4 && c.contains(w)) return true;
+    return false;
+  }
+
   Future<void> _addTypedWordToPhrase(String word) async {
     final lower = word.toLowerCase().trim();
     if (lower.isEmpty) return;
@@ -2907,18 +3282,23 @@ class _HomePageState extends State<HomePage> {
       _addTileToPhrase(cached);
       return;
     }
-    var symbol = _findSymbolForTypedWord(word);
+    var symbol = await _findSymbolForTypedWord(word);
     if (symbol != null) {
       _addTileToPhrase(symbol);
       return;
     }
+    // Only accept a fuzzy/relevance-search result if it's a genuine match for
+    // the typed word — these searches always return their single best-ranked
+    // result even when nothing actually matches well, which used to show an
+    // unrelated picture (e.g. typing "help" showing "back") instead of just
+    // falling back to plain text.
     final assetResults = await _externalSymbolService.searchAssets(word, limit: 1);
-    if (assetResults.isNotEmpty) {
+    if (assetResults.isNotEmpty && _isPlausibleWordMatch(assetResults.first.label, word)) {
       symbol = assetResults.first.toSymbolTile();
     }
     if (symbol == null) {
       final externalResults = await _externalSymbolService.searchAll(word, limit: 1);
-      if (externalResults.isNotEmpty) {
+      if (externalResults.isNotEmpty && _isPlausibleWordMatch(externalResults.first.label, word)) {
         symbol = externalResults.first.toSymbolTile();
       }
     }
@@ -3197,6 +3577,8 @@ class _HomePageState extends State<HomePage> {
         targetMode = AppMode.legends;
       } else if (area == 'Recipes') {
         targetMode = AppMode.recipes;
+      } else if (area == 'Unassigned') {
+        targetMode = AppMode.unassigned;
       }
       _currentMode = targetMode;
 
@@ -3279,6 +3661,8 @@ class _HomePageState extends State<HomePage> {
         return 'My School';
       case AppMode.personal:
         return 'Personal';
+      case AppMode.unassigned:
+        return 'Unassigned';
     }
   }
 
@@ -3327,6 +3711,7 @@ class _HomePageState extends State<HomePage> {
           availableBoards: _boards,
           selectedPreferredSets: _activeProfile?.preferredSymbolSets ?? [],
           startingBoardId: _activeProfile?.startingBoardId ?? '',
+          initialProfile: _activeProfile,
         ),
       ),
     );
@@ -3335,11 +3720,15 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _settings = result.settings;
         if (_activeProfile != null) {
-          _activeProfile = _activeProfile!.copyWith(
-            settings: result.settings,
-            preferredSymbolSets: result.preferredSymbolSets,
-            startingBoardId: result.startingBoardId,
-          );
+          if (result.profile != null) {
+            _activeProfile = result.profile!;
+          } else {
+            _activeProfile = _activeProfile!.copyWith(
+              settings: result.settings,
+              preferredSymbolSets: result.preferredSymbolSets,
+              startingBoardId: result.startingBoardId,
+            );
+          }
         }
       });
       if (_activeProfile != null) {
@@ -3423,7 +3812,7 @@ class _HomePageState extends State<HomePage> {
       }
 
       if (!mounted) return;
-      _preResolveChildIcons(full);
+      unawaited(_preResolveChildIcons(full));
       setState(() {
         _boardLoadError = null;
         _missingBoardId = null;
@@ -3497,11 +3886,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  bool _isAncestor(String ancestorId, Board? child) {
+  bool _isAncestor(String ancestorId, Board? child, [Set<String>? visited]) {
     if (child == null) return false;
     if (child.parentBoardId == ancestorId) return true;
+    visited ??= <String>{};
+    if (!visited.add(child.id)) return false; // cycle guard
     final parent = _boards.cast<Board?>().firstWhere((b) => b?.id == child.parentBoardId, orElse: () => null);
-    return _isAncestor(ancestorId, parent);
+    return _isAncestor(ancestorId, parent, visited);
   }
 
   bool _isTabSelected(TopTab tab) {
@@ -3982,7 +4373,9 @@ class _HomePageState extends State<HomePage> {
     // Work out ancestors for the current active tab to show the path
     List<Board> lineage = [];
     Board? current = _activeTab?.board;
+    final visitedLineageIds = <String>{};
     while (current != null && current.parentBoardId != null) {
+       if (!visitedLineageIds.add(current.id)) break; // cycle guard
        final parent = _boards.cast<Board?>().firstWhere((b) => b?.id == current!.parentBoardId, orElse: () => null);
        if (parent != null) {
          lineage.insert(0, parent);
@@ -4005,6 +4398,52 @@ class _HomePageState extends State<HomePage> {
     }
 
     return rows;
+  }
+
+  Future<void> _showDeleteUnassignedDialog() async {
+    final board = _activeTab?.board;
+    if (board == null) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Unassigned Board'),
+        content: Text(
+          'Are you sure you want to permanently delete "${board.name}"? '
+          'This will remove its source JSON and its runtime hierarchy entry.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      final service = await BoardService.getInstance();
+      await service.deleteUnassignedBoardCompletely(board.id);
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('"${board.name}" has been permanently deleted.')),
+      );
+
+      // Rebuild tabs so the deleted board is no longer listed.
+      _buildTabs();
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Delete failed: $e'), backgroundColor: Colors.red),
+      );
+    }
   }
 
   Widget _buildBoardLoadingPlaceholder(BuildContext context) {
@@ -4084,11 +4523,21 @@ class _HomePageState extends State<HomePage> {
                 _buildModeButton(AppMode.legends, Icons.auto_stories, 'Legends'),
                 _buildModeButton(AppMode.recipes, Icons.restaurant, 'Recipes'),
                 _buildModeButton(AppMode.personal, Icons.person, 'Personal'),
+                if (_activeProfile?.isAdmin == true)
+                  _buildModeButton(AppMode.unassigned, Icons.delete_outline, 'Unassigned'),
               ],
             ),
           ),
         ),
         actions: [
+          if (_currentMode == AppMode.unassigned &&
+              _activeProfile?.isAdmin == true &&
+              _activeTab?.type == TopTabType.board)
+            IconButton(
+              icon: const Icon(Icons.delete_forever),
+              tooltip: 'Permanently delete this unassigned board',
+              onPressed: _showDeleteUnassignedDialog,
+            ),
           IconButton(
             icon: const Icon(Icons.home_outlined),
             tooltip: 'Profile home',
@@ -4230,26 +4679,34 @@ class _HomePageState extends State<HomePage> {
                                   key: _boardViewKey,
                                   child: _isLoadingActiveBoard
                                       ? _buildBoardLoadingPlaceholder(context)
-                                      : SymbolGrid(
-                                  symbols: _displaySymbols,
-                                  favoriteIds: _favoritesService?.favorites ?? {},
-                                  onTap: _handleSymbolTap,
-                                  onLongPress: _handleSymbolLongPress,
-                                  onAdd: (index) {
-                                    if (_activeTab?.type == TopTabType.board && _activeTab?.board != null) {
-                                      _openBoardEditor(board: _activeTab!.board, index: index);
-                                    }
-                                  },
-                                  fixedRows: _activeTab?.board?.rows,
-                                  fixedColumns: _activeTab?.board?.columns,
-                                  adjustableLayout:
-                                      _activeTab?.board?.adjustableLayout ?? true,
-                                  boxScale: _activeTab?.board?.boxScale ?? 1.0,
-                                  highContrast: _settings?.highContrast ?? false,
-                                  viewOnly: _activeTab?.type == TopTabType.board,
-                                  scrollable: false,
-                                  horizontalScroll: _activeTab?.board?.adjustableLayout == false,
-                                  controller: _boardHorizontalScrollController,
+                                      : Listener(
+                                  onPointerSignal: _onBoardPointerSignal,
+                                  child: GestureDetector(
+                                    onScaleStart: _onBoardScaleStart,
+                                    onScaleUpdate: _onBoardScaleUpdate,
+                                    behavior: HitTestBehavior.translucent,
+                                    child: SymbolGrid(
+                                      symbols: _displaySymbols,
+                                      favoriteIds: _favoritesService?.favorites ?? {},
+                                      onTap: _handleSymbolTap,
+                                      onLongPress: _handleSymbolLongPress,
+                                      onAdd: (index) {
+                                        if (_activeTab?.type == TopTabType.board && _activeTab?.board != null) {
+                                          _openBoardEditor(board: _activeTab!.board, index: index);
+                                        }
+                                      },
+                                      fixedRows: _activeTab?.board?.rows,
+                                      fixedColumns: _activeTab?.board?.columns,
+                                      adjustableLayout:
+                                          _activeTab?.board?.adjustableLayout ?? true,
+                                      boxScale: (_activeTab?.board?.boxScale ?? 1.0) * _gridZoom,
+                                      highContrast: _settings?.highContrast ?? false,
+                                      viewOnly: _activeTab?.type == TopTabType.board,
+                                      scrollable: false,
+                                      horizontalScroll: _activeTab?.board?.adjustableLayout == false,
+                                      controller: _boardHorizontalScrollController,
+                                    ),
+                                  ),
                                 ),
                               /*FIXME*/),
                               if (_showMoreButton)
@@ -4342,8 +4799,8 @@ class _HomePageState extends State<HomePage> {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             final symbol = _phrase[index];
-                            final showSymbol = _settings?.sentenceType != 'words';
-                            final showLabel = _settings?.sentenceType != 'symbols';
+                            final showSymbol = _settings?.sentenceType != 'words' || symbol.isSilent;
+                            final showLabel = _settings?.sentenceType != 'symbols' && !symbol.isSilent;
                             return Stack(
                               children: [
                                 Container(
@@ -4405,7 +4862,11 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.volume_up, size: 28),
-                    onPressed: () => _speakText(_sentenceController.text, saveHistory: true),
+                    onPressed: () => _speakText(
+                      _buildSpeakableText(_sentenceController.text),
+                      saveHistory: true,
+                      displayText: _sentenceController.text,
+                    ),
                     tooltip: 'Speak sentence',
                   ),
                   IconButton(

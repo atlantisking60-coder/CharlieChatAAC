@@ -2,7 +2,7 @@
   "id": "prebuilt_home_equipment_common",
   "name": "Home Equipment (Common)",
   "area": "Common",
-  "parentBoardId": "prebuilt_home_management",
+  "parentBoardId": "prebuilt_home_management_common",
   "linkedBoardId": null,
   "rows": 6,
   "columns": 6,

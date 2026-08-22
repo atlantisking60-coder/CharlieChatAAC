@@ -1,0 +1,18 @@
+acid
+ph1
+ph2
+ph3
+ph4
+ph5
+ph6
+neutral
+ph7
+ph scale
+alkeli
+ph9
+ph10
+ph11
+ph12
+ph13
+ph14
+ph8

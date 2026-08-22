@@ -24,6 +24,7 @@ String? _findKeyIgnoreCase(Map<String, List<String>> map, String query) {
 }
 
 String _bestBoardIconPath(String boardName, List<String> paths) {
+  if (paths.isEmpty) return '';
   final lower = boardName.toLowerCase();
   // Prefer an exact file-name match
   for (final path in paths) {
@@ -35,43 +36,46 @@ String _bestBoardIconPath(String boardName, List<String> paths) {
   return _sanitizeIconAssetPath(sorted.first);
 }
 
-String _resolveIconAssetPath(String name, String? existing) {
+String _resolveIconAssetPath(String name, String? existing,
+    {bool useBoardsOnly = false}) {
   if (existing != null && existing.isNotEmpty) {
     return existing;
   }
 
   final boardName = name;
   final searchName = boardName.toLowerCase().trim();
-
-  // Try the symbol library first (non-BOARDS assets)
-  final symbolKey = _findKeyIgnoreCase(symbolIconAssetMap, searchName);
-  if (symbolKey != null) {
-    return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
-  }
-
   final clean = searchName.replaceAll(RegExp(r'[(){}\[\].,!?;:"/#@$%^&*]'), '').trim();
-  if (clean.isNotEmpty) {
-    final cleanSymbolKey = _findKeyIgnoreCase(symbolIconAssetMap, clean);
-    if (cleanSymbolKey != null) {
-      return _bestBoardIconPath(cleanSymbolKey, symbolIconAssetMap[cleanSymbolKey]!);
-    }
-  }
 
-  String? bestSymbolKey;
-  int bestSymbolScore = 0;
-  for (final key in symbolIconAssetMap.keys) {
-    final keyLower = key.toLowerCase();
-    if (keyLower.contains(searchName) ||
-        searchName.contains(keyLower) ||
-        (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
-      if (key.length > bestSymbolScore) {
-        bestSymbolScore = key.length;
-        bestSymbolKey = key;
+  if (!useBoardsOnly) {
+    // Try the symbol library first (non-BOARDS assets)
+    final symbolKey = _findKeyIgnoreCase(symbolIconAssetMap, searchName);
+    if (symbolKey != null) {
+      return _bestBoardIconPath(symbolKey, symbolIconAssetMap[symbolKey]!);
+    }
+
+    if (clean.isNotEmpty) {
+      final cleanSymbolKey = _findKeyIgnoreCase(symbolIconAssetMap, clean);
+      if (cleanSymbolKey != null) {
+        return _bestBoardIconPath(cleanSymbolKey, symbolIconAssetMap[cleanSymbolKey]!);
       }
     }
-  }
-  if (bestSymbolKey != null) {
-    return _bestBoardIconPath(bestSymbolKey, symbolIconAssetMap[bestSymbolKey]!);
+
+    String? bestSymbolKey;
+    int bestSymbolScore = 0;
+    for (final key in symbolIconAssetMap.keys) {
+      final keyLower = key.toLowerCase();
+      if (keyLower.contains(searchName) ||
+          searchName.contains(keyLower) ||
+          (clean.isNotEmpty && (keyLower.contains(clean) || clean.contains(keyLower)))) {
+        if (key.length > bestSymbolScore) {
+          bestSymbolScore = key.length;
+          bestSymbolKey = key;
+        }
+      }
+    }
+    if (bestSymbolKey != null) {
+      return _bestBoardIconPath(bestSymbolKey, symbolIconAssetMap[bestSymbolKey]!);
+    }
   }
 
   // Fall back to the BOARDS folder-style icons
@@ -116,6 +120,9 @@ String _resolveIconAssetPath(String name, String? existing) {
   final fileName = boardName;
   return _sanitizeIconAssetPath('assets/BOARDS/$fileName.png');
 }
+
+String resolveBoardLinkIconAssetPath(String boardName) =>
+    _resolveIconAssetPath(boardName, null, useBoardsOnly: true);
 
 String resolveBoardIconAssetPath(Board board) =>
     _resolveIconAssetPath(board.name, board.iconAssetPath);

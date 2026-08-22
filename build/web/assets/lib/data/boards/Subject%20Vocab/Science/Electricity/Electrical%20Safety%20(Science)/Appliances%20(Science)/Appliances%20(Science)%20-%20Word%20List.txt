@@ -1,0 +1,30 @@
+appliance
+tv
+fridge
+freezer
+fridge freezer
+washing machine
+dryer
+oven
+hob
+grill
+microwave
+kettle
+toaster
+steamer
+air fryer
+fryer
+blender
+dishwasher
+vacuum cleaner
+wet vac
+computer
+lamp
+fan
+heater
+radiator
+dehumidifier
+gaming console
+smoke alarm
+carbon monoxide detector
+boiler

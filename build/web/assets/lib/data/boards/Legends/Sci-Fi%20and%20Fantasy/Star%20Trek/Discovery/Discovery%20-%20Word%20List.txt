@@ -1,0 +1,22 @@
+discovery
+(captain) michael burnham
+(commander) saru
+ash tyler
+(commander) paul stamets
+(admiral) charles vance
+(agent) kovich
+(captain) gabriel lorca
+(captain) philippa georgiou
+(chancellor) l'rell
+(commander) jett reno
+(commander) nhan
+(doctor) hugh culber
+(ensign) adira tal
+(ensign) sylvia tilly
+(lieutenant commander) airiam
+(lieutenant) gen rhys
+(lieutenant) joann owosekun
+(lieutenant) keyla detmer
+(president) t'rina
+(scientist) ruon tarka
+cleveland booker

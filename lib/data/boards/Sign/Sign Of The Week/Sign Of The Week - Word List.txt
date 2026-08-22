@@ -1,0 +1,29 @@
+sign
+yes
+no
+please
+thank you
+sorry
+good morning
+good afternoon
+help
+toilet
+home
+school
+work
+finish
+play
+holiday
+happy birthday
+name
+ill
+who
+what
+when
+where
+why
+which
+how
+before
+after
+donkey

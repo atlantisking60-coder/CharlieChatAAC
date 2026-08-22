@@ -303,7 +303,6 @@ const Map<String, List<String>> boardIconAssetMap = {
   "june": ['assets/BOARDS/Time, Months, Events/June.png'],
   "justice league": ['assets/BOARDS/Legends/Characters/DC/Justice League.png'],
   "justice league dark": ['assets/BOARDS/Legends/Characters/DC/Justice League Dark.png'],
-  "justice society": ['assets/BOARDS/Legends/Characters/DC/Justice Society.png'],
   "keeping safe": ['assets/BOARDS/PD/Keeping Safe.png'],
   "keywords": ['assets/BOARDS/Keywords.png'],
   "lady and the tramp": ['assets/BOARDS/Legends/Characters/Disney/Lady and The Tramp.png'],

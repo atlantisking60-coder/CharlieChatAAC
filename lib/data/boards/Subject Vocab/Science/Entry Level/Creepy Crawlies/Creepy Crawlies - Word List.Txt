@@ -1,8 +1,28 @@
-Creepy Crawlies - Word List
-===============================
-
-creepy crawlies
+Animals
+Body Parts
+Insects
+Arachnids
+Invertebrates
+Habitats
+habitat
+insect
+arachnid
+invertebrate
+camouflage
+DNA
+ecosystem
+food chain
 food web
 pitfall
 quadrat
 sampling technique
+carnivore
+herbivore
+omnivore
+piscivore
+scavenger
+wild
+tame
+pet
+predator
+prey

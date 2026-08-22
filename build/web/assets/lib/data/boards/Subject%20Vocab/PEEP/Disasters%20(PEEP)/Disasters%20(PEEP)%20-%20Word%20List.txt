@@ -1,0 +1,39 @@
+flood
+earthquake
+volcano
+tornado
+fire
+storm
+monsoon
+tsunami
+volcanic eruption
+avalanche
+drought
+hurricane
+heatwave
+pandemic
+explosion
+landslide
+blizzard
+deforestation
+oil spill
+nuclear meltdown
+conflict
+terrorism
+war
+house
+structural damage
+destroyed
+homeless
+refugee
+fundraising
+shelter
+clean water
+personal identification
+mental health
+personal items
+medical supplies
+food
+drink
+rest
+tent

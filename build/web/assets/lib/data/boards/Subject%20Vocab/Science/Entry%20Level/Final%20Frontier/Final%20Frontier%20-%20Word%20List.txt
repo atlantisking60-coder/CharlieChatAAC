@@ -1,0 +1,8 @@
+universe
+moon
+orbit
+galaxy
+milky way
+star
+sun (sol)
+telescope

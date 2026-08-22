@@ -1,23 +1,46 @@
-Fossil Formation - Word List
-================================
-
-ancient organisms
-burial
-carbon film
-cast
-decomposition
-evolution
-fossil record
 fossil
-geological time
-imprint
-mold
-paleoclimate
 paleontology
-permineralization
-petrified fossil
-preservation
-replacement
+fossilization
+ancient organism
+extinct
 species
+skeleton
+bones
+shell
+organic material
+burial
+sedimentation
+compaction
+compression
+decomposition
+mineralization
+permineralization
+replacement
+preservation
+environment
+sedimentary
+soil
+ice
+swamp
+river
+ocean
 tar pit
+types of fossil
+mold
+cast
 trace fossil
+petrified fossil
+ember
+imprint
+carbon film
+rock
+layers
+strata
+erosion
+fossil record
+geological time
+evidence
+evolution
+extinction
+paleoclimate
+geological time

@@ -1,0 +1,26 @@
+{
+  "id": "prebuilt_material_properties",
+  "name": "Material Properties",
+  "area": "Subject Vocab",
+  "columns": 6,
+  "backgroundColor": "#FFFFFF",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 200,
+  "tier": 2,
+  "boxScale": 1.0,
+  "tileHeight": 100.0,
+  "tileWidth": 100.0,
+  "layout": {
+    "rows": 2,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "version": 0,
+  "parentBoardId": "prebuilt_science",
+  "iconAssetPath": "assets/Common/People/i.png",
+  "tileIconAssetPath": "assets/Common/People/i.png"
+}

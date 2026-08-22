@@ -1,17 +1,38 @@
-Types Of Rock - Word List
-=============================
-
-colour
-crystalline
+rock
+mineral
+igneous
+sedimentary
+metamorphic
+rock cycle
 geology
-gold
+mountain
+outcrop
+particles
+stone
+physical properties
+crystalline
+change
+texture
+colour
+hardness
 grain size
 luster
-outcrop
 porosity
-processes
-rock cycle
-rock, mineral
-silver
+density
 soft
-stone
+silver
+gold
+processes
+earth
+crust
+continental crust
+oceanic crust
+mantle
+upper mantle
+lower mantle
+core
+outer core
+inner core
+rock cycle
+processes
+luster

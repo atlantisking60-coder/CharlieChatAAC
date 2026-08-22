@@ -1,20 +1,44 @@
-Our Electrical Supply - Word List
-=====================================
-
-AC (alternating current)
-ampere, amp (A)
+Basic Components
+Appliances
+AC (Alternating Current)
+DC (Direct Current)
+ammeter
+ampere/amp
+battery
 bulb
 charge
-DC (direct current)
+circuit
+current
+conductor
+consumption
 dynamo
-earth, ground
-electrical unit
+earth (electrical)
+electric charge
+electrical units
+electricity
+energy
 energy consumption
 insulation
-kilowatt-hour (kWh)
-ohm's law
+insulator
+kilowatt-hour
+live
+mains
+neutral
 ohm
+ohm's law
+parallel circuit
 potential difference
+power
 power rating
+power source
 resistance
+series circuit
 transformer
+volt
+voltage
+low voltage
+high voltage
+voltmeter
+electrical units
+ohm's law
+potential difference

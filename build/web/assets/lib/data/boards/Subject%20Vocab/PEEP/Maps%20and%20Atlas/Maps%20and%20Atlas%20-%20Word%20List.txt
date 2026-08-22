@@ -1,0 +1,43 @@
+globe
+atlas
+map
+compass
+scale
+key or legend
+symbol
+route planning
+navigation
+orientation
+coordinates
+grid
+physical map
+road map
+topographic map
+relief map
+thematic map
+historical map
+climate map
+population map
+economic map
+resource map
+satellite map
+contour lines
+elevation
+tropic of cancer
+north
+north pole
+hemispheres
+latitude
+distance
+west
+equator
+east
+northern hemisphere
+longitude
+direction
+south pole
+south
+tropic of capricorn
+southern hemisphere
+prime meridian
+map reading

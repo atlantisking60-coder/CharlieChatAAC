@@ -1,0 +1,7 @@
+gravity
+newtons
+newton meter
+earth
+falling
+balanced
+unbalanced

@@ -1,0 +1,87 @@
+All five todos are now in place and the touched files are analyzer-clean:
+
+Profile model — UserProfile now has onlineId, role, syncEnabled, lastSyncedAt; ProfileService auto-assigns them.
+Firebase packages — cloud_firestore, firebase_storage, uuid added.
+Profile settings UI — Settings > Profiles now shows the Profile ID (copyable), Role, Password, and Store this profile online toggle.
+Download on the splash page — WelcomeScreen has a new cloud-download icon that opens a dialog to enter a profile online ID and imports it as a new local profile.
+Admin push/merge — FirebaseProfileSyncService handles upload/download, admin board push, and conflict resolution. BoardEditor now shows:
+UPDATED banner with Use new / Add new tiles / Keep mine options when board.adminUpdatePending is true.
+A Push update to admin button when the active profile is admin.
+One caveat: [c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart](cci:4://file:///c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart:0:0-0:0) still contains placeholder values, so cloud sync/push will only work once real Firebase web config is filled in.
+
+
+
+
+
+
+
+how do i add in the real firebase web coding?
+
+
+To add the real Firebase web config, you need to replace the placeholder values in [c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart](cci:4://file:///c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart:0:0-0:0) with your actual Firebase project values.
+
+1. Get the real config from Firebase Console
+Go to https://console.firebase.google.com/
+Open your Charlie Chat project
+Click the gear icon → Project settings
+Under Your apps, find your Web app (or add one with </> )
+Copy the firebaseConfig object values:
+apiKey
+authDomain
+projectId
+storageBucket
+messagingSenderId
+appId
+measurementId (optional)
+2. Paste them into [c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart](cci:4://file:///c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart:0:0-0:0)
+Replace the placeholder lines in the web and windows blocks with your real values, e.g.:
+
+
+
+dart
+static const FirebaseOptions web = FirebaseOptions(
+  apiKey: 'AIzaSy...',
+  appId: '1:123...:web:abc...',
+  messagingSenderId: '123...',
+  projectId: 'your-project-id',
+  authDomain: 'your-project-id.firebaseapp.com',
+  storageBucket: 'your-project-id.firebasestorage.app',
+  measurementId: 'G-...',
+);
+3. Enable Firebase services
+In the Firebase Console:
+
+Authentication → enable Email/Password (and any others you want)
+Firestore Database → create database, start in test mode for dev
+Storage → create a default bucket
+4. Set up security rules (important)
+For now, to allow the app to read/write:
+
+Firestore rules → Develop → Database → Rules:
+
+
+
+js
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true; // TODO: lock down before release
+    }
+  }
+}
+Storage rules:
+
+
+
+js
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if true; // TODO: lock down before release
+    }
+  }
+}
+If you paste your real firebaseConfig values here, I can update [c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart](cci:4://file:///c:/Users/Craig/Downloads/Charlie Chat/lib/firebase_options.dart:0:0-0:0) for you.
+

@@ -11,6 +11,7 @@ if not os.path.exists(boards_dir):
 board_index = []
 
 for root, dirs, files in os.walk(boards_dir):
+    dirs[:] = [d for d in dirs if d not in ('_temp', 'Backups', '.artifacts') and d.lower() != '_deleted']
     for file in files:
         if file.endswith('.json'):
             file_path = os.path.join(root, file)
@@ -72,7 +73,8 @@ with open(output_path, 'w', encoding='utf-8') as f:
         f.write(f"    sortOrder: {entry['sortOrder']},\n")
         f.write(f"    tier: {entry['tier']},\n")
         if entry['iconAssetPath']:
-            f.write(f"    iconAssetPath: '{entry['iconAssetPath']}',\n")
+            icon_escaped = entry['iconAssetPath'].replace("'", "\\'")
+            f.write(f"    iconAssetPath: '{icon_escaped}',\n")
         f.write('  ),\n')
 
     f.write('];\n')

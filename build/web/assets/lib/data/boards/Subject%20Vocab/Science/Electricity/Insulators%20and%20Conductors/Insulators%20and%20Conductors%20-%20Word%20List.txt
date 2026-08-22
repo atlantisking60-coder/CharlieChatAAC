@@ -1,0 +1,30 @@
+Basic Components
+electricity
+electric
+power
+energy
+current
+voltmeter
+circuit
+insulator (electrical)
+conductor (electrical)
+voltage
+allow
+block
+heat insulator
+heat conductor
+material
+plastics
+rubber
+wood
+glass
+metal
+copper
+aluminium
+nickel
+steel
+test
+experiment
+predict
+observe
+results

@@ -1,11 +1,12 @@
-Body Wars - Word List
-=========================
-
 antibiotic
+bacteria
 bacterium
-cells
+disease
+fungal cell
 fungus
-micro-organism
+microbes
+micro-organisms
 relationship
 sweat
 virus
+viruses

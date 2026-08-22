@@ -19,6 +19,7 @@ class SymbolTile {
   String linkedBoardId;
   bool isBoardLink;
   bool isFullScreenImage;
+  bool isSilent;
 
   // Appearance
   double tileSize; // relative scale multiplier
@@ -41,6 +42,7 @@ class SymbolTile {
     this.linkedBoardId = '',
     this.isBoardLink = false,
     this.isFullScreenImage = false,
+    this.isSilent = false,
     this.tileSize = 1.0,
     this.bgColor = 'transparent',
     this.textColor = '#000000',
@@ -49,7 +51,7 @@ class SymbolTile {
     this.rowSpan = 1,
   });
 
-  bool get speaks => !isBoardLink && !isFullScreenImage;
+  bool get speaks => !isBoardLink && !isFullScreenImage && !isSilent;
 
   String get speechText => speaks ? label : '';
 
@@ -69,6 +71,7 @@ class SymbolTile {
       'linkedBoardId': linkedBoardId,
       'isBoardLink': isBoardLink,
       'isFullScreenImage': isFullScreenImage,
+      'isSilent': isSilent,
       'tileSize': tileSize,
       'bgColor': bgColor,
       'textColor': textColor,
@@ -103,6 +106,7 @@ class SymbolTile {
       linkedBoardId: linkedId,
       isBoardLink: isLink,
       isFullScreenImage: m['isFullScreenImage'] ?? false,
+      isSilent: m['isSilent'] ?? false,
       tileSize:
           (m['tileSize'] is num) ? (m['tileSize'] as num).toDouble() : 1.0,
       bgColor: m['bgColor'] ?? 'transparent',
@@ -122,6 +126,7 @@ class SymbolTile {
     String? linkedBoardId,
     bool? isBoardLink,
     bool? isFullScreenImage,
+    bool? isSilent,
     double? tileSize,
     String? bgColor,
     String? textColor,
@@ -138,6 +143,7 @@ class SymbolTile {
       linkedBoardId: linkedBoardId ?? this.linkedBoardId,
       isBoardLink: isBoardLink ?? this.isBoardLink,
       isFullScreenImage: isFullScreenImage ?? this.isFullScreenImage,
+      isSilent: isSilent ?? this.isSilent,
       tileSize: tileSize ?? this.tileSize,
       bgColor: bgColor ?? this.bgColor,
       textColor: textColor ?? this.textColor,

@@ -1,7 +1,5 @@
-Spices - Word List
-======================
-
 baharat
+black pepper
 cajun spice
 cayenne
 chilli powder
@@ -17,3 +15,4 @@ paprika
 peppercorns
 saffron
 turmeric
+vanilla

@@ -1,0 +1,10 @@
+material
+properties
+hypothesis
+squash
+rigid
+flexible
+bend
+stretch
+strong
+weak

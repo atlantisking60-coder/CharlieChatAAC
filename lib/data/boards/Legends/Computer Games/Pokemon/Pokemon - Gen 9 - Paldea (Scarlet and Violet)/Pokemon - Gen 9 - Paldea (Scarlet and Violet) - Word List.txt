@@ -1,0 +1,149 @@
+generation 9 (scarlet and violet)
+paldea region (map)
+128b. paldean tauros (combat)
+128c. paldean tauros (blaze)
+128d. paldean tauros (aqua)
+194b. paldean wooper
+901b. bloodmoon ursaluna
+906. sprigatito
+907. floragato
+908. meowscarada
+909. fuecoco
+910. crocalor
+911. skeledirge
+912. quaxly
+913. quaxwell
+914. quaquaval
+915. lechonk
+916. oinkologne
+916b. oinkologne (female form)
+917. tarountula
+918. spidops
+919. nymble
+920. lokix
+921. pawmi
+922. pawmo
+923. pawmot
+924. tandemaus
+925. maushold
+925b. maushold (family of
+926. fidough
+927. dachsbun
+928. smoliv
+929. dolliv
+930. arboliva
+931. squawkabilly
+931b. squawkabilly (blue plumage)
+931c. squawkabilly (yellow plumage)
+931d. squawkabilly (white plumage)
+932. nacli
+933. naclstack
+934. garganacl
+935. charcadet
+936. armarouge
+937. ceruledge
+938. tadbulb
+939. bellibolt
+940. wattrel
+941. kilowattrel
+942. maschiff
+943. mabosstiff
+944. shroodle
+945. grafaiai
+946. bramblin
+947. brambleghast
+948. toedscool
+949. toedscruel
+950. klawf
+951. capsakid
+952. scovillain
+953. rellor
+954. rabsca
+955. flittle
+956. espathra
+957. tinkatink
+958. tinkatuff
+959. tinkaton
+960. wiglett
+961. wugtrio
+962. bombirdier
+963. finizen
+964. palafin
+965. varoom
+966. revavroom
+967. cyclizar
+968. orthworm
+969. glimmet
+970. glimmora
+971. greavard
+972. houndstone
+973. flamigo
+974. cetoddle
+975. cetitan
+976. veluza
+977. dondozo
+978. tatsugiri
+978b. tatsugiri (droopy form)
+978c. tatsugiri (stretchy form)
+979. annihilape
+980. clodsire
+981. farigiraf
+982. dudunsparce
+982b. dudunsparce (three-segment form)
+983. kingambit
+984. great tusk
+985. scream tail
+986. brute bonnet
+987. flutter mane
+988. slither wing
+989. sandy shocks
+990. iron treads
+991. iron bundle
+992. iron hands
+993. iron jugulis
+994. iron moth
+995. iron thorns
+996. frigibax
+997. arctibax
+998. baxcalibur
+999. gimmighoul
+999b. gimmighoul (roaming form)
+1000. gholdengo
+1001. wo-chien
+1002. chien-pao
+1003. ting-lu
+1004. chi-yu
+1005. roaring moon
+1006. iron valiant
+1007. koraidon
+1008. miraidon
+1009. walking wake
+1010. iron leaves
+1011. dipplin
+1012. poltchageist
+1012. poltchageist (first attempt)
+1012b. poltchageist (masterpiece form)
+1012c. poltchageist (masterpiece form
+1012c. poltchageist (masterpiece form 2
+1013. sinistcha
+1013. sinistcha (first attempt)
+1013b. sinistcha (masterpiece form)
+1013c. sinistcha (masterpiece form
+1013c. sinistcha (masterpiece form 2
+1014. okidogi
+1015. munkidori
+1016. fezandipiti
+1017. ogerpon
+1017b. ogerpon (wellspring mask)
+1017c. ogerpon (hearthflame mask)
+1017d. ogerpon (cornerstone mask)
+1018. archaludon
+1019. hydrapple
+1020. gouging fire
+1021. raging bolt
+1022. iron boulder
+1023. iron crown
+1024. terapagos
+1024b. terapagos (terastal form)
+1024c. terapagos (stellar form)
+1025. pecharunt

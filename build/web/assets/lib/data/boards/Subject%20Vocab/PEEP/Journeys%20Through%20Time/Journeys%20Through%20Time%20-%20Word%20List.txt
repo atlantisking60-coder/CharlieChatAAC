@@ -1,0 +1,20 @@
+era
+period
+civilisation
+ancient
+empire
+exploration
+historical
+source
+precambrian age
+phanerozoic age
+mesozoic age
+ice age
+stone age
+bronze age
+iron age
+classical era
+dark and middle ages
+early modern era
+industrial revolution
+modern era

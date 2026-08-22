@@ -1,0 +1,9 @@
+material
+properties
+hypothesis
+transparent
+translucent
+opaque
+light
+shadow
+reflect

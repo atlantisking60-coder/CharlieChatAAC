@@ -1,0 +1,120 @@
+generation 7 (sun and moon)
+alola region (map)
+019a. rattata (alolan form)
+020a. raticate (alolan form)
+026a. raichu (alolan form)
+027a. sandshrew (alolan form)
+028a. sandslash (alolan form)
+037a. vulpix (alolan form)
+038a. ninetales (alolan form)
+050a. diglett (alolan form)
+051a. dugtrio (alolan form)
+052a. meowth (alolan form)
+053a. persian (alolan form)
+074a. geodude (alolan form)
+075a. graveler (alolan form)
+076a. golem (alolan form)
+088a. grimer (alolan form)
+089a. muk (alolan form)
+103a. exeggutor (alolan form)
+105a. marowak (alolan form)
+722. rowlet
+723. dartrix
+724. decidueye
+725. litten
+726. torracat
+727. incineroar
+728. popplio
+729. brionne
+730. primarina
+731. pikipek
+732. trumbeak
+733. toucannon
+734. yungoos
+735. gumshoos
+736. grubbin
+737. charjabug
+738. vikavolt
+739. crabrawler
+740. crabominable
+741a. oricorio (baile style)
+741b. oricorio (pom-pom style)
+741c. oricorio (pa'u style)
+741d. oricorio (sensu style)
+742. cutiefly
+743. ribombee
+744. rockruff
+745a. lycanroc (midday form)
+745b. lycanroc (midnight form)
+745c. lycanroc (dusk form)
+746a. wishiwashi (solo form)
+746b. wishiwashi (school form)
+747. mareanie
+748. toxapex
+749. mudbray
+750. mudsdale
+751. dewpider
+752. araquanid
+753. fomantis
+754. lurantis
+755. morelull
+756. shiinotic
+757. salandit
+758. salazzle
+759. stufful
+760. bewear
+761. bounsweet
+762. steenee
+763. tsareena
+764. comfey
+765. oranguru
+766. passimian
+767. wimpod
+768. golisopod
+769. sandygast
+770. palossand
+771. pyukumuku
+772. type  null
+773. silvally
+774a. minior (meteor form)
+774b. minior (core form)
+775. komala
+776. turtonator
+777. togedemaru
+778a. mimikyu (disguised form)
+778b. mimikyu (busted form)
+779. bruxish
+780. drampa
+781. dhelmise
+782. jangmo-o
+783. hakamo-o
+784. kommo-o
+785. tapu koko
+786. tapu lele
+787. tapu bulu
+788. tapu fini
+789. cosmog
+790. cosmoem
+791. solgaleo
+792. lunala
+793. nihilego
+794. buzzwole
+795. pheromosa
+796. xurkitree
+797. celesteela
+798. kartana
+799. guzzlord
+800a. necrozma (normal form)
+800b. necrozma (dusk mane)
+800c. necrozma (dawn wings)
+800d. necrozma (ultra necrozma)
+801a. magearna (original color)
+801b. magearna (500 years ago)
+802. marshadow
+803. poipole
+804. naganadel
+805. stakataka
+806. blacephalon
+807. zeraora
+808. meltan
+809. melmetal

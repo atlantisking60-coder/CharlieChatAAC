@@ -1,11 +1,19 @@
-Igneous - Word List
-=======================
-
-basalt
-extrusive
-granite
 igneous
-intrusive
-lava
+rock
+mineral
+crust
+intrusive igneous
+extrusive igneous
 magma
+lava
+physical properties
+crystalline
+texture
+colour
+hardness
+grain size
+density
+processes
+basalt
+granite
 pumice

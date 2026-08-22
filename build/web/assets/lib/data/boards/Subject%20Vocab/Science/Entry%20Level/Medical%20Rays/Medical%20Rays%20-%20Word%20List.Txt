@@ -1,4 +1,18 @@
-Medical Rays - Word List
-============================
-
+electromagnetic spectrum
+infrared radiation
+microwave radiation
+radio wave
+speed of light
+infrared emission
+gamma ray
+laser
+prism
+ultraviolet
+ultraviolet radiation
+visible light
+visible spectrum
+wave
+white light
+X-ray
+electromagnetic spectrum
 gamma ray

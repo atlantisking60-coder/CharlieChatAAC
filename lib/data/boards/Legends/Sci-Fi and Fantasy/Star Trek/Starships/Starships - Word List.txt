@@ -1,0 +1,30 @@
+enterprise ncc-1701
+enterprise nx-01
+voyager
+borg sphere
+borg cube
+breen warship
+cardassian ship
+deep space 9
+federation ship
+ferengi marauder
+hirogen ship
+jem hadar battle cruiser
+klingon katinga class ship
+kumari ship
+lokirrim warship
+maquis raider
+reman warbird
+romulan scout ship
+romulan warbird
+shuttlecraft type 6
+shuttlecraft type 9
+space dock
+species 8472 bioship
+uss budapest
+uss discovery
+uss equinox
+uss reliant
+uss stargazer
+vulcan ship
+xindi aquatic cruiser

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import 'settings_service.dart';
 import 'sync_service.dart';
@@ -20,6 +21,10 @@ class UserProfile {
   final String? username;
   final String? password;
   final bool isAdmin;
+  final String onlineId;
+  final String role;
+  final bool syncEnabled;
+  final String? lastSyncedAt;
 
   UserProfile({
     required this.id,
@@ -31,6 +36,10 @@ class UserProfile {
     this.username,
     this.password,
     this.isAdmin = false,
+    this.onlineId = '',
+    this.role = 'user',
+    this.syncEnabled = false,
+    this.lastSyncedAt,
   });
 
   UserProfile copyWith({
@@ -43,6 +52,11 @@ class UserProfile {
     String? username,
     String? password,
     bool? isAdmin,
+    String? onlineId,
+    String? role,
+    bool? syncEnabled,
+    String? lastSyncedAt,
+    bool clearLastSyncedAt = false,
   }) {
     return UserProfile(
       id: id ?? this.id,
@@ -54,6 +68,10 @@ class UserProfile {
       username: username ?? this.username,
       password: password ?? this.password,
       isAdmin: isAdmin ?? this.isAdmin,
+      onlineId: onlineId ?? this.onlineId,
+      role: role ?? this.role,
+      syncEnabled: syncEnabled ?? this.syncEnabled,
+      lastSyncedAt: clearLastSyncedAt ? null : (lastSyncedAt ?? this.lastSyncedAt),
     );
   }
 
@@ -67,6 +85,10 @@ class UserProfile {
         'username': username,
         'password': password,
         'isAdmin': isAdmin,
+        'onlineId': onlineId,
+        'role': role,
+        'syncEnabled': syncEnabled,
+        'lastSyncedAt': lastSyncedAt,
       };
 
   factory UserProfile.fromMap(Map<String, dynamic> m) => UserProfile(
@@ -86,11 +108,17 @@ class UserProfile {
         username: m['username'],
         password: m['password'],
         isAdmin: m['isAdmin'] ?? false,
+        onlineId: m['onlineId'] ?? '',
+        role: m['role'] ?? 'user',
+        syncEnabled: m['syncEnabled'] ?? false,
+        lastSyncedAt: m['lastSyncedAt']?.toString(),
       );
 
   static UserProfile defaultProfile() => UserProfile(
         id: 'default',
         name: 'Default',
+        onlineId: 'default',
+        role: 'default',
         settings: const AppSettings(
           profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png',
           themeMode: ThemeMode.light,
@@ -204,6 +232,20 @@ class ProfileService {
         );
         profilesChanged = true;
       }
+
+      p = profiles[i];
+      if (p.onlineId.isEmpty) {
+        p = p.copyWith(onlineId: _generateOnlineIdFor(p));
+        profilesChanged = true;
+      }
+      if (p.role.isEmpty || p.role == 'user') {
+        final expectedRole = _roleFor(p);
+        if (p.role != expectedRole) {
+          p = p.copyWith(role: expectedRole);
+          profilesChanged = true;
+        }
+      }
+      profiles[i] = p;
     }
 
     /** 3. Ensure Admin profile exists **/
@@ -215,6 +257,8 @@ class ProfileService {
         username: 'admin',
         password: 'baycr0ft',
         isAdmin: true,
+        onlineId: 'admin',
+        role: 'admin',
         settings: globalSettings.settings.copyWith(
           profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_logo.png',
           themeMode: ThemeMode.light,
@@ -324,11 +368,18 @@ class ProfileService {
   }
 
   Future<void> createProfile(UserProfile profile) async {
+    var p = profile;
+    if (p.onlineId.isEmpty) {
+      p = p.copyWith(onlineId: const Uuid().v4());
+    }
+    if (p.role.isEmpty) {
+      p = p.copyWith(role: 'user');
+    }
     final profiles = this.profiles;
-    profiles.add(profile);
+    profiles.add(p);
     await saveProfiles(profiles, recordSync: false);
-    await _recordProfileChange(profile, SyncOperation.upsert);
-    await setActiveProfile(profile.id);
+    await _recordProfileChange(p, SyncOperation.upsert);
+    await setActiveProfile(p.id);
   }
 
   Future<void> deleteProfile(String id) async {
@@ -370,5 +421,17 @@ class ProfileService {
       operation: operation,
       payload: operation == SyncOperation.delete ? const {} : profile.toMap(),
     );
+  }
+
+  static String _generateOnlineIdFor(UserProfile p) {
+    if (p.id == 'default') return 'default';
+    if (p.id == 'admin') return 'admin';
+    return const Uuid().v4();
+  }
+
+  static String _roleFor(UserProfile p) {
+    if (p.id == 'default') return 'default';
+    if (p.id == 'admin' || p.isAdmin) return 'admin';
+    return 'user';
   }
 }

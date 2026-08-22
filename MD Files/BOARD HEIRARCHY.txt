@@ -10,7 +10,7 @@
 
 /// Two layers are merged at runtime:
 
-/// 1. Static compiled hierarchy ([boardHierarchy]) — prebuilt boards baked
+/// 1. Static compiled hierarchy ([boardHierarchy]) â€” prebuilt boards baked
 
 ///    into the Dart source. When the admin profile creates, moves or edits a
 
@@ -18,7 +18,7 @@
 
 ///    server (POST /saveHierarchy). The admin layer IS the static layer.
 
-/// 2. User custom hierarchy — boards created by individual users, stored
+/// 2. User custom hierarchy â€” boards created by individual users, stored
 
 ///    per-user in SharedPreferences. Only visible to that user.
 
@@ -26,9 +26,9 @@
 
 /// Board ID prefixes:
 
-/// - prebuilt_ — static / admin-created boards (available to everyone)
+/// - prebuilt_ â€” static / admin-created boards (available to everyone)
 
-/// - {username}_ — user-created boards (personal to that user)
+/// - {username}_ â€” user-created boards (personal to that user)
 
 
 
@@ -40,9 +40,15 @@ import 'dart:convert';
 
 
 
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart';
+
+
+
 import 'package:http/http.dart' as http;
+
+
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -89,7 +95,6 @@ class BoardHierarchyEntry {
 
 
 const List<BoardHierarchyEntry> boardHierarchy = [
-  // --- COMMON AREA ---
   BoardHierarchyEntry('Common Words', 'Common'),
   BoardHierarchyEntry('Small Words', 'Common'),
   BoardHierarchyEntry('Nouns (Montessori)', 'Common', 'Small Words'),
@@ -206,6 +211,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Asia (South)', 'Common', 'World Map'),
   BoardHierarchyEntry('Oceania', 'Common', 'World Map'),
 
+  
   // --- SUBJECT VOCAB AREA ---
   BoardHierarchyEntry('Subject Vocab', 'Subject Vocab'),
   BoardHierarchyEntry('Better Words (Thesaurus)', 'Subject Vocab'),
@@ -236,21 +242,22 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('English', 'Subject Vocab'),
   BoardHierarchyEntry('Maths', 'Subject Vocab'),
   BoardHierarchyEntry('Basic Maths Vocab', 'Subject Vocab', 'Maths'),
-  BoardHierarchyEntry('Numbers', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Numbers (Subject Vocab)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Shapes and Angles', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Fractions and Percentages', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Algebra', 'Subject Vocab', 'Maths'),
-  BoardHierarchyEntry('Money', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Money (Maths)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Ratios and Proportion', 'Subject Vocab', 'Maths'),
-  BoardHierarchyEntry('Time', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Time (Clocks) (Maths)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Weight and Capacity', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Statistics', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Measurements (Length and Width, Perimeter and Area)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Position and Direction', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Maths Resources', 'Subject Vocab', 'Maths'),
+  BoardHierarchyEntry('Class Equipment (Maths)', 'Subject Vocab', 'Maths'),
   BoardHierarchyEntry('Science', 'Subject Vocab'),
-  BoardHierarchyEntry('Intro', 'Subject Vocab', 'Science'),
-  BoardHierarchyEntry('Equipment', 'Subject Vocab', 'Science'),
+  BoardHierarchyEntry('Intro to Science', 'Subject Vocab', 'Science'),
+  BoardHierarchyEntry('Equipment For Science', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Hazard Symbols', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Bunsen Burners and Microscopes', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Material Properties', 'Subject Vocab', 'Science'),
@@ -305,13 +312,14 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Mental and Social Health', 'Subject Vocab', 'Staying Healthy'),
   BoardHierarchyEntry('Healthy Lifestyle', 'Subject Vocab', 'Staying Healthy'),
   BoardHierarchyEntry('Electricity', 'Subject Vocab', 'Science'),
-  BoardHierarchyEntry('Electrical Safety', 'Subject Vocab', 'Electricity'),
+  BoardHierarchyEntry('Electrical Safety (Science)', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Simple Series Circuit', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Circuit Symbols', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Insulators and Conductors', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Voltage and Brightness', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Parallel Construction', 'Subject Vocab', 'Electricity'),
   BoardHierarchyEntry('Components', 'Subject Vocab', 'Electricity'),
+  BoardHierarchyEntry('Appliances (Science)', 'Subject Vocab', 'Electrical Safety (Science)'),
   BoardHierarchyEntry('Rocks', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Types Of Rock', 'Subject Vocab', 'Rocks'),
   BoardHierarchyEntry('Igneous', 'Subject Vocab', 'Rocks'),
@@ -418,8 +426,8 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Diversity', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Keeping Safe', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Road Safety', 'Subject Vocab', 'Keeping Safe'),
-  BoardHierarchyEntry('Electrical Safety', 'Subject Vocab', 'Keeping Safe'),
-  BoardHierarchyEntry('Appliances', 'Subject Vocab', 'Electrical Safety'),
+  BoardHierarchyEntry('Electrical Safety (PD)', 'Subject Vocab', 'Keeping Safe'),
+  BoardHierarchyEntry('Appliances (PD)', 'Subject Vocab', 'Electrical Safety (PD)'),
   BoardHierarchyEntry('Fire Safety', 'Subject Vocab', 'Keeping Safe'),
   BoardHierarchyEntry('Train Safety', 'Subject Vocab', 'Keeping Safe'),
   BoardHierarchyEntry('Sun Safety', 'Subject Vocab', 'Keeping Safe'),
@@ -427,13 +435,13 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('NSPCC Pants', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('RSE', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Intimate Relationships', 'Subject Vocab', 'RSE'),
-  BoardHierarchyEntry('Feelings', 'Subject Vocab', 'Personal Development'),
+  BoardHierarchyEntry('Feelings', 'Subject Vocab', 'Personal Development'), // Link To Common Area's Board
   BoardHierarchyEntry('Jobs, Careers, Aspirations', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Alcohol Awareness', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Being Responsible', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Tutor Transition', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Living In The Wider World', 'Subject Vocab', 'Personal Development'),
-  BoardHierarchyEntry('Emergencies', 'Subject Vocab', 'Living In The Wider World'),
+  BoardHierarchyEntry('Emergencies (PD)', 'Subject Vocab', 'Living In The Wider World'),
   BoardHierarchyEntry('Relationships', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Health and Wellbeing', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Drugs', 'Subject Vocab', 'Personal Development'),
@@ -444,12 +452,12 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Belonging To A Community', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('Passport', 'Subject Vocab', 'Personal Development'),
   BoardHierarchyEntry('PEEP', 'Subject Vocab'),
-  BoardHierarchyEntry('Keywords', 'Subject Vocab', 'PEEP'),
+  BoardHierarchyEntry('PEEP Keywords', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Maps and Atlas', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Local Places', 'Subject Vocab', 'PEEP'),
-  BoardHierarchyEntry('Seasons', 'Subject Vocab', 'PEEP'),
+  BoardHierarchyEntry('Seasons (PEEP)', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Countries and Continents', 'Subject Vocab', 'PEEP'),
-  BoardHierarchyEntry('Great Britain', 'Subject Vocab', 'PEEP'),
+  BoardHierarchyEntry('Great Britain (PEEP)', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Explorers', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Biomes and Climate', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Journeys Through Time', 'Subject Vocab', 'PEEP'),
@@ -479,8 +487,8 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Pirate Crew', 'Subject Vocab', 'Pirates (PEEP)'),
   BoardHierarchyEntry('Famous Pirates', 'Subject Vocab', 'Pirates (PEEP)'),
   BoardHierarchyEntry('Fictional Pirates', 'Subject Vocab', 'Pirates (PEEP)'),
-  BoardHierarchyEntry('Emergencies', 'Subject Vocab', 'PEEP'),
-  BoardHierarchyEntry('Disasters', 'Subject Vocab', 'PEEP'),
+  BoardHierarchyEntry('Emergencies (PEEP)', 'Subject Vocab', 'PEEP'),
+  BoardHierarchyEntry('Disasters (PEEP)', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('Flags', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('English Monarchy', 'Subject Vocab', 'PEEP'),
   BoardHierarchyEntry('EPIC', 'Subject Vocab'),
@@ -532,7 +540,14 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Religion and Worldviews', 'Subject Vocab'),
   BoardHierarchyEntry('Love and Belonging', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Angels', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Angels (RWV)', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Creation Stories', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Christian Creation Story', 'Subject Vocab', 'Creation Stories'),
+  BoardHierarchyEntry('Judaism Creation Story', 'Subject Vocab', 'Creation Stories'),
+  BoardHierarchyEntry('Hinduism Creation Story', 'Subject Vocab', 'Creation Stories'),
+  BoardHierarchyEntry('Islam Creation Story', 'Subject Vocab', 'Creation Stories'),
+  BoardHierarchyEntry('Buddhism Creation Story', 'Subject Vocab', 'Creation Stories'),
+  BoardHierarchyEntry('Sikhism Creation Story', 'Subject Vocab', 'Creation Stories'),
   BoardHierarchyEntry('Love and Easter', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Hindu Traditions', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Belonging and Baptism', 'Subject Vocab', 'Religion and Worldviews'),
@@ -542,7 +557,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Good and Evil', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('People Making A Difference', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Islam Belonging', 'Subject Vocab', 'Religion and Worldviews'),
-  BoardHierarchyEntry('Community', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Community (RWV)', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Love, Rules, Choice, Consequences', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Special Things', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Christianity', 'Subject Vocab', 'Religion and Worldviews'),
@@ -552,9 +567,11 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Buddhism', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Sikhism', 'Subject Vocab', 'Religion and Worldviews'),
   BoardHierarchyEntry('Paganism', 'Subject Vocab', 'Religion and Worldviews'),
+  BoardHierarchyEntry('Gods and Characters', 'Subject Vocab', 'Religion and Worldviews'), // Link To Legends Area
   BoardHierarchyEntry('Music', 'Subject Vocab'),
   BoardHierarchyEntry('Musical Genres', 'Subject Vocab', 'Music'),
   BoardHierarchyEntry('Musical Instruments', 'Subject Vocab', 'Music'),
+  BoardHierarchyEntry('Describing Timbre', 'Subject Vocab', 'Music'), // NEW - added
   BoardHierarchyEntry('Horticulture', 'Subject Vocab'),
   BoardHierarchyEntry('Terminology For Horticulture', 'Subject Vocab', 'Horticulture'),
   BoardHierarchyEntry('Equipment For Horticulture', 'Subject Vocab', 'Horticulture'),
@@ -578,18 +595,19 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Engineering', 'Subject Vocab'),
   BoardHierarchyEntry('Living Life Skills', 'Subject Vocab'),
   BoardHierarchyEntry('Arts and Crafts', 'Subject Vocab', 'Living Life Skills'),
-  BoardHierarchyEntry('Home Management', 'Subject Vocab', 'Living Life Skills'),
-  BoardHierarchyEntry('Home Equipment', 'Subject Vocab', 'Home Management'),
+  BoardHierarchyEntry('Home Management (LLS)', 'Subject Vocab', 'Living Life Skills'),
+  BoardHierarchyEntry('Home Equipment (LLS)', 'Subject Vocab', 'Home Management (LLS)'),
   BoardHierarchyEntry('Hygiene and Healthy Living', 'Subject Vocab', 'Living Life Skills'),
   BoardHierarchyEntry('Environment and Community', 'Subject Vocab', 'Living Life Skills'),
   BoardHierarchyEntry('Finance and Numeracy', 'Subject Vocab', 'Living Life Skills'),
   BoardHierarchyEntry('Media and Social Media', 'Subject Vocab', 'Living Life Skills'),
-  BoardHierarchyEntry('Communication', 'Subject Vocab', 'Living Life Skills'),
+  BoardHierarchyEntry('Communication', 'Subject Vocab', 'Living Life Skills'), // link
   BoardHierarchyEntry('Personal Skills', 'Subject Vocab', 'Living Life Skills'),
   BoardHierarchyEntry('Prepare For Adulthood', 'Subject Vocab'),
-  BoardHierarchyEntry('Office Practice', 'Subject Vocab', 'Prepare For Adulthood'),  
+  BoardHierarchyEntry('Office Practice', 'Subject Vocab', 'Prepare For Adulthood'),
   BoardHierarchyEntry('World Of Work', 'Subject Vocab', 'Prepare For Adulthood'),
   BoardHierarchyEntry('Trips', 'Subject Vocab', 'Prepare For Adulthood'),
+  BoardHierarchyEntry('Careers', 'Subject Vocab', 'Prepare For Adulthood'),
   BoardHierarchyEntry('Hair and Beauty', 'Subject Vocab'),
   BoardHierarchyEntry('Health and Social Care', 'Subject Vocab'),
   BoardHierarchyEntry('Public Services', 'Subject Vocab'),
@@ -598,6 +616,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Option B', 'Subject Vocab'),
   BoardHierarchyEntry('Option C', 'Subject Vocab'),
   BoardHierarchyEntry('Tech Rotation', 'Subject Vocab'),
+  
 
   // --- MY SCHOOL AREA ---
   BoardHierarchyEntry('My School Main', 'My School'),
@@ -630,99 +649,56 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('KL', 'My School', 'People At School'),
   BoardHierarchyEntry('AW', 'My School', 'People At School'),
   BoardHierarchyEntry('Governors and Friends Of Baycroft', 'My School', 'People At School'),
-
-
+ 
   // --- LEGENDS AREA ---
   BoardHierarchyEntry('Legends', 'Legends'),
-  BoardHierarchyEntry('Characters', 'Legends'),
-  BoardHierarchyEntry('Myth and History', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Creatures and Races', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Fairy Tale Characters', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Gods, Titans, Heroes and Monsters', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Family Trees', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Egyptian Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Norse Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Norse Heroes', 'Legends', 'Norse Gods'),
-  BoardHierarchyEntry('Norse Valkyries', 'Legends', 'Norse Gods'),
-  BoardHierarchyEntry('Norse Races', 'Legends', 'Norse Gods'),
-  BoardHierarchyEntry('Norse Locations', 'Legends', 'Norse Gods'),
-  BoardHierarchyEntry('Greek Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Roman Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Heroes and Monsters (Greek and Roman)', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Biblical and Ancient Legendary Figures', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Christianity', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Angels', 'Legends', 'Christianity'),
-  BoardHierarchyEntry('Demons', 'Legends', 'Christianity'),
-  BoardHierarchyEntry('Judaism', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Islam', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Buddhism', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Hindu Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Paganism', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Other Mythology', 'Legends', 'Gods, Titans, Heroes and Monsters'),
-  BoardHierarchyEntry('Arthurian Legend', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Robin Hood and English Folklore', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Legendary Heroes and Folk Heroes', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Literary and Gothic Characters', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Horror Icons', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Famous Monsters and Horror Icons', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Misc', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Asian Legends and Folklore', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Arabian and Middle Eastern Tales', 'Legends', 'Myth and History'),
-  BoardHierarchyEntry('Books', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Marvel', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Spiderman', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('The Avengers', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Iron Man', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Captain America', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Thor', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Hulk', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Fantastic 4', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Deadpool', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Black Panther', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Guardians Of The Galaxy', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Doctor Strange', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Black Widow and Hawkeye', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Scarlet Witch', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Ant-Man', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('The Defenders and Street Level', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Eternals', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Inhumans', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('Villains', 'Legends', 'Marvel'),
-  BoardHierarchyEntry('X-Men', 'Legends', 'Characters'),
-  BoardHierarchyEntry("Xavier's Students", 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Major Villains', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Brotherhood of Mutants', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Apocalypse and The Horsemen', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('X-Force', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('New Mutants', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('X-Factor and Excalibur', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Hellfire Club', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Marauders', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Morlocks', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Generation X', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Weapon Program', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Anti-Mutant Threats', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('X-Men Later Additions', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('Other', 'Legends', 'X-Men'),
-  BoardHierarchyEntry('DC', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Super Family', 'Legends', 'DC'),
-  BoardHierarchyEntry('Bat Family', 'Legends', 'DC'),
-  BoardHierarchyEntry('Justice League', 'Legends', 'DC'),
-  BoardHierarchyEntry('The Flash', 'Legends', 'DC'),
-  BoardHierarchyEntry('Wonder Woman', 'Legends', 'DC'),
-  BoardHierarchyEntry('Green Lantern', 'Legends', 'DC'),
-  BoardHierarchyEntry('Aquaman', 'Legends', 'DC'),
-  BoardHierarchyEntry('Green Arrow', 'Legends', 'DC'),
-  BoardHierarchyEntry('Teen Titans', 'Legends', 'DC'),
-  BoardHierarchyEntry('Shazam', 'Legends', 'DC'),
-  BoardHierarchyEntry('Justice Society Of America (JSA)', 'Legends', 'DC'),
-  BoardHierarchyEntry('Doom Patrol', 'Legends', 'DC'),
-  BoardHierarchyEntry('Legends Of Tomorrow', 'Legends', 'DC'),
-  BoardHierarchyEntry('Justice League Dark Supernatural', 'Legends', 'DC'),
-  BoardHierarchyEntry('New Gods, Apokolips and Cosmic Villains', 'Legends', 'DC'),
-  BoardHierarchyEntry('Other Teams', 'Legends', 'DC'),
-  BoardHierarchyEntry('Disney Stories', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Mickey and Friends', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('Books', 'Legends'),
+  BoardHierarchyEntry('Cartoons and Puppets', 'Legends'),
+  BoardHierarchyEntry('Looney Tunes', 'Legends', 'Cartoons and Puppets'),
+  BoardHierarchyEntry('The House Of Mouse', 'Legends', 'Cartoons and Puppets'),
+  BoardHierarchyEntry('The Muppets', 'Legends', 'Cartoons and Puppets'),
+  BoardHierarchyEntry('Computer Games', 'Legends'),
+  BoardHierarchyEntry("Baldur's Gate 3", 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Borderlands', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Cuphead', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Fable', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Final Fantasy', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('FF10', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF12', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF13', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF15', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF16', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF6', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF7', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF8', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('FF9', 'Legends', 'Final Fantasy'),
+  BoardHierarchyEntry('Hollow Knight', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Horizon', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Burning Shores', 'Legends', 'Horizon'),
+  BoardHierarchyEntry('Forbidden West', 'Legends', 'Horizon'),
+  BoardHierarchyEntry('Frozen Wilds', 'Legends', 'Horizon'),
+  BoardHierarchyEntry('Logos', 'Legends', 'Horizon'),
+  BoardHierarchyEntry('Zero Dawn', 'Legends', 'Horizon'),
+  BoardHierarchyEntry('Kingdom Hearts', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Mario', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry("No Man's Sky", 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Ori', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Palworld', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Pokemon', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Custom Eeveelutions', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokeballs and Important Items', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 1 - Kanto (Fire Red, Leaf Green, Ocean Blue, Lightning Yellow)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 2 - Johto (Silver and Gold)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 3 - Hoenn (Ruby and Sapphire)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 4 - Sinnoh (Diamond and Pearl)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 5 - Unova (Black and White)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 6 - Kalos (X and Y)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 7 - Alola (Sun and Moon)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 8 - Galar (Sword and Shield)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon - Gen 9 - Paldea (Scarlet and Violet)', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Pokemon Missed Evolutions', 'Legends', 'Pokemon'),
+  BoardHierarchyEntry('Sonic', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Disney Stories', 'Legends'),
   BoardHierarchyEntry('1937 Snow White and The Seven Dwarfs', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1940 Fantasia', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1940 Pinocchio', 'Legends', 'Disney Stories'),
@@ -747,7 +723,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('1989 The Little Mermaid', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1991 Beauty and The Beast', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1992 Aladdin', 'Legends', 'Disney Stories'),
-  BoardHierarchyEntry('1993 The Nightmare Before Christmas', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1993 The Nightmare Before Christmas', 'Legends', 'Animations (Not Disney)'),
   BoardHierarchyEntry('1994 The Lion King', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1995 Pocahontas', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1995 Toy Story', 'Legends', 'Disney Stories'),
@@ -794,61 +770,128 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('2023 Elemental', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('2023 Wish', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('2025 Elio', 'Legends', 'Disney Stories'),
-  BoardHierarchyEntry('Looney Tunes', 'Legends', 'Characters'),
-  BoardHierarchyEntry('DnD', 'Legends', 'Characters'),
+  BoardHierarchyEntry('Real Life Heroes', 'Legends'),
+  BoardHierarchyEntry('Religion, Myth and History', 'Legends'),
+  BoardHierarchyEntry('Arabian and Middle Eastern Tales', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Arthurian Legend', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Asian Legends and Folklore', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Creatures and Races', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Fairy Tale Characters', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Famous Monsters and Horror Icons', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Gods, Titans, Heroes and Monsters', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Buddhism Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Christian Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Christian Angels and Demons', 'Legends', 'Christian Deities and People'),
+  BoardHierarchyEntry('Angels', 'Legends', 'Christian Angels and Demons'),
+  BoardHierarchyEntry('Demons', 'Legends', 'Christian Angels and Demons'),
+  BoardHierarchyEntry('Egyptian Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Family Trees', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Greek Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Olympians', 'Legends', 'Greek Gods'),
+  BoardHierarchyEntry('Titans', 'Legends', 'Greek Gods'),
+  BoardHierarchyEntry('Heroes and Monsters (Greek and Roman)', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Hindu Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Islam Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Jewish Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Norse Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Norse Heroes', 'Legends', 'Norse Gods'),
+  BoardHierarchyEntry('Norse Locations', 'Legends', 'Norse Gods'),
+  BoardHierarchyEntry('Norse Races', 'Legends', 'Norse Gods'),
+  BoardHierarchyEntry('Norse Valkyries', 'Legends', 'Norse Gods'),
+  BoardHierarchyEntry('Other Mythology', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Pagan Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Roman Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Sikh Deities and People', 'Legends', 'Gods, Titans, Heroes and Monsters'),
+  BoardHierarchyEntry('Legendary Heroes and Folk Heroes', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Literary and Gothic Characters', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Misc', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Robin Hood and English Folklore', 'Legends', 'Religion, Myth and History'),
+  BoardHierarchyEntry('Sci-Fi and Fantasy', 'Legends'),
+  BoardHierarchyEntry('DnD', 'Legends', 'Sci-Fi and Fantasy'),
   BoardHierarchyEntry('DnD Classes', 'Legends', 'DnD'),
   BoardHierarchyEntry('DnD Magic and Status', 'Legends', 'DnD'),
   BoardHierarchyEntry('DnD Races', 'Legends', 'DnD'),
-  BoardHierarchyEntry('Computer Games', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Pokemon', 'Legends', 'Computer Games'),
-  BoardHierarchyEntry('Pokeballs and Important Items', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 1 Kanto (Red, Green, Blue, Yellow)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 2 Johto (Silver and Gold)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 3 Hoenn (Ruby and Sapphire)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 4 Sinnoh (Diamond and Pearl)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 5 Unova (Black and White)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 6 Kalos (X and Y)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 7 Alola (Sun and Moon)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 8 Galar (Sword and Shield)', 'Pokemon'),
-  BoardHierarchyEntry('Pokemon - Gen 9 Paldea (Scarlet and Violet)', 'Pokemon'),
-  BoardHierarchyEntry('Palworld', 'Legends', 'Computer Games'),
-  BoardHierarchyEntry('Final Fantasy', 'Legends', 'Computer Games'),
-  BoardHierarchyEntry('FF6', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF7', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF8', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF9', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF10', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF12', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF13', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF15', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('FF16', 'Legends', 'Final Fantasy'),
-  BoardHierarchyEntry('Star Trek', 'Legends', 'Characters'),
+  BoardHierarchyEntry('Doctor Who', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Farscape', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Star Trek', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Deep Space 9', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Discovery', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Enterprise', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Known Races', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Lower Decks', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Picard', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Prodigy', 'Legends', 'Star Trek'),
   BoardHierarchyEntry('Starships', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('The Original Series', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('Strange New Worlds', 'Legends', 'Star Trek'),
   BoardHierarchyEntry('The Animated Series', 'Legends', 'Star Trek'),
   BoardHierarchyEntry('The Next Generation', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Deep Space Nine', 'Legends', 'Star Trek'),
+  BoardHierarchyEntry('The Original Series', 'Legends', 'Star Trek'),
   BoardHierarchyEntry('Voyager', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Enterprise', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Discovery', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Picard', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Lower Decks', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Prodigy', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Strange New Worlds', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Starfleet Academy', 'Legends', 'Star Trek'),
-  BoardHierarchyEntry('Star Wars', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Farscape', 'Legends', 'Characters'),
-  BoardHierarchyEntry('The Expanse', 'Legends', 'Characters'),
-  BoardHierarchyEntry('The Orville', 'Legends', 'Characters'),
-  BoardHierarchyEntry('The Lord Of The Rings', 'Legends', 'Characters'),
-  BoardHierarchyEntry('The Muppets', 'Legends', 'Characters'),
-  BoardHierarchyEntry('Real People', 'Legends'),
-
+  BoardHierarchyEntry('Star Wars', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('The Expanse', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Blueprints', 'Legends', 'The Expanse'),
+  BoardHierarchyEntry('The Lord Of The Rings', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('The Orville', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Wednesday', 'Legends', 'Sci-Fi and Fantasy'),
+  BoardHierarchyEntry('Superheroes', 'Legends'),
+  BoardHierarchyEntry('DC', 'Legends', 'Superheroes'),
+  BoardHierarchyEntry('Aquaman', 'Legends', 'DC'),
+  BoardHierarchyEntry('Bat Family', 'Legends', 'DC'),
+  BoardHierarchyEntry('Doom Patrol', 'Legends', 'DC'),
+  BoardHierarchyEntry('Green Arrow', 'Legends', 'DC'),
+  BoardHierarchyEntry('Green Lantern', 'Legends', 'DC'),
+  BoardHierarchyEntry('Justice League', 'Legends', 'DC'),
+  BoardHierarchyEntry('Justice League Dark  Supernatural', 'Legends', 'DC'),
+  BoardHierarchyEntry('Justice Society Of America (JSA)', 'Legends', 'DC'),
+  BoardHierarchyEntry('Legends Of Tomorrow', 'Legends', 'DC'),
+  BoardHierarchyEntry('New Gods, Apokolips and Cosmic Villains', 'Legends', 'DC'),
+  BoardHierarchyEntry('Other Teams', 'Legends', 'DC'),
+  BoardHierarchyEntry('Shazam', 'Legends', 'DC'),
+  BoardHierarchyEntry('Super Family', 'Legends', 'DC'),
+  BoardHierarchyEntry('Teen Titans', 'Legends', 'DC'),
+  BoardHierarchyEntry('The Flash', 'Legends', 'DC'),
+  BoardHierarchyEntry('Wonder Woman', 'Legends', 'DC'),
+  BoardHierarchyEntry('Marvel', 'Legends', 'Superheroes'),
+  BoardHierarchyEntry('Ant-Man', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Black Panther', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Black Widow and Hawkeye', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Captain America', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Deadpool', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Doctor Strange', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Eternals', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Fantastic 4', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Guardians Of The Galaxy', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Hulk', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Inhumans', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Iron Man', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Scarlet Witch', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Spiderman', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('The Avengers', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('The Defenders and Street Level', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Thor', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Villains', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('X-Men', 'Legends', 'Superheroes'),
+  BoardHierarchyEntry('Anti-Mutant Threats', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Apocalypse and The Horsemen', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Brotherhood of Mutants', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Generation X', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Hellfire Club', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Major Villains', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Marauders', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Morlocks', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('New Mutants', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Other', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('Weapon Program', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('X-Factor and Excalibur', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('X-Force', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('X-Men', 'Legends', 'X-Men'),
+  BoardHierarchyEntry('X-Men Later Additions', 'Legends', 'X-Men'),
+  BoardHierarchyEntry("Xavier's Students", 'Legends', 'X-Men'),
 
   // --- RECIPES AREA ---
   BoardHierarchyEntry('Recipes', 'Recipes'),
 
-  // --- SIGN AREA ---
+    // --- SIGN AREA ---
   BoardHierarchyEntry('Sign', 'Sign'),
   BoardHierarchyEntry('A-Z Of Sign', 'Sign'),
   BoardHierarchyEntry('A (Sign)', 'Sign', 'A-Z Of Sign'),
@@ -882,13 +925,13 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Feelings and Health', 'Sign'),
   BoardHierarchyEntry('Questions', 'Sign'),
   BoardHierarchyEntry('Grammatical Elements', 'Sign'),
-  BoardHierarchyEntry('Prepositions', 'Sign'),
+  BoardHierarchyEntry('Prepositions (Sign)', 'Sign'),
   BoardHierarchyEntry('Descriptions and Attributes', 'Sign'),
-  BoardHierarchyEntry('Colours', 'Sign'),
-  BoardHierarchyEntry('Numbers', 'Sign'),
+  BoardHierarchyEntry('Colours (Sign)', 'Sign'),
+  BoardHierarchyEntry('Numbers (Sign)', 'Sign'),
   BoardHierarchyEntry('Quantity and Measurement', 'Sign'),
   BoardHierarchyEntry('Time and Days', 'Sign'),
-  BoardHierarchyEntry('Letters', 'Sign'),
+  BoardHierarchyEntry('Letters (Sign)', 'Sign'),
   BoardHierarchyEntry('Food and Drink', 'Sign'),
   BoardHierarchyEntry('Personal Actions', 'Sign'),
   BoardHierarchyEntry('Shared Activities', 'Sign'),
@@ -904,25 +947,27 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Animals and Nature', 'Sign'),
   BoardHierarchyEntry('Weather (Sign)', 'Sign'),
   BoardHierarchyEntry('Outside', 'Sign'),
-  BoardHierarchyEntry('Places', 'Sign'),
+  BoardHierarchyEntry('Places (Sign)', 'Sign'),
   BoardHierarchyEntry('Transport and Vehicles', 'Sign'),
-  BoardHierarchyEntry('Money', 'Sign'),
+  BoardHierarchyEntry('Money (Sign)', 'Sign'),
   BoardHierarchyEntry('Public Notices', 'Sign'),
   BoardHierarchyEntry('Other Countries', 'Sign'),
   BoardHierarchyEntry('Religion and Customs', 'Sign'),
   BoardHierarchyEntry('Gender and Sexuality (Sign)', 'Sign'),
 
   // --- PERSONAL AREA ---
-  BoardHierarchyEntry('Personal', 'Personal')
-];
+  BoardHierarchyEntry('Personal', 'Personal'),
 
 
 
-// ──────────────────────────────────────────────
+
+
+
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Runtime (mutable) hierarchy
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
 
@@ -956,15 +1001,15 @@ String _userHierarchyPrefsKey(String userId) =>
 
 /// between compiles).
 
-const String _runtimeHierarchyPrefsKey = 'runtime_board_hierarchy';
+const String runtimeHierarchyPrefsKey = 'runtime_board_hierarchy';
 
 
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Persistence: runtime (admin = static) layer
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
 
@@ -974,39 +1019,9 @@ const String _runtimeHierarchyPrefsKey = 'runtime_board_hierarchy';
 
 Future<void> loadRuntimeHierarchy() async {
 
-  String? raw;
-
   final prefs = await SharedPreferences.getInstance();
 
-  // On the web live preview, the dev server is the source of truth for admin edits.
-
-  if (kIsWeb && Uri.base.host == 'localhost') {
-
-    try {
-
-      final response = await http
-
-          .get(Uri.parse('http://localhost:8787/runtimeHierarchy'))
-
-          .timeout(const Duration(seconds: 3));
-
-      if (response.statusCode == 200) {
-
-        raw = response.body;
-
-        await prefs.setString(_runtimeHierarchyPrefsKey, raw);
-
-      }
-
-    } catch (_) {}
-
-  }
-
-  if (raw == null || raw.isEmpty) {
-
-    raw = prefs.getString(_runtimeHierarchyPrefsKey);
-
-  }
+  final raw = prefs.getString(runtimeHierarchyPrefsKey);
 
   if (raw != null && raw.isNotEmpty) { // use persisted if available
 
@@ -1020,23 +1035,44 @@ Future<void> loadRuntimeHierarchy() async {
 
       
 
-      // FIX: The persisted/admin runtime order and parents must override the
-      // compiled-in values, otherwise in-app moves and reparents are ignored.
-      // Compiled entries are only used for prebuilt boards that are not in the
-      // persisted runtime set.
+      // Remove any stale (Common) suffixed boards that were renamed back.
 
-      final loadedNames = loaded.map((e) => e.name.toLowerCase()).toSet();
+      loaded.removeWhere((e) => e.name.endsWith(' (Common)'));
+
+      
+
+      // The COMPILED hierarchy is the source of truth for prebuilt boards: it
+
+      // defines their area, parent and order. Letting the persisted browser
+
+      // copy win meant a stale localStorage list could silently override the
+
+      // project, and any board hidden from a tab row disappeared entirely.
+
+      // Only genuinely custom boards are carried over from storage.
+
+      final prebuiltNames = boardHierarchy.map((e) => e.name.toLowerCase()).toSet();
+
+      
 
       final merged = <BoardHierarchyEntry>[];
 
-      // 1. Use the persisted runtime first (defines order and parents)
-      merged.addAll(loaded);
+      // 1. Compiled prebuilt hierarchy defines order.
 
-      // 2. Fill in any compiled-in prebuilt boards that aren't in the persisted set
-      for (final item in boardHierarchy) {
-        if (!loadedNames.contains(item.name.toLowerCase())) {
+      merged.addAll(boardHierarchy);
+
+      
+
+      // 2. Append custom boards that aren't part of the prebuilt set.
+
+      for (final item in loaded) {
+
+        if (!prebuiltNames.contains(item.name.toLowerCase())) {
+
           merged.add(item);
+
         }
+
       }
 
 
@@ -1053,7 +1089,7 @@ Future<void> loadRuntimeHierarchy() async {
 
   }
 
-  // First run or out-of-sync — seed from compiled const.
+  // First run or out-of-sync â€” seed from compiled const.
 
   runtimeBoardHierarchy
 
@@ -1065,7 +1101,9 @@ Future<void> loadRuntimeHierarchy() async {
 
 
 
-/// Persist the runtime hierarchy to SharedPreferences and the dev server.
+/// Persist the runtime hierarchy to SharedPreferences.
+
+/// The dev server mirror is handled by board_service.dart.
 
 Future<void> _persistRuntimeHierarchy() async {
 
@@ -1073,9 +1111,9 @@ Future<void> _persistRuntimeHierarchy() async {
 
   final entries = runtimeBoardHierarchy.map((e) => e.toJson()).toList();
 
-  final encoded = json.encode(entries);
+  await prefs.setString(runtimeHierarchyPrefsKey, json.encode(entries));
 
-  await prefs.setString(_runtimeHierarchyPrefsKey, encoded);
+  // Mirror to the dev server so the project file stays in sync too.
 
   if (kIsWeb && Uri.base.host == 'localhost') {
 
@@ -1093,9 +1131,13 @@ Future<void> _persistRuntimeHierarchy() async {
 
           )
 
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 5));
 
-    } catch (_) {}
+    } catch (e) {
+
+      debugPrint('Failed to mirror runtime hierarchy to dev server: $e');
+
+    }
 
   }
 
@@ -1107,11 +1149,11 @@ Future<void> _persistRuntimeHierarchy() async {
 
 
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Admin operations (modifies static/compiled hierarchy)
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
 
@@ -1181,11 +1223,11 @@ Future<void> removeFromRuntimeHierarchy(String name) async {
 
 
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Per-user operations
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
 
@@ -1319,11 +1361,11 @@ Future<void> ensureEmptyUserHierarchy(String userId) async {
 
 
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Board ID generator
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 String _hierarchyBoardId(String name) {
 
@@ -1361,11 +1403,11 @@ String userBoardId(String userId, String name) {
 
 
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 //  Lookup functions (search runtime + user)
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
 
@@ -1431,7 +1473,7 @@ String? hierarchyParentId(String name) {
 
 
 
-/// Derives the tier (1–5) by walking the parent chain.
+/// Derives the tier (1â€“5) by walking the parent chain.
 
 int hierarchyTier(String name) {
 

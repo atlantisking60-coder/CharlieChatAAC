@@ -1,32 +1,29 @@
-Dairy - Word List
-=====================
-
-banana milk
-blue cheese
-brie
 butter
-camembert
-cheddar
-chocolate milk
 clotted cream
 condensed milk
 cottage cheese
 cream cheese
 cream
-egg
 eggs
-feta
+egg
 ice cream
-milk
-milkshakes
-mozzarella
-parmesan
 reduced fat spread
-semi-skimmed milk
-skimmed milk
 sour cream
 spread
-strawberry milk
 whipped cream
-whole milk
 yogurt
+milk
+milkshakes
+blue cheese
+brie
+cheddar
+camembert
+feta
+mozzarella
+parmesan
+semi-skimmed milk
+skimmed milk
+whole milk
+chocolate milk
+banana milk
+strawberry milk

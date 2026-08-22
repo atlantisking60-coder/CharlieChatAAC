@@ -1,6 +1,3 @@
-Fruit - Word List
-=====================
-
 apple - green
 apple - red
 apple

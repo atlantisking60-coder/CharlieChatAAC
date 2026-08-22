@@ -1,0 +1,38 @@
+coal energy
+gas energy
+nuclear energy
+hydro energy
+hydrothermic energy
+solar energy
+tidal energy
+wave energy
+wind energy
+absorb
+absorber
+amplitude
+biofuel
+biomass
+energy
+fossil fuel
+frequency
+renewable
+non-renewable
+power station
+coal-fired
+geothermal
+gas-fired
+hydroelectric
+dam
+solar cell
+solar energy
+solar power
+tidal power
+tidal turbine
+transfer of energy
+transverse wave
+turbine
+wave equation
+wave turbine
+wavelength
+wind farm
+wind turbine

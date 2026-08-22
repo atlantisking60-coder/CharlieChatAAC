@@ -2,7 +2,7 @@
   "id": "prebuilt_joyful",
   "name": "Joyful",
   "area": "Common",
-  "parentBoardId": "prebuilt_feelings",
+  "parentBoardId": "prebuilt_feelings_common",
   "linkedBoardId": null,
   "rows": 6,
   "columns": 4,

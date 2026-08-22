@@ -130,7 +130,7 @@
       "category": "Custom",
       "imageAsset": "assets/BOARDS/Home.png",
       "emoji": "",
-      "linkedBoardId": "prebuilt_home_management",
+      "linkedBoardId": "prebuilt_home_management_common",
       "isBoardLink": true,
       "isFullScreenImage": false,
       "tileSize": 1,

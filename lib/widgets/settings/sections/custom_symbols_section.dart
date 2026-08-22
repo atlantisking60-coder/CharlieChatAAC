@@ -48,18 +48,18 @@ class _CustomSymbolsSectionState extends State<CustomSymbolsSection> {
 
   Future<void> _uploadSymbols() async {
     try {
-      final result = await FilePicker.pickFiles(
+      final files = await FilePicker.pickFiles(
         type: FileType.image,
         allowMultiple: true,
-        withData: true,
       );
 
-      if (result == null || result.files.isEmpty) return;
+      if (files.isEmpty) return;
 
       int successCount = 0;
-      for (final file in result.files) {
-        if (file.bytes != null && file.name.isNotEmpty) {
-          final uploadedPath = await _mirrorImageToProject(file.name, file.bytes!);
+      for (final file in files) {
+        if (file.name.isNotEmpty) {
+          final bytes = await file.readAsBytes();
+          final uploadedPath = await _mirrorImageToProject(file.name, bytes);
           if (uploadedPath != null) {
             successCount++;
           }

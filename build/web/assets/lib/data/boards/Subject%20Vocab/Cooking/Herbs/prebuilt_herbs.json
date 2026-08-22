@@ -2,25 +2,28 @@
   "id": "prebuilt_herbs",
   "name": "Herbs",
   "area": "Subject Vocab",
-  "columns": 5,
+  "columns": 8,
   "backgroundColor": "transparent",
-  "adjustableLayout": false,
+  "adjustableLayout": true,
   "isSubBoard": true,
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 279,
   "tier": 2,
+  "iconAssetPath": "assets/Subject Vocab/Cooking/Food Groups/herb.png",
+  "tileIconAssetPath": "assets/BOARDS/Cooking and Food/Herbs.png",
+  "version": 0,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
   "layout": {
-    "rows": 4,
+    "rows": 6,
     "blankTilesAdded": 0
   },
   "tiles": [
     {
-      "id": "prebuilt_cooking_herbs_basil",
+      "id": "prebuilt_herbs_basil",
       "type": "vocabulary",
       "label": "basil",
       "category": "Assets",
@@ -38,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_bay_leaf",
+      "id": "prebuilt_herbs_bay_leaf",
       "type": "vocabulary",
       "label": "bay leaf",
       "category": "Assets",
@@ -56,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_chamomile",
+      "id": "prebuilt_herbs_chamomile",
       "type": "vocabulary",
       "label": "chamomile",
       "category": "Assets",
@@ -74,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_chives",
+      "id": "prebuilt_herbs_chives",
       "type": "vocabulary",
       "label": "chives",
       "category": "Assets",
@@ -92,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_coriander",
+      "id": "prebuilt_herbs_coriander",
       "type": "vocabulary",
       "label": "coriander",
       "category": "Assets",
@@ -110,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_dill",
+      "id": "prebuilt_herbs_dill",
       "type": "vocabulary",
       "label": "dill",
       "category": "Assets",
@@ -128,7 +131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_fennel",
+      "id": "prebuilt_herbs_fennel",
       "type": "vocabulary",
       "label": "fennel",
       "category": "Assets",
@@ -146,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_hyssop",
+      "id": "prebuilt_herbs_hyssop",
       "type": "vocabulary",
       "label": "hyssop",
       "category": "Assets",
@@ -164,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_lavender",
+      "id": "prebuilt_herbs_lavender",
       "type": "vocabulary",
       "label": "lavender",
       "category": "Assets",
@@ -182,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_lemongrass",
+      "id": "prebuilt_herbs_lemongrass",
       "type": "vocabulary",
       "label": "lemongrass",
       "category": "Assets",
@@ -200,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_mint",
+      "id": "prebuilt_herbs_mint",
       "type": "vocabulary",
       "label": "mint",
       "category": "Assets",
@@ -218,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_oregano",
+      "id": "prebuilt_herbs_oregano",
       "type": "vocabulary",
       "label": "oregano",
       "category": "Assets",
@@ -236,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_parsley",
+      "id": "prebuilt_herbs_parsley",
       "type": "vocabulary",
       "label": "parsley",
       "category": "Assets",
@@ -254,7 +257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_rosemary",
+      "id": "prebuilt_herbs_rosemary",
       "type": "vocabulary",
       "label": "rosemary",
       "category": "Assets",
@@ -272,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_sage",
+      "id": "prebuilt_herbs_sage",
       "type": "vocabulary",
       "label": "sage",
       "category": "Assets",
@@ -290,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_terragon",
+      "id": "prebuilt_herbs_terragon",
       "type": "vocabulary",
       "label": "terragon",
       "category": "Assets",
@@ -308,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_thyme",
+      "id": "prebuilt_herbs_thyme",
       "type": "vocabulary",
       "label": "thyme",
       "category": "Assets",
@@ -326,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_cooking_herbs_tile_17",
+      "id": "prebuilt_herbs_tile_18",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -344,6 +347,5 @@
       "customVoice": ""
     }
   ],
-  "version": 0,
   "parentBoardId": "prebuilt_cooking"
 }

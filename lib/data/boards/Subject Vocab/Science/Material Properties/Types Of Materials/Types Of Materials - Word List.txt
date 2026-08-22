@@ -1,0 +1,16 @@
+material
+properties
+rough
+smooth
+flat
+bumpy
+sharp
+blunt
+wood
+metals
+plastics
+glass
+predict
+investigate
+record
+evaluate

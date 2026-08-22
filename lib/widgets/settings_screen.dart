@@ -10,6 +10,7 @@ import '../services/cross_platform_tts_service.dart';
 import '../services/settings_service.dart';
 import '../services/backup_service.dart';
 import '../services/external_symbol_service.dart';
+import '../services/profile_service.dart';
 import '../models/symbol_tile.dart';
 import 'symbol_grid.dart';
 
@@ -25,12 +26,14 @@ class ProfileSettingsResult {
   final List<String> preferredSymbolSets;
   final String startingBoardId;
   final String? navigateToBoardId;
+  final UserProfile? profile;
 
   ProfileSettingsResult({
     required this.settings,
     required this.preferredSymbolSets,
     required this.startingBoardId,
     this.navigateToBoardId,
+    this.profile,
   });
 }
 
@@ -120,12 +123,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _pickProfileImageFromDevice() async {
     try {
-      final result = await FilePicker.pickFiles(type: FileType.image);
+      final files = await FilePicker.pickFiles(type: FileType.image);
       if (!mounted) return;
-      if (result != null) {
+      if (files.isNotEmpty) {
+        final file = files.single;
         // For web, use the bytes directly
         if (kIsWeb) {
-          final bytes = await result.files.single.readAsBytes();
+          final bytes = await file.readAsBytes();
           setState(() {
             _settings = _settings.copyWith(profileImage: 'data:image/png;base64,${base64Encode(bytes)}');
           });
@@ -136,9 +140,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
         } else {
           // For native, use the file path
-          if (result.files.single.path != null) {
+          if (file.path != null) {
             setState(() {
-              _settings = _settings.copyWith(profileImage: result.files.single.path);
+              _settings = _settings.copyWith(profileImage: file.path);
             });
             if (mounted && context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(

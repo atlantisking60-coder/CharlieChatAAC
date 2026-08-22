@@ -2,7 +2,7 @@
   "id": "prebuilt_school_people",
   "name": "School People",
   "area": "Common",
-  "parentBoardId": "prebuilt_people",
+  "parentBoardId": "prebuilt_people_common",
   "linkedBoardId": null,
   "rows": 6,
   "columns": 5,

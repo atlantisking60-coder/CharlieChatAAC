@@ -1,6 +1,3 @@
-Vegetables - Word List
-==========================
-
 artichoke
 arugula
 asparagus

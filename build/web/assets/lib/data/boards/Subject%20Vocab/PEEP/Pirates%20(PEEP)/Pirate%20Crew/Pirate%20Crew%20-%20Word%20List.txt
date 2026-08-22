@@ -1,0 +1,20 @@
+captain
+first mate
+quartermaster
+scholar
+navigator
+helmsman
+gunner
+sniper
+doctor
+craftsman
+cook
+tailor
+musician
+lookout
+cabin boy
+botanist
+assassin
+spy
+steward
+beast tamer
