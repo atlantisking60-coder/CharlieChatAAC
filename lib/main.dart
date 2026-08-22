@@ -536,32 +536,23 @@ class _HomePageState extends State<HomePage> {
       if (_subjectVocabLessonIcons.isEmpty) await _loadSubjectVocabLessonIcons();
       await _loadValidIconAssets();
 
-      // Default sub-tab order for Common > Time > Events and Occasions.
-      if (boardService.getTabOrder('prebuilt_events_and_occasions') == null) {
-        await boardService.saveTabOrder('prebuilt_events_and_occasions', [
-          'Passover Keywords',
-          'Easter Keywords',
-          'Halloween Keywords',
-          'Bonfire Night Keywords',
-          'Christmas Keywords',
-          'Special Days',
-        ]);
-      }
+      // Tab orders now have a compiled fallback (see defaultTabOrders in
+      // lib/data/tab_orders_data.dart) that's kept in sync with the curated
+      // tab_orders.json, so there's no need to seed defaults here any more.
+      // This used to hardcode its own copies of a couple of orders — those
+      // had drifted out of date (e.g. missing 'My School Main' entirely) and,
+      // because they were saved straight to this browser's local storage the
+      // first time the app ran, permanently stuck once saved even after the
+      // real default was fixed.
 
-      // Default main tab order for My School.
-      if (boardService.getTabOrder('My School') == null) {
-        await boardService.saveTabOrder('My School', [
-          'Baycroft Expects',
-          'Food Options',
-          'Thinking Skills',
-          'When Things Go Wrong',
-          'Blank Levels',
-          'My School Lessons',
-          'Class Equipment',
-          'People At School',
-          'School Events',
-          'Other Useful Stuff',
-        ]);
+      // Self-heal: 'My School Main' is the My School landing board and must
+      // always be first. Older builds seeded a tab order without it at all,
+      // which — once persisted to a browser's local storage — otherwise
+      // shadows the corrected compiled default forever.
+      final mySchoolOrder = boardService.getTabOrder('My School');
+      if (mySchoolOrder != null && !mySchoolOrder.contains('My School Main')) {
+        await boardService.saveTabOrder(
+            'My School', ['My School Main', ...mySchoolOrder]);
       }
 
       // Load the Common area tab list as placeholders, then fill the active

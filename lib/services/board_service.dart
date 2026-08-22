@@ -124,6 +124,21 @@ const Set<String> _retiredBoardIds = {
   'prebuilt_pokemon_generation_1_fire_red_leaf_green_ocean_blue_lightning_yellow_legends_531',
   'prebuilt_pokemon_generation_2_silver_and_gold_legends_532',
   'prebuilt_pokemon_generation_2_silver_and_gold_legends_533',
+  // Leftovers from the old "Legends > Characters" structure, before Disney
+  // Stories / Pokemon / Real Life Heroes etc. were pulled out to their own
+  // top-level tabs and Characters itself was removed. No file, tile link, or
+  // hierarchy entry for any of these exists any more.
+  'prebuilt_characters',
+  'prebuilt_d_d',
+  'prebuilt_horror_icons',
+  'prebuilt_myth_and_history',
+  'prebuilt_biblical_and_ancient_legendary_figures',
+  // Old bare "Feelings"/"People" boards under Common, superseded by
+  // "Feelings (Common)" / "People (Common)" (prebuilt_feelings_common /
+  // prebuilt_people_common). These have no remaining file or hierarchy
+  // entry, so any resurrected copy is always an empty shell.
+  'prebuilt_feelings',
+  'prebuilt_people',
 };
 
 String prebuiltBoardId(String name) {
