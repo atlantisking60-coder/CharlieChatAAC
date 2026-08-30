@@ -143,7 +143,7 @@ const Map<String, String> boardIconMappings = {
       'When Things Go Wrong': 'assets/BOARDS/Words For When Things Go Wrong.png',
       'Blank Levels': 'assets/BOARDS/Blank Levels.png',
       'My School Lessons': 'assets/BOARDS/Lesson Vocabulary.png',
-      'People At School': 'assets/BOARDS/People At School.png',
+      'People at Baycroft': 'assets/BOARDS/People At School.png',
 
       // PERSONAL mode icons
       'PEOPLE AT HOME': 'assets/BOARDS/Home.png',

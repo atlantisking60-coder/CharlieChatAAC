@@ -214,6 +214,25 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('North American States', 'Common', 'World Map'),
   BoardHierarchyEntry('Disasters (Common)', 'Common', 'Weather'),
   BoardHierarchyEntry('Legends', 'Legends'),
+  BoardHierarchyEntry('1982 The Secret Of Nimh', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('1989 Wallace and Gromit', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('1997 Anastasia', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('1998 The Prince Of Egypt', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('1999 The Iron Giant', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('2000 The Road To El Dorado', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('2001 Shrek', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('2002 Ice Age', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('2007 Enchanted', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('2010 Despicable Me and Minions', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('2010 How To Train Your Dragon', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('Charlie and The Chocolate Factory', 'Legends', 'Books'),
+  BoardHierarchyEntry('Gargoyles', 'Legends', 'Cartoons and Puppets'),
+  BoardHierarchyEntry('Sesame Street', 'Legends', 'Cartoons and Puppets'),
+  BoardHierarchyEntry('Golden Axe', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Kid Chameleon', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Legacy of Kain', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Street Fighter', 'Legends', 'Computer Games'),
+  BoardHierarchyEntry('Streets of Rage', 'Legends', 'Computer Games'),
   BoardHierarchyEntry('1937 Snow White and The Seven Dwarfs', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1940 Fantasia', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1940 Pinocchio', 'Legends', 'Disney Stories'),
@@ -226,9 +245,12 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('1959 Sleeping Beauty', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1961 101 Dalmatians', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1963 The Sword In The Stone', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1964 Mary Poppins', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1967 The Jungle Book', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1970 The Aristocats', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1971 Bedknobs and Broomsticks', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1973 Robin Hood', 'Legends', 'Disney Stories'),
+  BoardHierarchyEntry('1977 Pete\'s Dragon', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1977 The Rescuers', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1977 Winnie The Pooh', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1981 The Fox and The Hound', 'Legends', 'Disney Stories'),
@@ -238,6 +260,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('1988 Oliver and Company', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1988 The Land Before Time', 'Legends', 'Animations (Not Disney)'),
   BoardHierarchyEntry('1989 All Dogs Go to Heaven', 'Legends', 'Animations (Not Disney)'),
+  BoardHierarchyEntry('1988 Who Framed Roger Rabbit', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1989 The Little Mermaid', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1991 Beauty and The Beast', 'Legends', 'Disney Stories'),
   BoardHierarchyEntry('1992 Aladdin', 'Legends', 'Disney Stories'),
@@ -293,6 +316,7 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Animaniacs', 'Legends', 'Cartoons and Puppets'),
   BoardHierarchyEntry('Animations (Not Disney)', 'Legends'),
   BoardHierarchyEntry('Ant-Man', 'Legends', 'Marvel'),
+  BoardHierarchyEntry('Flash Gordon', 'Legends', 'Sci-Fi and Fantasy'),
   BoardHierarchyEntry('Anti-Mutant Threats', 'Legends', 'X-Men'),
   BoardHierarchyEntry('Apocalypse and The Horsemen', 'Legends', 'X-Men'),
   BoardHierarchyEntry('Aquaman', 'Legends', 'DC'),
@@ -418,6 +442,19 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Prodigy', 'Legends', 'Star Trek'),
   BoardHierarchyEntry('ReBoot', 'Legends', 'Cartoons and Puppets'),
   BoardHierarchyEntry('Real Life Heroes', 'Legends'),
+  BoardHierarchyEntry('Activism, Charity and Heroism', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Celebrated Writers', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Culinary Masters', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Famous Actors', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Fashionable Designers', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Financial Gurus', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Intrepid Explorers', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Musical Practitioners', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Overcoming Challenges', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Political Figures', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Popular Artists', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Scientific Pioneers', 'Legends', 'Real Life Heroes'),
+  BoardHierarchyEntry('Sporting Icons', 'Legends', 'Real Life Heroes'),
   BoardHierarchyEntry('Religion, Myth and History', 'Legends'),
   BoardHierarchyEntry('Robin Hood and English Folklore', 'Legends', 'Religion, Myth and History'),
   BoardHierarchyEntry('Roman Gods', 'Legends', 'Gods, Titans, Heroes and Monsters'),
@@ -467,40 +504,45 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Zero Dawn Project', 'Legends', 'Horizon'),
   BoardHierarchyEntry('Pokemon - Gen 3 - Hoenn (Ruby and Sapphire)', 'Legends', 'Pokemon'),
   BoardHierarchyEntry('My School Main', 'My School'),
-  BoardHierarchyEntry('Food Options', 'My School'),
-  BoardHierarchyEntry('Other Useful Stuff', 'My School'),
-  BoardHierarchyEntry('School Events', 'My School'),
-  BoardHierarchyEntry('7EmS', 'My School', 'People At School'),
-  BoardHierarchyEntry('7LDo', 'My School', 'People At School'),
-  BoardHierarchyEntry('7MCa', 'My School', 'People At School'),
-  BoardHierarchyEntry('7NGr', 'My School', 'People At School'),
-  BoardHierarchyEntry('8LBr', 'My School', 'People At School'),
-  BoardHierarchyEntry('8MGr', 'My School', 'People At School'),
-  BoardHierarchyEntry('8SLP', 'My School', 'People At School'),
-  BoardHierarchyEntry('9EBl', 'My School', 'People At School'),
-  BoardHierarchyEntry('9LMc', 'My School', 'People At School'),
-  BoardHierarchyEntry('9RCo', 'My School', 'People At School'),
-  BoardHierarchyEntry('10BCl', 'My School', 'People At School'),
-  BoardHierarchyEntry('10KLa', 'My School', 'People At School'),
-  BoardHierarchyEntry('10RLi', 'My School', 'People At School'),
-  BoardHierarchyEntry('11HSu', 'My School', 'People At School'),
-  BoardHierarchyEntry('11STo', 'My School', 'People At School'),
-  BoardHierarchyEntry('RLP', 'My School', 'People At School'),
-  BoardHierarchyEntry('KL', 'My School', 'People At School'),
-  BoardHierarchyEntry('AW', 'My School', 'People At School'),
-  BoardHierarchyEntry('Governors and Friends Of Baycroft', 'My School', 'People At School'),
   BoardHierarchyEntry('Baycroft Expects', 'My School'),
   BoardHierarchyEntry('Thinking Skills', 'My School'),
   BoardHierarchyEntry('When Things Go Wrong', 'My School'),
   BoardHierarchyEntry('Blank Levels', 'My School'),
   BoardHierarchyEntry('My School Lessons', 'My School'),
   BoardHierarchyEntry('Class Equipment', 'My School'),
-  BoardHierarchyEntry('People At School', 'My School'),
-  BoardHierarchyEntry('Safeguarding Team', 'My School', 'People At School'),
-  BoardHierarchyEntry('Senior Leadership', 'My School', 'People At School'),
-  BoardHierarchyEntry('Office and Other Helpful People', 'My School', 'People At School'),
+  BoardHierarchyEntry('Food Options', 'My School'),
+  BoardHierarchyEntry('Other Useful Stuff', 'My School'),
+  BoardHierarchyEntry('School Events', 'My School'),
+  BoardHierarchyEntry('Timetables', 'My School'),
+  BoardHierarchyEntry('People at Baycroft', 'My School'),
+  BoardHierarchyEntry('7EmS', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('7LDo', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('7MCa', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('7NGr', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('8LBr', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('8MGr', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('8SLP', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('9EBl', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('9LMc', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('9RCo', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('10BCl', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('10KLa', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('10RLi', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('11HSu', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('11STo', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('RLP', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('KL', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('AW', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('safeguarding team', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('senior leadership', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('helpful people', 'My School', 'People at Baycroft'),
+  BoardHierarchyEntry('governors and friends of baycroft', 'My School', 'People at Baycroft'),
   BoardHierarchyEntry('Personal', 'Personal'),
   BoardHierarchyEntry('Common Interests', 'Personal'),
+  BoardHierarchyEntry('Confectionery', 'Personal'),
+  BoardHierarchyEntry('Sweets', 'Personal', 'Confectionery'),
+  BoardHierarchyEntry('Chocolates', 'Personal', 'Confectionery'),
+  BoardHierarchyEntry('Crisps', 'Personal', 'Confectionery'),
   BoardHierarchyEntry('Recipes', 'Recipes'),
   BoardHierarchyEntry('Bacon and Mushroom Risotto', 'Recipes'),
   BoardHierarchyEntry('Banana Dolphins', 'Recipes'),
@@ -605,8 +647,11 @@ const List<BoardHierarchyEntry> boardHierarchy = [
   BoardHierarchyEntry('Shared Activities', 'Sign'),
   BoardHierarchyEntry('Weather (Sign)', 'Sign'),
   BoardHierarchyEntry('Subject Vocab', 'Subject Vocab'),
+  BoardHierarchyEntry('Individual Gemstones', 'Subject Vocab', 'Gemstones and Jewels'),
+  BoardHierarchyEntry('Trees', 'Subject Vocab', 'Horticulture'),
   BoardHierarchyEntry('Absorbent Or Waterproof', 'Subject Vocab', 'Material Properties'),
   BoardHierarchyEntry('Acids', 'Subject Vocab', 'Acids and Alkelis'),
+  BoardHierarchyEntry('Gemstones and Jewels', 'Subject Vocab', 'Rocks'),
   BoardHierarchyEntry('Acids and Alkelis', 'Subject Vocab', 'Science'),
   BoardHierarchyEntry('Air and Water Resistance', 'Subject Vocab', 'Forces'),
   BoardHierarchyEntry('Alcohol Awareness', 'Subject Vocab', 'Personal Development'),
@@ -1278,12 +1323,19 @@ Future<void> updateRuntimeHierarchyEntry(BoardHierarchyEntry entry) async {
 
 
 /// Remove an entry from the runtime hierarchy (admin deletes a board).
+/// If [area] is provided, only entries with the matching name and area are
+/// removed, so same-named boards in other areas are not affected.
 
-Future<void> removeFromRuntimeHierarchy(String name) async {
+Future<void> removeFromRuntimeHierarchy(String name, {String? area}) async {
 
-  runtimeBoardHierarchy.removeWhere(
+  final lowerName = name.toLowerCase();
+  final lowerArea = area?.toLowerCase();
 
-      (e) => e.name.toLowerCase() == name.toLowerCase());
+  runtimeBoardHierarchy.removeWhere((e) {
+    if (e.name.toLowerCase() != lowerName) return false;
+    if (lowerArea == null) return true;
+    return e.area.toLowerCase() == lowerArea;
+  });
 
   await _persistRuntimeHierarchy();
 
@@ -1436,15 +1488,30 @@ Future<void> ensureEmptyUserHierarchy(String userId) async {
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 String _hierarchyBoardId(String name) {
-
-  if (name.toLowerCase() == 'a-z of sign') {
-
+  final lower = name.toLowerCase();
+  if (lower == 'a-z of sign') {
     return 'prebuilt_a-z_of_sign';
-
+  }
+  if (name == 'Not Disney Animations' || name == 'Animations (Not Disney)') {
+    return 'prebuilt_not_disney_animations';
+  }
+  if (name == 'The Turtles') {
+    return 'prebuilt_turtles';
   }
 
-  return 'prebuilt_${name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
+  // Baycroft-specific boards must have the baycroft_ prefix to remain
+  // private to the baycroft profile.
+  final baycroftNames = {
+    '7ems', '7ldo', '7mca', '7ngr', '8lbr', '8mgr', '8slp', '9ebl', '9lmc', '9rco',
+    '10bcl', '10kla', '10rli', '11hsu', '11sto', 'rlp', 'kl', 'aw',
+    'safeguarding team', 'senior leadership', 'helpful people',
+    'governors and friends of baycroft', 'people at baycroft', 'timetables'
+  };
+  if (baycroftNames.contains(lower)) {
+    return 'baycroft_${lower.replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
+  }
 
+  return 'prebuilt_${lower.replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
 }
 
 
@@ -1675,4 +1742,3 @@ int hierarchyPosition(String name) {
   return -1;
 
 }
-

@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_other_useful_stuff",
+  "name": "Other Useful Stuff",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 416,
+  "tier": 1,
+  "iconAssetPath": "assets/Common/Small Words/other.png",
+  "tileIconAssetPath": "assets/BOARDS/English/Montessori/Other.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

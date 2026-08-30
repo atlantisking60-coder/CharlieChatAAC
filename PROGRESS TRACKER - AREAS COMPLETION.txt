@@ -1,27 +1,33 @@
 Change the splash page text to say this:
 
-VERSION 1.0 22nd Aug 2026
+VERSION 1.2 30th Aug 2026
 
 STILL TO DO:
+Set up Firebase, to make profile changes consistent across devices.
 COMMON > Time > Special Days (One for each day of the year).
-LESSON VOCAB - Thesaurus boards.
 RECIPES - Add clearer instructions pictures.
 SIGN - New Makaton pictures to add gradually.
-------
-TO ADD TO LEGENDS:
 
-ANIMATIONS (NOT DISNEY):
-The Secret of NIMH (1982)
-Wallace and Gromit (1989)
-Anastasia (1997)
-The Iron Giant (1999)
-The Prince of Egypt (1998)
-The Road to El Dorado (2000)
-Shrek (2001)
-Ice Age (2002)
-How to Train Your Dragon (2010)
-Despicable Me and Minions (2010)
+-----
 
-CARTOONS:
-Gargoyles
-Sesame Street
+CHANGE LOG 1.1 > 1.2:
+- Profile specific tutor group boards, timetables boards and school food boards.
+- “Real Life Heroes” sub-boards created and populated.
+- Many Legends boards created and/or populated.
+- Recipes area boards created and populated.
+- Splash screen profile tile redesign.
+- Added search for boards feature.
+- Favourites board now show favourite boards as well as favourite tiles / words. Heart button added to all boards to add them to this.
+- Confectionary boards added under personal.
+- Gemstones and Jewels board under Science > Rocks.
+- Many Bug Fixes and file and folder structure clean-ups.
+- Native hydration for profile-specific boards.
+- Fixed file_picker v12 API breakages.
+
+
+
+
+
+
+
+PROMPTS TO DO:

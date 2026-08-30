@@ -879,10 +879,10 @@
   ],
   "isSubBoard": true,
   "isTertiaryBoard": true,
-  "isQuaternaryBoard": false,
+  "isQuaternaryBoard": true,
   "isQuinaryBoard": false,
   "sortOrder": 0,
-  "tier": 3,
+  "tier": 4,
   "iconAssetPath": "assets/Common/Time/Months/september.png",
   "tileIconAssetPath": "assets/BOARDS/Time, Months, Events/Semptember.png",
   "version": 0

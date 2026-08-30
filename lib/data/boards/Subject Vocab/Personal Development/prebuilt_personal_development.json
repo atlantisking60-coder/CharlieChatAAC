@@ -369,7 +369,7 @@
       "type": "board_link",
       "label": "Passport",
       "category": "Assets",
-      "imageAsset": "assets/Subject Vocab/Personal Development/scaled_Baycroft Passport.png",
+      "imageAsset": "assets/BOARDS/PD/Baycroft Passport.png",
       "emoji": "",
       "isBoardLink": true,
       "linkedBoardId": "prebuilt_passport",

@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_when_things_go_wrong",
+  "name": "When Things Go Wrong",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 411,
+  "tier": 1,
+  "iconAssetPath": "assets/Common/Weather/Disasters/conflict.png",
+  "tileIconAssetPath": "assets/BOARDS/Words For When Things Go Wrong.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

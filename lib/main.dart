@@ -38,7 +38,10 @@ import 'widgets/settings_screen.dart';
 import 'widgets/settings/settings_shell.dart';
 import 'widgets/symbol_grid.dart';
 import 'widgets/sync_status_screen.dart';
+import 'widgets/empty_boards_screen.dart';
+import 'services/empty_boards_service.dart';
 import 'widgets/board_editor.dart';
+import 'widgets/board_search_dialog.dart';
 import 'widgets/welcome_screen.dart';
 import 'widgets/new_profile_dialog.dart';
 import 'widgets/auth_guard.dart';
@@ -464,6 +467,8 @@ class _HomePageState extends State<HomePage> {
   UserProfile? _activeProfile;
   AppSettings? _settings;
   List<Board> _boards = [];
+  List<Board> _allBoards = [];
+  bool _isLoadingFavorites = false;
   static final Map<String, String> _subjectVocabLessonIcons = {};
 
   /// Set of every bundled web asset (assets/**). Used to reject icon paths
@@ -491,6 +496,15 @@ class _HomePageState extends State<HomePage> {
   final Map<String, GlobalKey> _tabActiveKeys = {};
   final Map<String, String> _iconPathCache = {};
   bool _showScrollToTop = false;
+
+  List<Board> get _favouriteBoards {
+    final favIds = _favoritesService?.favoriteBoards ?? <String>{};
+    return _allBoards.where((b) => favIds.contains(b.id)).toList();
+  }
+
+  void _onBoardTap(Board board) {
+    _openLinkedBoard(board.id);
+  }
 
   // Sub-boards that are hidden from the top-level tab bar but shown as a second row when their parent is active.
   static const List<String> _subBoardNames = [];
@@ -521,11 +535,13 @@ class _HomePageState extends State<HomePage> {
       await _tts.initialize();
       _profileService = await ProfileService.init();
       _metadataService = await SymbolMetadataService.init();
-      _favoritesService = await FavoritesService.init();
       _phraseService = await PhraseHistoryService.init();
       _profiles = _profileService.profiles;
       _activeProfile = _profileService.activeProfile;
       _settings = _activeProfile?.settings ?? widget.initialSettings;
+      
+      // Initialize favorites service AFTER active profile is known
+      _favoritesService = await FavoritesService.init(profileId: _activeProfile?.id ?? 'default');
       
       final boardService = await BoardService.getInstance(
         projectRoot: _settings?.projectRoot.isNotEmpty == true ? _settings!.projectRoot : null,
@@ -627,22 +643,115 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadBoards({String? area}) async {
     final service = await BoardService.getInstance();
-    _boards = await service.listBoards(area: area, includeTiles: false);
+    final loadArea = area;
+
+    // 1. Load the area's board list WITHOUT waiting for tab-icon metadata.
+    // The tab row renders immediately (names/tiers come from storage and the
+    // compiled hierarchy — no asset parsing), and the landing board starts
+    // loading right away instead of queuing behind icon fetches. Icons fill in
+    // from the background pass in step 3.
+    _boards = await service.listBoards(
+        area: loadArea, includeTiles: false, awaitIcons: false);
     _buildTabs();
-    await _loadFullActiveBoard();
+    unawaited(_loadFullActiveBoard());
+
+    // 2. Background load for all boards (for unified favorites and global search).
+    // This runs unawaited to avoid blocking the main UI thread.
+    unawaited(service.listBoards(includeTiles: false, awaitIcons: false).then((all) {
+      if (!mounted) return;
+      setState(() {
+        _allBoards = all;
+      });
+      if (_activeTab?.type == TopTabType.favorites) {
+        _triggerFavoritesLoad();
+      }
+    }));
+
+    // 3. Background pass that resolves any still-missing tab/tile icon
+    // metadata for THIS area, then refreshes the tab rows so icons pop in as
+    // soon as they land. Ignored when the user has switched areas meanwhile.
+    unawaited(service
+        .listBoards(area: loadArea, includeTiles: false, awaitIcons: true)
+        .then((fresh) {
+      if (!mounted || loadArea != _activeArea()) return;
+      var changed = false;
+      for (final fb in fresh) {
+        final i = _boards.indexWhere((b) => b.id == fb.id);
+        if (i < 0) continue;
+        final b = _boards[i];
+        final fbIcon = fb.iconAssetPath ?? '';
+        final fbTileIcon = fb.tileIconAssetPath ?? '';
+        if ((b.iconAssetPath ?? '') != fbIcon ||
+            (b.tileIconAssetPath ?? '') != fbTileIcon) {
+          b.iconAssetPath = fbIcon.isEmpty ? null : fb.iconAssetPath;
+          b.tileIconAssetPath = fbTileIcon.isEmpty ? null : fb.tileIconAssetPath;
+          changed = true;
+          }
+        }
+        if (changed && mounted) {
+          setState(() => _buildTabsInternal(_activeTab?.id));
+        }
+        unawaited(_preloadIconsForBoards(_boards));
+      }));
+  }
+
+  void _triggerFavoritesLoad() async {
+    if (_isLoadingFavorites || _allBoards.isEmpty) return;
+    setState(() => _isLoadingFavorites = true);
+    try {
+      final service = await BoardService.getInstance();
+      final favBoardIds = _favoritesService?.favoriteBoards ?? <String>{};
+      final favTileIds = _favoritesService?.favorites ?? <String>{};
+      
+      // Load all boards that are favorited OR contain a favorite tile.
+      final boardsToLoad = _allBoards.where((b) => 
+        favBoardIds.contains(b.id) || 
+        favTileIds.any((id) => id.startsWith(b.id + "_"))
+      ).toList();
+
+      for (final b in boardsToLoad) {
+        // Skip if already fully loaded
+        if (_allBoards.any((existing) => existing.id == b.id && existing.tiles.isNotEmpty)) continue;
+        
+        final full = await service.getBoard(b.id);
+        if (full != null) {
+          setState(() {
+            final idx = _allBoards.indexWhere((existing) => existing.id == full.id);
+            if (idx >= 0) _allBoards[idx] = full;
+            
+            // Also update the filtered current-area list if this board is in it
+            final bIdx = _boards.indexWhere((existing) => existing.id == full.id);
+            if (bIdx >= 0) _boards[bIdx] = full;
+          });
+        }
+      }
+    } finally {
+      if (mounted) setState(() => _isLoadingFavorites = false);
+    }
   }
 
   Future<void> _loadFullActiveBoard() async {
     if (_activeTab?.type != TopTabType.board || _activeTab?.board == null) return;
     final service = await BoardService.getInstance();
-    service.setPriorityBoardId(_activeTab!.board!.id);
+    final targetTabId = _activeTab!.id;
+    final targetBoardId = _activeTab!.board!.id;
+    service.setPriorityBoardId(targetBoardId);
     if (mounted) setState(() => _isLoadingActiveBoard = true);
-    final full = await service.getBoard(_activeTab!.board!.id);
+    final full = await service.getBoard(targetBoardId);
     if (!mounted) return;
+    // Ignore the result if the user already navigated elsewhere while the
+    // board was being fetched (area switches can overlap; the newer request
+    // owns the spinner and the tab row).
+    if (_activeTab?.id != targetTabId || _activeTab?.board?.id != targetBoardId) {
+      if (_activeTab?.type != TopTabType.board && mounted) {
+        setState(() => _isLoadingActiveBoard = false);
+      }
+      return;
+    }
     if (full == null) {
       setState(() => _isLoadingActiveBoard = false);
       final missingBoard = _createAutoMissingBoard(
-        _activeTab!.board!.id,
+        targetBoardId,
         _activeTab!.board!.name,
         area: _activeTab!.board!.area,
       );
@@ -765,7 +874,84 @@ class _HomePageState extends State<HomePage> {
     if (mounted) setState(() {});
   }
 
+  // Re-checks the icons behind the tab rows currently on screen and
+  // repopulates any that have drifted. Tabs can be rebuilt from boards whose
+  // stored iconAssetPath is empty or stale (area switches, hierarchy
+  // navigation, refreshed server copies), which makes icons "revert". The
+  // canonical compiled-index icon wins; boards the index has no icon for are
+  // fetched asynchronously from the icon store/dev server.
+  void _repopulateVisibleTabIcons() {
+    final service = BoardService.current;
+    if (service == null) return;
+    var changed = false;
+    final toLoad = <Board>[];
+    final visitedIds = <String>{};
+    void visit(Board? b) {
+      if (b == null || !visitedIds.add(b.id)) return;
+      final canonical = service.canonicalBoardIcon(b.id);
+      final current = b.iconAssetPath;
+      if (canonical != null && canonical.isNotEmpty && current != canonical) {
+        b.iconAssetPath = canonical;
+        _iconPathCache[b.id] = canonical;
+        changed = true;
+      } else if ((current == null || current.isEmpty) &&
+          _iconPathCache[b.id] == null &&
+          (canonical == null || canonical.isEmpty)) {
+        toLoad.add(b);
+      }
+    }
+
+    for (final tab in _tabs) {
+      visit(tab.board);
+    }
+    // Visit the active board's lineage and the sub-tab rows that render for
+    // each ancestor, so every icon used in the visible tab rows is checked.
+    final visitedLineageIds = <String>{};
+    Board? current = _activeTab?.board;
+    while (current != null && current.parentBoardId != null) {
+      if (!visitedLineageIds.add(current.id)) break;
+      for (final sub in _subTabsForBoard(current)) {
+        visit(sub.board);
+      }
+      final parent = _boards.cast<Board?>().firstWhere(
+            (b) => b?.id == current!.parentBoardId,
+            orElse: () => null,
+          );
+      if (parent == null) break;
+      current = parent;
+    }
+    if (_activeTab?.board != null) {
+      for (final sub in _subTabsForBoard(_activeTab!.board!)) {
+        visit(sub.board);
+      }
+    }
+    visit(_activeTab?.board);
+    visit(_parentBoard);
+
+    if (changed && mounted) {
+      setState(() => _buildTabsInternal(_activeTab?.id));
+    }
+    if (toLoad.isNotEmpty) unawaited(_preloadIconsForBoards(toLoad));
+  }
+
+  Future<void> _preloadIconsForBoards(List<Board> boards) async {
+    await Future.wait(boards.map((b) async {
+      try {
+        await BoardService.instance?.preloadBoardIcon(b);
+      } catch (_) {}
+    }));
+    if (!mounted) return;
+    if (boards.any((b) => b.iconAssetPath != null && b.iconAssetPath!.isNotEmpty)) {
+      setState(() => _buildTabsInternal(_activeTab?.id));
+    }
+  }
+
   String _getBoardIconPath(Board board) {
+    // Canonical icon from the compiled board index wins. This keeps tab icons
+    // stable even when tabs are rebuilt from boards whose iconAssetPath is
+    // empty/stale (function/area switches, hierarchy navigation, etc).
+    final canonical = BoardService.current?.canonicalBoardIcon(board.id);
+    if (canonical != null && canonical.isNotEmpty) return canonical;
     if (board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty) {
       return board.iconAssetPath!;
     }
@@ -929,7 +1115,7 @@ class _HomePageState extends State<HomePage> {
       'When Things Go Wrong': 'assets/BOARDS/Words For When Things Go Wrong.png',
       'Blank Levels': 'assets/BOARDS/Blank Levels.png',
       'My School Lessons': 'assets/BOARDS/Lesson Vocabulary.png',
-      'People At School': 'assets/BOARDS/People At School.png',
+      'People at Baycroft': 'assets/BOARDS/People At School.png',
 
       // PERSONAL mode icons
       'PEOPLE AT HOME': 'assets/BOARDS/Home.png',
@@ -1296,6 +1482,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _buildTabsInternal(oldActiveId);
     });
+    // Tab icons can drift when tabs are rebuilt from boards whose stored icon
+    // differs from the canonical index icon — re-check the visible rows.
+    _repopulateVisibleTabIcons();
   }
 
   void _syncParentBoardForActiveTab() {
@@ -1728,6 +1917,26 @@ class _HomePageState extends State<HomePage> {
             addedMySchoolBoardIds.add(board.id);
           }
         }
+        // Never silently drop a hierarchically-expected My School tab just
+        // because the board list is stale or still loading after an area
+        // switch: inject a placeholder whose id comes from the compiled index
+        // so tapping it opens the real board. This keeps all top-level My
+        // School boards present no matter what state was cached previously.
+        for (final boardName in mySchoolBoardNames) {
+          final alreadyShown = _boardForTabName(boardName, 'My School') != null;
+          if (alreadyShown) continue;
+          final resolvedId = BoardService.current?.resolveBoardIdForName(boardName);
+          if (resolvedId == null || addedMySchoolBoardIds.contains(resolvedId)) continue;
+          final placeholder = _createAutoMissingBoard(resolvedId, boardName, area: 'My School');
+          if (!_boards.any((b) => b.id == resolvedId)) _boards.add(placeholder);
+          allTabs.add(TopTab(
+              id: resolvedId,
+              label: _tabLabelForBoard(placeholder),
+              iconAssetPath: _getBoardIconPath(placeholder),
+              type: TopTabType.board,
+              board: placeholder));
+          addedMySchoolBoardIds.add(resolvedId);
+        }
         allTabs.add(TopTab(
             id: 'my_school_editor',
             label: 'New Board',
@@ -1974,6 +2183,26 @@ class _HomePageState extends State<HomePage> {
           ));
         }
       }
+
+      // A stored order can be stale or incomplete (e.g. it was recorded before
+      // a board restructure/rename, like People at Baycroft's sub-tabs). Never
+      // silently drop a real child: append any children missing from the saved
+      // order, keeping the saved prefix intact but guaranteeing everything that
+      // lives under this board is reachable as a tab.
+      final appended = <TopTab>[];
+      for (final child in children) {
+        if (seenIds.add(child.id)) {
+          appended.add(TopTab(
+            id: child.id,
+            label: _tabLabelForBoard(child),
+            iconAssetPath: _getBoardIconPath(child),
+            type: TopTabType.board,
+            board: child,
+            parentBoard: board,
+          ));
+        }
+      }
+      if (appended.isNotEmpty) childrenTabs.addAll(_sortedChildTabs(board, appended));
       return childrenTabs;
     }
 
@@ -1993,7 +2222,12 @@ class _HomePageState extends State<HomePage> {
         ));
       }
     }
+    return _sortedChildTabs(board, childrenTabs);
+  }
 
+  // Sorts sub-board tabs by compiled hierarchy order, then board sortOrder,
+  // then by label.
+  List<TopTab> _sortedChildTabs(Board board, List<TopTab> childrenTabs) {
     // Sort by compiled hierarchy order, then board sortOrder, then by label
     childrenTabs.sort((a, b) {
       // SPECIAL CASE: A-Z Of Sign sub-tabs should ALWAYS be alphabetical
@@ -2071,6 +2305,13 @@ class _HomePageState extends State<HomePage> {
       boardService.setProjectRoot(profile.settings.projectRoot);
     }
     boardService.setCurrentProfileId(profile.id);
+
+    // Re-initialize favourites service for the new profile
+    _favoritesService = await FavoritesService.init(profileId: profile.id);
+
+    if (profile.isAdmin) {
+      EmptyBoardsService.instance.invalidate();
+    }
 
     if (!mounted) return;
 
@@ -2188,7 +2429,9 @@ class _HomePageState extends State<HomePage> {
                               child: Icon(_activeTab!.icon!, size: 32),
                             ),
                           Text(
-                            _activeTab!.label,
+                            _activeProfile?.isAdmin == true && _activeTab?.board != null
+                                ? '${_activeTab!.label} (${_activeTab!.board!.id})'
+                                : _activeTab!.label,
                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ],
@@ -2302,7 +2545,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              _activeTab!.label,
+                              _activeProfile?.isAdmin == true && _activeTab?.board != null
+                                  ? '${_activeTab!.label} (${_activeTab!.board!.id})'
+                                  : _activeTab!.label,
                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ],
@@ -2576,9 +2821,11 @@ class _HomePageState extends State<HomePage> {
     }
     if (_activeTab?.type == TopTabType.favorites) {
       final favorites = _favoritesService?.favorites ?? <String>{};
-      // Collect tiles from all boards that are favourited
+      
+      // Only show individual favorite tiles from all boards (no board links in main tile area)
       final boardFavTiles = <SymbolTile>[];
-      for (final board in _boards) {
+      
+      for (final board in _allBoards) {
         for (final tile in board.tiles) {
           if (favorites.contains(tile.id) && _matchesFuzzy(tile, search)) {
             boardFavTiles.add(tile);
@@ -2608,6 +2855,23 @@ class _HomePageState extends State<HomePage> {
   List<SymbolTile> get _displaySymbols {
     final filtered = _filteredSymbols;
     final search = _searchController.text.trim().toLowerCase();
+    
+    // Ensure minimum 4 tiles for favorites tab
+    if (_activeTab?.type == TopTabType.favorites) {
+      final result = List<SymbolTile>.from(filtered);
+      while (result.length < 4) {
+        result.add(SymbolTile(
+          id: 'blank_${result.length}',
+          label: '',
+          imageAsset: '',
+          emoji: '',
+          category: '',
+          bgColor: 'transparent',
+          textColor: '#000000',
+        ));
+      }
+      return result;
+    }
     
     // Only apply layout truncation/expansion if we are viewing a specific board without search active
     if (_activeTab?.type == TopTabType.board && _activeTab?.board != null && (search.isEmpty || (search.length == 1 && !_isSearchableShortQuery(search)))) {
@@ -2717,7 +2981,7 @@ class _HomePageState extends State<HomePage> {
             _parentBoard = null;
             _navigationHistory.clear();
           });
-          _loadBoards(area: _activeArea());
+_loadBoards(area: _activeArea());
 
           // Reset tab scroll position to the start
           for (final controller in _tabScrollControllers.values) {
@@ -2903,6 +3167,7 @@ class _HomePageState extends State<HomePage> {
       _persistSessionState();
     });
     _scrollActiveTabsIntoViewAfterFrame();
+    _repopulateVisibleTabIcons();
   }
 
   Board _createAutoMissingBoard(String id, String name,
@@ -2932,7 +3197,10 @@ class _HomePageState extends State<HomePage> {
     if (!_boards.any((b) => b.id == boardId)) {
       _boards.add(board);
     }
-    BoardService.getInstance().then((s) => s.saveBoard(board));
+    // Do NOT save this placeholder to storage/dev server: it is transient and
+    // only exists until the real board loads. Persisting it here is what
+    // overwrote populated board JSONs (e.g. People at Baycroft, Timetables,
+    // 7EmS) with empty shells when getBoard failed or returned stale data.
     return board;
   }
 
@@ -3322,6 +3590,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _handleSymbolLongPress(SymbolTile symbol) {
+    // Specialized menu for favorite board links on the Favorites board
+    if (symbol.id.startsWith('fav_board_')) {
+      final boardId = symbol.id.replaceFirst('fav_board_', '');
+      showModalBottomSheet(
+        context: context,
+        builder: (ctx) => SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.favorite, color: Colors.red),
+                title: const Text('Remove board from favorites'),
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                  _favoritesService?.toggleFavoriteBoard(boardId);
+                  setState(() {}); // Refresh the favorites grid
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+      return;
+    }
+
     showModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
@@ -3446,41 +3739,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _toggleFavorite(SymbolTile symbol) async {
-    final service = await BoardService.getInstance();
-    final isFavorite = _favoritesService?.isFavorite(symbol.id) ?? false;
-    
-    // Toggle the favorite ID
+    // Just toggle the favorite ID in SharedPreferences - this is instant
     await _favoritesService?.toggleFavorite(symbol.id);
     
-    // Also add/remove from the Favorites board
-    final favoritesBoardId = prebuiltBoardId('Favorites');
-    Board? favoritesBoard = await service.loadBoard(favoritesBoardId);
-    
-    if (!isFavorite) {
-      // Adding to favorites - add to Favorites board
-      favoritesBoard ??= Board(
-        id: favoritesBoardId,
-        name: 'Favorites',
-        rows: defaultBoardRows,
-        columns: defaultBoardColumns,
-        tiles: [],
-        isSubBoard: true,
-      );
-      
-      // Add the tile to the favorites board if not already there
-      final tileExists = favoritesBoard.tiles.any((t) => t.id == symbol.id);
-      if (!tileExists) {
-        favoritesBoard.tiles.add(symbol);
-        await service.saveBoard(favoritesBoard);
-      }
-    } else {
-      // Removing from favorites - remove from Favorites board
-      if (favoritesBoard != null) {
-        favoritesBoard.tiles.removeWhere((t) => t.id == symbol.id);
-        await service.saveBoard(favoritesBoard);
-      }
-    }
-    
+    // Update UI immediately without slow board I/O
     setState(() {});
   }
 
@@ -3691,6 +3953,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> _openBoardSearch() async {
+    final selectedBoardId = await showDialog<String>(
+      context: context,
+      builder: (_) => BoardSearchDialog(symbolService: _externalSymbolService),
+    );
+    if (selectedBoardId != null && selectedBoardId.isNotEmpty) {
+      _openLinkedBoard(selectedBoardId);
+    }
+  }
+
   Future<void> _openSettings() async {
     final currentSettings = _settings ?? widget.initialSettings;
     final result = await Navigator.of(context).push<ProfileSettingsResult>(
@@ -3744,6 +4016,15 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => const SyncStatusScreen()),
     );
+  }
+
+  Future<void> _openEmptyBoardsList() async {
+    final boardId = await Navigator.of(context).push<String>(
+      MaterialPageRoute(builder: (_) => const EmptyBoardsScreen()),
+    );
+    if (boardId != null && boardId.isNotEmpty) {
+      _openLinkedBoard(boardId);
+    }
   }
 
   Future<void> _handleTabTap(TopTab tab) async {
@@ -3834,6 +4115,7 @@ class _HomePageState extends State<HomePage> {
       });
       _persistSessionState();
       _scrollActiveTabsIntoViewAfterFrame();
+      _triggerFavoritesLoad();
       return;
     }
     if (tab.type == TopTabType.settings) {
@@ -4295,7 +4577,10 @@ class _HomePageState extends State<HomePage> {
                 Icon(_getBoardIconData(tab.board), size: 18, color: foregroundColor),
               if (!isUtilityTab) ...[
                 const SizedBox(width: 6),
-                Text(tab.label, style: const TextStyle(fontSize: 13)),
+                Text(
+                  tab.label,
+                  style: const TextStyle(fontSize: 13),
+                ),
               ],
             ],
           ),
@@ -4331,6 +4616,30 @@ class _HomePageState extends State<HomePage> {
 
   List<List<TopTab>> _buildTabRows() {
     List<List<TopTab>> rows = [];
+
+    // Admin-only Unassigned area: always show one tab row per tier (1-5),
+    // even when a tier has no boards, so orphaned high-tier boards are still
+    // reachable without a parent/hierarchy path.
+    if (_currentMode == AppMode.unassigned) {
+      final unassigned = _boards
+          .where((b) => b.area == 'Unassigned' && !b.id.startsWith('link_'))
+          .toList();
+      for (int tier = 1; tier <= 5; tier++) {
+        final tierBoards = unassigned
+            .where((b) => b.tier == tier)
+            .map((board) => TopTab(
+                  id: board.id,
+                  label: _tabLabelForBoard(board),
+                  iconAssetPath: _getBoardIconPath(board),
+                  type: TopTabType.board,
+                  board: board,
+                ))
+            .toList();
+        rows.add(tierBoards);
+      }
+      return rows;
+    }
+
     rows.add(_tabs); // Top row: Main navigation
 
     // Use a Set to avoid duplicating the same row of sub-tabs
@@ -4521,6 +4830,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          if (_activeProfile?.isAdmin == true)
+            IconButton(
+              icon: const Icon(Icons.checklist_rtl),
+              tooltip: 'Boards to finish',
+              onPressed: _openEmptyBoardsList,
+            ),
           if (_currentMode == AppMode.unassigned &&
               _activeProfile?.isAdmin == true &&
               _activeTab?.type == TopTabType.board)
@@ -4654,9 +4969,88 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               ...tabRows.map((row) => SizedBox(
                                 height: layout.tabBarHeight,
-                                child: _buildTabBar(row),
+                                child: row.isEmpty
+                                    ? const SizedBox.shrink()
+                                    : _buildTabBar(row),
                               )),
                               _buildResponsiveBody(context, layout),
+                              if (_activeTab?.type == TopTabType.favorites) ...[
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.favorite, size: 16, color: Colors.redAccent),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        'Favourite Boards',
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.redAccent),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                if (_favouriteBoards.isNotEmpty)
+                                  SizedBox(
+                                    height: 100,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      itemCount: _favouriteBoards.length,
+                                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                                      itemBuilder: (context, index) {
+                                        final board = _favouriteBoards[index];
+                                        return GestureDetector(
+                                          onTap: () => _onBoardTap(board),
+                                          child: Container(
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context).colorScheme.surfaceContainer,
+                                              borderRadius: BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.5),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 28,
+                                                  height: 28,
+                                                  child: (board.iconAssetPath?.isNotEmpty == true)
+                                                      ? Image.asset(
+                                                          board.iconAssetPath!,
+                                                          fit: BoxFit.cover,
+                                                          errorBuilder: (_, __, ___) => Icon(Icons.dashboard_rounded, size: 28, color: Theme.of(context).colorScheme.primary),
+                                                        )
+                                                      : Icon(Icons.dashboard_rounded, size: 28, color: Theme.of(context).colorScheme.primary),
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                  child: Text(
+                                                    board.name,
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                else
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                    child: Text(
+                                      'Heart a board to add it here',
+                                      style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                                    ),
+                                  ),
+                                const SizedBox(height: 8),
+                              ],
                             ],
                           ),
                         ),
@@ -4896,7 +5290,9 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Board: ${_activeTab!.label}',
+                            _activeProfile?.isAdmin == true
+                                ? 'Board: ${_activeTab!.label} (${_activeTab!.board!.id})'
+                                : 'Board: ${_activeTab!.label}',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -4919,6 +5315,16 @@ class _HomePageState extends State<HomePage> {
                                   icon: const Icon(Icons.arrow_upward),
                                   label: const Text('Up'),
                                 ),
+                              OutlinedButton.icon(
+                                onPressed: _openBoardSearch,
+                                icon: const Icon(Icons.search),
+                                label: const Text('Search For A Board'),
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: Theme.of(context).colorScheme.onTertiaryContainer,
+                                  backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                                  side: BorderSide(color: Theme.of(context).colorScheme.tertiary),
+                                ),
+                              ),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
@@ -4935,9 +5341,24 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               OutlinedButton.icon(
+                                onPressed: () async {
+                                  await _favoritesService?.toggleFavoriteBoard(_activeTab!.board!.id);
+                                  setState(() {});
+                                },
+                                icon: Icon(
+                                  _favoritesService?.isFavoriteBoard(_activeTab!.board!.id) == true
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: _favoritesService?.isFavoriteBoard(_activeTab!.board!.id) == true
+                                      ? Colors.redAccent
+                                      : null,
+                                ),
+                                label: const Text('Fave'),
+                              ),
+                              OutlinedButton.icon(
                                 onPressed: _exportBoardFromView,
                                 icon: const Icon(Icons.photo_camera_outlined),
-                                label: const Text('Export Board'),
+                                label: const Text('Save PNG'),
                               ),
                               OutlinedButton(
                                 onPressed: _downloadBoardJsonToBackup,

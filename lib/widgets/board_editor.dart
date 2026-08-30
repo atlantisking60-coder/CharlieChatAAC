@@ -786,6 +786,9 @@ class _BoardEditorState extends State<BoardEditor> {
       return false;
     }
 
+    int filled = 0;
+    int skipped = 0;
+    int unchanged = 0;
     try {
       final total = board.tiles.length;
       for (int i = 0; i < total; i++) {
@@ -794,29 +797,48 @@ class _BoardEditorState extends State<BoardEditor> {
           final isBroken = await _isImageBroken(tile.imageAsset);
           if (tile.imageAsset.isEmpty || isBroken) {
             final query = tile.label.trim().toLowerCase();
-            var results = await _externalSymbolService.searchAssets(query, limit: limit, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
+            debugPrint('Fill Pics [$mode] searching for "$query"');
+            var results = await _externalSymbolService.searchAssets(
+              query,
+              limit: limit,
+              preferredSets: _activeProfile?.preferredSymbolSets,
+              priorityPaths: priorityPaths,
+              pathPrefixes: allowedPrefixes.isNotEmpty ? allowedPrefixes.toList() : null,
+            );
             final filtered = results.where((r) => isAllowed(r.imageUrl)).toList();
             if (filtered.isNotEmpty) {
               setState(() {
                 board.tiles[i] = tile.copyWith(imageAsset: filtered.first.imageUrl, category: filtered.first.source);
               });
+              filled++;
+              debugPrint('Fill Pics [$mode] filled "$query" with ${filtered.first.imageUrl}');
             } else if (allowExternal) {
               final allResults = await _externalSymbolService.searchAll(query, limit: 1, preferredSets: _activeProfile?.preferredSymbolSets, priorityPaths: priorityPaths);
               if (allResults.isNotEmpty) {
                 setState(() {
                   board.tiles[i] = tile.copyWith(imageAsset: allResults.first.imageUrl, category: allResults.first.source);
                 });
+                filled++;
+                debugPrint('Fill Pics [$mode] filled "$query" with ${allResults.first.imageUrl}');
               } else {
                 setState(() {
                   board.tiles[i] = tile.copyWith(imageAsset: _placeholderImage);
                 });
+                unchanged++;
+                debugPrint('Fill Pics [$mode] no match for "$query"');
               }
             } else {
               setState(() {
                 board.tiles[i] = tile.copyWith(imageAsset: _placeholderImage);
               });
+              unchanged++;
+              debugPrint('Fill Pics [$mode] no local match for "$query"');
             }
+          } else {
+            unchanged++;
           }
+        } else {
+          skipped++;
         }
         setState(() {
           _populateProgress = (i + 1) / total;
@@ -830,6 +852,11 @@ class _BoardEditorState extends State<BoardEditor> {
         _isPopulating = false;
         _populateProgress = 0.0;
       });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Fill Pics: $mode — filled $filled, unchanged $unchanged, skipped $skipped')),
+        );
+      }
     }
   }
 
@@ -2147,7 +2174,9 @@ class _BoardEditorState extends State<BoardEditor> {
                             } else if (imagePath.isNotEmpty) {
                               imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
                             }
-                            setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; isBoardLink = false; linkedBoardId = ''; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
+                            // Uploading an image should only replace the picture —
+                            // it must never clobber an existing board link.
+                            setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
                           }
                         } catch (e) { debugPrint('Error picking image: $e'); }
                       }, child: const Text('Upload Image'))),
@@ -2173,7 +2202,9 @@ class _BoardEditorState extends State<BoardEditor> {
                             } else if (imagePath.isNotEmpty) {
                               imagePath = await _persistImportedImage(File(imagePath), boardId: board.id);
                             }
-                            setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; isBoardLink = false; linkedBoardId = ''; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
+                            // Taking a photo should only replace the picture —
+                            // it must never clobber an existing board link.
+                            setDialogState(() { imageUpdated = true; tile.imageAsset = imagePath; if (labelCtl.text.trim().isEmpty) labelCtl.text = _labelFromPath(res.name); });
                           }
                         } catch (e) { debugPrint('Error taking photo: $e'); }
                       }, child: const Text('Take Photo'))),
@@ -2642,9 +2673,9 @@ class _BoardEditorState extends State<BoardEditor> {
                             final cols = int.tryParse(_columnsController.text) ?? board.columns;
                             if (rows != board.rows || cols != board.columns) _resizeBoard(rows, cols);
                             
-                            // 5s timeout to prevent being stuck forever if something hangs
+                            // 30s timeout to allow for network mirror (especially with multiple images)
                             await _saveBoard().timeout(
-                                  const Duration(seconds: 5),
+                                  const Duration(seconds: 30),
                                   onTimeout: () => debugPrint('Save timed out'),
                                 );
                           } finally {
@@ -3022,6 +3053,11 @@ class _BoardEditorState extends State<BoardEditor> {
   void _convertAllTiles(String type) {
     setState(() {
       for (final tile in board.tiles) {
+        // Leave empty/blank tiles untouched; bulk conversion only applies to
+        // tiles that actually have content.
+        if (tile.label.isEmpty && tile.imageAsset.isEmpty && tile.emoji.isEmpty) {
+          continue;
+        }
         switch (type) {
           case 'normal_word':
             tile.isBoardLink = false;

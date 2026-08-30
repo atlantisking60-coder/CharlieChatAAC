@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' show min;
 
 import 'package:flutter/foundation.dart' show debugPrint, kIsWeb;
 import 'package:flutter/services.dart';
@@ -1002,7 +1003,9 @@ class ExternalSymbolService {
             return !blockedWords.any((w) => label.contains(w));
           }).toList();
 
-    return sortByRelevance(filtered, query, preferredSets: preferredSets, priorityPaths: priorityPaths);
+    final sorted = sortByRelevance(filtered, query, preferredSets: preferredSets, priorityPaths: priorityPaths);
+    // Limit total results to prevent UI lag in selection dialogs.
+    return sorted.take(min(limit, 24)).toList();
   }
 
   String _arasaacImageUrl(String id) {
@@ -1102,6 +1105,18 @@ class ExternalSymbolService {
       final priorityCount = priorityPaths?.length ?? 0;
       final inAppCount = priorityCount + 3;
 
+      // By default Sign assets rank below plain in-app assets, but if the
+      // user has dragged 'Sign' above 'In App Assets' in their Preferred
+      // Symbol Sets, respect that and swap the two tiers.
+      bool signPrioritized = false;
+      if (preferredSets != null && preferredSets.isNotEmpty) {
+        final signIdx = preferredSets.indexOf('Sign');
+        final assetsIdx = preferredSets.indexOf('In App Assets');
+        if (signIdx != -1 && (assetsIdx == -1 || signIdx < assetsIdx)) {
+          signPrioritized = true;
+        }
+      }
+
       int sourceIndex(String imageUrl) {
         final p = imageUrl.toLowerCase();
         if (priorityPaths != null) {
@@ -1112,8 +1127,8 @@ class ExternalSymbolService {
         final offset = priorityCount;
         if (!p.startsWith('assets/')) return offset + 3; // Free external sets
         if (p.startsWith('assets/common/small words/montessori/')) return offset + 1;
-        if (p.startsWith('assets/sign/')) return offset + 2;
-        return offset; // Other in-app assets
+        if (p.startsWith('assets/sign/')) return offset + (signPrioritized ? 0 : 2);
+        return offset + (signPrioritized ? 2 : 0); // Other in-app assets
       }
 
       const closeMatchMaxScore = 10;
@@ -1321,9 +1336,21 @@ class ExternalSymbolService {
     }
   }
 
-  Future<List<ExternalSymbol>> searchAssets(String query, {int limit = 30, List<String>? preferredSets, List<String>? priorityPaths}) async {
+  /// [pathPrefixes], when given, restricts results to assets whose path
+  /// starts with one of the prefixes (case-insensitive) — e.g. used by the
+  /// "Folders" and "Sign" search options to only show assets/BOARDS or
+  /// assets/Sign respectively.
+  Future<List<ExternalSymbol>> searchAssets(String query, {int limit = 30, List<String>? preferredSets, List<String>? priorityPaths, List<String>? pathPrefixes}) async {
     await _ensureMetadata();
-    final allAssets = _assetSymbolCache ?? [];
+    var allAssets = _assetSymbolCache ?? [];
+
+    if (pathPrefixes != null && pathPrefixes.isNotEmpty) {
+      final lowerPrefixes = pathPrefixes.map((p) => p.toLowerCase()).toList();
+      allAssets = allAssets.where((a) {
+        final path = a.imageUrl.toLowerCase();
+        return lowerPrefixes.any((prefix) => path.startsWith(prefix));
+      }).toList();
+    }
 
     if (query.trim().isEmpty) return allAssets.take(limit).toList();
 

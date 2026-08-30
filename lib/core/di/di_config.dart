@@ -71,7 +71,7 @@ Future<void> _registerAsyncDependencies() async {
   getIt.registerSingleton<SyncService>(syncService);
   
   // Favorites Service (uses init)
-  final favoritesService = await FavoritesService.init();
+  final favoritesService = await FavoritesService.init(profileId: 'default');
   getIt.registerSingleton<FavoritesService>(favoritesService);
   
   // Phrase History Service (uses init)

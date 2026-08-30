@@ -1,0 +1,26 @@
+{
+  "id": "baycroft_11hsu",
+  "name": "11HSu",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 433,
+  "tier": 2,
+  "iconAssetPath": "assets/My School/People At School/Baycroft Classes/11HSu.png",
+  "tileIconAssetPath": "assets/BOARDS/My School/11HSu.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "baycroft_people_at_baycroft"
+}

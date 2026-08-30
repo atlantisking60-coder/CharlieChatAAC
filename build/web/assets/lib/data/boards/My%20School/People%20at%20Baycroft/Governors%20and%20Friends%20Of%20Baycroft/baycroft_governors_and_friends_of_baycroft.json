@@ -1,0 +1,26 @@
+{
+  "id": "baycroft_governors_and_friends_of_baycroft",
+  "name": "governors and friends of baycroft",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": true,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 441,
+  "tier": 2,
+  "iconAssetPath": "assets/My School/People At School/Friends Of Baycroft.png",
+  "tileIconAssetPath": "assets/BOARDS/My School/Friends Of Baycroft.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": [],
+  "parentBoardId": "baycroft_people_at_baycroft"
+}

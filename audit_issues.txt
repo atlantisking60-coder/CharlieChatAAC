@@ -1,0 +1,71 @@
+Total files: 980
+Issues: 68
+
+Subject Vocab\Science\Electrical Safety\prebuilt_electrical_safety.json: tier 3 != depth 2
+Subject Vocab\Science\Electrical Safety\prebuilt_electrical_safety.json: isTertiaryBoard True != expected False
+Subject Vocab\Science\Rocks\Gemstones and Jewels\prebuilt_gemstones_individual.json: tier 4 != depth 3
+Subject Vocab\Science\Rocks\Gemstones and Jewels\prebuilt_gemstones_individual.json: isTertiaryBoard False != expected True
+Subject Vocab\Science\Rocks\Gemstones and Jewels\prebuilt_gemstones_individual.json: isQuaternaryBoard True != expected False
+Subject Vocab\Retail\Staff (Retail)\_deleted\link_prebuilt_staff_retail.json: tier 2 != depth 3
+Subject Vocab\Retail\Staff (Retail)\_deleted\link_prebuilt_staff_retail.json: isTertiaryBoard False != expected True
+Subject Vocab\Personal Development\Making Friends\_deleted\prebuilt_making_friends.json: area mismatch (Unassigned != Subject Vocab)
+Subject Vocab\Personal Development\Making Friends\_deleted\prebuilt_making_friends.json: tier 1 != depth 3
+Subject Vocab\Personal Development\Making Friends\_deleted\prebuilt_making_friends.json: isSubBoard False != expected True
+Subject Vocab\Personal Development\Making Friends\_deleted\prebuilt_making_friends.json: isTertiaryBoard False != expected True
+Subject Vocab\Personal Development\Making Friends\_deleted\prebuilt_making_friends.json: sub-board missing parentBoardId
+Subject Vocab\Personal Development\Keeping Safe\Electrical Safety\_deleted\link_prebuilt_electrical_safety.json: tier 3 != depth 4
+Subject Vocab\Personal Development\Keeping Safe\Electrical Safety\_deleted\link_prebuilt_electrical_safety.json: isQuaternaryBoard False != expected True
+Subject Vocab\Maths\Time (Clocks) (Maths)\_deleted\link_prebuilt_time_clocks.json: tier 2 != depth 3
+Subject Vocab\Maths\Time (Clocks) (Maths)\_deleted\link_prebuilt_time_clocks.json: isTertiaryBoard False != expected True
+Subject Vocab\Maths\Money (Maths)\_deleted\link_prebuilt_money.json: tier 2 != depth 3
+Subject Vocab\Maths\Money (Maths)\_deleted\link_prebuilt_money.json: isTertiaryBoard False != expected True
+Subject Vocab\Maths\Class Equipment (Maths)\_deleted\link_prebuilt_class_equipment.json: tier 2 != depth 3
+Subject Vocab\Maths\Class Equipment (Maths)\_deleted\link_prebuilt_class_equipment.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\_deleted\baycroft_people_at_school.json: tier 1 != depth 2
+My School\People at Baycroft\_deleted\baycroft_people_at_school.json: isSubBoard False != expected True
+My School\People at Baycroft\_deleted\baycroft_people_at_school.json: sub-board missing parentBoardId
+My School\People at Baycroft\Senior Leadership\_deleted\baycroft_senior_leadership.json: tier 2 != depth 3
+My School\People at Baycroft\Senior Leadership\_deleted\baycroft_senior_leadership.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\Safeguarding Team\_deleted\baycroft_safeguarding_team.json: tier 2 != depth 3
+My School\People at Baycroft\Safeguarding Team\_deleted\baycroft_safeguarding_team.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\RLP\_deleted\baycroft_rlp.json: tier 2 != depth 3
+My School\People at Baycroft\RLP\_deleted\baycroft_rlp.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\Office and Other Helpful People\_deleted\baycroft_office_and_other_helpful_people.json: tier 2 != depth 3
+My School\People at Baycroft\Office and Other Helpful People\_deleted\baycroft_office_and_other_helpful_people.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\KL\_deleted\baycroft_kl.json: tier 2 != depth 3
+My School\People at Baycroft\KL\_deleted\baycroft_kl.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\Governors and Friends Of Baycroft\_deleted\baycroft_governors_and_friends_of_baycroft.json: tier 2 != depth 3
+My School\People at Baycroft\Governors and Friends Of Baycroft\_deleted\baycroft_governors_and_friends_of_baycroft.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\AW\_deleted\baycroft_aw.json: tier 2 != depth 3
+My School\People at Baycroft\AW\_deleted\baycroft_aw.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\9RCo\_deleted\baycroft_9rco.json: tier 2 != depth 3
+My School\People at Baycroft\9RCo\_deleted\baycroft_9rco.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\9LMc\_deleted\baycroft_9lmc.json: tier 2 != depth 3
+My School\People at Baycroft\9LMc\_deleted\baycroft_9lmc.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\9EBl\_deleted\baycroft_9ebl.json: tier 2 != depth 3
+My School\People at Baycroft\9EBl\_deleted\baycroft_9ebl.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\8SLP\_deleted\baycroft_8slp.json: tier 2 != depth 3
+My School\People at Baycroft\8SLP\_deleted\baycroft_8slp.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\8MGr\_deleted\baycroft_8mgr.json: tier 2 != depth 3
+My School\People at Baycroft\8MGr\_deleted\baycroft_8mgr.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\8LBr\_deleted\baycroft_8lbr.json: tier 2 != depth 3
+My School\People at Baycroft\8LBr\_deleted\baycroft_8lbr.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\7NGr\_deleted\baycroft_7ngr.json: tier 2 != depth 3
+My School\People at Baycroft\7NGr\_deleted\baycroft_7ngr.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\7MCa\_deleted\baycroft_7mca.json: tier 2 != depth 3
+My School\People at Baycroft\7MCa\_deleted\baycroft_7mca.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\7LDo\_deleted\baycroft_7ldo.json: tier 2 != depth 3
+My School\People at Baycroft\7LDo\_deleted\baycroft_7ldo.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\7EmS\_deleted\baycroft_7ems.json: tier 2 != depth 3
+My School\People at Baycroft\7EmS\_deleted\baycroft_7ems.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\11STo\_deleted\baycroft_11sto.json: tier 2 != depth 3
+My School\People at Baycroft\11STo\_deleted\baycroft_11sto.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\11HSu\_deleted\baycroft_11hsu.json: tier 2 != depth 3
+My School\People at Baycroft\11HSu\_deleted\baycroft_11hsu.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\10RLi\_deleted\baycroft_10rli.json: tier 2 != depth 3
+My School\People at Baycroft\10RLi\_deleted\baycroft_10rli.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\10KLa\_deleted\baycroft_10kla.json: tier 2 != depth 3
+My School\People at Baycroft\10KLa\_deleted\baycroft_10kla.json: isTertiaryBoard False != expected True
+My School\People at Baycroft\10BCl\_deleted\baycroft_10bcl.json: tier 2 != depth 3
+My School\People at Baycroft\10BCl\_deleted\baycroft_10bcl.json: isTertiaryBoard False != expected True
+Legends\Disney Stories\2007 Enchanted\prebuilt_2007_enchanted.json: parentBoardId prebuilt_animations_not_disney not found

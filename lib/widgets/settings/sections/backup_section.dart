@@ -58,20 +58,20 @@ class _BackupSectionState extends State<BackupSection> {
 
     setState(() { _busy = true; _progress = 0; _statusMessage = null; _isError = false; });
     try {
-      FilePickerResult? result;
+      PlatformFile? file;
       if (!kIsWeb) {
-        result = await FilePicker.pickFiles(
+        file = await FilePicker.pickFile(
           type: FileType.custom,
           allowedExtensions: ['json', 'zip'],
         );
-        if (result == null || !mounted) {
+        if (file == null || !mounted) {
           setState(() => _busy = false);
           return;
         }
       }
       final svc = await BackupService.init();
-      if (result != null && result.files.single.path != null) {
-        await svc.restoreBackup(result.files.single.path!);
+      if (file != null && file.path != null) {
+        await svc.restoreBackup(file.path!);
         if (mounted) setState(() => _progress = 1.0);
       }
       if (mounted) {

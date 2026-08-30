@@ -109,7 +109,7 @@ class _AacHomeScreenState extends ConsumerState<AacHomeScreen>
   }
 
   List<Board> get _favouriteBoards {
-    final favIds = widget.favoritesService.favorites;
+    final favIds = widget.favoritesService.favoriteBoards;
     return widget.boards.where((b) => favIds.contains(b.id)).toList();
   }
 
@@ -182,9 +182,9 @@ class _AacHomeScreenState extends ConsumerState<AacHomeScreen>
             // ── Favourite Boards ─────────────────────────────────────────────
             SliverToBoxAdapter(
               child: _SectionHeader(
-                icon: Icons.star_rounded,
+                icon: Icons.favorite,
                 title: 'Favourite Boards',
-                color: Colors.amber.shade700,
+                color: Colors.redAccent,
                 trailing: _favouriteBoards.isEmpty ? null : TextButton(
                   onPressed: () => _showAllFavourites(context),
                   child: const Text('See all'),
@@ -521,9 +521,9 @@ class _AacHomeScreenState extends ConsumerState<AacHomeScreen>
         itemBuilder: (_, i) => _BoardCard(
           board: boards[i],
           onTap: () => widget.onBoardSelected(boards[i]),
-          isFavourite: widget.favoritesService.isFavorite(boards[i].id),
+          isFavourite: widget.favoritesService.isFavoriteBoard(boards[i].id),
           onFavouriteToggle: () async {
-            await widget.favoritesService.toggleFavorite(boards[i].id);
+            await widget.favoritesService.toggleFavoriteBoard(boards[i].id);
             setState(() {});
           },
         ),
@@ -723,7 +723,9 @@ class _BoardCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    board.name,
+                    (BoardService.instance?.isAdmin ?? false)
+                        ? '${board.name} (${board.id})'
+                        : board.name,
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -743,10 +745,10 @@ class _BoardCard extends StatelessWidget {
                 child: GestureDetector(
                   onTap: onFavouriteToggle,
                   child: Icon(
-                    isFavourite ? Icons.star_rounded : Icons.star_border_rounded,
+                    isFavourite ? Icons.favorite : Icons.favorite_border,
                     size: 18,
                     color: isFavourite
-                        ? Colors.amber.shade600
+                        ? Colors.redAccent
                         : cs.outline.withValues(alpha: 0.5),
                   ),
                 ),

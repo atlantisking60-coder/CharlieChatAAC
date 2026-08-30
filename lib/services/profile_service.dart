@@ -217,16 +217,12 @@ class ProfileService {
         }
       }
 
-      // Ensure the default profile uses the proper app icon.
-      if (p.id == 'default' &&
-          p.settings.profileImage != 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png') {
-        profiles[i] = p.copyWith(
-          settings: p.settings.copyWith(profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'),
-        );
-        profilesChanged = true;
-      }
-
-      if (p.settings.profileImage == 'assets/symbols/baycroft.png') {
+      // Ensure the default and admin profiles use the proper app icon if they have the logo or baycroft icon.
+      final isDefaultOrAdmin = p.id == 'default' || p.id == 'admin';
+      final hasWrongIcon = p.settings.profileImage == 'assets/Logos and Profile Pics/charlie_chat_aac_logo.png' || 
+                           p.settings.profileImage == 'assets/symbols/baycroft.png';
+      
+      if (isDefaultOrAdmin && hasWrongIcon) {
         profiles[i] = p.copyWith(
           settings: p.settings.copyWith(profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'),
         );
@@ -260,7 +256,28 @@ class ProfileService {
         onlineId: 'admin',
         role: 'admin',
         settings: globalSettings.settings.copyWith(
-          profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_logo.png',
+          profileImage: 'assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png',
+          themeMode: ThemeMode.light,
+        ),
+        tabOrder: [],
+        preferredSymbolSets: const ['In App Assets'],
+      ));
+      profilesChanged = true;
+    }
+
+    /** 4. Ensure Baycroft profile exists **/
+    if (!profiles.any((p) => p.id == 'baycroft' || p.name.toLowerCase() == 'baycroft')) {
+      final globalSettings = await SettingsService.init();
+      profiles.add(UserProfile(
+        id: 'baycroft',
+        name: 'Baycroft',
+        username: 'baycroft',
+        password: 'baycr0ft',
+        isAdmin: false,
+        onlineId: 'baycroft',
+        role: 'user',
+        settings: globalSettings.settings.copyWith(
+          profileImage: 'assets/My School/baycroft.png',
           themeMode: ThemeMode.light,
         ),
         tabOrder: [],
@@ -279,15 +296,55 @@ class ProfileService {
   /// PROFILES GETTER
   /// Decodes a JSON string from storage into a list of Profile objects.
   ///
+  static const _backupKey = 'aac_user_profiles_backup';
+
   List<UserProfile> get profiles {
     final raw = _prefs.getString(_profilesKey);
-    if (raw == null || raw.isEmpty) return [];
+    if (raw == null || raw.isEmpty) {
+      // Try backup
+      final backup = _prefs.getString(_backupKey);
+      if (backup != null && backup.isNotEmpty) {
+        debugPrint('Profiles primary empty, restoring from backup');
+        try {
+          final decoded = json.decode(backup) as List<dynamic>;
+          final result = decoded
+              .map((e) => UserProfile.fromMap(Map<String, dynamic>.from(e)))
+              .toList();
+          if (result.isNotEmpty) {
+            // Restore primary from backup
+            _prefs.setString(_profilesKey, backup);
+            return result;
+          }
+        } catch (_) {
+          debugPrint('Backup also corrupted');
+        }
+      }
+      return [];
+    }
     try {
       final decoded = json.decode(raw) as List<dynamic>;
       return decoded
           .map((e) => UserProfile.fromMap(Map<String, dynamic>.from(e)))
           .toList();
-    } catch (_) {
+    } catch (e) {
+      debugPrint('Profile JSON parse error: $e');
+      // Try backup
+      final backup = _prefs.getString(_backupKey);
+      if (backup != null && backup.isNotEmpty) {
+        debugPrint('Restoring profiles from backup');
+        try {
+          final decoded = json.decode(backup) as List<dynamic>;
+          final result = decoded
+              .map((e) => UserProfile.fromMap(Map<String, dynamic>.from(e)))
+              .toList();
+          if (result.isNotEmpty) {
+            _prefs.setString(_profilesKey, backup);
+            return result;
+          }
+        } catch (_) {
+          debugPrint('Backup also corrupted');
+        }
+      }
       return [];
     }
   }
@@ -342,6 +399,11 @@ class ProfileService {
     List<UserProfile> profiles, {
     bool recordSync = true,
   }) async {
+    // Backup current profiles before overwriting
+    final current = _prefs.getString(_profilesKey);
+    if (current != null && current.isNotEmpty) {
+      _prefs.setString(_backupKey, current);
+    }
     await _prefs.setString(
         _profilesKey, json.encode(profiles.map((p) => p.toMap()).toList()));
     if (recordSync) {

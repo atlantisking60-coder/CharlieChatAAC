@@ -206,11 +206,11 @@
     }
   ],
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 0,
-  "tier": 3,
+  "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/Retail/Marketing/marketing.png",
   "tileIconAssetPath": "assets/BOARDS/Retail/Marketing (Retail).png",
   "version": 0

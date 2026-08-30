@@ -1,0 +1,577 @@
+{
+  "id": "bad_thesaurus",
+  "name": "Bad Thesaurus",
+  "area": "Subject Vocab",
+  "category": "Assets",
+  "iconAssetPath": "assets/BOARDS/Synonyms/Synonyms - Nouns - Idea, Place, Story, Trouble.png",
+  "tileIconAssetPath": "",
+  "bgColor": "transparent",
+  "textColor": "#000000",
+  "columns": 7,
+  "rows": 8,
+  "parentBoardId": "prebuilt_better_words_thesaurus",
+  "sortOrder": 0,
+  "tiles": [
+    {
+      "id": "prebuilt_bad_thesaurus_rotten",
+      "label": "rotten",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_defective",
+      "label": "defective",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/broken.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_unsuitable",
+      "label": "unsuitable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/wrong.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_horrible",
+      "label": "horrible",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_sinister",
+      "label": "sinister",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_nefarious",
+      "label": "nefarious",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_rank",
+      "label": "rank",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_funny",
+      "label": "funny",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_evil",
+      "label": "evil",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_contaminated",
+      "label": "contaminated",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_faulty",
+      "label": "faulty",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/broken.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_disagreeable",
+      "label": "disagreeable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/unpleasant.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_atrocious",
+      "label": "atrocious",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_putrid",
+      "label": "putrid",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_base",
+      "label": "base",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/wrong.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_ghastly",
+      "label": "ghastly",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_humorous",
+      "label": "humorous",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_immoral",
+      "label": "immoral",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_spoiled",
+      "label": "spoiled",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/spoiled.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_inferior",
+      "label": "inferior",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/inferior.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_outrageous",
+      "label": "outrageous",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_snide",
+      "label": "snide",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_obnoxious",
+      "label": "obnoxious",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_execrable",
+      "label": "execrable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_amusing",
+      "label": "amusing",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_tainted",
+      "label": "tainted",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_imperfect",
+      "label": "imperfect",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/imperfect.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_unpleasant",
+      "label": "unpleasant",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/unpleasant.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_scandalous",
+      "label": "scandalous",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_deplorable",
+      "label": "deplorable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_detestable",
+      "label": "detestable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_naughty",
+      "label": "naughty",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/naughty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_droll",
+      "label": "droll",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_corrupt",
+      "label": "corrupt",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_harmful",
+      "label": "harmful",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/harmful.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_substandard",
+      "label": "substandard",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/inferior.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_nasty",
+      "label": "nasty",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_infamous",
+      "label": "infamous",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_dismal",
+      "label": "dismal",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/dismal.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_despicable",
+      "label": "despicable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_comical",
+      "label": "comical",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_sinful",
+      "label": "sinful",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_injurious",
+      "label": "injurious",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/harmful.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_improper",
+      "label": "improper",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/wrong.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_unfriendly",
+      "label": "unfriendly",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/unpleasant.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_gross",
+      "label": "gross",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/horrible.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_contemptible",
+      "label": "contemptible",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/nasty.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_laughable",
+      "label": "laughable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/funny.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_depraved",
+      "label": "depraved",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_unfavourable",
+      "label": "unfavourable",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/unpleasant.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_inappropriate",
+      "label": "inappropriate",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/wrong.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_irascible",
+      "label": "irascible",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/cross.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_noxious",
+      "label": "noxious",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/noxious.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_heinous",
+      "label": "heinous",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/evil.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_foul",
+      "label": "foul",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/contaminated.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    },
+    {
+      "id": "prebuilt_bad_thesaurus_silly",
+      "label": "silly",
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "imageAsset": "assets/Subject Vocab/Better Words (Thesaurus)/People Places Thesaurus/silly, stupid.png",
+      "isBoardLink": false,
+      "gridOrder": 0,
+      "version": "1.0"
+    }
+  ],
+  "version": "2.0"
+}

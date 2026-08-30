@@ -398,11 +398,11 @@
     }
   ],
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 2,
-  "tier": 3,
+  "tier": 2,
   "iconAssetPath": "assets/Common/Time/calendar.png",
   "tileIconAssetPath": "assets/BOARDS/Months.png",
   "version": 0

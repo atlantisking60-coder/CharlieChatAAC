@@ -145,28 +145,26 @@ class BetaFooter extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           const Text(
-            'VERSION 1.0 22nd Aug 2026\n\n'
+            'VERSION 1.2 30th Aug 2026\n\n'
             'STILL TO DO:\n\n'
+            'Set up Firebase, to make profile changes consistent across devices.\n\n'
             'COMMON > Time > Special Days (One for each day of the year).\n\n'
-            'LESSON VOCAB - Thesaurus boards.\n\n'
             'RECIPES - Add clearer instructions pictures.\n\n'
-            'SIGN - New Makaton pictures to add gradually.\n'
-            '------\n'
-            'TO ADD TO LEGENDS:\n\n'
-            'ANIMATIONS (NOT DISNEY):\n'
-            'The Secret of NIMH (1982)\n'
-            'Wallace and Gromit (1989)\n'
-            'Anastasia (1997)\n'
-            'The Iron Giant (1999)\n'
-            'The Prince of Egypt (1998)\n'
-            'The Road to El Dorado (2000)\n'
-            'Shrek (2001)\n'
-            'Ice Age (2002)\n'
-            'How to Train Your Dragon (2010)\n'
-            'Despicable Me and Minions (2010)\n\n'
-            'CARTOONS:\n'
-            'Gargoyles\n'
-            'Sesame Street',
+            'SIGN - New Makaton pictures to add gradually.\n\n'
+            '-----\n\n'
+            'CHANGE LOG 1.1 > 1.2:\n'
+            '- Profile specific tutor group boards, timetables boards and school food boards.\n'
+            '- \"Real Life Heroes\" sub-boards created and populated.\n'
+            '- Many Legends boards created and/or populated.\n'
+            '- Recipes area boards created and populated.\n'
+            '- Splash screen profile tile redesign.\n'
+            '- Added search for boards feature.\n'
+            '- Favourites board now show favourite boards as well as favourite tiles / words. Heart button added to all boards to add them to this.\n'
+            '- Confectionary boards added under personal.\n'
+            '- Gemstones and Jewels board under Science > Rocks.\n'
+            '- Many Bug Fixes and file and folder structure clean-ups.\n'
+            '- Native hydration for profile-specific boards.\n'
+            '- Fixed file_picker v12 API breakages.',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white70,

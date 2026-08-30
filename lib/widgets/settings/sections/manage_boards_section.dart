@@ -102,7 +102,7 @@ class _ManageBoardsSectionState extends State<ManageBoardsSection> {
   }
 
   List<dynamic> _sortMySchoolArea(List<Board> areaBoards, List<Board> allPool) {
-    final order = ['My School Main', 'People At School', 'Baycroft Expects', 'Thinking Skills', 'When Things Go Wrong', 'Blank Levels', 'My School Lessons', 'Better Words (Thesaurus)'];
+    final order = ['My School Main', 'People at Baycroft', 'Baycroft Expects', 'Thinking Skills', 'When Things Go Wrong', 'Blank Levels', 'My School Lessons', 'Better Words (Thesaurus)'];
     return _sortWithOrder(areaBoards, allPool, order);
   }
 

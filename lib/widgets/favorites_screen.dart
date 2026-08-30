@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../models/symbol_tile.dart';
@@ -12,13 +14,33 @@ class FavoritesScreen extends StatelessWidget {
   final SymbolTapCallback onTap;
   final SymbolFavoriteToggle onToggleFavorite;
 
-  const FavoritesScreen({
+  // Ensure we always show at least 4 tiles (padding with blank tiles if needed).
+  FavoritesScreen({
     super.key,
     required this.favoriteTiles,
     required this.favoriteIds,
     required this.onTap,
     required this.onToggleFavorite,
-  });
+  }) : _paddedTiles = _padTiles(favoriteTiles);
+
+  List<SymbolTile> _padTiles(List<SymbolTile> tiles) {
+    final result = List<SymbolTile>.from(tiles);
+    while (result.length < 4) {
+      result.add(_blankTile());
+    }
+    return result;
+  }
+
+  SymbolTile _blankTile() {
+    return SymbolTile(
+      label: '',
+      imageAsset: '',
+      emoji: '',
+      type: TileType.blank,
+    );
+  }
+
+  List<SymbolTile> get paddedTiles => _paddedTiles;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +53,7 @@ class FavoritesScreen extends StatelessWidget {
         title: const Text('Favorites'),
         centerTitle: true,
       ),
-      body: favoriteTiles.isEmpty
+      body: paddedTiles.isEmpty
           ? const Center(child: Text('No favorites yet. Long-press a symbol to add it.'))
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -47,10 +69,32 @@ class FavoritesScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: SymbolGrid(
-                      symbols: favoriteTiles,
+                      symbols: paddedTiles,
                       favoriteIds: favoriteIds,
                       onTap: onTap,
-                      onLongPress: onToggleFavorite,
+                      onLongPress: (symbol) {
+                        // Show confirmation dialog before removing from favorites
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text('Remove from Favorites'),
+                            content: Text('Remove "${symbol.label}" from your favorites?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(ctx).pop(),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                  onToggleFavorite(symbol);
+                                },
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

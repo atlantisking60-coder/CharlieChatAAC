@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_my_school_lessons",
+  "name": "My School Lessons",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 413,
+  "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/timetable.png",
+  "tileIconAssetPath": "assets/BOARDS/Subjects/Timetable.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

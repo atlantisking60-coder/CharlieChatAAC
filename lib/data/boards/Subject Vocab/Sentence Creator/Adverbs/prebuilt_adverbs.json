@@ -2494,11 +2494,11 @@
     }
   ],
   "isSubBoard": true,
-  "isTertiaryBoard": true,
+  "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
   "sortOrder": 7,
-  "tier": 3,
+  "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/English/adverb.png",
   "tileIconAssetPath": "assets/BOARDS/English/Adverbs.png",
   "version": 0

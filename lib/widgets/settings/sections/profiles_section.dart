@@ -273,15 +273,10 @@ class _ProfilesSectionState extends State<ProfilesSection> {
   Widget _buildReorderableSetsList() {
     final allAvailable = [
       'In App Assets',
+      'Sign',
       'ARASAAC',
       'OpenSymbols',
-      'Mulberry',
-      'SymbolStix',
-      'Widgit',
-      'Makaton',
-      'PCS (Boardmaker)',
-      'Snap Core',
-      'Tobii Dynavox',
+      'GlobalSymbols',
     ];
 
     // Ensure allAvailable are in the preferredSets list, maintaining existing order

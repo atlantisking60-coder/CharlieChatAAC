@@ -153,7 +153,7 @@ class WelcomeScreen extends StatelessWidget {
                         isActive: isActive,
                         color: _profileColor(colorScheme, index),
                         onTap: () => onProfileSelected(profile.id),
-                        onDelete: filteredProfiles.length > 1
+                        onDelete: (filteredProfiles.length > 1 && profile.id != 'default')
                             ? () => onDeleteProfile(profile)
                             : null,
                       );
@@ -553,20 +553,18 @@ class _ProfileTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundColor: colorScheme.surface,
-                    foregroundColor: colorScheme.primary,
-                    backgroundImage: _getProfileImageProvider(),
-                    child: profile.settings.profileImage.isEmpty
-                        ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
-                        : null,
+                  Expanded(
+                    child: Text(
+                      profile.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    ),
                   ),
-                  const Spacer(),
                   if (isActive) Icon(Icons.check_circle, color: colorScheme.primary),
                   if (onDelete != null)
                     IconButton(
@@ -576,18 +574,43 @@ class _ProfileTile extends StatelessWidget {
                     ),
                 ],
               ),
-              const Spacer(),
+              Expanded(
+                child: Center(
+                  child: CircleAvatar(
+                    radius: 48,
+                    backgroundColor: colorScheme.surface,
+                    foregroundColor: colorScheme.primary,
+                    backgroundImage: _getProfileImageProvider(),
+                    child: profile.settings.profileImage.isEmpty
+                        ? ClipOval(child: Image.asset('assets/Logos and Profile Pics/charlie_chat_aac_default_profile.png'))
+                        : null,
+                  ),
+                ),
+              ),
               Text(
-                profile.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                _profileNote,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.onSurface.withValues(alpha: 0.75),
+                  height: 1.3,
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String get _profileNote {
+    if (profile.isAdmin) {
+      return 'Changes made to this profile affect all profiles across all devices.';
+    }
+    if (profile.id == 'default') {
+      return 'Changes to this profile affect only this device.';
+    }
+    return 'Changes to this profile affect only this profile on all devices you download the profile to.';
   }
 
   ImageProvider? _getProfileImageProvider() {

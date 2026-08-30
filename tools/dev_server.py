@@ -264,7 +264,8 @@ def _scan_board_files():
     index = {}
     if not BOARDS_DIR.exists():
         return index
-    for root, _, files in os.walk(BOARDS_DIR):
+    for root, dirs, files in os.walk(BOARDS_DIR):
+        dirs[:] = [d for d in dirs if d not in ('_temp', 'Backups', '.artifacts') and d.lower() != '_deleted']
         root_path = Path(root)
         for f in files:
             if not f.lower().endswith(".json"):

@@ -1,0 +1,25 @@
+Change log 1.1 > 1.2:
+
+Profile specific tutor group boards, timetables boards and school food boards.
+
+“Real Life Heroes” sub-boards created and populated.
+
+Many Legends boards created and/or populated.
+
+Recipes area boards created and populated.
+
+Splash screen profile tile redesign.
+
+Added search for boards feature.
+
+Favourites board now show favourite boards as well as favourite tiles / words. Heart button added to all boards to add them to this.
+
+Confectionary boards added under personal.
+
+Gemstones and Jewels board under Science > Rocks. Wil be adding to this later.
+
+Many Bug Fixes and file and folder structure clean-ups.
+
+Native hydration for profile-specific boards
+
+Fixed file_picker v12 API breakages

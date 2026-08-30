@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_thinking_skills",
+  "name": "Thinking Skills",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 410,
+  "tier": 1,
+  "iconAssetPath": "assets/My School/Thinking Skills/Questioning.png",
+  "tileIconAssetPath": "assets/BOARDS/Thinking Skills.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

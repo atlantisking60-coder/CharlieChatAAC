@@ -1,6 +1,5 @@
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../models/symbol_tile.dart';
 import '../services/board_service.dart';
@@ -26,15 +25,11 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
   final _providers = [
     'All Libraries',
     'Assets',
+    'Folders',
+    'Sign',
     'ARASAAC',
     'OpenSymbols',
     'GlobalSymbols',
-    'Mulberry',
-    'Sclera',
-    'Widgit',
-    'Makaton',
-    'Snap Core',
-    'Tobii Dynavox'
   ];
   String _selectedProvider = 'Assets';
   bool _loading = false;
@@ -268,11 +263,6 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
     final query = _queryController.text.trim();
     if (query.isEmpty) return;
 
-    if (_selectedProvider == 'Mulberry' || _selectedProvider == 'Sclera') {
-      _openWebSearch(query);
-      return;
-    }
-
     if (!loadMore) {
       setState(() {
         _loading = true;
@@ -293,6 +283,10 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
         results = await _service.searchAll(query, limit: _currentLimit, preferredSets: widget.preferredSets);
       } else if (_selectedProvider == 'Assets') {
         results = await _service.searchAssets(query, limit: _currentLimit);
+      } else if (_selectedProvider == 'Folders') {
+        results = await _service.searchAssets(query, limit: _currentLimit, pathPrefixes: const ['assets/BOARDS']);
+      } else if (_selectedProvider == 'Sign') {
+        results = await _service.searchAssets(query, limit: _currentLimit, pathPrefixes: const ['assets/Sign']);
       } else {
         // Single-provider searches also use synonyms
         final alts = _service.expandedQueries(query);
@@ -303,14 +297,6 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
           results = await _searchMultiple(queries, (q) => _service.searchOpenSymbols(q, limit: _currentLimit));
         } else if (_selectedProvider == 'GlobalSymbols') {
           results = await _searchMultiple(queries, (q) => _service.searchGlobalSymbols(q, limit: _currentLimit));
-        } else if (_selectedProvider == 'Widgit') {
-          results = await _searchMultiple(queries, (q) => _service.searchWidgit(q, limit: _currentLimit));
-        } else if (_selectedProvider == 'Makaton') {
-          results = await _searchMultiple(queries, (q) => _service.searchOpenSymbols(q, limit: _currentLimit, repo: 'makaton'));
-        } else if (_selectedProvider == 'Snap Core') {
-          results = await _searchMultiple(queries, (q) => _service.searchOpenSymbols(q, limit: _currentLimit, repo: 'snap-core'));
-        } else if (_selectedProvider == 'Tobii Dynavox') {
-          results = await _searchMultiple(queries, (q) => _service.searchOpenSymbols(q, limit: _currentLimit, repo: 'tobii-dynavox'));
         } else {
           results = [];
         }
@@ -348,29 +334,14 @@ class _ExternalSymbolSearchScreenState extends State<ExternalSymbolSearchScreen>
     await _search(loadMore: true);
   }
 
-  Future<void> _openWebSearch(String query) async {
-    final link = _service.libraryLinks.firstWhere(
-      (link) => link.name.toLowerCase().contains(_selectedProvider.toLowerCase()),
-      orElse: () => _service.libraryLinks.first,
-    );
-
-    final uri = link.uriForQuery(query);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Unable to open external search.')),
-        );
-      }
-    }
-  }
-
   bool _isIntegratedProvider(String provider) {
     return provider == 'All Libraries' ||
         provider == 'Assets' ||
+        provider == 'Folders' ||
+        provider == 'Sign' ||
         provider == 'ARASAAC' ||
         provider == 'OpenSymbols' ||
-        provider == 'GlobalSymbols' ||
-        provider == 'Widgit';
+        provider == 'GlobalSymbols';
   }
 
   @override

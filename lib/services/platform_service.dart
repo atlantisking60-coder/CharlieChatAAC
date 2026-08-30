@@ -19,37 +19,35 @@ class PlatformService {
   static bool get isNative => !isWeb;
 
   /// Safe file picker that handles web and native differences
-  static Future<FilePickerResult?> pickImageFiles({
+  static Future<List<PlatformFile>> pickImageFiles({
     bool allowMultiple = false,
     String? dialogTitle,
   }) async {
     try {
-      final result = await FilePicker.pickFiles(
+      return await FilePicker.pickFiles(
         type: FileType.image,
         dialogTitle: dialogTitle,
       );
-      return result;
     } catch (e) {
       debugPrint('Error picking files: $e');
-      return null;
+      return const [];
     }
   }
 
   /// Safe file picker for any file type
-  static Future<FilePickerResult?> pickFiles({
+  static Future<List<PlatformFile>> pickFiles({
     bool allowMultiple = false,
     String? dialogTitle,
     FileType type = FileType.any,
   }) async {
     try {
-      final result = await FilePicker.pickFiles(
+      return await FilePicker.pickFiles(
         type: type,
         dialogTitle: dialogTitle,
       );
-      return result;
     } catch (e) {
       debugPrint('Error picking files: $e');
-      return null;
+      return const [];
     }
   }
 

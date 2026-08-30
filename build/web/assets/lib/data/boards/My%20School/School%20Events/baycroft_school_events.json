@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_school_events",
+  "name": "School Events",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 417,
+  "tier": 1,
+  "iconAssetPath": "assets/Subject Vocab/Religion and Worldviews/Love and Easter/celebrate.png",
+  "tileIconAssetPath": null,
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

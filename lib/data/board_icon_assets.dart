@@ -422,7 +422,7 @@ const Map<String, List<String>> boardIconAssetMap = {
   "peep vocab": ['assets/BOARDS/Subjects/PEEP Vocab.png'],
   "people": ['assets/BOARDS/People.png'],
   "people and places": ['assets/BOARDS/People and Places.png'],
-  "people at school": ['assets/BOARDS/People At School.png'],
+  "people at baycroft": ['assets/BOARDS/People At School.png'],
   "performing arts vocab": ['assets/BOARDS/Subjects/Performing Arts Vocab.png'],
   "personal development vocab": ['assets/BOARDS/Subjects/Personal Development Vocab.png'],
   "peter pan": ['assets/BOARDS/Legends/Characters/Disney/Peter Pan.png'],

@@ -6,16 +6,20 @@
 
 ## Tab Order (Top-Level Boards)
 
-| #  | Board Name          |
-|----|---------------------|
-| 1  | My School Main      |
-| 2  | Baycroft Expects    |
-| 3  | Thinking Skills     |
-| 4  | When Things Go Wrong |
-| 5  | Blank Levels        |
-| 6  | My School Lessons   |
-| 7  | Class Equipment     |
-| 8  | People At School    |
+| #  | Board Name           |
+|----|----------------------|
+| 1  | My School Main       |
+| 2  | Timetables           |
+| 3  | Baycroft Expects     |
+| 4  | Food Options         |
+| 5  | Thinking Skills      |
+| 6  | When Things Go Wrong |
+| 7  | Blank Levels         |
+| 8  | My School Lessons    |
+| 9  | Class Equipment      |
+| 10 | School Events        |
+| 11 | Other Useful Stuff   |
+| 12 | People at Baycroft   |
 
 ---
 
@@ -23,16 +27,21 @@
 
 ```
 My School Main
+Timetables
 Baycroft Expects
+Food Options
 Thinking Skills
 When Things Go Wrong
 Blank Levels
 My School Lessons
 Class Equipment
-People At School
+School Events
+Other Useful Stuff
+People at Baycroft
     Safeguarding Team
     Senior Leadership
-    Office & Other Helpful People
+    Helpful People
+    Governors and Friends of Baycroft
     7EmS
     7LDo
     7MCa
@@ -51,13 +60,13 @@ People At School
     RLP
     KL
     AW
-    Governors & Friends Of Baycroft
 ```
 
 ---
 
 ## Notes
 
-- `People At School` contains all class groups and staff categories as child boards.
+- Every top-level board uses the `baycroft_*` id scheme (e.g. `baycroft_my_school_main`).
+- `People at Baycroft` contains all class groups and staff categories as child boards.
 - Class group boards use abbreviated naming (e.g. `7EmS` = Year 7, class EmS).
-- `Governors & Friends Of Baycroft` is the last child under People At School.
+- `Governors and Friends of Baycroft` is the last adult board under People at Baycroft.

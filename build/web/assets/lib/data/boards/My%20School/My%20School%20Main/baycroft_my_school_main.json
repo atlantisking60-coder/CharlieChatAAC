@@ -1,0 +1,25 @@
+{
+  "id": "baycroft_my_school_main",
+  "name": "My School Main",
+  "area": "My School",
+  "columns": 8,
+  "backgroundColor": "transparent",
+  "adjustableLayout": false,
+  "isSubBoard": false,
+  "isTertiaryBoard": false,
+  "isQuaternaryBoard": false,
+  "isQuinaryBoard": false,
+  "sortOrder": 408,
+  "tier": 1,
+  "iconAssetPath": "assets/Common/Places/Buildings/school.png",
+  "tileIconAssetPath": "assets/BOARDS/People At School.png",
+  "version": 0,
+  "boxScale": 1,
+  "tileHeight": 100,
+  "tileWidth": 100,
+  "layout": {
+    "rows": 1,
+    "blankTilesAdded": 0
+  },
+  "tiles": []
+}

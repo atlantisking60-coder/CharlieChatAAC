@@ -47,7 +47,8 @@ class ImageCleanupService {
       }
       if (kIsWeb) return null;
       final file = File(source);
-      return await file.exists() ? file.readAsBytes() : null;
+      final exists = await file.exists();
+      return exists ? await file.readAsBytes() : null;
     } catch (_) {
       return null;
     }

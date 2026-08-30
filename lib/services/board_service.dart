@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/board_hierarchy.dart';
+import '../data/board_index.dart';
 import '../data/tab_orders_data.dart';
 import '../models/symbol_tile.dart';
 import 'external_symbol_service.dart';
@@ -142,7 +143,8 @@ const Set<String> _retiredBoardIds = {
 };
 
 String prebuiltBoardId(String name) {
-  if (name.toLowerCase() == 'a-z of sign' || name.toLowerCase() == 'a-z of sign') {
+  final lower = name.toLowerCase();
+  if (lower == 'a-z of sign') {
     return 'prebuilt_a-z_of_sign';
   }
   if (name == 'Not Disney Animations' || name == 'Animations (Not Disney)') {
@@ -151,7 +153,20 @@ String prebuiltBoardId(String name) {
   if (name == 'The Turtles') {
     return 'prebuilt_turtles';
   }
-  return 'prebuilt_${name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
+
+  // Baycroft-specific boards must have the baycroft_ prefix to remain
+  // private to the baycroft profile.
+  final baycroftNames = {
+    '7ems', '7ldo', '7mca', '7ngr', '8lbr', '8mgr', '8slp', '9ebl', '9lmc', '9rco',
+    '10bcl', '10kla', '10rli', '11hsu', '11sto', 'rlp', 'kl', 'aw',
+    'safeguarding team', 'senior leadership', 'helpful people',
+    'governors and friends of baycroft', 'people at baycroft', 'timetables'
+  };
+  if (baycroftNames.contains(lower)) {
+    return 'baycroft_${lower.replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
+  }
+
+  return 'prebuilt_${lower.replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';
 }
 
 class Board {
@@ -343,7 +358,7 @@ class BoardService {
   /// Cached icon metadata (iconAssetPath, tileIconAssetPath) for prebuilt
   /// boards, keyed by board id. Avoids re-parsing board JSON files on every
   /// area switch — the icons never change during a session.
-  final Map<String, ({String? icon, String? tileIcon})> _boardIconMetaCache = {};
+  final Map<String, ({String? icon, String? tileIcon, int version})> _boardIconMetaCache = {};
 
   /// Tracks whether the local web dev server (localhost:8787) is reachable.
   /// null = untested, true = reachable, false = unreachable.
@@ -352,6 +367,198 @@ class BoardService {
   /// Boards the dev server answered non-200 for (JSON not on disk yet).
   /// Cached per session so the app doesn't re-request them on every access.
   final Set<String> _devServerMissingBoards = {};
+
+  /// Cached lookup from board name to the compiled [staticBoardIndex] entries.
+  /// Profile-specific boards can share a display name with a prebuilt board
+  /// (e.g. "People At School"), so we keep every entry and pick the one that
+  /// belongs to the active profile at runtime.
+  Map<String, List<BoardIndexEntry>>? _boardIndexByName;
+  Map<String, List<BoardIndexEntry>>? _boardIndexByCompactName;
+  final Map<String, BoardIndexEntry?> _boardIndexById = {};
+
+  /// Lowercase with every non-alphanumeric character stripped, so names that
+  /// only differ by punctuation/case/folded words ("9 Lmc" vs "9LMc") match.
+  static String _normalizedBoardName(String name) =>
+      name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+  /// Build the name-indexed board cache once.
+  void _ensureBoardIndexMap() {
+    if (_boardIndexByName != null) return;
+    final byName = <String, List<BoardIndexEntry>>{};
+    final byCompact = <String, List<BoardIndexEntry>>{};
+    for (final entry in staticBoardIndex) {
+      byName.putIfAbsent(entry.name.toLowerCase(), () => []).add(entry);
+      byCompact
+          .putIfAbsent(_normalizedBoardName(entry.name), () => [])
+          .add(entry);
+      _boardIndexById.putIfAbsent(entry.id, () => entry);
+    }
+    _boardIndexByName = byName;
+    _boardIndexByCompactName = byCompact;
+  }
+
+  /// Return every compiled index entry with the given board name. Falls back
+  /// to a case/folded-word match so a stale id round-tripped through
+  /// [_nameFromBoardId] (e.g. "prebuilt_9lmc" -> "9 Lmc") still finds the
+  /// canonical entry (e.g. "9LMc" -> baycroft_9lmc).
+  List<BoardIndexEntry> _boardIndexEntriesForName(String name) {
+    _ensureBoardIndexMap();
+    final exact = _boardIndexByName![name.toLowerCase()];
+    if (exact != null) return exact;
+    return _boardIndexByCompactName![_normalizedBoardName(name)] ?? const [];
+  }
+
+  /// Return the compiled index entry for a board id, if any.
+  BoardIndexEntry? _boardIndexEntryForId(String id) {
+    _ensureBoardIndexMap();
+    return _boardIndexById[id];
+  }
+
+  /// Public version of [_idForBoardName]: the id that should be used when
+  /// displaying the board whose display name is [name] for the active profile.
+  String resolveBoardIdForName(String name) => _idForBoardName(name);
+
+  /// The canonical tab-icon asset path recorded in the compiled index for
+  /// [id], or null if the index has no icon for it.
+  String? canonicalBoardIcon(String id) =>
+      _boardIndexEntryForId(id)?.iconAssetPath;
+
+  /// Returns the profile prefix of [id] (the part before the first underscore)
+  /// if it looks like a profile-specific board. [prebuilt_] and [link_] ids are
+  /// treated as shared, not profile-specific.
+  String? _profilePrefixForBoardId(String id) {
+    if (id.startsWith('prebuilt_') || id.startsWith('link_')) return null;
+    final idx = id.indexOf('_');
+    if (idx <= 0) return null;
+    return id.substring(0, idx);
+  }
+
+  /// Whether [id] is owned by a specific profile rather than being shared.
+  bool _isProfileSpecificBoardId(String id) => _profilePrefixForBoardId(id) != null;
+
+  /// Returns true if the active profile is allowed to see [id].
+  /// Shared boards are always visible. The special admin profile (raw id
+  /// 'admin') can see every profile-specific board. Any other profile only
+  /// sees boards whose prefix matches its raw profile id.
+  bool _boardIdVisibleToCurrentProfile(String id) {
+    final prefix = _profilePrefixForBoardId(id);
+    if (prefix == null) return true;
+    final raw = _rawProfileId ?? 'default';
+    if (raw == 'admin') return true;
+    return raw == prefix;
+  }
+
+  /// Choose the right id for a board [name] based on the active profile.
+  /// If the active profile has a profile-specific version of [name], use it;
+  /// otherwise fall back to the prebuilt (shared) id. Returns the computed
+  /// prebuilt id if the board is not known to the compiled index.
+  String _idForBoardName(String name) {
+    final entries = _boardIndexEntriesForName(name);
+    if (entries.isEmpty) return prebuiltBoardId(name);
+
+    // Prefer a profile-specific entry visible to the current profile.
+    for (final entry in entries) {
+      if (_isProfileSpecificBoardId(entry.id) &&
+          _boardIdVisibleToCurrentProfile(entry.id)) {
+        return entry.id;
+      }
+    }
+
+    // Otherwise fall back to the shared/prebuilt entry if there is one.
+    for (final entry in entries) {
+      if (!_isProfileSpecificBoardId(entry.id)) {
+        return entry.id;
+      }
+    }
+
+    // All entries are profile-specific but none match the current profile.
+    // Return the first so callers can decide whether to hide it.
+    return entries.first.id;
+  }
+
+  /// Resolve a requested board id to the profile-specific id when appropriate.
+  /// This lets link tiles that reference the shared prebuilt id (e.g.
+  /// prebuilt_people_at_school) open the baycroft_ copy when the baycroft
+  /// profile is active.
+  String _resolveBoardId(String id) {
+    if (!id.startsWith('prebuilt_')) return id;
+    final entry = _boardIndexEntryForId(id);
+    final name = entry?.name ?? _nameFromBoardId(id);
+    final resolved = _idForBoardName(name);
+    return resolved;
+  }
+
+  /// Whether a shared [id] has been superseded by a bespoke, profile-specific
+  /// board that now owns its display name (e.g. prebuilt_9lmc ->
+  /// baycroft_9lmc). Zombie copies (cached in browser storage or re-saved from
+  /// a stale session) must stay tombstoned so they never surface next to the
+  /// real board.
+  ///
+  /// Only applied when the display name has NO shared prebuilt entry left —
+  /// e.g. "9LMc" exists only as baycroft_9lmc. Boards like "People At School"
+  /// keep their legitimate shared prebuilt copy for non-profile users, so
+  /// prebuilt_people_at_school is never treated as a zombie.
+  bool _isSupersededPrebuiltId(String id) {
+    if (!id.startsWith('prebuilt_')) return false;
+    final name = _nameFromBoardId(id);
+    final entries = _boardIndexEntriesForName(name);
+    if (entries.isEmpty) return false;
+    if (entries.any((e) => !_isProfileSpecificBoardId(e.id))) return false;
+    return _isProfileSpecificBoardId(_idForBoardName(name));
+  }
+
+  /// Permanently drop any stored prebuilt board whose name now resolves to a
+  /// different profile-specific board, removing its storage keys and tombstoning
+  /// it so it can't come back. Runs at startup and after "restore defaults".
+  Future<void> _removeSupersededPrebuiltBoards() async {
+    try {
+      for (final board in await listBoards(includeTiles: false)) {
+        if (!board.id.startsWith('prebuilt_')) continue;
+        if (!_isSupersededPrebuiltId(board.id)) continue;
+        debugPrint('Superseding zombie prebuilt board "${board.name}" (${board.id})');
+        await _markBoardDeleted(board.id);
+        if (kIsWeb && _prefs != null) {
+          for (final key in _prefs!.getKeys().toList()) {
+            if (key.startsWith('board_') && key.endsWith('_$board.id')) {
+              await _prefs!.remove(key);
+            }
+          }
+        } else if (_dataDir != null) {
+          final f = File('${_dataDir!.path}/board_default_${board.id}.json');
+          if (await f.exists()) await f.delete();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error removing superseded prebuilt boards: $e');
+    }
+  }
+
+  /// Drop stored copies of board ids that no longer exist in any source JSON
+  /// (legacy/mis-saved ids). Runs once when the prebuilt schema version bumps,
+  /// so devices that cached such an id under a profile-scoped key don't keep
+  /// an orphan board that could shadow the corrected board during
+  /// duplicate-name resolution.
+  Future<void> _removeLegacyStrayBoards() async {
+    const legacyIds = <String>{'prebuilt_people_at_school'};
+    for (final id in legacyIds) {
+      final pattern = RegExp('^board_[^_]+_$id\$');
+      if (kIsWeb && _prefs != null) {
+        for (final key in _prefs!.getKeys().toList()) {
+          if (pattern.hasMatch(key)) {
+            await _prefs!.remove(key);
+          }
+        }
+      } else if (_dataDir != null) {
+        final files = _dataDir!.listSync().whereType<File>();
+        for (final file in files) {
+          if (pattern.hasMatch(p.basename(file.path).replaceAll('.json', ''))) {
+            await file.delete();
+          }
+        }
+      }
+      _boardCache.remove(id);
+    }
+  }
 
   /// Limits concurrent requests to the local dev server so a burst of parallel
   /// board loads doesn't blow past the 3s timeout budget (previously ~700
@@ -377,8 +584,10 @@ class BoardService {
     }
   }
 
-  // Bump this to force every prebuilt board to be reloaded from source JSON.
-  static const int _kPrebuiltBoardsSchemaVersion = 4;
+  // Bump this to force every prebuilt board to be loaded from source JSON.
+  // v7: My School boards renamed from prebuilt_* to baycroft_*; purge stale
+  //     stored boards so tabs/children resolve from the fresh index.
+  static const int _kPrebuiltBoardsSchemaVersion = 7;
 
   BoardService._();
 
@@ -416,6 +625,9 @@ class BoardService {
       _hasSyncedDevBoards = true;
       _syncDevBoards();
     }
+
+    // Native builds hydrate source boards into app storage per-profile.
+    unawaited(_ensureProfileSpecificBoardsForCurrentProfile());
   }
 
   /// Returns the raw profile ID before the admin/default mapping.
@@ -427,6 +639,11 @@ class BoardService {
 
   /// Returns true if the current profile is the admin profile.
   bool get isAdmin => _isAdmin;
+
+  /// Returns true if [boardId] should be visible to the active profile.
+  /// Shared ([prebuilt_]/[link_]) boards are always visible; profile-specific
+  /// boards (e.g. baycroft_*) are only visible to the matching profile.
+  bool isBoardIdVisible(String boardId) => _boardIdVisibleToCurrentProfile(boardId);
 
   /// If set, this board will be loaded before other prebuilt boards during startup.
   String? _priorityBoardId;
@@ -446,10 +663,19 @@ class BoardService {
         for (final b in allBoards) {
           final board = _boardFromJson(b as Map<String, dynamic>);
           if (_deletedBoardIds.contains(board.id)) continue;
+          if (!_boardIdVisibleToCurrentProfile(board.id)) continue;
           // Always refresh boards from dev server to ensure latest images
           await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: !board.id.startsWith('prebuilt_'));
         }
-        debugPrint('Dev Sync: Updated $_currentProfileId profile with ${allBoards.length} boards from disk.');
+        final syncedCount = allBoards.where((b) {
+          try {
+            return _boardIdVisibleToCurrentProfile(
+                _boardFromJson(b as Map<String, dynamic>).id);
+          } catch (_) {
+            return false;
+          }
+        }).length;
+        debugPrint('Dev Sync: Updated $_currentProfileId profile with $syncedCount boards from disk.');
       }
     } catch (e) {
       debugPrint('Dev Sync Error: $e');
@@ -661,9 +887,16 @@ class BoardService {
       _deletionPrefs.getStringList('deleted_board_ids_v2') ?? const [],
     );
     // Recover any prebuilt boards that were auto-deleted by the duplicate-name
-    // bug. Only genuinely retired prebuilt IDs should stay deleted.
+    // bug. Only genuinely retired prebuilt IDs should stay deleted, and shared
+    // prebuilt IDs that have been superseded by a bespoke profile-specific
+    // board of the same name (e.g. prebuilt_9lmc -> baycroft_9lmc) must also
+    // stay tombstoned — otherwise they resurrect next to the real board and
+    // the two fight via _removeDuplicateNameBoards forever.
     final recovered = _deletedBoardIds
-        .where((id) => id.startsWith('prebuilt_') && !_retiredBoardIds.contains(id))
+        .where((id) =>
+            id.startsWith('prebuilt_') &&
+            !_retiredBoardIds.contains(id) &&
+            !_isSupersededPrebuiltId(id))
         .toSet();
     if (recovered.isNotEmpty) {
       _deletedBoardIds.removeAll(recovered);
@@ -717,6 +950,9 @@ class BoardService {
 
     await fixSignBoards();
     await fixStaleBoardLinks();
+    // Supersede zombies FIRST so dedupe never sees a stale prebuilt_ copy next
+    // to the real profile-specific board and deletes the wrong one.
+    await _removeSupersededPrebuiltBoards();
     await _removeDuplicateNameBoards();
   }
 
@@ -774,7 +1010,7 @@ class BoardService {
       final board = await loadBoard(id);
       if (board != null) {
         await deleteBoard(id);
-        await removeFromRuntimeHierarchy(board.name);
+        await removeFromRuntimeHierarchy(board.name, area: board.area);
       }
     }
   }
@@ -945,8 +1181,16 @@ class BoardService {
   /// Removes all cached copies of prebuilt boards so the next load is forced
   /// to read the latest source JSON (used when the schema version changes).
   Future<void> _clearStoredPrebuiltBoards() async {
-    for (final name in prebuiltBoardNames) {
-      final id = prebuiltBoardId(name);
+    // Profile-specific boards (baycroft_*) are NOT reachable via
+    // prebuiltBoardId(name), so clear their cached copies too. Otherwise a
+    // renamed/moved board keeps its stale stored parentBoardId (e.g. the old
+    // parent id, or '__removed__' after a tab was removed) and never re-hydrates
+    // from the corrected source JSON.
+    final ids = <String>{
+      ...prebuiltBoardNames.map((n) => prebuiltBoardId(n)),
+      ...staticBoardIndex.where((e) => e.id.startsWith('baycroft_')).map((e) => e.id),
+    };
+    for (final id in ids) {
       final key = _getBoardKey(id);
       _boardCache.remove(id);
       if (kIsWeb && _prefs != null) {
@@ -970,6 +1214,46 @@ class BoardService {
     );
   }
 
+  /// Whether most of [board]'s tiles carry a real asset image path; used to
+  /// detect stored copies whose image references went stale and need repair
+  /// from the source JSON.
+  bool _hasMostTilesWithImages(Board board) {
+    if (board.tiles.isEmpty) return false;
+    final withImages = board.tiles
+        .where((t) => t.imageAsset.isNotEmpty && t.imageAsset.startsWith('assets/'))
+        .length;
+    return withImages > board.tiles.length * 0.5;
+  }
+
+  /// Adopt board-level source metadata (icons, area/parent, version) onto the
+  /// user's saved board while ALWAYS keeping the user's tile edits — user edits
+  /// win over source JSON on reload. Returns [stored] (mutated) when something
+  /// changed and should be persisted, otherwise null.
+  Board? _mergeSourceMetadataIntoStored(Board source, Board stored) {
+    var changed = false;
+    if ((source.iconAssetPath ?? '').isNotEmpty && source.iconAssetPath != stored.iconAssetPath) {
+      stored.iconAssetPath = source.iconAssetPath;
+      changed = true;
+    }
+    if ((source.tileIconAssetPath ?? '').isNotEmpty && source.tileIconAssetPath != stored.tileIconAssetPath) {
+      stored.tileIconAssetPath = source.tileIconAssetPath;
+      changed = true;
+    }
+    if (source.area.isNotEmpty && source.area != stored.area) {
+      stored.area = source.area;
+      changed = true;
+    }
+    if (source.parentBoardId != stored.parentBoardId) {
+      stored.parentBoardId = source.parentBoardId;
+      changed = true;
+    }
+    if (source.version > stored.version) {
+      stored.version = source.version;
+      changed = true;
+    }
+    return changed ? stored : null;
+  }
+
   Future<void> _ensurePrebuiltBoards() async {
     // If the prebuilt schema version changed, purge the cached copies so the
     // latest JSON (icons, parents, etc.) is loaded back in.
@@ -977,6 +1261,7 @@ class BoardService {
     final storedVersion = _prefs?.getInt(schemaKey) ?? 0;
     if (storedVersion < _kPrebuiltBoardsSchemaVersion) {
       await _clearStoredPrebuiltBoards();
+      await _removeLegacyStrayBoards();
       if (_prefs != null) {
         await _prefs!.setInt(schemaKey, _kPrebuiltBoardsSchemaVersion);
       }
@@ -1010,6 +1295,13 @@ class BoardService {
     Future<void> loadOne(String name) async {
       final id = prebuiltBoardId(name);
       if (_deletedBoardIds.contains(id)) return;
+      // Skip creating prebuilt_ skeleton if a profile-specific board (e.g.
+      // baycroft_*) already exists in the static index — the profile hydration
+      // step will load it, and creating a duplicate causes _removeDuplicateNameBoards
+      // to delete the real board.
+      final hasProfileVersion = staticBoardIndex.any((e) =>
+          e.name == name && e.id != id && !e.id.startsWith('prebuilt_') && !e.id.startsWith('link_'));
+      if (hasProfileVersion) return;
       final key = _getBoardKey(id);
       
       bool exists = false;
@@ -1093,8 +1385,19 @@ class BoardService {
           );
           if (response.statusCode == 200) {
              final board = _boardFromJson(json.decode(response.body) as Map<String, dynamic>);
-             await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: true);
-             _boardCache[board.id] = board;
+             final stored = await loadBoard(id);
+             if (stored != null && stored.tiles.isNotEmpty && _hasMostTilesWithImages(stored)) {
+               // User edits always win: keep the stored tiles, but adopt any
+               // board-level changes (icons, area/parent, version) from source.
+               final merged = _mergeSourceMetadataIntoStored(board, stored);
+               if (merged != null) {
+                 await _writeBoard(merged, mirrorToDisk: false, cacheInWebStorage: true);
+               }
+               _boardCache[board.id] = stored;
+             } else {
+               await _writeBoard(board, mirrorToDisk: false, cacheInWebStorage: true);
+               _boardCache[board.id] = board;
+             }
              return;
           }
           // The server answered but has no JSON for this board on disk; don't
@@ -1108,23 +1411,27 @@ class BoardService {
         }
       }
 
-      // On native dev mode, prefer the on-disk JSON over cached storage unless
-      // the user has added more tiles in the app than the JSON currently holds.
+      // On native dev mode, prefer the on-disk JSON for new boards; existing
+      // stored copies keep the user's tile edits (user edits always win).
       if (diskJsonFile != null) {
         try {
           final raw = await diskJsonFile.readAsString();
           final board = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
           final stored = await loadBoard(id);
-          if (stored != null &&
-              stored.tiles.length > board.tiles.length &&
-              board.area == stored.area &&
-              board.parentBoardId == stored.parentBoardId) {
-            debugPrint('Board "$name" preserving locally added tiles over emptier disk JSON');
+          if (stored != null && stored.tiles.isNotEmpty && _hasMostTilesWithImages(stored)) {
+            // User edits always win: keep the stored tiles, but adopt any
+            // board-level changes (icons, area/parent, version) from disk.
+            final merged = _mergeSourceMetadataIntoStored(board, stored);
+            if (merged != null) {
+              debugPrint('Board "$name" preserving locally edited tiles over disk JSON');
+              await _writeBoard(merged, mirrorToDisk: false);
+            }
+            _boardCache[board.id] = stored;
             return;
           }
           if (stored != null && stored.tiles.length > board.tiles.length) {
-            // Disk has fewer tiles, but its location/parent has changed.
-            // Keep the user's tiles but adopt the disk area/parent.
+            // Stored copy is stale (missing images) but richer — keep the user's
+            // tiles but adopt the disk area/parent.
             board.tiles = stored.tiles;
             board.rows = stored.rows;
             board.columns = stored.columns;
@@ -1147,8 +1454,18 @@ class BoardService {
       // 2. Try to load from App Assets (Production Mode)
       final assetBoard = await _loadBoardFromAssets(id, name);
       if (assetBoard != null) {
-        await _writeBoard(assetBoard, mirrorToDisk: false, cacheInWebStorage: false);
-        _boardCache[assetBoard.id] = assetBoard;
+        final stored = await loadBoard(id);
+        if (stored != null && stored.tiles.isNotEmpty && _hasMostTilesWithImages(stored)) {
+          // User edits always win: keep the stored tiles, adopt source metadata.
+          final merged = _mergeSourceMetadataIntoStored(assetBoard, stored);
+          if (merged != null) {
+            await _writeBoard(merged, mirrorToDisk: false, cacheInWebStorage: false);
+          }
+          _boardCache[stored.id] = stored;
+        } else {
+          await _writeBoard(assetBoard, mirrorToDisk: false, cacheInWebStorage: false);
+          _boardCache[assetBoard.id] = assetBoard;
+        }
         return;
       }
 
@@ -2954,7 +3271,11 @@ class BoardService {
     return boards.where((board) => !_deletedBoardIds.contains(board.id)).toList();
   }
 
-  Future<List<Board>> listBoards({String? area, bool includeTiles = true}) async {
+  Future<List<Board>> listBoards({
+    String? area,
+    bool includeTiles = true,
+    bool awaitIcons = true,
+  }) async {
     // Project-source scanning has been removed from the list path. Boards are
     // hydrated into app storage during init, so listBoards now reads from
     // storage only and is O(stored boards) instead of O(all project files).
@@ -3001,16 +3322,20 @@ class BoardService {
         }
       }
 
-      // Inject prebuilt boards missing from storage as lightweight placeholders.
+      // Drop any stored boards that belong to a different profile.
+      boardsById.removeWhere((id, b) => !_boardIdVisibleToCurrentProfile(b.id));
+
+      // Inject prebuilt/profile boards missing from storage as lightweight placeholders.
       // The full JSON is only loaded when the user selects the board's tab.
       for (final name in prebuiltBoardNames) {
         if (area != null && _areaForBoardName(name) != area) continue;
-        final id = prebuiltBoardId(name);
+        final id = _idForBoardName(name);
+        if (id.isEmpty || !_boardIdVisibleToCurrentProfile(id)) continue;
         if (!boardsById.containsKey(id) && !_deletedBoardIds.contains(id)) {
           final tier = hierarchyTier(name);
           final parentName = hierarchyParent(name);
           final parentId = (parentName != null && parentName.isNotEmpty)
-              ? prebuiltBoardId(parentName)
+              ? _idForBoardName(parentName)
               : null;
           final index = runtimeBoardHierarchy
               .indexWhere((e) => e.name.toLowerCase() == name.toLowerCase());
@@ -3033,29 +3358,30 @@ class BoardService {
         }
       }
 
-    // Pre-fetch tab/tile icon metadata for prebuilt placeholders so tab
-    // icons appear as soon as an area loads, including child sub-boards.
-    // Only use an icon path if the asset was actually bundled for web.
-    if (kIsWeb) {
-      final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-      final validAssets = manifest.listAssets().toSet();
-      final iconFutures = <Future<void>>[];
-      for (final board in boardsById.values) {
-        if (board.id.startsWith('prebuilt_')) {
-          if (area != null && _areaForBoardName(board.name) != area) continue;
-          // Use cached icon metadata if available (avoids re-parsing JSON)
-          final cached = _boardIconMetaCache[board.id];
-          if (cached != null) {
-            if (cached.icon != null && cached.icon!.isNotEmpty && validAssets.contains(cached.icon)) {
-              board.iconAssetPath = cached.icon;
+      // Pre-fetch tab/tile icon metadata for prebuilt placeholders so tab
+      // icons appear as soon as an area loads, including child sub-boards.
+      // Only use an icon path if the asset was actually bundled for web.
+      // OPTIMIZATION: Skip this for global listings (area == null) unless icons
+      // are explicitly requested.
+      if (kIsWeb && area != null) {
+        final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+        final validAssets = manifest.listAssets().toSet();
+        final iconFutures = <Future<void>>[];
+        for (final board in boardsById.values) {
+          if (board.id.startsWith('prebuilt_') || _isProfileSpecificBoardId(board.id)) {
+            if (_areaForBoardName(board.name) != area) continue;
+            // Use cached icon metadata if available (avoids re-parsing JSON)
+            final cached = _boardIconMetaCache[board.id];
+            if (cached != null) {
+              if (cached.icon != null && cached.icon!.isNotEmpty && validAssets.contains(cached.icon)) {
+                board.iconAssetPath = cached.icon;
+              }
+              if (cached.tileIcon != null && cached.tileIcon!.isNotEmpty && validAssets.contains(cached.tileIcon)) {
+                board.tileIconAssetPath = cached.tileIcon;
+              }
+              continue;
             }
-            if (cached.tileIcon != null && cached.tileIcon!.isNotEmpty && validAssets.contains(cached.tileIcon)) {
-              board.tileIconAssetPath = cached.tileIcon;
-            }
-            continue;
-          }
-          iconFutures.add(
-            _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: true)
+            final future = _loadBoardFromAssets(board.id, board.name, includeTiles: false, preferDevServer: false)
                 .then((asset) {
                   if (asset != null) {
                     final icon = asset.iconAssetPath;
@@ -3070,47 +3396,66 @@ class BoardService {
                     }
                   }
                   // Cache for future area switches — including boards with no
-                  // bundled JSON (negative results), so they aren't re-parsed
-                  // on every listBoards call.
+                  // icon/tile icon set, to avoid redundant re-parsing.
                   _boardIconMetaCache[board.id] = (
-                    icon: asset?.iconAssetPath,
-                    tileIcon: asset?.tileIconAssetPath,
+                    icon: board.iconAssetPath,
+                    tileIcon: board.tileIconAssetPath,
+                    version: asset?.version ?? 0,
                   );
-                })
-                .catchError((_) {
-                  _boardIconMetaCache[board.id] = (icon: null, tileIcon: null);
-                }),
-          );
+                });
+            
+            // Prioritize Tier 1 (main tab) icons or the currently selected board.
+            final isTier1 = board.tier == 1;
+            final isPriority = board.id == _priorityBoardId;
+            
+            if (awaitIcons && (isTier1 || isPriority)) {
+              iconFutures.add(future);
+            } else {
+              // Load in background for sub-boards/non-priority boards
+              unawaited(future);
+            }
+          }
+        }
+        if (awaitIcons && iconFutures.isNotEmpty) {
+          await Future.wait(iconFutures);
         }
       }
-      await Future.wait(iconFutures);
-    }
 
-      // Drop prebuilt boards that are no longer in the hierarchy so stale
-      // localStorage entries (e.g. renamed or removed boards) don't show.
-      if (runtimeBoardHierarchy.isNotEmpty) {
-        boardsById.removeWhere((id, b) => b.id.startsWith('prebuilt_') && !isInBoardHierarchy(b.name));
-      }
-
-      return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
+      return boardsById.values.toList();
     } else {
       final boardsById = <String, Board>{};
+      // Area switches must not block waiting for every stored board to be read
+      // and decoded. Since keys are 'board_<profile>_<id>', we can derive each
+      // board's compiled area from its id; boards known to belong to a
+      // different area are skipped without touching the file at all, and the
+      // remaining files are read/decoded concurrently.
+      final futures = <Future<void>>[];
       for (final prefix in [defaultPrefix, currentPrefix]) {
         final files = _dataDir!
             .listSync()
             .whereType<File>()
             .where((file) => p.basename(file.path).startsWith(prefix));
         for (final file in files) {
-          try {
-            final content = await file.readAsString();
-            final m = json.decode(content) as Map<String, dynamic>;
-            final board = Board.fromMap(m, includeTiles: includeTiles);
-            boardsById[board.id] = board;
-          } catch (e) {
-            debugPrint('listBoards: failed to load native file ${file.path}: $e');
-          }
+          final id = p
+              .basenameWithoutExtension(file.path)
+              .substring(prefix.length);
+          final entryArea = _boardIndexEntryForId(id)?.area;
+          if (area != null && entryArea != null && entryArea != area) continue;
+          futures.add(() async {
+            try {
+              final content = await file.readAsString();
+              final m = json.decode(content) as Map<String, dynamic>;
+              final board = Board.fromMap(m, includeTiles: includeTiles);
+              boardsById[board.id] = board;
+            } catch (e) {
+              debugPrint('listBoards: failed to load native file ${file.path}: $e');
+            }
+          }());
         }
       }
+      await Future.wait(futures);
+      // Hide boards that belong to a different profile.
+      boardsById.removeWhere((id, b) => !_boardIdVisibleToCurrentProfile(b.id));
       return _areaFilter(_sortBoards(_withoutDeletedBoards(boardsById.values)), area);
     }
   }
@@ -3150,6 +3495,12 @@ class BoardService {
 
   Future<Board?> loadBoard(String id) async {
     if (kIsWeb && _deletedBoardIds.contains(id)) return null;
+
+    // Resolve shared prebuilt ids to profile-specific ids when appropriate,
+    // and refuse to load boards that do not belong to the active profile.
+    id = _resolveBoardId(id);
+    if (!_boardIdVisibleToCurrentProfile(id)) return null;
+
     // Non-admin profiles have their own per-user copy; load that first.
     if (!_isAdmin && !kIsWeb && _dataDir != null) {
       final f = File('${_dataDir!.path}/${_getBoardKey(id)}.json');
@@ -3179,16 +3530,28 @@ class BoardService {
 
     final key = _getBoardKey(id);
     if (kIsWeb) {
-      // For prebuilt boards the JSON file is the source of truth for tiles.
+      // For prebuilt/profile boards the JSON file is the source of truth for tiles.
       // However, user-edited metadata (icon, sortOrder) from localStorage is
       // overlaid so Manage Boards changes are reflected in tabs.
-      if (id.startsWith('prebuilt_')) {
-        final asset = await _loadBoardFromAssets(id, _nameFromBoardId(id));
+      if (id.startsWith('prebuilt_') || _isProfileSpecificBoardId(id)) {
+        final name = _boardIndexEntryForId(id)?.name ?? _nameFromBoardId(id);
+        final asset = await _loadBoardFromAssets(id, name);
         if (asset != null) {
           final raw = _prefs!.getString(key);
           if (raw != null && raw.isNotEmpty) {
             try {
               final cached = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+              // Preserve user-edited tiles from localStorage - this is critical for persistence
+              if (cached.tiles.isNotEmpty) {
+                asset.tiles = cached.tiles;
+                asset.rows = cached.rows;
+                asset.columns = cached.columns;
+                asset.adjustableLayout = cached.adjustableLayout;
+                asset.boxScale = cached.boxScale;
+                asset.tileHeight = cached.tileHeight;
+                asset.tileWidth = cached.tileWidth;
+                asset.backgroundColor = cached.backgroundColor;
+              }
               // Preserve any user icon or sortOrder set via Manage Boards.
               if (cached.iconAssetPath != null) {
                 asset.iconAssetPath = cached.iconAssetPath;
@@ -3207,8 +3570,12 @@ class BoardService {
                 asset.isQuaternaryBoard = cached.isQuaternaryBoard;
                 asset.isQuinaryBoard = cached.isQuinaryBoard;
               }
+              // Preserve version tracking
+              asset.version = cached.version;
+              asset.adminUpdatePending = cached.adminUpdatePending;
+              asset.adminVersionId = cached.adminVersionId;
             } catch (e) {
-              debugPrint('Error merging cached metadata for $id: $e');
+              debugPrint('Error merging cached data for $id: $e');
             }
           }
           return asset;
@@ -3265,7 +3632,7 @@ class BoardService {
   /// yet — e.g. every sibling in a large category like Disney Stories —
   /// always triggered a fetch just to resolve its tab icon.
   Future<void> _ensureBoardIcons(Board board, {bool tabIconOnly = false}) async {
-    if (!board.id.startsWith('prebuilt_')) return;
+    if (!board.id.startsWith('prebuilt_') && !_isProfileSpecificBoardId(board.id)) return;
     final hasIcon = board.iconAssetPath != null && board.iconAssetPath!.isNotEmpty;
     final hasTileIcon = board.tileIconAssetPath != null && board.tileIconAssetPath!.isNotEmpty;
     if (tabIconOnly ? hasIcon : (hasIcon && hasTileIcon)) {
@@ -3382,6 +3749,14 @@ class BoardService {
       await saveBoard(board);
       return;
     }
+    // Boards that exist in the compiled index (profile boards like baycroft_*,
+    // plus source-controlled link_ boards) must never be converted to a
+    // prebuilt_ id: doing so deletes the real board JSON and leaves a duplicate
+    // prebuilt_* copy behind. Just re-save them in place to mirror local edits.
+    if (_boardIndexEntryForId(board.id) != null) {
+      await saveBoard(board);
+      return;
+    }
     board.id = prebuiltBoardId(board.name);
     await deleteBoard(oldId);
     await saveBoard(board);
@@ -3453,6 +3828,7 @@ class BoardService {
     // Permanently-retired ids (see _retiredBoardIds) must never come back,
     // even though the blanket un-delete above just cleared their tombstones.
     await retireSpecifiedBoards();
+    await _removeSupersededPrebuiltBoards();
     await _removeDuplicateNameBoards();
   }
 
@@ -3602,11 +3978,14 @@ class BoardService {
             headers: {'Content-Type': 'application/json'},
             body: json.encode(boardJson),
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode != 200) {
-        debugPrint('Dev save server returned ${response.statusCode}');
+        debugPrint('Dev save server returned ${response.statusCode}: ${response.body}');
+      } else {
+        debugPrint('Dev save server mirrored board ${boardJson['id']} successfully.');
       }
     } catch (e) {
+      debugPrint('Dev save server mirror failed for ${boardJson['id']}: $e');
       // Server not running; ignore.
     }
   }
@@ -3732,32 +4111,21 @@ class BoardService {
     );
   }
 
-  /// Permanently delete an Unassigned board and remove it from the runtime hierarchy.
-  /// Only available to admins. Throws if the board is not Unassigned or if a real
-  /// (non-Unassigned) board with the same name exists.
-  Future<void> deleteUnassignedBoardCompletely(String id) async {
-    if (!_isAdmin) throw Exception('Only admins can delete unassigned boards.');
+  /// Permanently delete a board by id and remove it from the runtime hierarchy.
+  /// Only available to admins. The deletion is scoped to the board's own id and
+  /// area, so boards with the same or similar names in other areas are never
+  /// affected.
+  Future<void> deleteBoardCompletelyById(String id) async {
+    if (!_isAdmin) throw Exception('Only admins can permanently delete boards.');
 
     final board = await loadBoard(id);
     if (board == null) throw Exception('Board not found: $id');
 
-    if (board.area != 'Unassigned') {
-      throw Exception('Board "${board.name}" is not in the Unassigned area.');
-    }
+    // Remove from runtime hierarchy first, matching both name and area so
+    // same-named boards in other areas are preserved.
+    await removeFromRuntimeHierarchy(board.name, area: board.area);
 
-    final lowerName = board.name.toLowerCase();
-    final realVersion = runtimeBoardHierarchy.any(
-      (e) => e.name.toLowerCase() == lowerName && e.area != 'Unassigned',
-    );
-    if (realVersion) {
-      throw Exception('A non-Unassigned board named "${board.name}" still exists; '
-          'delete the real version first if that is what you meant.');
-    }
-
-    // Remove from runtime hierarchy first.
-    await removeFromRuntimeHierarchy(board.name);
-
-    // Remove from in-memory cache and delete the source JSON file where possible.
+    // Remove from in-memory cache and deletion lists.
     _boardCache.remove(id);
     _deletedBoardIds.remove(id);
 
@@ -3781,7 +4149,25 @@ class BoardService {
       }
     }
 
-    debugPrint('Deleted unassigned board ${board.name} ($id)');
+    // Record the deletion for sync.
+    final sync = await SyncService.init();
+    await sync.recordChange(
+      entityType: SyncEntityType.board,
+      entityId: id,
+      operation: SyncOperation.delete,
+    );
+
+    // In web builds, also ask the dev server to remove the source file.
+    if (kIsWeb) {
+      unawaited(_mirrorDeleteToDevServer(id, board.name, board.area));
+    }
+
+    debugPrint('Deleted board ${board.name} ($id)');
+  }
+
+  /// Backwards-compatible alias for the previous Unassigned-only deletion API.
+  Future<void> deleteUnassignedBoardCompletely(String id) async {
+    await deleteBoardCompletelyById(id);
   }
 
   /// POST a board deletion to the local dev server so deletions made in the web
@@ -4412,6 +4798,13 @@ class BoardService {
       if (!kIsWeb && _projectRoot != null) {
         final ids = onlyIds ?? prebuiltBoardNames.map((n) => prebuiltBoardId(n)).toSet();
         for (final id in ids) {
+          // Skip prebuilt_ boards that have a profile-specific version (baycroft_*)
+          final entry = _boardIndexEntryForId(id);
+          if (entry != null) {
+            final hasProfileVersion = staticBoardIndex.any((e) =>
+                e.name == entry.name && e.id != id && !e.id.startsWith('prebuilt_') && !e.id.startsWith('link_'));
+            if (hasProfileVersion) continue;
+          }
           final file = await _findProjectJsonFile(id);
           if (file == null) continue;
           try {
@@ -4421,23 +4814,15 @@ class BoardService {
             final storedBoard = await loadBoard(assetBoard.id);
             if (storedBoard == null) {
               await _writeBoard(assetBoard, mirrorToDisk: false);
-            } else if (assetBoard.tiles.length >= storedBoard.tiles.length) {
-              // Prefer on-disk JSON when it has the same or more tiles,
-              // but preserve user-added tiles if the source is empty/stale.
+            } else if (storedBoard.tiles.isEmpty || !_hasMostTilesWithImages(storedBoard)) {
+              // Stored copy is empty or has stale images — reload from source.
               await _writeBoard(assetBoard, mirrorToDisk: false);
-            } else if (assetBoard.area != storedBoard.area ||
-                       assetBoard.parentBoardId != storedBoard.parentBoardId) {
-              // Source location/parent has changed; keep the user's tiles but
-              // adopt the new area and parent from disk.
-              assetBoard.tiles = storedBoard.tiles;
-              assetBoard.rows = storedBoard.rows;
-              assetBoard.columns = storedBoard.columns;
-              assetBoard.adjustableLayout = storedBoard.adjustableLayout;
-              assetBoard.boxScale = storedBoard.boxScale;
-              assetBoard.tileHeight = storedBoard.tileHeight;
-              assetBoard.tileWidth = storedBoard.tileWidth;
-              assetBoard.backgroundColor = storedBoard.backgroundColor;
-              await _writeBoard(assetBoard, mirrorToDisk: false);
+            } else {
+              // User edits always win; adopt any source metadata (icons, area/parent).
+              final merged = _mergeSourceMetadataIntoStored(assetBoard, storedBoard);
+              if (merged != null) {
+                await _writeBoard(merged, mirrorToDisk: false);
+              }
             }
           } catch (e) {
             debugPrint('Error loading project board from disk ${file.path}: $e');
@@ -4460,32 +4845,20 @@ class BoardService {
         try {
           final raw = await rootBundle.loadString(assetPath);
           final assetBoard = _boardFromJson(json.decode(raw) as Map<String, dynamic>);
+          if (!_boardIdVisibleToCurrentProfile(assetBoard.id)) continue;
           if (_deletedBoardIds.contains(assetBoard.id)) continue;
           final storedBoard = await loadBoard(assetBoard.id);
           if (storedBoard == null) {
             // Board does not exist in storage yet — load it from the asset.
             await _writeBoard(assetBoard, mirrorToDisk: false);
-          } else if (assetBoard.area != storedBoard.area ||
-                     assetBoard.parentBoardId != storedBoard.parentBoardId) {
-            // Source location/parent has changed; keep the user's tiles but
-            // adopt the new area and parent from disk.
-            assetBoard.tiles = storedBoard.tiles;
-            assetBoard.rows = storedBoard.rows;
-            assetBoard.columns = storedBoard.columns;
-            assetBoard.adjustableLayout = storedBoard.adjustableLayout;
-            assetBoard.boxScale = storedBoard.boxScale;
-            assetBoard.tileHeight = storedBoard.tileHeight;
-            assetBoard.tileWidth = storedBoard.tileWidth;
-            assetBoard.backgroundColor = storedBoard.backgroundColor;
+          } else if (storedBoard.tiles.isEmpty || !_hasMostTilesWithImages(storedBoard)) {
+            // Stored copy is empty or has stale images — reload from source.
             await _writeBoard(assetBoard, mirrorToDisk: false);
-          } else if (storedBoard.tiles.isNotEmpty &&
-                     assetBoard.tiles.length >= storedBoard.tiles.length) {
-            // Check if stored board has missing images, but do not overwrite
-            // user-added tiles with an emptier asset.
-            final tilesWithImages = storedBoard.tiles.where((t) => t.imageAsset.isNotEmpty && t.imageAsset.startsWith('assets/')).length;
-            if (tilesWithImages < storedBoard.tiles.length * 0.5) {
-              debugPrint('Board "${assetBoard.name}" has missing images — reloading from asset');
-              await _writeBoard(assetBoard, mirrorToDisk: false);
+          } else {
+            // User edits always win; adopt any source metadata (icons, area/parent).
+            final merged = _mergeSourceMetadataIntoStored(assetBoard, storedBoard);
+            if (merged != null) {
+              await _writeBoard(merged, mirrorToDisk: false);
             }
           }
         } catch (e) {
@@ -4496,6 +4869,56 @@ class BoardService {
       debugPrint('Error loading project boards from assets: $e');
     }
   }
+
+  /// Hydrate source JSONs that are owned by the active profile (e.g.
+  /// baycroft_*) into app storage so they appear on native builds.
+  /// Web loads these on demand from the asset bundle, so this is skipped there.
+  Future<void> _ensureProfileSpecificBoardsForCurrentProfile() async {
+    if (kIsWeb) return;
+    final raw = _rawProfileId;
+    if (raw == null || raw == 'default') return;
+    // Admin also loads profile-specific boards so baycroft_* etc. are visible.
+    final prefix = raw == 'admin' ? 'baycroft_' : '${raw}_';
+    final ids = staticBoardIndex
+        .where((e) => e.id.startsWith(prefix) && !e.id.startsWith('prebuilt_') && !e.id.startsWith('link_'))
+        .map((e) => e.id)
+        .toSet();
+    if (ids.isEmpty) return;
+    debugPrint('Hydrating ${ids.length} profile-specific boards for $raw');
+    for (final id in ids) {
+      try {
+        Board? assetBoard;
+        if (!kIsWeb && _projectRoot != null) {
+          final file = await _findProjectJsonFile(id);
+          if (file != null) {
+            assetBoard = _boardFromJson(json.decode(await file.readAsString()) as Map<String, dynamic>);
+          }
+        }
+        if (assetBoard == null) {
+          final name = _boardIndexEntryForId(id)?.name ?? _nameFromBoardId(id);
+          assetBoard = await _loadBoardFromAssets(id, name);
+        }
+        if (assetBoard == null) continue;
+        if (_deletedBoardIds.contains(assetBoard.id)) continue;
+        final storedBoard = await loadBoard(assetBoard.id);
+        if (storedBoard == null) {
+          await _writeBoard(assetBoard, mirrorToDisk: false);
+        } else if (storedBoard.tiles.isEmpty || !_hasMostTilesWithImages(storedBoard)) {
+          // Stored copy is empty or has stale images — reload from source.
+          await _writeBoard(assetBoard, mirrorToDisk: false);
+        } else {
+          // User edits always win; adopt any source metadata (icons, area/parent).
+          final merged = _mergeSourceMetadataIntoStored(assetBoard, storedBoard);
+          if (merged != null) {
+            await _writeBoard(merged, mirrorToDisk: false);
+          }
+        }
+      } catch (e) {
+        debugPrint('Error hydrating profile board $id: $e');
+      }
+    }
+  }
+
   double _imageFileExistenceRatio(List<dynamic> tiles) {
     if (tiles.isEmpty) return 1.0;
     var valid = 0;
@@ -4513,9 +4936,22 @@ class BoardService {
   }
 
   String? _hierarchyNameForId(String id) {
-    if (!id.startsWith('prebuilt_')) return null;
-    for (final e in runtimeBoardHierarchy) {
-      if (prebuiltBoardId(e.name) == id) return e.name;
+    if (id.startsWith('prebuilt_')) {
+      for (final e in runtimeBoardHierarchy) {
+        if (prebuiltBoardId(e.name) == id) return e.name;
+      }
+      return null;
+    }
+    // Handle user-created board IDs ({userId}_ prefix)
+    final idx = id.indexOf('_');
+    if (idx > 0) {
+      final userId = id.substring(0, idx);
+      final boardNameSuffix = id.substring(idx + 1);
+      // Check user custom hierarchy entries
+      for (final e in userCustomHierarchyEntries) {
+        final expectedId = userBoardId(userId, e.name);
+        if (expectedId == id) return e.name;
+      }
     }
     return null;
   }
@@ -4896,7 +5332,15 @@ class BoardService {
     // Link placeholders already have a unique, stable id; do not remap them to
     // the original prebuilt id, otherwise they would overwrite the real board.
     if (board.id.startsWith('link_')) return;
-    board.id = prebuiltBoardId(board.name);
+
+    // If the board already has a well-known ID from the compiled index,
+    // do not overwrite it with a generic prebuilt_ ID. This ensures
+    // profile-specific boards (e.g. baycroft_*) keep their stable IDs.
+    final inIndex = staticBoardIndex.any((e) => e.id == board.id);
+    if (!inIndex) {
+      board.id = prebuiltBoardId(board.name);
+    }
+
     final usedIds = <String>{};
     for (var index = 0; index < board.tiles.length; index++) {
       final tile = board.tiles[index];
