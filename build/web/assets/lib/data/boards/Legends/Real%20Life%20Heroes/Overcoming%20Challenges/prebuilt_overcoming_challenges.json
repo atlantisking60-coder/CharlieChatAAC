@@ -13,18 +13,17 @@
   "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/PE/PE Keywords/goal setting.png",
   "tileIconAssetPath": "assets/BOARDS/Legends/Real Life Heroes/Overcoming Challenges.png",
-  "version": 2,
+  "version": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
-  "parentBoardId": "prebuilt_real_life_heroes",
   "layout": {
     "rows": 5,
     "blankTilesAdded": 0
   },
   "tiles": [
     {
-      "id": "prebuilt_overcoming_challenges_stephen_hawking",
+      "id": "prebuilt_overcoming_challenges_stephen_hawking_physicist_who_lived_with_als_for_55_years_and_transformed_our_understanding_of_the_universe",
       "type": "vocabulary",
       "label": "stephen hawking (physicist who lived with als for 55 years and transformed our understanding of the universe)",
       "category": "Custom",
@@ -42,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_helen_keller",
+      "id": "prebuilt_overcoming_challenges_helen_keller_deaf_and_blind_author_and_activist_who_learned_to_communicate",
       "type": "vocabulary",
       "label": "helen keller (deaf and blind author and activist who learned to communicate)",
       "category": "Custom",
@@ -60,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_bethany_hamilton",
+      "id": "prebuilt_overcoming_challenges_bethany_hamilton_surfed_again_after_losing_her_arm_in_a_shark_attack",
       "type": "vocabulary",
       "label": "bethany hamilton (surfed again after losing her arm in a shark attack)",
       "category": "Custom",
@@ -78,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_nick_vujicic",
+      "id": "prebuilt_overcoming_challenges_nick_vujicic_born_without_arms_or_legs_became_a_motivational_speaker",
       "type": "vocabulary",
       "label": "nick vujicic (born without arms or legs, became a motivational speaker)",
       "category": "Custom",
@@ -96,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_terry_fox",
+      "id": "prebuilt_overcoming_challenges_terry_fox_ran_across_canada_on_one_leg_to_raise_cancer_awareness",
       "type": "vocabulary",
       "label": "terry fox (ran across canada on one leg to raise cancer awareness)",
       "category": "Custom",
@@ -114,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_temple_grandin",
+      "id": "prebuilt_overcoming_challenges_temple_grandin_autistic_scientist_who_revolutionised_livestock_handling",
       "type": "vocabulary",
       "label": "temple grandin (autistic scientist who revolutionised livestock handling)",
       "category": "Custom",
@@ -132,7 +131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_jessica_cox",
+      "id": "prebuilt_overcoming_challenges_jessica_cox_born_without_arms_became_a_licensed_pilot",
       "type": "vocabulary",
       "label": "jessica cox (born without arms, became a licensed pilot)",
       "category": "Custom",
@@ -150,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_ellie_simmonds",
+      "id": "prebuilt_overcoming_challenges_ellie_simmonds_paralympic_swimmer_born_with_achondroplasia_who_won_gold_medals",
       "type": "vocabulary",
       "label": "ellie simmonds (paralympic swimmer born with achondroplasia who won gold medals)",
       "category": "Custom",
@@ -168,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_christopher_reeve",
+      "id": "prebuilt_overcoming_challenges_christopher_reeve_superman_actor_who_became_paraplegic_and_fought_for_spinal_cord_research",
       "type": "vocabulary",
       "label": "christopher reeve (superman actor who became paraplegic and fought for spinal cord research)",
       "category": "Custom",
@@ -186,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_ludwig_guttmann",
+      "id": "prebuilt_overcoming_challenges_ludwig_guttmann_founded_the_paralympic_games",
       "type": "vocabulary",
       "label": "ludwig guttmann (founded the paralympic games)",
       "category": "Custom",
@@ -204,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_aron_ralston",
+      "id": "prebuilt_overcoming_challenges_aron_ralston_survived_127_hours_trapped_by_a_boulder_by_amputating_his_own_arm",
       "type": "vocabulary",
       "label": "aron ralston (survived 127 hours trapped by a boulder by amputating his own arm)",
       "category": "Custom",
@@ -222,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_wilma_rudolph",
+      "id": "prebuilt_overcoming_challenges_wilma_rudolph_overcame_polio_to_become_an_olympic_sprint_champion",
       "type": "vocabulary",
       "label": "wilma rudolph (overcame polio to become an olympic sprint champion)",
       "category": "Custom",
@@ -240,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_aimee_mullins",
+      "id": "prebuilt_overcoming_challenges_aimee_mullins_double_amputee_who_became_a_sprinter_and_actress",
       "type": "vocabulary",
       "label": "aimee mullins (double amputee who became a sprinter and actress)",
       "category": "Custom",
@@ -258,7 +257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_lizzie_velasquez",
+      "id": "prebuilt_overcoming_challenges_lizzie_velasquez_born_with_a_rare_condition_became_an_anti_bullying_activist",
       "type": "vocabulary",
       "label": "lizzie velasquez (born with a rare condition, became an anti-bullying activist)",
       "category": "Custom",
@@ -276,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_nando_parrado",
+      "id": "prebuilt_overcoming_challenges_nando_parrado_survived_72_days_in_the_andes_after_a_plane_crash",
       "type": "vocabulary",
       "label": "nando parrado (survived 72 days in the andes after a plane crash)",
       "category": "Custom",
@@ -294,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_amy_purdy",
+      "id": "prebuilt_overcoming_challenges_amy_purdy_snowboarder_who_lost_both_legs_and_won_paralympic_medals",
       "type": "vocabulary",
       "label": "amy purdy (snowboarder who lost both legs and won paralympic medals)",
       "category": "Custom",
@@ -312,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_sudha_chandran",
+      "id": "prebuilt_overcoming_challenges_sudha_chandran_dancer_who_performed_after_losing_her_leg_in_an_accident",
       "type": "vocabulary",
       "label": "sudha chandran (dancer who performed after losing her leg in an accident)",
       "category": "Custom",
@@ -330,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_louis_braille",
+      "id": "prebuilt_overcoming_challenges_louis_braille_invented_the_braille_reading_system_for_the_blind",
       "type": "vocabulary",
       "label": "louis braille (invented the braille reading system for the blind)",
       "category": "Custom",
@@ -348,7 +347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_thomas_edison",
+      "id": "prebuilt_overcoming_challenges_thomas_edison_overcame_childhood_deafness_to_become_the_greatest_inventor_of_all_time",
       "type": "vocabulary",
       "label": "thomas edison (overcame childhood deafness to become the greatest inventor of all time)",
       "category": "Custom",
@@ -366,7 +365,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_rob_burrow",
+      "id": "prebuilt_overcoming_challenges_rob_burrow_rugby_legend_who_fought_motor_neurone_disease_with_courage",
       "type": "vocabulary",
       "label": "rob burrow (rugby legend who fought motor neurone disease with courage)",
       "category": "Custom",
@@ -384,119 +383,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_overcoming_challenges_andrea_bocelli",
+      "id": "prebuilt_overcoming_challenges_andrea_bocelli_blind_tenor_who_has_sung_for_popes_and_presidents_worldwide",
       "type": "vocabulary",
       "label": "andrea bocelli (blind tenor who has sung for popes and presidents worldwide)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/andrea bocelli.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -510,11 +401,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_jim_abbott",
+      "id": "prebuilt_overcoming_challenges_jim_abbott_one_handed_pitcher_who_threw_a_major_league_no_hitter",
       "type": "vocabulary",
       "label": "jim abbott (one-handed pitcher who threw a major league no-hitter)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/jim abbott.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -528,11 +419,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_kyle_maynard",
+      "id": "prebuilt_overcoming_challenges_kyle_maynard_congenital_amputee_who_became_an_mma_fighter_and_mountaineer",
       "type": "vocabulary",
       "label": "kyle maynard (congenital amputee who became an MMA fighter and mountaineer)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/kyle maynard.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -546,11 +437,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_bonner_paddock",
+      "id": "prebuilt_overcoming_challenges_bonner_paddock_marathon_runner_with_cerebral_palsy_who_completed_the_boston_marathon",
       "type": "vocabulary",
       "label": "bonner paddock (marathon runner with cerebral palsy who completed the boston marathon)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/bonner paddock.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -564,11 +455,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_erik_weihenmayer",
+      "id": "prebuilt_overcoming_challenges_erik_weihenmayer_first_blind_person_to_summit_mount_everest",
       "type": "vocabulary",
       "label": "erik weihenmayer (first blind person to summit mount everest)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/erik weihenmayer.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -582,11 +473,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_alex_zanardi",
+      "id": "prebuilt_overcoming_challenges_alex_zanardi_racing_driver_who_won_paralympic_gold_after_losing_both_legs",
       "type": "vocabulary",
       "label": "alex zanardi (racing driver who won paralympic gold after losing both legs)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/alex zanardi.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -600,11 +491,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_jean_dominique_bauby",
+      "id": "prebuilt_overcoming_challenges_jean_dominique_bauby_wrote_a_memoir_using_only_his_left_eye_blinking",
       "type": "vocabulary",
       "label": "jean-dominique bauby (wrote a memoir using only his left eye blinking)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Culinary Masters/dominique ansel.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -618,11 +509,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_mark_inglis",
+      "id": "prebuilt_overcoming_challenges_mark_inglis_first_double_amputee_to_summit_mount_everest",
       "type": "vocabulary",
       "label": "mark inglis (first double amputee to summit mount everest)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/mark inglis.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -636,11 +527,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_spencer_west",
+      "id": "prebuilt_overcoming_challenges_spencer_west_walked_on_his_hands_to_raise_funds_for_clean_water_in_africa",
       "type": "vocabulary",
       "label": "spencer west (walked on his hands to raise funds for clean water in africa)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/spencer west.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -654,11 +545,29 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_overcoming_challenges_matt_stutzman",
+      "id": "prebuilt_overcoming_challenges_matt_stutzman_paralympic_archer_born_without_arms_who_competes_with_his_feet",
       "type": "vocabulary",
       "label": "matt stutzman (paralympic archer born without arms who competes with his feet)",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Overcoming Challenges/matt stutzman.png",
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_overcoming_challenges_tile_31",
+      "type": "blank",
+      "label": "",
       "category": "Custom",
-      "imageAsset": "",
+      "imageAsset": null,
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -671,5 +580,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": "prebuilt_real_life_heroes"
 }

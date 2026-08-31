@@ -1659,6 +1659,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icons.favorite,
             type: TopTabType.favorites));
         final addedLegendsBoardIds = <String>{};
+        final addedLegendsBoardNames = <String>{};
         for (final boardName in legendsBoardNames) {
           final matches = _boards.where((b) => b.name.toLowerCase() == boardName.toLowerCase()).toList();
           final legendsMatches = matches.where((b) => b.area == 'Legends').toList();
@@ -1667,7 +1668,10 @@ class _HomePageState extends State<HomePage> {
             continue;
           }
           if (legendsMatches.isEmpty) continue;
-          final board = legendsMatches.first;
+          // Prefer profile-specific boards over prebuilt boards
+          final nonPrebuilt = legendsMatches
+              .where((b) => !b.id.startsWith('prebuilt_') && !b.id.startsWith('link_'));
+          final board = nonPrebuilt.isNotEmpty ? nonPrebuilt.first : legendsMatches.first;
           if (!board.isSubBoard) {
             allTabs.add(TopTab(
                 id: board.id,
@@ -1676,13 +1680,15 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedLegendsBoardIds.add(board.id);
+            addedLegendsBoardNames.add(board.name.toLowerCase());
           }
         }
         // Add any custom boards that are explicitly in the Legends area.
         for (final board in _boards) {
           if (board.area == 'Legends' &&
               !board.isSubBoard &&
-              !addedLegendsBoardIds.contains(board.id)) {
+              !addedLegendsBoardIds.contains(board.id) &&
+              !addedLegendsBoardNames.contains(board.name.toLowerCase())) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1690,6 +1696,7 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedLegendsBoardIds.add(board.id);
+            addedLegendsBoardNames.add(board.name.toLowerCase());
           }
         }
         allTabs.add(TopTab(
@@ -1846,6 +1853,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icons.favorite,
             type: TopTabType.favorites));
         final addedSchoolBoardIds = <String>{};
+        final addedSchoolBoardNames = <String>{};
         for (final boardName in schoolBoardNames) {
           // Look for board by name within the current area
           final board = _boardForTabName(boardName, _activeArea());
@@ -1859,12 +1867,14 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedSchoolBoardIds.add(board.id);
+            addedSchoolBoardNames.add(board.name.toLowerCase());
           }
         }
         for (final board in _boards) {
           if (board.area == 'Subject Vocab' &&
               !board.isSubBoard &&
-              !addedSchoolBoardIds.contains(board.id)) {
+              !addedSchoolBoardIds.contains(board.id) &&
+              !addedSchoolBoardNames.contains(board.name.toLowerCase())) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1872,6 +1882,7 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedSchoolBoardIds.add(board.id);
+            addedSchoolBoardNames.add(board.name.toLowerCase());
           }
         }
         allTabs.add(TopTab(
@@ -1889,6 +1900,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icons.favorite,
             type: TopTabType.favorites));
         final addedMySchoolBoardIds = <String>{};
+        final addedMySchoolBoardNames = <String>{};
         for (final boardName in mySchoolBoardNames) {
           // Look for board by name within the current area
           final board = _boardForTabName(boardName, _activeArea());
@@ -1902,12 +1914,14 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedMySchoolBoardIds.add(board.id);
+            addedMySchoolBoardNames.add(board.name.toLowerCase());
           }
         }
         for (final board in _boards) {
           if (board.area == 'My School' &&
               !board.isSubBoard &&
-              !addedMySchoolBoardIds.contains(board.id)) {
+              !addedMySchoolBoardIds.contains(board.id) &&
+              !addedMySchoolBoardNames.contains(board.name.toLowerCase())) {
             allTabs.add(TopTab(
                 id: board.id,
                 label: _tabLabelForBoard(board),
@@ -1915,6 +1929,7 @@ class _HomePageState extends State<HomePage> {
                 type: TopTabType.board,
                 board: board));
             addedMySchoolBoardIds.add(board.id);
+            addedMySchoolBoardNames.add(board.name.toLowerCase());
           }
         }
         // Never silently drop a hierarchically-expected My School tab just
@@ -1922,19 +1937,25 @@ class _HomePageState extends State<HomePage> {
         // switch: inject a placeholder whose id comes from the compiled index
         // so tapping it opens the real board. This keeps all top-level My
         // School boards present no matter what state was cached previously.
+        // Only create placeholders for boards that actually exist in _boards
+        // (loaded from storage) — do NOT create phantom tabs for boards that
+        // don't exist for the current profile (e.g. baycroft boards are invisible
+        // to the default profile, so no placeholder should be shown).
         for (final boardName in mySchoolBoardNames) {
           final alreadyShown = _boardForTabName(boardName, 'My School') != null;
           if (alreadyShown) continue;
           final resolvedId = BoardService.current?.resolveBoardIdForName(boardName);
           if (resolvedId == null || addedMySchoolBoardIds.contains(resolvedId)) continue;
-          final placeholder = _createAutoMissingBoard(resolvedId, boardName, area: 'My School');
-          if (!_boards.any((b) => b.id == resolvedId)) _boards.add(placeholder);
+          // Only show the tab if the board actually exists in storage for this profile
+          final existingBoards = _boards.where((b) => b.id == resolvedId);
+          if (existingBoards.isEmpty) continue;
+          final existingBoard = existingBoards.first;
           allTabs.add(TopTab(
               id: resolvedId,
-              label: _tabLabelForBoard(placeholder),
-              iconAssetPath: _getBoardIconPath(placeholder),
+              label: _tabLabelForBoard(existingBoard),
+              iconAssetPath: _getBoardIconPath(existingBoard),
               type: TopTabType.board,
-              board: placeholder));
+              board: existingBoard));
           addedMySchoolBoardIds.add(resolvedId);
         }
         allTabs.add(TopTab(
@@ -2121,6 +2142,14 @@ class _HomePageState extends State<HomePage> {
             b.name.toLowerCase() == boardName.toLowerCase() && b.area == area)
         .toList();
     if (matches.isEmpty) return null;
+    // Prefer profile-specific boards (e.g. baycroft_*) over prebuilt_ boards,
+    // so the Baycroft profile sees its own populated boards instead of the
+    // empty prebuilt shells that also exist in _boards.
+    final nonPrebuilt = matches
+        .where((b) => !b.id.startsWith('prebuilt_') && !b.id.startsWith('link_'));
+    if (nonPrebuilt.isNotEmpty) {
+      return nonPrebuilt.first;
+    }
     return matches.firstWhere(
       (b) => !b.id.startsWith('link_'),
       orElse: () => matches.first,
@@ -2140,7 +2169,24 @@ class _HomePageState extends State<HomePage> {
     
     // Find children of THIS board by stored parent relationship.
     // Board-link tiles no longer automatically generate sub-tabs.
-    final children = _boards.where((b) => b.parentBoardId == board.id && b.isSubBoard).toList();
+    final rawChildren = _boards.where((b) => b.parentBoardId == board.id && b.isSubBoard).toList();
+    // Dedup children by name, preferring profile-specific boards over prebuilt
+    final childrenByName = <String, Board>{};
+    for (final child in rawChildren) {
+      final key = child.name.toLowerCase();
+      final existing = childrenByName[key];
+      if (existing == null) {
+        childrenByName[key] = child;
+      } else {
+        // Prefer profile-specific (non-prebuilt) boards
+        final childIsProfileSpecific = !child.id.startsWith('prebuilt_');
+        final existingIsProfileSpecific = !existing.id.startsWith('prebuilt_');
+        if (childIsProfileSpecific && !existingIsProfileSpecific) {
+          childrenByName[key] = child;
+        }
+      }
+    }
+    final children = childrenByName.values.toList();
 
     // Small Words: keep Montessori-branded grammar boards plus plain Adjectives/Prepositions only.
     if (board.name.toLowerCase() == 'small words') {
@@ -2157,6 +2203,7 @@ class _HomePageState extends State<HomePage> {
       // are added, and no reordering is applied.
       final childrenTabs = <TopTab>[];
       final seenIds = <String>{};
+      final seenNames = <String>{};
       for (final name in savedOrder) {
         // Prefer a real board over an empty link board when several boards
         // share the same name, otherwise stale link boards can shadow the
@@ -2167,12 +2214,19 @@ class _HomePageState extends State<HomePage> {
             .toList();
         Board? b;
         if (matching.isNotEmpty) {
-          b = matching.firstWhere(
-            (candidate) => !candidate.id.startsWith('link_'),
-            orElse: () => matching.first,
-          );
+          // Prefer profile-specific boards over prebuilt boards
+          final nonPrebuilt = matching.where(
+              (c) => !c.id.startsWith('prebuilt_') && !c.id.startsWith('link_'));
+          if (nonPrebuilt.isNotEmpty) {
+            b = nonPrebuilt.first;
+          } else {
+            b = matching.firstWhere(
+              (candidate) => !candidate.id.startsWith('link_'),
+              orElse: () => matching.first,
+            );
+          }
         }
-        if (b != null && seenIds.add(b.id)) {
+        if (b != null && seenIds.add(b.id) && seenNames.add(b.name.toLowerCase())) {
           childrenTabs.add(TopTab(
             id: b.id,
             label: _tabLabelForBoard(b),
@@ -2191,7 +2245,7 @@ class _HomePageState extends State<HomePage> {
       // lives under this board is reachable as a tab.
       final appended = <TopTab>[];
       for (final child in children) {
-        if (seenIds.add(child.id)) {
+        if (seenIds.add(child.id) && seenNames.add(child.name.toLowerCase())) {
           appended.add(TopTab(
             id: child.id,
             label: _tabLabelForBoard(child),
@@ -2210,8 +2264,9 @@ class _HomePageState extends State<HomePage> {
     // Board-link tiles no longer auto-generate sub-tabs.
     final childrenTabs = <TopTab>[];
     final seenIds = <String>{};
+    final seenNames = <String>{};
     for (final child in children) {
-      if (seenIds.add(child.id)) {
+      if (seenIds.add(child.id) && seenNames.add(child.name.toLowerCase())) {
         childrenTabs.add(TopTab(
           id: child.id,
           label: _tabLabelForBoard(child),

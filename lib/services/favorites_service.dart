@@ -20,6 +20,15 @@ class FavoritesService {
     final prefs = await SharedPreferences.getInstance();
     // Renamed Baycroft board: old ids now point at baycroft_people_at_baycroft.
     await _migrateBaycroftBoardFavourites(prefs, profileId);
+    // One-time clear of Baycroft profile personalization (favorites) to match Admin.
+    if (profileId == 'baycroft') {
+      const clearedKey = 'baycroft_favorites_cleared_v1';
+      if (prefs.getBool(clearedKey) != true) {
+        await prefs.remove('aac_favorites_baycroft');
+        await prefs.remove('aac_favourite_boards_baycroft');
+        await prefs.setBool(clearedKey, true);
+      }
+    }
     return FavoritesService._(prefs, profileId);
   }
 

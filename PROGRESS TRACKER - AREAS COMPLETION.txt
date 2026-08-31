@@ -31,3 +31,13 @@ CHANGE LOG 1.1 > 1.2:
 
 
 PROMPTS TO DO:
+On the version of the app that has just been pushed to the actual website, https://charliechataac.co.uk/, via netlify and github, the boards under my school are not populating for some reason, with the exception of the 7NGR Tutor Group. I should be able to see the content for these on both the admin and Baycroft profiles, but I cannot. There is also pre built people at school showing up on the tabs, which should not be the case.
+-----
+The tabs themselves on the my school area should only be showing up for the Admin and Baycroft Profiles, but I can see them on the default profile, despite them having the 'baycroft_[board name]' prefix. any profile that is not Baycroft or admin, should be unable to see content with the prefix 'baycroft'; meaning that this particular area should spawn as completely empty for other profiles until the user adds something there.
+-----
+On recipes, carrot and cranberry muffin is misspelt and therefore linking to a misspelt version of that board. neither the correct or incorrect version of the board are showing on the tabs at the top as they should, nor are either of them findable via the 'Search for a board' button.
+-----
+It appears individual gemstones, opals and pearls boards, did not retain Tab and Tile icons, and did not immediately populate under 'gemstones and jewels'. it took me editing those boards and saving them again to make them stick as Tier 4 tabs.
+-----
+Favourites disappeared after a reload for the baycroft profile, though appear to have stuck for the admin profile.
+-----

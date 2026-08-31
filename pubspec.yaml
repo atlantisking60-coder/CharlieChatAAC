@@ -29,7 +29,7 @@ dependencies:
   desktop_drop: ^0.8.0
   get_it: ^9.2.1
   flutter_riverpod: ^3.3.2
-  go_router: ^17.3.0
+  go_router: ^18.0.0
   connectivity_plus: ^7.2.0
   # Authentication dependencies
   firebase_core: ^4.12.0
@@ -547,7 +547,6 @@ flutter:
     - "assets/Personal/Confectionary/Crisps/"
     - "assets/Personal/Confectionary/Crisps/Flavours/"
     - "assets/Personal/Confectionary/Sweets/"
-    - "assets/Personal/Memes/"
     - "assets/Plain Numbers/"
     - "assets/Recipes/"
     - "assets/Recipes/Instructions/"
@@ -1407,7 +1406,6 @@ flutter:
     - "lib/data/boards/Personal/Confectionery/Chocolates/"
     - "lib/data/boards/Personal/Confectionery/Crisps/"
     - "lib/data/boards/Personal/Confectionery/Sweets/"
-    - "lib/data/boards/Personal/Memes/"
     - "lib/data/boards/Personal/Personal/"
     - "lib/data/boards/Recipes/"
     - "lib/data/boards/Recipes/Bacon and Mushroom Risotto/"
@@ -1416,6 +1414,7 @@ flutter:
     - "lib/data/boards/Recipes/Breakfast Muffins/"
     - "lib/data/boards/Recipes/Brilliant Bread/"
     - "lib/data/boards/Recipes/Carrot and Cranberry Muffins/"
+    - "lib/data/boards/Recipes/Carrot and Cranbery Muffins/"
     - "lib/data/boards/Recipes/Chicken Fajitas/"
     - "lib/data/boards/Recipes/Chilli Con Carne/"
     - "lib/data/boards/Recipes/Christmas Cookies/"
@@ -1972,3 +1971,6 @@ flutter:
     - "lib/data/boards/Subject Vocab/Tutor Time, Events and Clubs/"
     - "lib/data/boards/Subject Vocab/Tutor Time/"
     - "lib/data/boards/Subject Vocab/Ways To Present/"
+    - "lib/data/boards/Unassigned/"
+    - "lib/data/boards/Unassigned/Baycroft Baycroft Expects/"
+    - "lib/data/boards/Unassigned/Baycroft People At School/"

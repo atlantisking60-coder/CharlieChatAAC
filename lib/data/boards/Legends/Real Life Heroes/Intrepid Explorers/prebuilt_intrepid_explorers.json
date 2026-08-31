@@ -13,11 +13,10 @@
   "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/PEEP/Explorers/explorer.png",
   "tileIconAssetPath": "assets/BOARDS/PEEP and Sustainability/Explorers.png",
-  "version": 2,
+  "version": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
-  "parentBoardId": "prebuilt_real_life_heroes",
   "layout": {
     "rows": 5,
     "blankTilesAdded": 0
@@ -528,7 +527,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_intrepid_explorers_alexandra_davidneel",
+      "id": "prebuilt_intrepid_explorers_alexandra_david_neel",
       "type": "vocabulary",
       "label": "alexandra david-neel",
       "category": "Custom",
@@ -546,65 +545,29 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_intrepid_explorers_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_intrepid_explorers_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_intrepid_explorers_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
       "id": "prebuilt_intrepid_explorers_bear_grylls",
       "type": "vocabulary",
       "label": "bear grylls",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Intrepid Explorers/bear grylls.png",
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_intrepid_explorers_tile_31",
+      "type": "blank",
+      "label": "",
       "category": "Custom",
-      "imageAsset": "",
+      "imageAsset": null,
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -617,5 +580,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": "prebuilt_real_life_heroes"
 }

@@ -13,11 +13,10 @@
   "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/Lessons/Art.png",
   "tileIconAssetPath": "assets/BOARDS/Subjects/Art Vocab.png",
-  "version": 2,
+  "version": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
-  "parentBoardId": "prebuilt_real_life_heroes",
   "layout": {
     "rows": 6,
     "blankTilesAdded": 0
@@ -150,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_georgia_okeeffe",
+      "id": "prebuilt_popular_artists_georgia_o_keeffe",
       "type": "vocabulary",
       "label": "georgia o'keeffe",
       "category": "Custom",
@@ -420,7 +419,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_ls_lowry",
+      "id": "prebuilt_popular_artists_l_s_lowry",
       "type": "vocabulary",
       "label": "l.s. lowry",
       "category": "Custom",
@@ -726,7 +725,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_40",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -744,7 +743,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_41",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -762,7 +761,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_42",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -780,7 +779,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_43",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -798,7 +797,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_44",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -816,7 +815,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_45",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -834,7 +833,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_46",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -852,7 +851,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_",
+      "id": "prebuilt_popular_artists_tile_47",
       "type": "blank",
       "label": "",
       "category": "Custom",
@@ -870,11 +869,29 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_popular_artists_john_constable",
-      "type": "vocabulary",
-      "label": "john constable",
+      "id": "prebuilt_popular_artists_tile_48",
+      "type": "blank",
+      "label": "",
       "category": "Custom",
-      "imageAsset": "",
+      "imageAsset": null,
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_popular_artists_tile_49",
+      "type": "blank",
+      "label": "",
+      "category": "Custom",
+      "imageAsset": null,
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -887,5 +904,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": "prebuilt_real_life_heroes"
 }

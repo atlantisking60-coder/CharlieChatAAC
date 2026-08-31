@@ -1498,14 +1498,24 @@ String _hierarchyBoardId(String name) {
   if (name == 'The Turtles') {
     return 'prebuilt_turtles';
   }
+  // Special case: Baycroft Expects already contains "baycroft" in name,
+  // so adding prefix would create double prefix. Return correct ID directly.
+  if (lower == 'baycroft expects') {
+    return 'baycroft_expects';
+  }
 
   // Baycroft-specific boards must have the baycroft_ prefix to remain
   // private to the baycroft profile.
   final baycroftNames = {
+    // Top-level My School boards
+    'my school main', 'food options', 'thinking skills',
+    'when things go wrong', 'blank levels', 'my school lessons', 'class equipment',
+    'school events', 'other useful stuff', 'people at baycroft', 'timetables',
+    // People at Baycroft sub-boards
     '7ems', '7ldo', '7mca', '7ngr', '8lbr', '8mgr', '8slp', '9ebl', '9lmc', '9rco',
     '10bcl', '10kla', '10rli', '11hsu', '11sto', 'rlp', 'kl', 'aw',
     'safeguarding team', 'senior leadership', 'helpful people',
-    'governors and friends of baycroft', 'people at baycroft', 'timetables'
+    'governors and friends of baycroft',
   };
   if (baycroftNames.contains(lower)) {
     return 'baycroft_${lower.replaceAll(RegExp(r'[^a-z0-9]+'), '_').replaceAll(RegExp(r'_+$'), '')}';

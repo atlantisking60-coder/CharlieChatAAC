@@ -13,18 +13,17 @@
   "tier": 2,
   "iconAssetPath": "assets/Subject Vocab/Religion and Worldviews/People Making A Difference/charity.png",
   "tileIconAssetPath": "assets/BOARDS/Legends/Real Life Heroes/Activism, Charity and Heroism.png",
-  "version": 2,
+  "version": 3,
   "boxScale": 1,
   "tileHeight": 100,
   "tileWidth": 100,
-  "parentBoardId": "prebuilt_real_life_heroes",
   "layout": {
     "rows": 5,
     "blankTilesAdded": 0
   },
   "tiles": [
     {
-      "id": "prebuilt_activism_charity_and_heroism_malala_yousafzai",
+      "id": "prebuilt_activism_charity_and_heroism_malala_yousafzai_shot_by_the_taliban_for_girls_education_became_youngest_nobel_laureate",
       "type": "vocabulary",
       "label": "malala yousafzai (shot by the taliban for girls' education, became youngest nobel laureate)",
       "category": "Custom",
@@ -42,7 +41,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_greta_thunberg",
+      "id": "prebuilt_activism_charity_and_heroism_greta_thunberg_school_student_who_sparked_a_global_climate_movement",
       "type": "vocabulary",
       "label": "greta thunberg (school student who sparked a global climate movement)",
       "category": "Custom",
@@ -60,7 +59,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_martin_luther_king_jr",
+      "id": "prebuilt_activism_charity_and_heroism_martin_luther_king_jr_led_the_american_civil_rights_movement_with_nonviolence",
       "type": "vocabulary",
       "label": "martin luther king jr. (led the american civil rights movement with nonviolence)",
       "category": "Custom",
@@ -78,7 +77,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_nelson_mandela",
+      "id": "prebuilt_activism_charity_and_heroism_nelson_mandela_fought_apartheid_and_became_south_africa_s_first_black_president",
       "type": "vocabulary",
       "label": "nelson mandela (fought apartheid and became south africa's first black president)",
       "category": "Custom",
@@ -96,7 +95,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_rosa_parks",
+      "id": "prebuilt_activism_charity_and_heroism_rosa_parks_refused_to_give_up_her_bus_seat_and_sparked_the_montgomery_boycott",
       "type": "vocabulary",
       "label": "rosa parks (refused to give up her bus seat and sparked the montgomery boycott)",
       "category": "Custom",
@@ -114,7 +113,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_harriet_tubman",
+      "id": "prebuilt_activism_charity_and_heroism_harriet_tubman_escaped_slavery_and_led_hundreds_to_freedom_via_the_underground_railroad",
       "type": "vocabulary",
       "label": "harriet tubman (escaped slavery and led hundreds to freedom via the underground railroad)",
       "category": "Custom",
@@ -132,7 +131,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_mahatma_gandhi",
+      "id": "prebuilt_activism_charity_and_heroism_mahatma_gandhi_led_india_to_independence_through_nonviolent_resistance",
       "type": "vocabulary",
       "label": "mahatma gandhi (led india to independence through nonviolent resistance)",
       "category": "Custom",
@@ -150,7 +149,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_william_wilberforce",
+      "id": "prebuilt_activism_charity_and_heroism_william_wilberforce_fought_for_20_years_to_abolish_the_british_slave_trade",
       "type": "vocabulary",
       "label": "william wilberforce (fought for 20 years to abolish the british slave trade)",
       "category": "Custom",
@@ -168,7 +167,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_emmeline_pankhurst",
+      "id": "prebuilt_activism_charity_and_heroism_emmeline_pankhurst_fought_for_women_s_right_to_vote_in_britain",
       "type": "vocabulary",
       "label": "emmeline pankhurst (fought for women's right to vote in britain)",
       "category": "Custom",
@@ -186,7 +185,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_david_attenborough",
+      "id": "prebuilt_activism_charity_and_heroism_david_attenborough_lifetime_dedicated_to_wildlife_conservation_and_climate_awareness",
       "type": "vocabulary",
       "label": "david attenborough (lifetime dedicated to wildlife conservation and climate awareness)",
       "category": "Custom",
@@ -204,7 +203,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_desmond_tutu",
+      "id": "prebuilt_activism_charity_and_heroism_desmond_tutu_archbishop_who_fought_apartheid_through_nonviolence",
       "type": "vocabulary",
       "label": "desmond tutu (archbishop who fought apartheid through nonviolence)",
       "category": "Custom",
@@ -222,7 +221,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_florence_nightingale",
+      "id": "prebuilt_activism_charity_and_heroism_florence_nightingale_founded_modern_nursing_and_saved_countless_lives",
       "type": "vocabulary",
       "label": "florence nightingale (founded modern nursing and saved countless lives)",
       "category": "Custom",
@@ -240,7 +239,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_oskar_schindler",
+      "id": "prebuilt_activism_charity_and_heroism_oskar_schindler_saved_1200_jewish_lives_during_the_holocaust",
       "type": "vocabulary",
       "label": "oskar schindler (saved 1200 jewish lives during the holocaust)",
       "category": "Custom",
@@ -258,7 +257,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_mother_teresa",
+      "id": "prebuilt_activism_charity_and_heroism_mother_teresa_dedicated_her_life_to_caring_for_the_poorest_of_the_poor_in_kolkata",
       "type": "vocabulary",
       "label": "mother teresa (dedicated her life to caring for the poorest of the poor in kolkata)",
       "category": "Custom",
@@ -276,7 +275,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_martin_luther_king_jr_sr",
+      "id": "prebuilt_activism_charity_and_heroism_martin_luther_king_jr_sr_father_and_pastor_who_inspired_a_civil_rights_leader",
       "type": "vocabulary",
       "label": "martin luther king jr. sr. (father and pastor who inspired a civil rights leader)",
       "category": "Custom",
@@ -294,7 +293,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_clara_barton",
+      "id": "prebuilt_activism_charity_and_heroism_clara_barton_founded_the_american_red_cross",
       "type": "vocabulary",
       "label": "clara barton (founded the american red cross)",
       "category": "Custom",
@@ -312,7 +311,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_raoul_wallenberg",
+      "id": "prebuilt_activism_charity_and_heroism_raoul_wallenberg_saved_tens_of_thousands_of_hungarian_jews_during_the_holocaust",
       "type": "vocabulary",
       "label": "raoul wallenberg (saved tens of thousands of hungarian jews during the holocaust)",
       "category": "Custom",
@@ -330,7 +329,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_irena_sendler",
+      "id": "prebuilt_activism_charity_and_heroism_irena_sendler_smuggled_2500_jewish_children_out_of_warsaw_during_the_holocaust",
       "type": "vocabulary",
       "label": "irena sendler (smuggled 2500 jewish children out of warsaw during the holocaust)",
       "category": "Custom",
@@ -348,7 +347,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_wangari_maathai",
+      "id": "prebuilt_activism_charity_and_heroism_wangari_maathai_planted_51_million_trees_and_won_the_nobel_peace_prize",
       "type": "vocabulary",
       "label": "wangari maathai (planted 51 million trees and won the nobel peace prize)",
       "category": "Custom",
@@ -366,7 +365,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_cesar_chavez",
+      "id": "prebuilt_activism_charity_and_heroism_cesar_chavez_founded_the_united_farm_workers_union_to_fight_for_workers_rights",
       "type": "vocabulary",
       "label": "cesar chavez (founded the united farm workers union to fight for workers' rights)",
       "category": "Custom",
@@ -384,7 +383,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_ruby_bridges",
+      "id": "prebuilt_activism_charity_and_heroism_ruby_bridges_first_black_child_to_attend_an_all_white_school_in_new_orleans",
       "type": "vocabulary",
       "label": "ruby bridges (first black child to attend an all-white school in new orleans)",
       "category": "Custom",
@@ -402,7 +401,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_leymah_gbowee",
+      "id": "prebuilt_activism_charity_and_heroism_leymah_gbowee_united_women_to_end_the_liberian_civil_war_won_nobel_peace_prize",
       "type": "vocabulary",
       "label": "leymah gbowee (united women to end the liberian civil war, won nobel peace prize)",
       "category": "Custom",
@@ -420,7 +419,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_kailash_satyarthi",
+      "id": "prebuilt_activism_charity_and_heroism_kailash_satyarthi_fought_child_labour_and_won_the_nobel_peace_prize",
       "type": "vocabulary",
       "label": "kailash satyarthi (fought child labour and won the nobel peace prize)",
       "category": "Custom",
@@ -438,7 +437,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_abdul_sattar_edhi",
+      "id": "prebuilt_activism_charity_and_heroism_abdul_sattar_edhi_founded_the_world_s_largest_volunteer_ambulance_service_in_pakistan",
       "type": "vocabulary",
       "label": "abdul sattar edhi (founded the world's largest volunteer ambulance service in pakistan)",
       "category": "Custom",
@@ -456,7 +455,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_nadiya_hussain",
+      "id": "prebuilt_activism_charity_and_heroism_nadiya_hussain_great_british_bake_off_winner_who_inspired_muslim_women_across_britain",
       "type": "vocabulary",
       "label": "nadiya hussain (great british bake off winner who inspired muslim women across britain)",
       "category": "Custom",
@@ -474,7 +473,7 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_bryan_stevenson",
+      "id": "prebuilt_activism_charity_and_heroism_bryan_stevenson_founded_the_equal_justice_initiative_to_fight_racial_inequality",
       "type": "vocabulary",
       "label": "bryan stevenson (founded the equal justice initiative to fight racial inequality)",
       "category": "Custom",
@@ -492,65 +491,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_activism_charity_and_heroism_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_activism_charity_and_heroism_",
-      "type": "blank",
-      "label": "",
-      "category": "Custom",
-      "imageAsset": null,
-      "emoji": "",
-      "isBoardLink": false,
-      "linkedBoardId": "",
-      "linkedBoardName": null,
-      "isFullScreenImage": false,
-      "bgColor": "transparent",
-      "textColor": "#000000",
-      "tileSize": 1,
-      "colSpan": 1,
-      "rowSpan": 1,
-      "customVoice": ""
-    },
-    {
-      "id": "prebuilt_activism_charity_and_heroism_angelina_jolie",
+      "id": "prebuilt_activism_charity_and_heroism_angelina_jolie_unhcr_special_envoy_who_built_schools_in_refugee_camps_worldwide",
       "type": "vocabulary",
       "label": "angelina jolie (unhcr special envoy who built schools in refugee camps worldwide)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Activism, Charity and Heroism/angelina jolie.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -564,11 +509,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_nadia_murad",
+      "id": "prebuilt_activism_charity_and_heroism_nadia_murad_yazidi_survivor_who_won_the_nobel_peace_prize_for_anti_rape_work",
       "type": "vocabulary",
       "label": "nadia murad (yazidi survivor who won the nobel peace prize for anti-rape work)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Activism, Charity and Heroism/nadia murad.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -582,11 +527,11 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_tarana_burke",
+      "id": "prebuilt_activism_charity_and_heroism_tarana_burke_founded_the_metoo_movement_to_support_survivors_of_sexual_violence",
       "type": "vocabulary",
       "label": "tarana burke (founded the metoo movement to support survivors of sexual violence)",
-      "category": "Custom",
-      "imageAsset": "",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Activism, Charity and Heroism/tarana burke.png",
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -600,11 +545,29 @@
       "customVoice": ""
     },
     {
-      "id": "prebuilt_activism_charity_and_heroism_ellen_degeneres",
+      "id": "prebuilt_activism_charity_and_heroism_ellen_degeneres_pioneered_lgbtq_visibility_and_raised_millions_for_humanitarian_causes",
       "type": "vocabulary",
       "label": "ellen degeneres (pioneered lgbtq+ visibility and raised millions for humanitarian causes)",
+      "category": "Assets",
+      "imageAsset": "assets/Legends/Real Life Heroes/Activism, Charity and Heroism/ellen degeneres.png",
+      "emoji": "",
+      "isBoardLink": false,
+      "linkedBoardId": "",
+      "linkedBoardName": null,
+      "isFullScreenImage": false,
+      "bgColor": "transparent",
+      "textColor": "#000000",
+      "tileSize": 1,
+      "colSpan": 1,
+      "rowSpan": 1,
+      "customVoice": ""
+    },
+    {
+      "id": "prebuilt_activism_charity_and_heroism_tile_31",
+      "type": "blank",
+      "label": "",
       "category": "Custom",
-      "imageAsset": "",
+      "imageAsset": null,
       "emoji": "",
       "isBoardLink": false,
       "linkedBoardId": "",
@@ -617,5 +580,6 @@
       "rowSpan": 1,
       "customVoice": ""
     }
-  ]
+  ],
+  "parentBoardId": "prebuilt_real_life_heroes"
 }

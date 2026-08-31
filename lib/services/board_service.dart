@@ -472,8 +472,9 @@ class BoardService {
     }
 
     // All entries are profile-specific but none match the current profile.
-    // Return the first so callers can decide whether to hide it.
-    return entries.first.id;
+    // Return the prebuilt ID so the board stays hidden for this profile
+    // instead of leaking the profile-specific version.
+    return prebuiltBoardId(name);
   }
 
   /// Resolve a requested board id to the profile-specific id when appropriate.
@@ -587,7 +588,9 @@ class BoardService {
   // Bump this to force every prebuilt board to be loaded from source JSON.
   // v7: My School boards renamed from prebuilt_* to baycroft_*; purge stale
   //     stored boards so tabs/children resolve from the fresh index.
-  static const int _kPrebuiltBoardsSchemaVersion = 7;
+  // v8: Force clear ALL stored boards (including profile-specific) to remove
+  //     stale boards from user localStorage on deployed website.
+  static const int _kPrebuiltBoardsSchemaVersion = 8;
 
   BoardService._();
 
@@ -1178,28 +1181,30 @@ class BoardService {
     }
   }
 
-  /// Removes all cached copies of prebuilt boards so the next load is forced
-  /// to read the latest source JSON (used when the schema version changes).
+  /// Removes ALL stored board data for the current profile so the next load
+  /// is forced to read the latest source JSON (used when the schema version changes).
   Future<void> _clearStoredPrebuiltBoards() async {
-    // Profile-specific boards (baycroft_*) are NOT reachable via
-    // prebuiltBoardId(name), so clear their cached copies too. Otherwise a
-    // renamed/moved board keeps its stale stored parentBoardId (e.g. the old
-    // parent id, or '__removed__' after a tab was removed) and never re-hydrates
-    // from the corrected source JSON.
-    final ids = <String>{
-      ...prebuiltBoardNames.map((n) => prebuiltBoardId(n)),
-      ...staticBoardIndex.where((e) => e.id.startsWith('baycroft_')).map((e) => e.id),
-    };
-    for (final id in ids) {
-      final key = _getBoardKey(id);
-      _boardCache.remove(id);
-      if (kIsWeb && _prefs != null) {
+    if (kIsWeb && _prefs != null) {
+      final prefix = _getBoardKey('');
+      final keys = _prefs!.getKeys().where((key) => key.startsWith(prefix)).toList();
+      for (final key in keys) {
         await _prefs!.remove(key);
-      } else if (_dataDir != null) {
-        final f = File('${_dataDir!.path}/$key.json');
-        if (await f.exists()) await f.delete();
+      }
+      // Also clear the shared default profile prefix if different
+      if (_currentProfileId != 'default') {
+        const defaultPrefix = 'board_default_';
+        final defaultKeys = _prefs!.getKeys().where((key) => key.startsWith(defaultPrefix)).toList();
+        for (final key in defaultKeys) {
+          await _prefs!.remove(key);
+        }
+      }
+    } else if (_dataDir != null) {
+      final files = _dataDir!.listSync().whereType<File>().where((f) => f.path.endsWith('.json'));
+      for (final file in files) {
+        await file.delete();
       }
     }
+    _boardCache.clear();
   }
 
 /// PREBUILT LOADER
@@ -3912,15 +3917,19 @@ class BoardService {
         }
 
         if (_isAdmin) {
-          // OPTIMIZATION: Instead of scanning ALL keys with _prefs!.getKeys(),
-          // we construct the specific keys for known profiles.
+          // Propagate admin edits to the correct profile storage only.
+          // prebuilt/link boards (no profile prefix) → default profile
+          // profile-specific boards (e.g. baycroft_*) → only that profile
           try {
             final profilesRaw = _prefs!.getString('aac_user_profiles');
             if (profilesRaw != null && profilesRaw.isNotEmpty) {
               final List<dynamic> profiles = json.decode(profilesRaw);
+              final boardPrefix = _profilePrefixForBoardId(board.id);
               for (final p in profiles) {
                 final id = p['id'] as String?;
-                if (id == null || id == 'default' || id == 'admin') continue;
+                if (id == null || id == 'admin') continue;
+                if (boardPrefix == null && id != 'default') continue;
+                if (boardPrefix != null && boardPrefix != id) continue;
                 final profileKey = 'board_${id}_${board.id}';
                 try {
                   await _prefs!.setString(profileKey, encoded);
@@ -3938,14 +3947,21 @@ class BoardService {
       await f.writeAsString(encoded);
 
       if (_isAdmin) {
-        // Update all profile files for this board
+        // Propagate admin edits to the correct profile files only.
+        // prebuilt/link boards (no profile prefix) → default profile
+        // profile-specific boards (e.g. baycroft_*) → only that profile
+        final boardPrefix = _profilePrefixForBoardId(board.id);
         final boardSuffix = '_${board.id}.json';
         final files = _dataDir!.listSync().whereType<File>();
         for (final file in files) {
-          if (p.basename(file.path).startsWith('board_') &&
-              p.basename(file.path).endsWith(boardSuffix)) {
-            await file.writeAsString(encoded);
-          }
+          final baseName = p.basename(file.path);
+          if (!baseName.startsWith('board_') || !baseName.endsWith(boardSuffix)) continue;
+          // Extract profile prefix from filename: board_<profileId>_<boardId>.json
+          final withoutBoardPrefix = baseName.substring('board_'.length);
+          final profileId = withoutBoardPrefix.substring(0, withoutBoardPrefix.indexOf('_'));
+          if (boardPrefix == null && profileId != 'default') continue;
+          if (boardPrefix != null && boardPrefix != profileId) continue;
+          await file.writeAsString(encoded);
         }
       }
     }
