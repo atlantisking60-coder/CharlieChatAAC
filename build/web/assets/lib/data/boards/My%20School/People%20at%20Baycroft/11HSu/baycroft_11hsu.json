@@ -15,8 +15,8 @@
     {
       "id": "baycroft_11hsu_miss_sutcliffe",
       "label": "Miss Sutcliffe",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/miss sutcliffe.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_11hsu_mrs_martin",
       "label": "Mrs Martin",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs martin.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_11hsu_mr_hammond",
       "label": "Mr Hammond",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mr hammond.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_11hsu_mrs_tillotson",
       "label": "Mrs Tillotson",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs tillotson.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 380,
+  "sortOrder": 433,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/11HSu.png",
   "tileIconAssetPath": "assets/BOARDS/My School/11HSu.png",
-  "version": 2,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

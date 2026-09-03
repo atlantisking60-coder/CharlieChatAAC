@@ -15,8 +15,8 @@
     {
       "id": "baycroft_7ldo_mrs_downs",
       "label": "Mrs Downs",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/mrs downs.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_7ldo_miss_bond",
       "label": "Miss Bond",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss bond.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -47,10 +47,10 @@
       "rowSpan": 1
     },
     {
-      "id": "baycroft_7ldo_tile_3",
-      "label": "",
+      "id": "baycroft_7ldo_miss_smith",
+      "label": "Miss Smith",
       "category": "Custom",
-      "imageAsset": "",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss smith.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 368,
+  "sortOrder": 421,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/7LDo.png",
   "tileIconAssetPath": "assets/BOARDS/My School/7LDo.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

@@ -15,8 +15,8 @@
     {
       "id": "baycroft_7mca_miss_cave",
       "label": "Miss Cave",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss cave.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -30,10 +30,10 @@
       "rowSpan": 1
     },
     {
-      "id": "baycroft_7mca_miss_ambrosetti",
-      "label": "Miss Ambrosetti",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "id": "baycroft_7mca_mrs_ambrosetti",
+      "label": "Mrs Ambrosetti",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/mrs ambrosetti.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_7mca_miss_bell",
       "label": "Miss Bell",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss bell.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_7mca_miss_taylor",
       "label": "Miss Taylor",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss taylor.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 369,
+  "sortOrder": 422,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/7MCa.png",
   "tileIconAssetPath": "assets/BOARDS/My School/7MCa.png",
-  "version": 2,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

@@ -13,10 +13,10 @@
   "backgroundColor": "#FFFFFF",
   "tiles": [
     {
-      "id": "baycroft_10rli_ms_linden",
-      "label": "Ms Linden",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "id": "baycroft_10rli_mrs_linden",
+      "label": "Mrs Linden",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs linden.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_10rli_mr_hanlon",
       "label": "Mr Hanlon",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mr t hanlon.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_10rli_mrs_collicutt",
       "label": "Mrs Collicutt",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs collicutt.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_10rli_mrs_sommerville",
       "label": "Mrs Sommerville",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs sommerville.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 379,
+  "sortOrder": 432,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/10RLi.png",
   "tileIconAssetPath": "assets/BOARDS/My School/10RLi.png",
-  "version": 3,
+  "version": 2,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

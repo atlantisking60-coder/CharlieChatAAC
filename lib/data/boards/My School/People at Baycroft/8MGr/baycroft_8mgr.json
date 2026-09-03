@@ -15,8 +15,8 @@
     {
       "id": "baycroft_8mgr_ms_gevaux_ross",
       "label": "Ms Gevaux-Ross",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/ms gevaux-ross.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_8mgr_miss_bayles",
       "label": "Miss Bayles",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/miss bayles.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_8mgr_mrs_francis",
       "label": "Mrs Francis",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/mrs francis.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -64,10 +64,10 @@
       "rowSpan": 1
     },
     {
-      "id": "baycroft_8mgr_miss_wyatt",
-      "label": "Miss Wyatt",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "id": "baycroft_8mgr_mrs_wyatt",
+      "label": "Mrs Wyatt",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/mrs wyatt.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -544,11 +544,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 372,
+  "sortOrder": 425,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/8MGr.png",
   "tileIconAssetPath": "assets/BOARDS/My School/8MGr.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

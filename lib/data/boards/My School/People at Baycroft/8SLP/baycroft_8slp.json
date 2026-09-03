@@ -15,8 +15,8 @@
     {
       "id": "baycroft_8slp_mr_le_peuple",
       "label": "Mr Le Peuple",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/mr le peuple.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_8slp_miss_jarvis",
       "label": "Miss Jarvis",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/miss jarvis.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_8slp_miss_greentree",
       "label": "Miss Greentree",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/miss greentree.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -442,11 +442,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 373,
+  "sortOrder": 426,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/8SLP.png",
   "tileIconAssetPath": "assets/BOARDS/My School/8SLP.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

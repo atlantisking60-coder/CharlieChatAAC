@@ -15,8 +15,8 @@
     {
       "id": "baycroft_10kla_mr_rose",
       "label": "Mr Rose",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mr rose.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_10kla_ms_parsons",
       "label": "Ms Parsons",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/ms parsons.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_10kla_miss_king",
       "label": "Miss King",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/miss king.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_10kla_miss_lawrence",
       "label": "Miss Lawrence",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/miss lawrence.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 378,
+  "sortOrder": 431,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/10KLa.png",
   "tileIconAssetPath": "assets/BOARDS/My School/10KLa.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

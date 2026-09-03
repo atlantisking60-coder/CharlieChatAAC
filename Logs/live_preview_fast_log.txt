@@ -1,5 +1,7 @@
 ============================================= 
   Charlie Chat - Fast Web Live Preview       
-  Started: 16/08/2026 22:28:19.51                     
+  Started: 03/09/2026 19:04:13.98                     
 ============================================= 
                                               
+[1/2] Starting dev save server on port 8787... 
+[2/2] Opening browser at http://localhost:8787... 

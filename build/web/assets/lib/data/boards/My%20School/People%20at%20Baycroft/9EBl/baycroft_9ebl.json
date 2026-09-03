@@ -15,8 +15,8 @@
     {
       "id": "baycroft_9ebl_miss_black",
       "label": "Miss Black",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/miss black.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_9ebl_ms_wrench",
       "label": "Ms Wrench",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/ms wrench.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -47,10 +47,10 @@
       "rowSpan": 1
     },
     {
-      "id": "baycroft_9ebl_mr_kimple",
-      "label": "Mr Kimple",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "id": "baycroft_9ebl_mr_penfold",
+      "label": "Mr Penfold",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/mr penfold.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -544,11 +544,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 374,
+  "sortOrder": 427,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/9EBl.png",
   "tileIconAssetPath": "assets/BOARDS/My School/9EBl.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

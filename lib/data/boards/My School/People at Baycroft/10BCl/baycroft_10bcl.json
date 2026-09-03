@@ -15,8 +15,8 @@
     {
       "id": "baycroft_10bcl_mrs_clark",
       "label": "Mrs Clark",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs clark.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_10bcl_mr_jeffery",
       "label": "Mr Jeffery",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mr jeffery.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_10bcl_mrs_lock",
       "label": "Mrs Lock",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs lock.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_10bcl_mrs_skinner",
       "label": "Mrs Skinner",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 10/mrs skinner.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -629,11 +629,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 377,
+  "sortOrder": 430,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/10BCl.png",
   "tileIconAssetPath": "assets/BOARDS/My School/10BCl.png",
-  "version": 3,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

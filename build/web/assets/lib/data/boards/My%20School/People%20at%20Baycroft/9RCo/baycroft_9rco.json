@@ -15,8 +15,8 @@
     {
       "id": "baycroft_9rco_mrs_cole",
       "label": "Mrs Cole",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/mrs cole.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_9rco_mrs_hook",
       "label": "Mrs Hook",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/mrs hook.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_9rco_mrs_french",
       "label": "Mrs French",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/mrs french.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_9rco_ms_privett",
       "label": "Ms Privett",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 9/ms privett.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 376,
+  "sortOrder": 429,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/9RCo.png",
   "tileIconAssetPath": "assets/BOARDS/My School/9RCo.png",
-  "version": 4,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

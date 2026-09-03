@@ -15,8 +15,8 @@
     {
       "id": "baycroft_8lbr_mrs_brenton",
       "label": "Mrs Brenton",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/mrs brenton.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_8lbr_miss_wotton",
       "label": "Miss Wotton",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/miss wotton.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_8lbr_mrs_penny",
       "label": "Mrs Penny",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/mrs penny.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_8lbr_miss_watson",
       "label": "Miss Watson",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 8/miss watson.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -442,11 +442,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 371,
+  "sortOrder": 424,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/8LBr.png",
   "tileIconAssetPath": "assets/BOARDS/My School/8LBr.png",
-  "version": 4,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

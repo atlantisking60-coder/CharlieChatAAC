@@ -15,8 +15,8 @@
     {
       "id": "baycroft_7ems_mrs_smeeton",
       "label": "Mrs Smeeton",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/mrs smeeton.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_7ems_mrs_langford",
       "label": "Mrs Langford",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/mrs langford.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_7ems_miss_ripley",
       "label": "Miss Ripley",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 7/miss ripley.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -527,11 +527,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 367,
+  "sortOrder": 420,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/7EmS.png",
   "tileIconAssetPath": "assets/BOARDS/My School/7EmS.png",
-  "version": 2,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }

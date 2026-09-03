@@ -15,8 +15,8 @@
     {
       "id": "baycroft_rlp_mrs_le_peuple",
       "label": "Mrs Le Peuple",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs le peuple.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -32,8 +32,8 @@
     {
       "id": "baycroft_rlp_miss_white",
       "label": "Miss White",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/miss white.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -49,8 +49,8 @@
     {
       "id": "baycroft_rlp_mrs_campbell",
       "label": "Mrs Campbell",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs campbell.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -66,8 +66,8 @@
     {
       "id": "baycroft_rlp_mrs_taylorson",
       "label": "Mrs Taylorson",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs taylorson.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -83,8 +83,8 @@
     {
       "id": "baycroft_rlp_mrs_moorhead",
       "label": "Mrs Moorhead",
-      "category": "People",
-      "imageAsset": "assets/My School/baycroft.png",
+      "category": "Assets",
+      "imageAsset": "assets/My School/People At School/Staff/Year 11/mrs morehead.png",
       "emoji": "",
       "linkedBoardId": "",
       "isBoardLink": false,
@@ -629,11 +629,11 @@
   "isTertiaryBoard": false,
   "isQuaternaryBoard": false,
   "isQuinaryBoard": false,
-  "sortOrder": 382,
+  "sortOrder": 435,
   "tier": 2,
   "iconAssetPath": "assets/My School/People At School/Baycroft Classes/RLP.png",
   "tileIconAssetPath": "assets/BOARDS/My School/RLP.png",
-  "version": 2,
+  "version": 1,
   "adminUpdatePending": false,
   "adminVersionId": null
 }
